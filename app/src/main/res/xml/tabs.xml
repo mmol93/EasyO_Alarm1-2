@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        drawable = "@drawable/tab_alarm"
+        text="@string/Alarm" />
+
+    <tab
+        drawable="@drawable/tab_setting"
+        text="@string/Setting" />
+</tabs>

@@ -1,0 +1,17 @@
+<메이드 알람>
+
+1. short액티비티에서 알람 지정
+
+2. shortAlarmFragment의 onActivityResult) 1에서 등록한 데이터가 AppClass, SQL 각각의 hour, min, progress, Sun~Sat에 저장됨 + 배열을 생성하여 요일에 대한 정보를 넣어준다.
+- 위 배열에는 7개의 방을 만들어주고 각 방에는 0을 넣어 초기화 해준다
+- 일요일 = 인덱스 0 ~ 토요일 = 인덱스 6
+- SQL에는 저장을 하고나서 읽기를 하여 방금 저장한 데이터의 인덱스를 가져온다
+
+3. shortAlarmFragment의 onActivityResult) 1에서 저장한 데이터를 바탕으로 알람 매니저를 설정한다
+- 매개변수로 requireContext, app, 인덱스, 시간, 분, 요일배열을 넘겨준다
+
+4. 알람매니저를 정의한다
+- 받아온 매개변수로 알람을 설정한다
+- requestCode의 경우 매개변수로 가져온 인덱스를 넣어준다
+
+5. alarmManager에서 사용할
