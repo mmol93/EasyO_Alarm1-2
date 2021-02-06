@@ -8,6 +8,6 @@ class AppClass : Application() {
     var wayOfAlarm = 1  // 계산 문제를 제출할지 말지 선택(설정 탭에서 선택 가능)
 
     // 계산 문제에서 사용될 변수
-    var counter = 2 // 문제 반복 몇 번 할지
+    var counter = 1 // 문제 반복 몇 번 할지
 
 }

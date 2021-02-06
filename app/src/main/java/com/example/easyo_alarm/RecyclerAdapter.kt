@@ -218,7 +218,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
 
                     SQLHelper.close()
                     notifyItemRemoved(position)  // 데이터를 삭제하고 나서 RecyclerView를 업데이트
-                    notifyDataSetChanged()  // 데이터를 삭제했으니 RecyclerView의 데이터를 갱신
+                    notifyItemRangeChanged(position, size)  // 삭제하고나서 어댑터의 item Range 갱신
                 }
             }
 
