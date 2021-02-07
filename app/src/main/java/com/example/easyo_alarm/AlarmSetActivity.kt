@@ -27,7 +27,7 @@ class AlarmSetActivity : AppCompatActivity() {
         binder.numberPickerMin.maxValue = 59
         binder.numberPickerMin.minValue = 0
 
-        // numberPicker에 오전 오후 텍스트 세팅
+        // numberPicker에 오전 오후 텍스트 세팅.
         val arg1 = arrayOf<String>(getString(R.string.alarmSet_AM), getString(R.string.alarmSet_PM))
         binder.numberPickerAMPM.minValue = 0
         binder.numberPickerAMPM.maxValue = arg1.size - 1
