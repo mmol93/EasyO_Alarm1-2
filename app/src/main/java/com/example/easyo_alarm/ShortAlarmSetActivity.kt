@@ -81,6 +81,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
             result_intent.putExtra("min", min)
             result_intent.putExtra("progress", seekValue)
 
+            // -> alarmFragment로 이동한다
             setResult(100, result_intent)
 
             finish()
