@@ -56,6 +56,8 @@
                 android:id="@+id/row_tues"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothic"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/week_tue" />
@@ -65,6 +67,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/nanumgothic"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:text="@string/week_wed" />
 
@@ -72,6 +76,8 @@
                 android:id="@+id/row_thur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothic"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/week_thur" />
@@ -80,6 +86,8 @@
                 android:id="@+id/row_fri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothic"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/week_fri" />
@@ -88,6 +96,8 @@
                 android:id="@+id/row_sat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothic"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/week_sat" />
@@ -96,6 +106,8 @@
                 android:id="@+id/row_sun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothic"
+                android:textColor="@color/black"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/week_sun" />

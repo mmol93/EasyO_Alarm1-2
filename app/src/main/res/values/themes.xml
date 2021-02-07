@@ -12,5 +12,26 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!--타이틀 바 삭제. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
+
     </style>
+
+    <!-- numberPickerCustomTheme -->
+    <style name="numberPickerCustomTheme">
+        <item name="android:textSize">
+            20sp
+        </item>
+        <item name="fontFamily">
+            @font/nanumgothicextrabold
+        </item>
+        <item name="editTextColor">
+            @color/black
+        </item>
+    </style>
+
 </resources>
