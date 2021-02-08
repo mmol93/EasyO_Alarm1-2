@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import com.example.easyo_alarm.databinding.ActivityAlarmSetBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
@@ -75,28 +76,35 @@ class AlarmSetActivity : AppCompatActivity() {
             Log.d("AlarmSetActivity", "hour: $hour")
             Log.d("AlarmSetActivity", "min: $min")
 
-            // ** 요일에 대한 설정
-            val weekArray = ArrayList<Int>()
-            weekArray.add(Sun)
-            weekArray.add(Mon)
-            weekArray.add(Tue)
-            weekArray.add(Wed)
-            weekArray.add(Thu)
-            weekArray.add(Fri)
-            weekArray.add(Sat)
+            // ** 요일을 한개라도 설정해야 데이터를 SQL에 쓰고 액티비티를 종료하게 한다
+            if (Sun == 1 || Mon == 1 || Tue == 1 || Wed == 1 || Thu == 1 || Fri == 1 || Sat== 1){
+                // ** 요일에 대한 설정
+                val weekList = ArrayList<Int>()
+                weekList.add(Sun)
+                weekList.add(Mon)
+                weekList.add(Tue)
+                weekList.add(Wed)
+                weekList.add(Thu)
+                weekList.add(Fri)
+                weekList.add(Sat)
 
-            val result_intent = Intent()
-            result_intent.putExtra("hour", hour)
-            result_intent.putExtra("min", min)
-            result_intent.putExtra("progress", seekValue)
-            result_intent.putExtra("weekArray", weekArray)
+                val result_intent = Intent()
+                result_intent.putExtra("hour", hour)
+                result_intent.putExtra("min", min)
+                result_intent.putExtra("progress", seekValue)
+                result_intent.putExtra("weekList", weekList)
 
-            // -> alarmFragment로 이동한다
-            setResult(200, result_intent)
+                // -> alarmFragment로 이동한다
+                setResult(200, result_intent)
 
-            finish()
+                finish()
+            }
+            // ** 요일을 하나라도 설정하지 않을 경우 Toast로 알려준다
+            else{
+                val toast = Toast.makeText(this, getString(R.string.alarmSet_Toast), Toast.LENGTH_LONG)
+                toast.show()
+            }
         }
-
 
         // 일요 텍스트 클릭
         binder.alarmSetSun.setOnClickListener {

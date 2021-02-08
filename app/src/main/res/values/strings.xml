@@ -30,6 +30,7 @@
     <string name="front_ok">OK</string>
     <string name="alarmSet_AM">AM</string>
     <string name="alarmSet_PM">PM</string>
+    <string name="alarmSet_Toast">Please set week... Master</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

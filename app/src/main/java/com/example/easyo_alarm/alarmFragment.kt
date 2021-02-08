@@ -163,9 +163,9 @@ class alarmFragment : Fragment() {
                 val hour = data?.getIntExtra("hour", 0)
                 val min = data?.getIntExtra("min", 0)
                 val progress = data?.getIntExtra("progress", 0)
-                val weekArray = data?.getIntegerArrayListExtra("weekArray")
+                val weekList = data?.getIntegerArrayListExtra("weekList")
 
-                // 각 요일별로 변수를 만들어서 weekArray의 데이터를 반영하기
+                // 각 요일별로 변수를 만들어서 weekList의 데이터를 반영하기
                 var Sun = 0
                 var Mon = 0
                 var Tue = 0
@@ -174,25 +174,25 @@ class alarmFragment : Fragment() {
                 var Fri = 0
                 var Sat = 0
 
-                if (weekArray!![0] == 1){
+                if (weekList!![0] == 1){
                     Sun = 1
                 }
-                if (weekArray!![1] == 1){
+                if (weekList!![1] == 1){
                     Mon = 1
                 }
-                if (weekArray!![2] == 1){
+                if (weekList!![2] == 1){
                     Tue = 1
                 }
-                if (weekArray!![3] == 1){
+                if (weekList!![3] == 1){
                     Wed = 1
                 }
-                if (weekArray!![4] == 1){
+                if (weekList!![4] == 1){
                     Thu = 1
                 }
-                if (weekArray!![5] == 1){
+                if (weekList!![5] == 1){
                     Fri = 1
                 }
-                if (weekArray!![6] == 1){
+                if (weekList!![6] == 1){
                     Sat = 1
                 }
 
@@ -219,6 +219,13 @@ class alarmFragment : Fragment() {
                 val arg1 = arrayOf(hour, min, progress, Sun, Mon, Tue, Wed, Thu, Fri, Sat, requestCode.toInt(), 0)
 
                 SQLHelper.writableDatabase.execSQL(sql_insert, arg1)
+
+                // 알람 매니저에도 해당 알람 정보를 보내준다
+                // 필요 매개변수: context, 알람시간, 알람분, progress, 알람요일, requestCode(Int), quick 여부
+                val newAlarm = makeAlarm(requireContext(), hour!!, min!!, progress!!, weekList, requestCode.toInt())
+                newAlarm.addNewAlarm_once()
+
+                SQLHelper.close()
             }
         }
     }
