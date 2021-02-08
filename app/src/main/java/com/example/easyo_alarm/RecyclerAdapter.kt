@@ -31,9 +31,9 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
         val progressList = mutableListOf<Int>()
         val Sun = mutableListOf<Int>()
         val Mon = mutableListOf<Int>()
-        val Tues = mutableListOf<Int>()
+        val Tue = mutableListOf<Int>()
         val Wed = mutableListOf<Int>()
-        val Thur = mutableListOf<Int>()
+        val Thu = mutableListOf<Int>()
         val Fri = mutableListOf<Int>()
         val Sat = mutableListOf<Int>()
         val requestCode = mutableListOf<Int>()
@@ -48,9 +48,9 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             val index4 = c1.getColumnIndex("progressData")
             val index5 = c1.getColumnIndex("Sun")
             val index6 = c1.getColumnIndex("Mon")
-            val index7 = c1.getColumnIndex("Tues")
+            val index7 = c1.getColumnIndex("Tue")
             val index8 = c1.getColumnIndex("Wed")
-            val index9 = c1 .getColumnIndex("Thur")
+            val index9 = c1 .getColumnIndex("Thu")
             val index10 = c1.getColumnIndex("Fri")
             val index11 = c1.getColumnIndex("Sat")
             val index12 = c1.getColumnIndex("requestCode")
@@ -63,9 +63,9 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             progressList.add(c1.getInt(index4))
             Sun.add(c1.getInt(index5))
             Mon.add(c1.getInt(index6))
-            Tues.add(c1.getInt(index7))
+            Tue.add(c1.getInt(index7))
             Wed.add(c1.getInt(index8))
-            Thur.add(c1.getInt(index9))
+            Thu.add(c1.getInt(index9))
             Fri.add(c1.getInt(index10))
             Sat.add(c1.getInt(index11))
             requestCode.add(c1.getInt(index12))
@@ -98,13 +98,13 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
         if (Mon[position].toString() == "1"){
             holder.row_mon.setBackgroundColor(Color.parseColor("#1ABC9C"))
         }
-        if (Tues[position].toString() == "1"){
+        if (Tue[position].toString() == "1"){
             holder.row_tues.setBackgroundColor(Color.parseColor("#1ABC9C"))
         }
         if (Wed[position].toString() == "1"){
             holder.row_wed.setBackgroundColor(Color.parseColor("#1ABC9C"))
         }
-        if (Thur[position].toString() == "1"){
+        if (Thu[position].toString() == "1"){
             holder.row_thur.setBackgroundColor(Color.parseColor("#1ABC9C"))
         }
         if (Fri[position].toString() == "1"){
@@ -128,7 +128,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
         holder.row_switch.setOnCheckedChangeListener() { compoundButton: CompoundButton, b: Boolean ->
             // 알람 매니저에 알람 등록하기
             if (holder.row_switch.isChecked){
-                val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tues[position], Wed[position], Thur[position], Fri[position], Sat[position])
+                val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tue[position], Wed[position], Thu[position], Fri[position], Sat[position])
                 val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position])
                 // quick인지 normal인지에 따라 알람 매니저의 다른 메서드를 호출하게 한다
                 if (quick[position] == 1){
@@ -150,7 +150,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             }
             // 알람 매니저에 해당 알람 캔슬하기
             else{
-                val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tues[position], Wed[position], Thur[position], Fri[position], Sat[position])
+                val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tue[position], Wed[position], Thu[position], Fri[position], Sat[position])
                 val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position])
 
                 reNewAlarm.cancelAlarm(requestCode[position])
@@ -172,7 +172,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                 override fun onClick(dialog: DialogInterface?, which: Int) {
                     // 데이터를 삭제하기 전에 알람매니저를 먼저 취소한다.
                     // 해당 알람 캔슬하기
-                    val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tues[position], Wed[position], Thur[position], Fri[position], Sat[position])
+                    val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tue[position], Wed[position], Thu[position], Fri[position], Sat[position])
                     val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position])
                     reNewAlarm.cancelAlarm(requestCode[position])
 
@@ -185,9 +185,9 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     progressList.removeAt(position)
                     Sun.removeAt(position)
                     Mon.removeAt(position)
-                    Tues.removeAt(position)
+                    Tue.removeAt(position)
                     Wed.removeAt(position)
-                    Thur.removeAt(position)
+                    Thu.removeAt(position)
                     Fri.removeAt(position)
                     Sat.removeAt(position)
                     Log.d("RecyclerAdapter", "minList after delete: $minList")

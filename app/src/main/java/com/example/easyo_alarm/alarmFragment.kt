@@ -14,7 +14,6 @@ import java.util.*
 class alarmFragment : Fragment() {
     val doneAlarmActivity = 100         // 알람 액티비티
     val doneShortAlarmActivity = 200    // 퀵 알람 액티비티 반환값용 변수
-    val doneFrontAlarmActivity = 300
     lateinit var binder: FragmentAlarmBinding   // 데이터 바인더용 변수
     lateinit var app : AppClass
 
@@ -114,11 +113,11 @@ class alarmFragment : Fragment() {
                         weekList[0] = 1}
                     2 -> {alarmWeek_String = "Mon"
                         weekList[1] = 1}
-                    3 -> {alarmWeek_String = "Tues"
+                    3 -> {alarmWeek_String = "Tue"
                         weekList[2] = 1}
                     4 -> {alarmWeek_String = "Wed"
                         weekList[3] = 1}
-                    5 -> {alarmWeek_String = "Thur"
+                    5 -> {alarmWeek_String = "Thu"
                         weekList[4] = 1}
                     6 -> {alarmWeek_String = "Fri"
                         weekList[5] = 1}
@@ -155,6 +154,71 @@ class alarmFragment : Fragment() {
                 Log.d("alarmFragment", "transMin: $alarmMin")
                 Log.d("alarmFragment", "progress: $progress")
                 Log.d("alarmFragment", "alarmWeek_String: $alarmWeek_String")
+            }
+        }
+
+        if (requestCode == doneAlarmActivity){
+            if (resultCode == 200){
+                // 액티비티에서 데이터 가져오기
+                val hour = data?.getIntExtra("hour", 0)
+                val min = data?.getIntExtra("min", 0)
+                val progress = data?.getIntExtra("progress", 0)
+                val weekArray = data?.getIntegerArrayListExtra("weekArray")
+
+                // 각 요일별로 변수를 만들어서 weekArray의 데이터를 반영하기
+                var Sun = 0
+                var Mon = 0
+                var Tue = 0
+                var Wed = 0
+                var Thu = 0
+                var Fri = 0
+                var Sat = 0
+
+                if (weekArray!![0] == 1){
+                    Sun = 1
+                }
+                if (weekArray!![1] == 1){
+                    Mon = 1
+                }
+                if (weekArray!![2] == 1){
+                    Tue = 1
+                }
+                if (weekArray!![3] == 1){
+                    Wed = 1
+                }
+                if (weekArray!![4] == 1){
+                    Thu = 1
+                }
+                if (weekArray!![5] == 1){
+                    Fri = 1
+                }
+                if (weekArray!![6] == 1){
+                    Sat = 1
+                }
+
+                // requestCode 생성을 위해 현재 날짜 가져옴
+                val present_Time = Calendar.getInstance()
+                val presentDay = present_Time.get(Calendar.DAY_OF_YEAR)
+                val presentHour = present_Time.get(Calendar.HOUR_OF_DAY)
+                val presentMin = present_Time.get(Calendar.MINUTE)
+                val presentSecond = present_Time.get(Calendar.SECOND)
+
+                // *** SQL에 데이터 입력하기 ***
+                val SQLHelper = SQLHelper(activity!!)
+
+                val sql_insert = """
+                insert into MaidAlarm (hourData, minData, progressData, "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
+                 requestCode, quick)
+                values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """.trimIndent()
+
+                // requestCode는 알람을 설정한 현재의 일+시간+분+초로 이루어진다
+                val requestCode = presentDay.toString() + presentHour.toString() +
+                        presentMin.toString() + presentSecond.toString()
+
+                val arg1 = arrayOf(hour, min, progress, Sun, Mon, Tue, Wed, Thu, Fri, Sat, requestCode.toInt(), 0)
+
+                SQLHelper.writableDatabase.execSQL(sql_insert, arg1)
             }
         }
     }

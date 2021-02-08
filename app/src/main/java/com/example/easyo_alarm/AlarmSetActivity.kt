@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.example.easyo_alarm.databinding.ActivityAlarmSetBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import java.util.ArrayList
 
 class AlarmSetActivity : AppCompatActivity() {
     lateinit var binder: ActivityAlarmSetBinding
@@ -22,6 +23,14 @@ class AlarmSetActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_set)
         binder = ActivityAlarmSetBinding.inflate(layoutInflater)
+        // 요일 클릭에 대한 정의
+        var Sun = 0
+        var Mon = 0
+        var Tue = 0
+        var Wed = 0
+        var Thu = 0
+        var Fri = 0
+        var Sat = 0
 
         // 1. 애드몹 초기화
         MobileAds.initialize(this) {}
@@ -51,20 +60,36 @@ class AlarmSetActivity : AppCompatActivity() {
         // Save 버튼 클릭 시 - 미완성
         // 요일에 대한 정보도 같이 넘겨줘야한다
         binder.buttonSave.setOnClickListener {
-            hour = binder.numberPickerHour.value
+            // ** 시간, 분에 대한 설정
             // binder.numberPickerAMPM.value == 0은 AM을 가리킨다
             if (binder.numberPickerAMPM.value == 0){
-
+                hour = binder.numberPickerHour.value
             }else{
-                // 자동으로 else는 PM을 가리키게 된다
-
+                hour = binder.numberPickerHour.value + 12
+                // 24시는 0시로 설정되게 한다
+                if (hour == 24){
+                    hour = 0
+                }
             }
             min = binder.numberPickerMin.value
+            Log.d("AlarmSetActivity", "hour: $hour")
+            Log.d("AlarmSetActivity", "min: $min")
+
+            // ** 요일에 대한 설정
+            val weekArray = ArrayList<Int>()
+            weekArray.add(Sun)
+            weekArray.add(Mon)
+            weekArray.add(Tue)
+            weekArray.add(Wed)
+            weekArray.add(Thu)
+            weekArray.add(Fri)
+            weekArray.add(Sat)
 
             val result_intent = Intent()
             result_intent.putExtra("hour", hour)
             result_intent.putExtra("min", min)
             result_intent.putExtra("progress", seekValue)
+            result_intent.putExtra("weekArray", weekArray)
 
             // -> alarmFragment로 이동한다
             setResult(200, result_intent)
@@ -72,14 +97,6 @@ class AlarmSetActivity : AppCompatActivity() {
             finish()
         }
 
-        // 요일 클릭에 대한 정의
-        var Sun = 0
-        var Mon = 0
-        var Tue = 0
-        var Wed = 0
-        var Thu = 0
-        var Fri = 0
-        var Sat = 0
 
         // 일요 텍스트 클릭
         binder.alarmSetSun.setOnClickListener {
@@ -118,9 +135,8 @@ class AlarmSetActivity : AppCompatActivity() {
 
         // seekBar의 Progress 값을 가져온다
         binder.volumeSeekBar.setOnSeekBarChangeListener(seekListener)
+
         setContentView(binder.root)
-
-
     }
 
     // seekBar에 대한 리스너 정의
