@@ -60,7 +60,7 @@ class makeAlarm(
         Log.d("makeAlarm", "Set exact Time: " + Date().toString())
         Log.d("makeAlarm", "hour: $hour")
         Log.d("makeAlarm", "min: $min")
-        Log.d("makeAlarm", "hour: $requestCode")
+        Log.d("makeAlarm", "requestCode: $requestCode")
 
         // 위에서 설정한 시간(Calendar.getInstance)에 알람이 울리게 한다
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -151,98 +151,27 @@ class Receiver : BroadcastReceiver() {
         toast.show()
         // 오늘이 알람에서 설정한 요일과 맞는지 확인하기 위해 오늘 날짜의 요일을 가져온다
         val calendar = Calendar.getInstance()
-        val present_week = calendar.get(Calendar.DAY_OF_WEEK)
+        // 밑에서 사용될 arrayFromMakeAlarm의 경우 인덱스가 0부터 시작
+        // 하지만 일요일 = 1 ~ 토요일 = 7이기 때문에 1부터 시작해서 -1을 해줘야 해당 요일과 인덱스가 매칭된다
+        val present_week = calendar.get(Calendar.DAY_OF_WEEK) - 1
         val arrayFromMakeAlarm = intent!!.getIntegerArrayListExtra("arrayForPendingIntent")
+
+        // 순서대로 일 ~ 토, progress, quick  = 9개 항목 들어있음
         Log.d("makeAlarm", "arrayFromMakeAlarm form onReceive(): $arrayFromMakeAlarm")
+        Log.d("makeAlarm", "present_week: $present_week")
 
-        // *** 1~7까지는 일요일~토요일 요일 확인
-        for (i in 0..8){
-            // 일요일
-            if (i == 0) {
-                if (arrayFromMakeAlarm!![i] == 1){
-                    Log.d("makeAlarm", "일요일입니다.")
-                    val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
-                    frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
-                    frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
-                    context?.startActivity(frontAlarmActivity)
-                }
-            }
-            // 월요일
-            if (i == 1){
-                if (arrayFromMakeAlarm!![i] == 1){
-                    Log.d("makeAlarm", "월요일입니다.")
-                    val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
-                    frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
-                    frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
-                    context?.startActivity(frontAlarmActivity)
-                }
-            }
-            // 화요일
-            if (i == 2){
-                if (arrayFromMakeAlarm!![i] == 1){
-                    Log.d("makeAlarm", "화요일입니다.")
-                    val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
-                    frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
-                    frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
-                    context?.startActivity(frontAlarmActivity)
-                }
-            }
-            // 수요일
-            if (i == 3){
-                if (arrayFromMakeAlarm!![i] == 1){
-                    Log.d("makeAlarm", "수요일입니다.")
-                    val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
-                    frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
-                    frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
-                    context?.startActivity(frontAlarmActivity)
-                }
-            }
-            // 목요일
-            if (i == 4){
-                if (arrayFromMakeAlarm!![i] == 1){
-                    Log.d("makeAlarm", "목요일입니다.")
-                    val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
-                    frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
-                    frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
-                    context?.startActivity(frontAlarmActivity)
-                }
-            }
-            // 금요일
-            if (i == 5){
-                if (arrayFromMakeAlarm!![i] == 1){
-                    Log.d("makeAlarm", "금요일입니다.")
-                    val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
-                    frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
-                    frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
-                    context?.startActivity(frontAlarmActivity)
-                }
-            }
-            // 토요일
-            if (i == 6){
-                if (arrayFromMakeAlarm!![i] == 1){
-                    Log.d("makeAlarm", "토요일입니다.")
-                    val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
-                    frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
-                    frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
-                    context?.startActivity(frontAlarmActivity)
-                    // quick 알람이었을 경우
-                }
-            }
-            // quick 알람인지 아닌지 판단(i = 7은 progress임)
-            if (i == 8){
-                // quick 알람이므로 자동으로 리스트의 토글 버튼을 off 한다
-                if (arrayFromMakeAlarm!![i] == 1){
-
-                }
-            }
+        // 알람에서 설정한 요일일 때만 액티비티 띄워서 알람 울리게 설정
+        if (arrayFromMakeAlarm!![present_week] == 1){
+            Log.d("makeAlarm", "${present_week}요일입니다.")
+            val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
+            frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
+            frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
+            context?.startActivity(frontAlarmActivity)
         }
 
+        if (arrayFromMakeAlarm!![8] == 1){
+            // quick 알람이르므로 자동으로 토글 off - 미구현
+        }
     }
 }

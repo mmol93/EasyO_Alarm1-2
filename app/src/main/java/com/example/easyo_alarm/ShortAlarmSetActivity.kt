@@ -87,20 +87,27 @@ class ShortAlarmSetActivity : AppCompatActivity() {
             val calendar = Calendar.getInstance()
             val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
             val presentMin = calendar.get(Calendar.MINUTE)
-            val toast_min = presentMin + min
+            var toast_min = presentMin + min
+            // 현재 분 + 설정 분 = 60분 이상이면 시간에 +1하기
+            if (toast_min >= 60){
+                hour += 1
+                toast_min -= 60
+            }
             val toast_day : Int = (presentHour + hour) / 24
+            val taost_hour : Int = (presentHour + hour) % 24
 
-            // 1일을 초과하지 않을 때
+            // 1일을 초과하지 않을 때 (xx 시간 xx분 뒤 알람울림)
             if (toast_day <= 0){
              val text = getString(R.string.alarmToast_inform1) + " "+ hour.toString() +
                      " "+ getString(R.string.alarmToast_inform3) + " "+ min.toString() + " "+ getString(R.string.alarmToast_inform4)
              val toast = Toast.makeText(this, text, Toast.LENGTH_LONG)
              toast.show()
             }
-            // 1일을 초과할 때
+
+            // 1일을 초과할 때 (xx일 xx시간 xx분 뒤 알람울림)
             else{
                 val text = getString(R.string.alarmToast_inform1) + " "+ toast_day + " "+ getString(R.string.alarmToast_inform2) +
-                " "+ hour.toString() + " "+ getString(R.string.alarmToast_inform3) + " "+ min.toString() + " "+ getString(R.string.alarmToast_inform4)
+                " "+ taost_hour.toString() + " "+ getString(R.string.alarmToast_inform3) + " "+ toast_min.toString() + " "+ getString(R.string.alarmToast_inform4)
                 val toast = Toast.makeText(this, text, Toast.LENGTH_LONG)
                 toast.show()
             }
