@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.easyo_alarm.databinding.ActivityShortAlarmSetBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import java.util.*
 
 class ShortAlarmSetActivity : AppCompatActivity() {
     // 모든 숫자(시간) 초기화하기
@@ -81,7 +82,30 @@ class ShortAlarmSetActivity : AppCompatActivity() {
             result_intent.putExtra("min", min)
             result_intent.putExtra("progress", seekValue)
 
-            // -> alarmFragment로 이동한다
+            // ** Toast로 xx일 xx분 뒤 알람 울립니다 만들어주기 - 전반적으로 수정 필요함...
+            // - 현재 날짜랑 연동해서 계산할 필요가 있음
+            val calendar = Calendar.getInstance()
+            val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
+            val presentMin = calendar.get(Calendar.MINUTE)
+            val toast_min = presentMin + min
+            val toast_day : Int = (presentHour + hour) / 24
+
+            // 1일을 초과하지 않을 때
+            if (toast_day <= 0){
+             val text = getString(R.string.alarmToast_inform1) + " "+ hour.toString() +
+                     " "+ getString(R.string.alarmToast_inform3) + " "+ min.toString() + " "+ getString(R.string.alarmToast_inform4)
+             val toast = Toast.makeText(this, text, Toast.LENGTH_LONG)
+             toast.show()
+            }
+            // 1일을 초과할 때
+            else{
+                val text = getString(R.string.alarmToast_inform1) + " "+ toast_day + " "+ getString(R.string.alarmToast_inform2) +
+                " "+ hour.toString() + " "+ getString(R.string.alarmToast_inform3) + " "+ min.toString() + " "+ getString(R.string.alarmToast_inform4)
+                val toast = Toast.makeText(this, text, Toast.LENGTH_LONG)
+                toast.show()
+            }
+
+            // ** -> alarmFragment로 이동한다
             setResult(100, result_intent)
 
             finish()
@@ -121,11 +145,9 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar?) {
-
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar?) {
-
         }
     }
 }

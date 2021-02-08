@@ -20,11 +20,12 @@ class AlarmSetActivity : AppCompatActivity() {
     // 모든 숫자(시간) 초기화하기
     var hour = 0
     var min = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_set)
         binder = ActivityAlarmSetBinding.inflate(layoutInflater)
-        // 요일 클릭에 대한 정의
+        // 요일 클릭에 대한 변수 정의
         var Sun = 0
         var Mon = 0
         var Tue = 0

@@ -12,7 +12,7 @@
     <string name="quick_10">+10min</string>
     <string name="quick_5">+5min</string>
     <string name="quick_1">+1min</string>
-    <string name="timeOver">hour is within 99</string>
+    <string name="timeOver">hour should be within 99</string>
     <string name="saveBtn">save</string>
     <string name="cancelBtn">cancel</string>
     <string name="week_sun">Sun</string>
@@ -31,6 +31,11 @@
     <string name="alarmSet_AM">AM</string>
     <string name="alarmSet_PM">PM</string>
     <string name="alarmSet_Toast">Please set week... Master</string>
+    <string name="alarmToast_inform1">Alarm will Ring</string>
+    <string name="alarmToast_inform2">days</string>
+    <string name="alarmToast_inform3">hours</string>
+    <string name="alarmToast_inform4">minutes later</string>
+
 
 
     <!-- TODO: Remove or change this placeholder text -->
