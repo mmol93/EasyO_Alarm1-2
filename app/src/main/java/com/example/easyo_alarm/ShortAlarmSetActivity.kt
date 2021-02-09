@@ -82,7 +82,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
             result_intent.putExtra("min", min)
             result_intent.putExtra("progress", seekValue)
 
-            // ** Toast로 xx일 xx분 뒤 알람 울립니다 만들어주기 - 전반적으로 수정 필요함...
+            // ** Toast로 xx일 xx분 뒤 알람 울립니다 만들어주기
             // - 현재 날짜랑 연동해서 계산할 필요가 있음
             val calendar = Calendar.getInstance()
             val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -111,10 +111,8 @@ class ShortAlarmSetActivity : AppCompatActivity() {
                 val toast = Toast.makeText(this, text, Toast.LENGTH_LONG)
                 toast.show()
             }
-
             // ** -> alarmFragment로 이동한다
             setResult(100, result_intent)
-
             finish()
         }
 
