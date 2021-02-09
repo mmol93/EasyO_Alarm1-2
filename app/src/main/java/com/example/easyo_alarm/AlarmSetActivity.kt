@@ -95,7 +95,29 @@ class AlarmSetActivity : AppCompatActivity() {
                 result_intent.putExtra("progress", seekValue)
                 result_intent.putExtra("weekList", weekList)
 
-                // -> alarmFragment로 이동한다
+                // ** 다음 알람까지의 시간을 계산한다
+                val diffTime = diffTime()
+                val restOfWeek = diffTime.diffWeek(weekList, hour)
+                val restOfHour = diffTime.diffHour(hour)
+                val restOfMin = diffTime.diffMin(min)
+
+                // ** 토스트 만들기
+                // 당일일 때
+                if (restOfWeek == 0){
+                    val text = getString(R.string.alarmToast_inform1) + " "+ restOfHour.toString() +
+                            " "+ getString(R.string.alarmToast_inform3) + " "+ restOfMin.toString() + " "+ getString(R.string.alarmToast_inform4)
+                    val toast = Toast.makeText(this, text, Toast.LENGTH_LONG)
+                    toast.show()
+                }
+                // 다음 알람이 1일 이상일 때
+                else if (restOfWeek >= 1){
+                    val text = getString(R.string.alarmToast_inform1) + " "+ restOfWeek.toString() + " "+ getString(R.string.alarmToast_inform2) +
+                            " "+ restOfHour.toString() + " "+ getString(R.string.alarmToast_inform3) + " "+ restOfMin.toString() + " "+ getString(R.string.alarmToast_inform4)
+                    val toast = Toast.makeText(this, text, Toast.LENGTH_LONG)
+                    toast.show()
+                }
+
+                // ** -> alarmFragment로 이동한다
                 setResult(200, result_intent)
 
                 finish()
