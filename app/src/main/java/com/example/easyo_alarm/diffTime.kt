@@ -17,6 +17,7 @@ class diffTime {
         val presentWeek = calendar.get(Calendar.DAY_OF_WEEK)
         val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
         var diff = 0
+        val restOfDay = mutableListOf<Int>()
 
         for (i in 0..7){
             if (weekList[i] == 1){
@@ -27,8 +28,7 @@ class diffTime {
                     0 -> {
                         if (hour - presentHour >= 0){
                             return 0
-                        }
-                        else{
+                        }else{
                             return 6
                         }
                     }
@@ -89,6 +89,7 @@ class diffTime {
         val calendar = Calendar.getInstance()
         val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
 
+        // 예약한 시간과 현재 시간의 차이를 계산하여 남은 시간 반환
         if (hour - presentHour >= 0){
             return hour - presentHour
         }else{
@@ -104,6 +105,7 @@ class diffTime {
         val calendar = Calendar.getInstance()
         val presentMin = calendar.get(Calendar.MINUTE)
 
+        // 예약한 시간과 현재 시간의 차이를 계산하여 남은 시간 반환
         if (min - presentMin >= 0){
             return min - presentMin
         }else{
