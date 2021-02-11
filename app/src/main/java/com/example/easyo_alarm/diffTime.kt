@@ -23,62 +23,62 @@ class diffTime {
             if (weekList[i] == 1){
                 // i는 인덱스이기 때문에 요일이랑 같아지기 위해서는 +1이 필요함
                 diff = presentWeek - (i + 1)    // 오늘 요일 - 알람 예약 요일
-                // 순서대로 제일 가까운 요일을 찾는다
+                // 일 -> 토까지 순서대로 진행하며 시간 계산을 통해 남은 일수를 restOfDay에 넣는다
                 when(diff){
                     0 -> {
                         if (hour - presentHour >= 0){
-                            return 0
+                            restOfDay.add(0)
                         }else{
-                            return 6
+                            restOfDay.add(6)
                         }
                     }
                     -1, 6 -> {
                         if (hour - presentHour >= 0){
-                            return 1
+                            restOfDay.add(1)
                         }else{
-                            return 0
+                            restOfDay.add(0)
                         }
                     }
                     -2, 5 -> {
                       if (hour - presentHour >= 0){
-                          return 2
+                          restOfDay.add(2)
                       }else{
-                          return 1
+                          restOfDay.add(1)
                       }
                     }
                     -3, 4 -> {
                         if (hour - presentHour >= 0){
-                            return 3
+                            restOfDay.add(3)
                         }else{
-                            return 2
+                            restOfDay.add(2)
                         }
                     }
                     -4, 3 -> {
                         if (hour - presentHour >= 0){
-                            return 4
+                            restOfDay.add(4)
                         }else{
-                            return 3
+                            restOfDay.add(3)
                         }
                     }
                     -5, 2 -> {
                         if (hour - presentHour >= 0){
-                            return 5
+                            restOfDay.add(5)
                         }else{
-                            return 4
+                            restOfDay.add(4)
                         }
                     }
                     -6, 1 -> {
                         if (hour - presentHour >= 0){
-                            return 6
+                            restOfDay.add(6)
                         }else{
-                            return 5
+                            restOfDay.add(5)
                         }
                     }
                 }
             }
         }
-        // 뭔가 다른 에러 발생할 시
-        return -1
+        // restOfday 리스트 안에서 제일 작은 숫자를 반환한다
+        return restOfDay.minOrNull()?:0
     }
 
     // 현재 시간과 설정한 알람의 시간의 차이를 구하는 메서드
