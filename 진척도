@@ -1,7 +1,7 @@
 1. 껏다켜도 알람 울릴 수 있게 알람 매니저 재가동하는 코드 짜기
 - 이 부분의 기능은 찾아봐야함...
 
-2. notification 알람으로 가장 가까운 다음 알람 알려주기(일시정지)
+2. notification 알람으로 가장 가까운 다 알람 알려주기(일시정지)
 - 이 기능은 on/off 가능 - 설정 탭에서 지정 가능
 - 표시해줄 알람은 사용자가 수동으로 지정하게 만들기
 - 이 기능은 새로운 클래스를 만들어서 진행하기
@@ -42,7 +42,6 @@
 13. 음량이 0일 땐 진동만 울리게 설정하기
 - https://r2---sn-oguelney.googlevideo.com/videoplayback?expire=1547361698&ratebypass=yes&ipbits=0&txp=5431432&fvip=2&sparams=clen,dur,ei,expire,gir,id,ip,ipbits,itag,lmt,mime,mip,mm,mn,ms,mv,pl,ratebypass,requiressl,source,usequic&dur=2487.205&source=youtube&id=o-AFU5WYmppmSyvhuN-vYHnA9zb_qazPL5JANaBNepI9ZF&requiressl=yes&lmt=1541762056298111&itag=18&ip=52.78.151.237&clen=106473489&signature=02FE1AD7C3C0FDFB173383A9D48A1374FDDE9470.31A7D7D3F98045946B0DD3C07436A241B223B84D&ei=Qok6XOqPGI3DqQHxlL_4CA&pl=24&key=cms1&c=WEB&gir=yes&mime=video%2Fmp4&redirect_counter=1&cm2rm=sn-oguy67l&req_id=471900e67ee3a3ee&cms_redirect=yes&mip=182.228.195.55&mm=34&mn=sn-oguelney&ms=ltu&mt=1547339611&mv=u&usequic=no
 
-
 14. 앱 종료시 dialog 뜨게 만들어서 확인하게 하기
 
 15. 레이아웃 전반적으로 예쁘게 꾸미기 (마지막에 하기)
@@ -72,3 +71,7 @@
 26. 알람 설정 시 xx일 xx시간 xx분 뒤 알람 울림 Toast 추가하기
 - Short 알람 - C
 - normal 알람 - C
+
+27. 볼륨의 progress를 0으로 설정하면 volume 아이콘도 mute 아이콘으로 바뀌게 설정하기
+
+28.

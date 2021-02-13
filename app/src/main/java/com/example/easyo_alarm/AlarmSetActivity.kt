@@ -69,27 +69,20 @@ class AlarmSetActivity : AppCompatActivity() {
 
         // numberPickerHour 터치시
         binder.numberPickerHour.setOnValueChangedListener { picker, oldVal, newVal ->
-            // binder.numberPickerAMPM.value == 0은 AM을 가리킨다
-            if (binder.numberPickerAMPM.value == 0){
-                restOfHour = diffTime.diffHour(newVal)
-                restOfWeek = diffTime.diffWeek(weekList, newVal)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
-            }else{
-                val newVal2 = newVal + 12
-                restOfHour = diffTime.diffHour(newVal2)
-                restOfWeek = diffTime.diffWeek(weekList, newVal2)
-                // 24시는 0시로 설정되게 한다
-                if (restOfHour == 24){
-                    restOfHour = 0
-                }
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
-            }
+            // 시간 계산하여 메시지 표시
+            informNextAlarm(newVal)
         }
 
         // numberPickerMin 터치시
         binder.numberPickerMin.setOnValueChangedListener { picker, oldVal, newVal ->
-            restOfMin = diffTime.diffMin(newVal)
-            binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+            // 시간 계산하여 메시지 표시
+            informNextAlarm(binder.numberPickerHour.value)
+        }
+
+        // numberPickerAMPM 터치시
+        binder.numberPickerAMPM.setOnValueChangedListener { picker, oldVal, newVal ->
+            // 시간 계산하여 메시지 표시
+            informNextAlarm(binder.numberPickerHour.value)
         }
 
         // Cancel 버튼 클릭 시
@@ -139,149 +132,100 @@ class AlarmSetActivity : AppCompatActivity() {
 
         // 일요 텍스트 클릭
         binder.alarmSetSun.setOnClickListener {
-            restOfMin = binder.numberPickerMin.value
+            restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
             if (Sun == 0){
                 Sun = textWeek(binder.alarmSetSun, Sun)
                 weekList[0] = 1
-                if (binder.numberPickerAMPM.value == 0){
-                    hour = binder.numberPickerHour.value
-                }else{
-                    hour = binder.numberPickerHour.value + 12
-                }
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }else{
                 Sun = textWeek(binder.alarmSetSun, Sun)
                 weekList[0] = 0
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }
         }
 
         // 월요 텍스트 클릭
         binder.alarmSetMon.setOnClickListener {
-            restOfMin = binder.numberPickerMin.value
+            restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
             if (Mon == 0){
                 Mon = textWeek(binder.alarmSetMon, Mon)
                 weekList[1] = 1
-                if (binder.numberPickerAMPM.value == 0){
-                    hour = binder.numberPickerHour.value
-                }else{
-                    hour = binder.numberPickerHour.value + 12
-                }
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }else{
                 Mon = textWeek(binder.alarmSetMon, Mon)
                 weekList[1] = 0
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }
         }
 
         // 화요 텍스트 클릭
         binder.alarmSetTues.setOnClickListener {
-            restOfMin = binder.numberPickerMin.value
+            restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
             if (Tue == 0){
                 Tue = textWeek(binder.alarmSetTues, Tue)
                 weekList[2] = 1
-                if (binder.numberPickerAMPM.value == 0){
-                    hour = binder.numberPickerHour.value
-                }else{
-                    hour = binder.numberPickerHour.value + 12
-                }
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }else{
                 Tue = textWeek(binder.alarmSetTues, Tue)
                 weekList[2] = 0
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }
 
         }
 
         // 수요 텍스트 클릭
         binder.alarmSetWed.setOnClickListener {
-            restOfMin = binder.numberPickerMin.value
+            restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
             if (Wed == 0){
                 Wed = textWeek(binder.alarmSetWed, Wed)
                 weekList[3] = 1
-                if (binder.numberPickerAMPM.value == 0){
-                    hour = binder.numberPickerHour.value
-                }else{
-                    hour = binder.numberPickerHour.value + 12
-                }
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }else{
                 Wed = textWeek(binder.alarmSetWed, Wed)
                 weekList[3] = 0
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }
         }
 
         // 목요 텍스트 클릭
         binder.alarmSetThur.setOnClickListener {
-            restOfMin = binder.numberPickerMin.value
+            restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
             if (Thu == 0){
                 Thu = textWeek(binder.alarmSetThur, Thu)
                 weekList[4] = 1
-                if (binder.numberPickerAMPM.value == 0){
-                    hour = binder.numberPickerHour.value
-                }else{
-                    hour = binder.numberPickerHour.value + 12
-                }
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }else{
                 Thu = textWeek(binder.alarmSetThur, Thu)
                 weekList[4] = 0
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }
         }
 
         // 금요 텍스트 클릭
         binder.alarmSetFri.setOnClickListener {
-            restOfMin = binder.numberPickerMin.value
+            restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
             if (Fri == 0){
                 Fri = textWeek(binder.alarmSetFri, Fri)
                 weekList[5] = 1
-                if (binder.numberPickerAMPM.value == 0){
-                    hour = binder.numberPickerHour.value
-                }else{
-                    hour = binder.numberPickerHour.value + 12
-                }
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }else{
                 Fri = textWeek(binder.alarmSetFri, Fri)
                 weekList[5] = 0
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }
         }
 
         // 토요 텍스트 클릭
         binder.alarmSetSat.setOnClickListener {
-            restOfMin = binder.numberPickerMin.value
+            restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
             if (Sat == 0){
                 Sat = textWeek(binder.alarmSetSat, Sat)
                 weekList[6] = 1
-                if (binder.numberPickerAMPM.value == 0){
-                    hour = binder.numberPickerHour.value
-                }else{
-                    hour = binder.numberPickerHour.value + 12
-                }
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }else{
                 Sat = textWeek(binder.alarmSetSat, Sat)
                 weekList[6] = 0
-                restOfWeek = diffTime.diffWeek(weekList, hour)
-                binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+                informNextAlarm(binder.numberPickerHour.value)
             }
         }
 
@@ -335,6 +279,25 @@ class AlarmSetActivity : AppCompatActivity() {
         else{
             textView.setBackgroundColor(Color.parseColor("#aaaaaa"))
             return 0
+        }
+    }
+
+    // NumberPickerHour/Min, 각 요일의 텍스트를 클릭할 때 마다 알람까지 남은 시간 표기하는 메서드
+    fun informNextAlarm(localHour : Int){
+        restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
+        if (binder.numberPickerAMPM.value == 0){
+            restOfHour = diffTime.diffHour(localHour)
+            restOfWeek = diffTime.diffWeek(weekList, localHour, binder.numberPickerMin.value)
+            binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
+        }else{
+            val localHour2 = localHour + 12
+            restOfHour = diffTime.diffHour(localHour2)
+            restOfWeek = diffTime.diffWeek(weekList, localHour2, binder.numberPickerMin.value)
+            // 24시는 0시로 설정되게 한다
+            if (restOfHour == 24){
+                restOfHour = 0
+            }
+            binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
         }
     }
 

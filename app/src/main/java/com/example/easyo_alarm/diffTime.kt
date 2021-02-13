@@ -9,13 +9,14 @@ class diffTime {
     // 현재 요일과 예약한 요일중 제일 빠른 요일을 찾는 메서드
     // 매개변수로 해당 알람의 weekList와 알람 시간을 받는다
     // 반환값 : xx일 뒤 알람의 "xx" 부분 = 즉, 가장 가까운 알람의 남은 일 수 반환
-    fun diffWeek(weekList:List<Int>, hour : Int) : Int {
+    fun diffWeek(weekList:List<Int>, hour : Int, min : Int) : Int {
         // weekList : 해당 알람의 weekList
 
         // 오늘의 요일을 가져온다
         val calendar = Calendar.getInstance()
         val presentWeek = calendar.get(Calendar.DAY_OF_WEEK)
         val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val presentMin = calendar.get(Calendar.MINUTE)
         var diff = 0
         val restOfDay = mutableListOf<Int>()
 
@@ -27,49 +28,67 @@ class diffTime {
                 when(diff){
                     0 -> {
                         if (hour - presentHour >= 0){
-                            restOfDay.add(0)
+                            // 분까지 확실히 계산해서 현재보다 미래 알람인지, 과거인지 인지해야한다
+                                // 둘 다 미래일 때만 당일로 취급
+                                if (min - presentMin >= 0){
+                                    restOfDay.add(0)
+                                }else{
+                                    restOfDay.add(6)
+                                }
                         }else{
                             restOfDay.add(6)
                         }
                     }
                     -1, 6 -> {
                         if (hour - presentHour >= 0){
-                            restOfDay.add(1)
+                            if (min - presentMin >= 0){
+                                restOfDay.add(1)
+                            }
                         }else{
                             restOfDay.add(0)
                         }
                     }
                     -2, 5 -> {
                       if (hour - presentHour >= 0){
-                          restOfDay.add(2)
+                          if (min - presentMin >= 0){
+                              restOfDay.add(2)
+                          }
                       }else{
                           restOfDay.add(1)
                       }
                     }
                     -3, 4 -> {
                         if (hour - presentHour >= 0){
-                            restOfDay.add(3)
+                            if (min - presentMin >= 0){
+                                restOfDay.add(3)
+                            }
                         }else{
                             restOfDay.add(2)
                         }
                     }
                     -4, 3 -> {
                         if (hour - presentHour >= 0){
-                            restOfDay.add(4)
+                            if (min - presentMin >= 0){
+                                restOfDay.add(4)
+                            }
                         }else{
                             restOfDay.add(3)
                         }
                     }
                     -5, 2 -> {
                         if (hour - presentHour >= 0){
-                            restOfDay.add(5)
+                            if (min - presentMin >= 0){
+                                restOfDay.add(5)
+                            }
                         }else{
                             restOfDay.add(4)
                         }
                     }
                     -6, 1 -> {
                         if (hour - presentHour >= 0){
-                            restOfDay.add(6)
+                            if (min - presentMin >= 0){
+                                restOfDay.add(6)
+                            }
                         }else{
                             restOfDay.add(5)
                         }
