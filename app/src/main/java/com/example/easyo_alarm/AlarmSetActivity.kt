@@ -285,7 +285,18 @@ class AlarmSetActivity : AppCompatActivity() {
             }
         }
 
-        // seekBar의 Progress 값을 가져온다
+        // * 불륨 이미지를 클릭했을 때
+        binder.imageVolume.setOnClickListener {
+            if (binder.volumeSeekBar.progress > 0){
+                binder.volumeSeekBar.progress = 0
+                binder.imageVolume.setImageResource(R.drawable.volume_mute)
+            }else{
+                binder.volumeSeekBar.progress = 100
+                binder.imageVolume.setImageResource(R.drawable.volume_icon)
+            }
+        }
+
+        // * seekBar의 Progress 값을 가져온다
         binder.volumeSeekBar.setOnSeekBarChangeListener(seekListener)
 
         setContentView(binder.root)
@@ -297,6 +308,11 @@ class AlarmSetActivity : AppCompatActivity() {
             when (seekBar?.id) {
                 R.id.volumeSeekBar -> {
                     seekValue = progress
+                    if (progress == 0){
+                        binder.imageVolume.setImageResource(R.drawable.volume_mute)
+                    }else{
+                        binder.imageVolume.setImageResource(R.drawable.volume_icon)
+                    }
                 }
             }
         }
