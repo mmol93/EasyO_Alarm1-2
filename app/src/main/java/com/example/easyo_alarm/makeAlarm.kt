@@ -92,14 +92,12 @@ class makeAlarm(
         ListForPendingIntent.add(progress)
         ListForPendingIntent.add(quick)
 
-        ListForPendingIntent = (weekList + ListForPendingIntent) as MutableList<Int>
+        // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
+        ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>
 
         // intent에 putIntent를 하기 위해선 List -> array로 변환필요
-        val arrayForPendingIntent : Array<Int> = ListForPendingIntent.toTypedArray()
-        intent.putExtra("arrayForPendingIntent", arrayForPendingIntent)
-
         Log.d("makeAlarm", "ListForPendingIntent: $ListForPendingIntent")
-        Log.d("makeAlarm", "arrayForPendingIntent: $arrayForPendingIntent")
+        intent.putExtra("arrayForPendingIntent", ListForPendingIntent)
 
         val pendingIntent = PendingIntent.getBroadcast(
                 context,
@@ -113,25 +111,20 @@ class makeAlarm(
         Log.d("makeAlarm", "hour: $requestCode")
 
         // 위에서 설정한 시간(Calendar.getInstance)에 알람이 울리게 한다
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            // API23 이상에서는 setExactAndAllowWhileIdle을 사용해야한다.
-            alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        }else{
-            alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+//            // API23 이상에서는 setExactAndAllowWhileIdle을 사용해야한다.
+//            alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+//        }else{
+//            alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+//        }
 
         // 위에서 울린 알림이 매일 울리게 설정한다
-        val intervalDay = (24 * 60 * 60 * 1000).toLong() // 24시간
-
-        var selectTime = calendar.timeInMillis
-        val currenTime = System.currentTimeMillis()
-
-        if(currenTime>selectTime){
-            selectTime += intervalDay
-        }
+//        val intervalDay = (60 * 1000).toLong() // 24시간
+//
+//        var selectTime = calendar.timeInMillis
 
         // 지정한 시간에 매일 알람 울리게 설정
-        alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, selectTime,  intervalDay, pendingIntent);
+        alarmManager?.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,  AlarmManager.INTERVAL_DAY, pendingIntent)
     }
 
     // *** 이미 있는 알람을 삭제한다.
@@ -172,6 +165,36 @@ class Receiver : BroadcastReceiver() {
 
         if (arrayFromMakeAlarm!![8] == 1){
             // quick 알람이르므로 자동으로 토글 off - 미구현
+        }
+
+        if (intent.action == "android.intent.action.BOOT_COMPLETED") {
+            Log.d("makeAlarm", "onReceive() 호출")
+            val toast = Toast.makeText(context, "BroadcastReceiver() 호출", Toast.LENGTH_LONG)
+            toast.show()
+            // 오늘이 알람에서 설정한 요일과 맞는지 확인하기 위해 오늘 날짜의 요일을 가져온다
+            val calendar = Calendar.getInstance()
+            // 밑에서 사용될 arrayFromMakeAlarm의 경우 인덱스가 0부터 시작
+            // 하지만 일요일 = 1 ~ 토요일 = 7이기 때문에 1부터 시작해서 -1을 해줘야 해당 요일과 인덱스가 매칭된다
+            val present_week = calendar.get(Calendar.DAY_OF_WEEK) - 1
+            val arrayFromMakeAlarm = intent!!.getIntegerArrayListExtra("arrayForPendingIntent")
+
+            // 순서대로 일 ~ 토, progress, quick  = 9개 항목 들어있음
+            Log.d("makeAlarm", "arrayFromMakeAlarm form onReceive(): $arrayFromMakeAlarm")
+            Log.d("makeAlarm", "present_week: $present_week")
+
+            // 알람에서 설정한 요일일 때만 액티비티 띄워서 알람 울리게 설정
+            if (arrayFromMakeAlarm!![present_week] == 1){
+                Log.d("makeAlarm", "${present_week}요일입니다.")
+                val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
+                frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
+                frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
+                context?.startActivity(frontAlarmActivity)
+            }
+
+            if (arrayFromMakeAlarm!![8] == 1){
+                // quick 알람이르므로 자동으로 토글 off - 미구현
+            }
         }
     }
 }
