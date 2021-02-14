@@ -14,7 +14,7 @@ class SQLHelper : SQLiteOpenHelper {
         // minData: 설정한 분이 담김
         // progressData: 음량이 담김
         // Sun~Sat: 각 요일별로 off=0 / on=1이 담김
-        // quick: Quick 알람인지 일반 알람인지 구분(Quick 알람은 한 번 울리고 리스트에서 삭제되게 하기 위해)
+        // quick: Quick 알람인지 일반 알람인지 구분(Quick 알람은 한 번 울리고 리스트에서 삭제되게 하기 위해)(0: normal 알람, 1: quick 알람)
         // requestCode: 알람을 생성한 시간(Calendar.getInstance())의 timeInMillis가 담긴다(이미 지나간 시간은 유니크 숫자라서 사용)
         // -> 알람 매니저를 호출할 때 requestCode로 사용된다
         // switch: Recycler의 아이템중 토글 버튼 기록 = 따로 지정할 필요 x
