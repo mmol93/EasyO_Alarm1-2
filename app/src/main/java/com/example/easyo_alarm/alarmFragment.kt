@@ -223,7 +223,7 @@ class alarmFragment : Fragment() {
                 // 알람 매니저에도 해당 알람 정보를 보내준다
                 // 필요 매개변수: context, 알람시간, 알람분, progress, 알람요일, requestCode(Int), quick 여부
                 val newAlarm = makeAlarm(requireContext(), hour!!, min!!, progress!!, weekList, requestCode.toInt())
-                newAlarm.addNewAlarm_once()
+                newAlarm.addNewAlarm_normal()
 
                 SQLHelper.close()
             }

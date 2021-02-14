@@ -121,17 +121,18 @@ class makeAlarm(
         }
 
         // 위에서 울린 알림이 매일 울리게 설정한다
-        val intervalDay = (24 * 60 * 60 * 1000).toLong() // 24시간
+//        val intervalDay = (24 * 60 * 60 * 1000).toLong() // 24시간
+        val intervalDay = (20 * 1000).toLong() // test: 20초
 
         var selectTime = calendar.timeInMillis
-        val currenTime = System.currentTimeMillis()
+        val currentTime = System.currentTimeMillis()
 
-        if(currenTime>selectTime){
-            selectTime += intervalDay
-        }
+
+        selectTime += intervalDay
+
 
         // 지정한 시간에 매일 알람 울리게 설정
-        alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, selectTime,  intervalDay, pendingIntent);
+        alarmManager?.setInexactRepeating(AlarmManager.RTC_WAKEUP, selectTime,  intervalDay, pendingIntent)
     }
 
     // *** 이미 있는 알람을 삭제한다.
@@ -154,6 +155,7 @@ class Receiver : BroadcastReceiver() {
         // 밑에서 사용될 arrayFromMakeAlarm의 경우 인덱스가 0부터 시작
         // 하지만 일요일 = 1 ~ 토요일 = 7이기 때문에 1부터 시작해서 -1을 해줘야 해당 요일과 인덱스가 매칭된다
         val present_week = calendar.get(Calendar.DAY_OF_WEEK) - 1
+        // arrayFromMakeAlarm = Sun ~ Sat(7개) + progress + quick = 9개 아이템 들어있음
         val arrayFromMakeAlarm = intent!!.getIntegerArrayListExtra("arrayForPendingIntent")
 
         // 순서대로 일 ~ 토, progress, quick  = 9개 항목 들어있음
