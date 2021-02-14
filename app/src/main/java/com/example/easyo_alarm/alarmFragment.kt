@@ -164,6 +164,7 @@ class alarmFragment : Fragment() {
                 val min = data?.getIntExtra("min", 0)
                 val progress = data?.getIntExtra("progress", 0)
                 val weekList = data?.getIntegerArrayListExtra("weekList")
+                Log.d("alarmFragment", "weekList: $weekList")
 
                 // 각 요일별로 변수를 만들어서 weekList의 데이터를 반영하기
                 var Sun = 0

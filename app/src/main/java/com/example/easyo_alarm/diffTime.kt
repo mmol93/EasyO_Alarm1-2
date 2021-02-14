@@ -20,7 +20,7 @@ class diffTime {
         var diff = 0
         val restOfDay = mutableListOf<Int>()
 
-        for (i in 0..7){
+        for (i in 0..6){
             if (weekList[i] == 1){
                 // i는 인덱스이기 때문에 요일이랑 같아지기 위해서는 +1이 필요함
                 diff = presentWeek - (i + 1)    // 오늘 요일 - 알람 예약 요일

@@ -15,14 +15,14 @@ import java.util.ArrayList
 
 class AlarmSetActivity : AppCompatActivity() {
     lateinit var binder: ActivityAlarmSetBinding
-    var seekValue = 0
+    var seekValue = 100
 
     // 모든 숫자(시간) 초기화하기
     var hour = 0
     var min = 0
 
     // 예약한 요일을 담는 List
-    val weekList = ArrayList<Int>(7)
+    val weekList = ArrayList<Int>()
 
     // diffTime에 대한 객체 생성
     val diffTime = com.example.easyo_alarm.diffTime()
@@ -32,9 +32,10 @@ class AlarmSetActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // weekList 초기화
-        for (i in 0..7){
+        for (i in 0..6){
             weekList.add(0)
         }
+        Log.d("AlarmSetActivity", "weekList: $weekList")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_set)
         binder = ActivityAlarmSetBinding.inflate(layoutInflater)
@@ -117,6 +118,8 @@ class AlarmSetActivity : AppCompatActivity() {
                 result_intent.putExtra("min", min)
                 result_intent.putExtra("progress", seekValue)
                 result_intent.putExtra("weekList", weekList)
+
+                Log.d("AlarmSetActivity", "progress: $seekValue")
 
                 // ** -> alarmFragment로 이동한다
                 setResult(200, result_intent)

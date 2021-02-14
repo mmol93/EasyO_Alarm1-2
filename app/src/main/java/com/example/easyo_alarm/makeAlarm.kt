@@ -39,10 +39,12 @@ class makeAlarm(
         // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
         // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
         // 넘겨줄 항목은 다음과 같다.
-        // Sun ~ Sat, progress, quick => 9개의 항목을 가진 리스트
+        // Sun ~ Sat, progress, quick, hour, min => 11개의 항목을 가진 리스트
         var ListForPendingIntent = mutableListOf<Int>()
         ListForPendingIntent.add(progress)
         ListForPendingIntent.add(quick)
+        ListForPendingIntent.add(hour)
+        ListForPendingIntent.add(min)
 
         // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
         ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>
@@ -87,10 +89,12 @@ class makeAlarm(
         // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
         // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
         // 넘겨줄 항목은 다음과 같다.
-        // Sun ~ Sat, progress, quick => 9개의 항목을 가진 리스트
+        // Sun ~ Sat, progress, quick, hour, min => 11개의 항목을 가진 리스트
         var ListForPendingIntent = mutableListOf<Int>()
         ListForPendingIntent.add(progress)
         ListForPendingIntent.add(quick)
+        ListForPendingIntent.add(hour)
+        ListForPendingIntent.add(min)
 
         // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
         ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>
@@ -119,12 +123,12 @@ class makeAlarm(
 //        }
 
         // 위에서 울린 알림이 매일 울리게 설정한다
-//        val intervalDay = (60 * 1000).toLong() // 24시간
+        val intervalDay = (24 * 60 * 60 * 1000).toLong() // 24시간
 //
 //        var selectTime = calendar.timeInMillis
 
         // 지정한 시간에 매일 알람 울리게 설정
-        alarmManager?.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,  AlarmManager.INTERVAL_DAY, pendingIntent)
+        alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,  intervalDay, pendingIntent)
     }
 
     // *** 이미 있는 알람을 삭제한다.
@@ -151,14 +155,17 @@ class Receiver : BroadcastReceiver() {
             // 밑에서 사용될 arrayFromMakeAlarm의 경우 인덱스가 0부터 시작
             // 하지만 일요일 = 1 ~ 토요일 = 7이기 때문에 1부터 시작해서 -1을 해줘야 해당 요일과 인덱스가 매칭된다
             val present_week = calendar.get(Calendar.DAY_OF_WEEK) - 1
+            val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
+            val presentMin = calendar.get(Calendar.MINUTE)
             val arrayFromMakeAlarm = intent!!.getIntegerArrayListExtra("arrayForPendingIntent")
 
-            // 순서대로 일 ~ 토, progress, quick  = 9개 항목 들어있음
+            // 순서대로 일 ~ 토, progress, quick, hour, min  = 11개 항목 들어있음
             Log.d("makeAlarm", "arrayFromMakeAlarm form onReceive(): $arrayFromMakeAlarm")
             Log.d("makeAlarm", "present_week: $present_week")
 
             // 알람에서 설정한 요일일 때만 액티비티 띄워서 알람 울리게 설정
-            if (arrayFromMakeAlarm!![present_week] == 1){
+            // 설정 알람 시간이랑 동일할 때만 울리게 한다.
+            if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
                 Log.d("makeAlarm", "${present_week}요일입니다.")
                 val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
                 frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
