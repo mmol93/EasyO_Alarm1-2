@@ -143,8 +143,70 @@ class makeAlarm(
 
 class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
+        // *** 휴대폰을 재부팅 했을 때 ***
         if (intent!!.action == "android.intent.action.BOOT_COMPLETED") {
             Log.d("makeAlarm", "재부팅됨")
+            // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
+            val SQLHelper = SQLHelper(context!!)
+            val sql = "select * from MaidAlarm"
+            val c1 = SQLHelper.writableDatabase.rawQuery(sql, null)
+
+            // 모든 컬럼, 모든 레코드의 값 가져와서 리스트 안에 넣기
+            while (c1.moveToNext()){
+                val index1 = c1.getColumnIndex("idx")
+                val index2 = c1.getColumnIndex("hourData")
+                val index3 = c1.getColumnIndex("minData")
+                val index4 = c1.getColumnIndex("progressData")
+                val index5 = c1.getColumnIndex("Sun")
+                val index6 = c1.getColumnIndex("Mon")
+                val index7 = c1.getColumnIndex("Tue")
+                val index8 = c1.getColumnIndex("Wed")
+                val index9 = c1 .getColumnIndex("Thu")
+                val index10 = c1.getColumnIndex("Fri")
+                val index11 = c1.getColumnIndex("Sat")
+                val index12 = c1.getColumnIndex("requestCode")
+                val index13 = c1.getColumnIndex("quick")
+                val index14 = c1.getColumnIndex("switch")
+
+                // ** SQL에서 데이터를 가져와서 다시 알람 매니저로 보낸다 (아래 설명은 그 순서임)
+                // 각 항목의 값을 해당 이름의 변수에 넣는다 -> Sun ~ Sat은 weekList로 만든다 ->
+                // context, hour, min, progress, weekList, requestCode를 이용하여 makeAlarm() 객체를 만든다
+                // switch의 값에 따라 once Or normal 알람 메서드를 호출한다
+
+                val hour = c1.getInt(index2)
+                val min = c1.getInt(index3)
+                val progress = c1.getInt(index4)
+                val Sun = c1.getInt(index5)
+                val Mon = c1.getInt(index6)
+                val Tue = c1.getInt(index7)
+                val Wed = c1.getInt(index8)
+                val Thu = c1.getInt(index9)
+                val Fri = c1.getInt(index10)
+                val Sat = c1.getInt(index11)
+                val requestCode = c1.getInt(index12)
+                val quick = c1.getInt(index13)
+                val switch = c1.getInt(index14)
+
+                val weekList = mutableListOf<Int>()
+                weekList.add(Sun)
+                weekList.add(Mon)
+                weekList.add(Tue)
+                weekList.add(Wed)
+                weekList.add(Thu)
+                weekList.add(Fri)
+                weekList.add(Sat)
+
+                val makeAlarm = makeAlarm(context, hour, min, progress, weekList, requestCode)
+
+                // quick 알람일 경우
+                if (quick == 1){
+                    makeAlarm.addNewAlarm_once()
+                }
+                // normal 알람일 경우
+                else{
+                    makeAlarm.addNewAlarm_normal()
+                }
+            }
         }
         else{
             Log.d("makeAlarm", "onReceive() 호출")
