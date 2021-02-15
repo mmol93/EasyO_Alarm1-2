@@ -1,8 +1,12 @@
 package com.example.easyo_alarm
 
 import android.app.Application
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import com.example.easyo_alarm.databinding.ActivityFrontAlarmBinding
 import com.example.easyo_alarm.databinding.FragmentCalculateProblemBinding
@@ -16,6 +20,7 @@ class FrontAlarmActivity : AppCompatActivity() {
     var problem1 = Random.nextInt(1, 100)
     var problem2 = Random.nextInt(1, 10)
     var user_answer = 0
+    lateinit var vib : Vibrator // 진동관련 변수 - 여기서 정의해야 ok버튼의 리스너에서 사용가능
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +51,26 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
 
         // *** 음악 파일 실행 - 미구현
+        // 먼저 progress 값을 가져온다
+        val progress = intent.getIntExtra("progress", -1)
+
+        if (progress == -1){
+            Log.d("FrontAlarmActivity", "FrontAlarmActivity 의 Vibrate 쪽에 에러 발생")
+        }
+        // progress가 0일 때는 진동이 울리게 정한다
+        else if(progress == 0){
+            Log.d("FrontAlarmActivity", "진동울리는중")
+            val arrayTime = longArrayOf(1000, 1000, 1000, 1000)
+            val arrayAmplitudes = intArrayOf(0, 150, 0, 150)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, 1))
+            } else {
+                vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                vib.vibrate(10000000)
+            }
+        }
+        Log.d("FrontAlarmActivity", "progress: $progress")
 
 
         // *** 계산 문제를 표시할지 말지 결정한다
@@ -91,12 +116,18 @@ class FrontAlarmActivity : AppCompatActivity() {
                         // 틀릴 시 진동하게 하기 - 미구현
                     }
                     if (counter >= app.counter){
+                        if (progress == 0){
+                            vib.cancel()
+                        }
                         finish()
                         // 음악 재생을 멈춘다 - 미구현
                     }
                 }
             }
             else{
+                if (progress == 0){
+                    vib.cancel()
+                }
                 finish()
                 // 음악 재생을 멈춘다 - 미구현
             }
