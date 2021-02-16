@@ -1,8 +1,12 @@
 package com.example.easyo_alarm
 
+import android.app.AlarmManager
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
@@ -62,12 +66,12 @@ class FrontAlarmActivity : AppCompatActivity() {
             Log.d("FrontAlarmActivity", "진동울리는중")
             val arrayTime = longArrayOf(1000, 1000, 1000, 1000)
             val arrayAmplitudes = intArrayOf(0, 150, 0, 150)
+            vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
                 vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, 1))
             } else {
-                vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                vib.vibrate(10000000)
+                vib.vibrate(1000)
             }
         }
         Log.d("FrontAlarmActivity", "progress: $progress")
@@ -131,6 +135,39 @@ class FrontAlarmActivity : AppCompatActivity() {
                 finish()
                 // 음악 재생을 멈춘다 - 미구현
             }
+        }
+
+        // "10분 뒤" 버튼 클릭 시 동작 설정
+        binder.button10Min.setOnClickListener {
+            val alarmManager: AlarmManager? =
+                    this.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+
+            val receiver = Receiver()
+            val filter = IntentFilter("POSTPHONETIME")
+            registerReceiver(receiver, filter)
+
+            val calendar = Calendar.getInstance()
+            val intent = Intent("POSTPHONETIME")
+
+            // 10분뒤 알람이므로 현재 시간에 + 10분(10 * 60 * 1000)을 해준다
+            // 지금은 테스트로 1분
+            val intervalTen = 1 * 60 * 1000
+
+            // 한번 쓰고 버릴 알람이기 때문에 requestCode는 1로 설정한다
+            val pendingIntent = PendingIntent.getBroadcast(
+                    this,
+                    1,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            // 위에서 설정한 시간(Calendar.getInstance)에 알람이 울리게 한다
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                // API23 이상에서는 setExactAndAllowWhileIdle을 사용해야한다.
+                alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + intervalTen, pendingIntent)
+            }else{
+                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + intervalTen, pendingIntent)
+            }
+            finish()
         }
         setContentView(binder.root)
     }

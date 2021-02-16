@@ -208,6 +208,9 @@ class Receiver : BroadcastReceiver() {
                 }
             }
         }
+        else if(intent!!.action == "POSTPHONETIME"){
+            Log.d("makeAlarm", "알람 연장됨")
+        }
         else{
             Log.d("makeAlarm", "onReceive() 호출")
             val toast = Toast.makeText(context, "BroadcastReceiver() 호출", Toast.LENGTH_LONG)

@@ -32,6 +32,7 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="POSTPHONETIME"/>
             </intent-filter>
             </receiver>
     </application>
