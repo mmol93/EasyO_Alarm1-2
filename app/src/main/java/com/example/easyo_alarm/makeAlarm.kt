@@ -210,6 +210,16 @@ class Receiver : BroadcastReceiver() {
         }
         else if(intent!!.action == "POSTPHONETIME"){
             Log.d("makeAlarm", "알람 연장됨")
+            // 넘어온 intent에서 progress 데이터를 가져온다
+            val progress = intent.getIntExtra("progress", -1)
+            Log.d("makeAlarm", "progress: $progress")
+
+            // 다시 FrontAlarmActivity를 띄워야한다
+            val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
+            frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            // FrontAlarmActivity 를 띄위기 위해선 progress 데이터를 intent로 넘겨줘야한다.
+            frontAlarmActivity.putExtra("progress", progress)
+            context?.startActivity(frontAlarmActivity)
         }
         else{
             Log.d("makeAlarm", "onReceive() 호출")

@@ -149,6 +149,10 @@ class FrontAlarmActivity : AppCompatActivity() {
             val calendar = Calendar.getInstance()
             val intent = Intent("POSTPHONETIME")
 
+            // 다음 알람에도 progress 데이터는 필요하기 때문에 넘겨준다
+            // 즉, FrontAlarmActivity를 호출하기 위해서 필요한 필수 데이터는 progress뿐
+            intent.putExtra("progress", progress)
+
             // 10분뒤 알람이므로 현재 시간에 + 10분(10 * 60 * 1000)을 해준다
             // 지금은 테스트로 1분
             val intervalTen = 1 * 60 * 1000

@@ -18,7 +18,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
 
     lateinit var binder: ActivityShortAlarmSetBinding
 
-    var seekValue = 0
+    var seekValue = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
