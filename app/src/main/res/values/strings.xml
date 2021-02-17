@@ -35,6 +35,7 @@
     <string name="alarmToast_inform2">days</string>
     <string name="alarmToast_inform3">hours</string>
     <string name="alarmToast_inform4">minutes later</string>
+    <string name="backButtonDoubleClick">Tap back button in order to exit</string>
 
 
 

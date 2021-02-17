@@ -20,11 +20,17 @@ import kotlin.random.Random.Default.nextInt
 
 class FrontAlarmActivity : AppCompatActivity() {
     lateinit var binder : ActivityFrontAlarmBinding
+
     // 계산 문제에서 사용할 변수
     var problem1 = Random.nextInt(1, 100)
     var problem2 = Random.nextInt(1, 10)
     var user_answer = 0
     lateinit var vib : Vibrator // 진동관련 변수 - 여기서 정의해야 ok버튼의 리스너에서 사용가능
+
+    // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
+    override fun onBackPressed() {
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
