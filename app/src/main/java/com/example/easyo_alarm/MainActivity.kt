@@ -3,6 +3,7 @@ package com.example.easyo_alarm
 import android.content.ComponentName
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.easyo_alarm.databinding.ActivityMainBinding
@@ -37,13 +38,6 @@ class MainActivity : AppCompatActivity() {
         mainBinder.adView.loadAd(adRequest)
 
         val receiver = ComponentName(this, Receiver::class.java)
-
-//        // 기기 재부팅시 수신기를 사용 가능한 상태로 만들기
-//        this.packageManager.setComponentEnabledSetting(
-//                receiver,
-//                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-//                PackageManager.DONT_KILL_APP
-//        )
 
         // 최초 화면은 알람탭의 화면을 보여주게 한다
         val tran = supportFragmentManager.beginTransaction()
