@@ -14,11 +14,11 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     }
 
     override fun getItemCount(): Int {
-        return 2
+        return 3
     }
 
     override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
-        val item = arrayOf("집", "집2")
+        val item = arrayOf("집", "집2", "집3")
         holder.row_mainText.text = item[position]
         Log.d("settingRecyclerAdapter", "item: ${item[position]}")
     }
