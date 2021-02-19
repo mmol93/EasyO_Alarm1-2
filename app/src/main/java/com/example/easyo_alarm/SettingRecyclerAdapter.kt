@@ -18,7 +18,11 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     }
 
     override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
-        val item = arrayOf("집", "집2", "집3")
+        val item1 = context.getString(R.string.settingItem_selectAlarm)
+        val item2 = context.getString(R.string.settingItem_alarmMode)
+        val item3 = context.getString(R.string.settingItem_notification)
+        val item4 = context.getString(R.string.settingItem_info)
+        val item = arrayOf("1", "집2", "집3")
         holder.row_mainText.text = item[position]
         Log.d("settingRecyclerAdapter", "item: ${item[position]}")
     }

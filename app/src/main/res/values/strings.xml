@@ -36,6 +36,12 @@
     <string name="alarmToast_inform3">hours</string>
     <string name="alarmToast_inform4">minutes later</string>
     <string name="backButtonDoubleClick">Tap back button in order to exit</string>
+    <string name="settingItem_selectAlarm">Select Alarm</string>
+    <string name="settingItem_alarmMode">Set Alarm Mode</string>
+    <string name="settingItem_info">App Info</string>
+    <string name="settingItem_notification">Set On/Off Notification</string>
+
+
 
 
 
