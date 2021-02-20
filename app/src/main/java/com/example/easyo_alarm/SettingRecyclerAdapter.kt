@@ -1,10 +1,19 @@
 package com.example.easyo_alarm
 
+import android.animation.ValueAnimator
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.core.animation.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyo_alarm.databinding.SettingRowBinding
 
@@ -34,6 +43,63 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
             2 -> {holder.row_image.setImageResource(R.drawable.setting_notification)}
             3 -> {holder.row_image.setImageResource(R.drawable.setting_info)}
         }
+
+        // 각 itemView 클릭 시
+        holder.row_view.setOnClickListener {
+            // 클릭된 항목은 텍스트 색 바뀌게 하기 &
+            changeTextColorAndListener(holder.row_mainText, Color.BLACK, Color.WHITE, View.LAYOUT_DIRECTION_LTR, 400, position)
+        }
+    }
+
+    fun changeTextColorAndListener(textView: TextView, fromColor: Int, toColor: Int, direction: Int = View.LAYOUT_DIRECTION_LTR, duration:Long = 200, position : Int) {
+        val ori_text = textView.text
+        var startValue = 0
+        var endValue = 0
+        // 텍스트뷰의 텍스트의 왼쪽에서 오른쪽으로 색 변환
+        if(direction == View.LAYOUT_DIRECTION_LTR){
+            startValue = 0
+            endValue = textView.text.length
+        }
+        // 텍스트뷰의 텍스트의 오른쪽에서 왼쪽으로 색 변환
+        else if(direction == View.LAYOUT_DIRECTION_RTL) {
+            startValue = textView.text.length
+            endValue = 0
+        }
+        textView.setTextColor(fromColor)
+        val valueAnimator = ValueAnimator.ofInt(startValue, endValue)
+        valueAnimator.addUpdateListener { animator -> val spannableString = SpannableString(textView.text)
+            if (direction == View.LAYOUT_DIRECTION_LTR) {
+                spannableString.setSpan(ForegroundColorSpan(toColor), startValue, animator.animatedValue.toString().toInt(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            else if (direction == View.LAYOUT_DIRECTION_RTL) {
+                spannableString.setSpan(ForegroundColorSpan(toColor), animator.animatedValue.toString().toInt(), spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            textView.text = spannableString
+        }
+        valueAnimator.duration = duration
+        valueAnimator.start()
+        valueAnimator.doOnEnd {
+            // 각 텍스뷰에 대한 행동 정의
+            when(position){
+                // Select Bell 클릭 시
+                0 -> {
+                    textView.text = context.getString(R.string.settingItem_selectAlarm)
+                }
+                // Set Alarm Mode 클릭 시
+                1 -> {
+                    textView.text = context.getString(R.string.settingItem_alarmMode)
+                }
+                // Set On/Off Notification 클릭 시
+                2 -> {
+                    textView.text = context.getString(R.string.settingItem_notification)
+                }
+                // AppInfo 클릭 시
+                3 -> {
+                    textView.text = context.getString(R.string.settingItem_info)
+                }
+            }
+
+        }
     }
 }
 
@@ -42,4 +108,5 @@ class SettingViewHolder(view : View) : RecyclerView.ViewHolder(view){
 
     val row_mainText = binder.settingText
     val row_image = binder.settingImage
+    val row_view = binder.rowItemView
 }

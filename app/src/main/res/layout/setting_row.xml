@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/under_edge"
+    android:id="@+id/row_itemView"
     android:padding="14dp" >
 
     <ImageView
