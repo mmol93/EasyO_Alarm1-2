@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/under_edge"
-    android:padding="8dp" >
+    android:padding="14dp" >
 
     <ImageView
         android:id="@+id/settingImage"
