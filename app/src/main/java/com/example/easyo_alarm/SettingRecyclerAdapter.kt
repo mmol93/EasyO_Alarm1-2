@@ -14,7 +14,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return 4
     }
 
     override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
@@ -22,7 +22,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         val item2 = context.getString(R.string.settingItem_alarmMode)
         val item3 = context.getString(R.string.settingItem_notification)
         val item4 = context.getString(R.string.settingItem_info)
-        val item = arrayOf("1", "집2", "집3")
+        val item = arrayOf(item1, item2, item3, item4)
         holder.row_mainText.text = item[position]
         Log.d("settingRecyclerAdapter", "item: ${item[position]}")
     }
