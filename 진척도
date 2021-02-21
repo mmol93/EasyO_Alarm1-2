@@ -81,7 +81,7 @@
 34. setting RecyclerView에 item마다 알맞은 아이콘 넣어주기 - C
 - SelectAlarm : 하트
 - Set Alarm Mode : 계산기(원래 쓰던거)
-- Set On/Off Notification :
+- Set On/Off Notification : (트위터 비슷한)새 모양
 - App Info : i 모양 아이콘
 
 35. Set Alarm Mode 기능 구현하기 - ing

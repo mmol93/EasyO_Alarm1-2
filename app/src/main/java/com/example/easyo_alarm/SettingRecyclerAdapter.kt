@@ -2,6 +2,7 @@ package com.example.easyo_alarm
 
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.DialogInterface
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.Spannable
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.animation.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyo_alarm.databinding.SettingRowBinding
@@ -47,7 +49,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         // 각 itemView 클릭 시
         holder.row_view.setOnClickListener {
             // 클릭된 항목은 텍스트 색 바뀌게 하기 &
-            changeTextColorAndListener(holder.row_mainText, Color.BLACK, Color.WHITE, View.LAYOUT_DIRECTION_LTR, 400, position)
+            changeTextColorAndListener(holder.row_mainText, Color.BLACK, Color.rgb(0,204,204), View.LAYOUT_DIRECTION_LTR, 400, position)
         }
     }
 
@@ -79,7 +81,8 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         valueAnimator.duration = duration
         valueAnimator.start()
         valueAnimator.doOnEnd {
-            // 각 텍스뷰에 대한 행동 정의
+            // ** 각 텍스뷰에 대한 행동 정의
+            val app = AppClass()
             when(position){
                 // Select Bell 클릭 시
                 0 -> {
@@ -88,6 +91,31 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 // Set Alarm Mode 클릭 시
                 1 -> {
                     textView.text = context.getString(R.string.settingItem_alarmMode)
+                    // * 항목 선택 Dialog 설정
+                    val modeItem = arrayOf(context.getString(R.string.settingItem_alarmModeItem1), context.getString(R.string.settingItem_alarmModeItem2))
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle(context.getString(R.string.settingItem_alarmMode))
+                    builder.setSingleChoiceItems(modeItem, 0 , null)
+                    builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
+
+                    // * 아이템 선택했을 때 리스너 설정(람다식)
+                    builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                        val alert = dialogInterface as AlertDialog
+                        val idx = alert.listView.checkedItemPosition
+                        // 선택된 아이템의 position에 따라 행동 조건 넣기
+                        when(idx){
+                            // Normal 클릭 시
+                            0 -> {
+
+                            }
+                            // Calculate 클릭 시
+                            1 -> {
+
+                            }
+                        }
+                    }
+
+                    builder.show()
                 }
                 // Set On/Off Notification 클릭 시
                 2 -> {

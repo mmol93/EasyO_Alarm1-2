@@ -40,6 +40,8 @@
     <string name="settingItem_alarmMode">Set Alarm Mode</string>
     <string name="settingItem_info">App Info</string>
     <string name="settingItem_notification">Set On/Off Notification</string>
+    <string name="settingItem_alarmModeItem1">Normal</string>
+    <string name="settingItem_alarmModeItem2">Calculator</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

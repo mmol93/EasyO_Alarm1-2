@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="backgroundColor">#A4A4A4</color>
     <color name="itemColor">#DEEDF8</color>
+    <color name="textColorChange">#00FFFF</color>
 </resources>
