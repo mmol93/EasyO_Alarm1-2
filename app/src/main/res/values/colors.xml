@@ -10,4 +10,5 @@
     <color name="backgroundColor">#A4A4A4</color>
     <color name="itemColor">#DEEDF8</color>
     <color name="textColorChange">#00FFFF</color>
+    <color name="subTextColor">#6E6E6E</color>
 </resources>

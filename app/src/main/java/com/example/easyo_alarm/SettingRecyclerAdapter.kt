@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.easyo_alarm.databinding.SettingRowBinding
 
 class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<SettingViewHolder>() {
+    lateinit var app : AppClass
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingViewHolder {
         return SettingViewHolder(LayoutInflater.from(context).inflate(R.layout.setting_row, parent, false))
     }
@@ -29,14 +30,30 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     }
 
     override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
+        app = AppClass()
         // *** RecyclerView의 각 item 설정하기
         // ** item 중 텍스트뷰 설정하기
         val item1 = context.getString(R.string.settingItem_selectAlarm)
         val item2 = context.getString(R.string.settingItem_alarmMode)
         val item3 = context.getString(R.string.settingItem_notification)
         val item4 = context.getString(R.string.settingItem_info)
-        val item = arrayOf(item1, item2, item3, item4)
-        holder.row_mainText.text = item[position]
+        val items = arrayOf(item1, item2, item3, item4)
+        holder.row_mainText.text = items[position]
+
+        // ** item중 Sub 텍스트뷰 설정하기
+        val subItem1 = "아직 미정"
+        var subItem2 = ""
+        if (app.wayOfAlarm == 0){
+            subItem2 = context.getString(R.string.settingItem_sub_alarmMode1)
+        }else{
+            subItem2 = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
+                    app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
+        }
+        val subItem3 = context.getString(R.string.settingItem_sub_notification)
+        val subItem4 = context.getString(R.string.settingItem_sub_info)
+        val subItems = arrayOf(subItem1, subItem2, subItem3, subItem4)
+        holder.row_SubText.text = subItems[position]
+
 
         // ** item 중 이미지뷰 설정하기
         when(position){
@@ -82,7 +99,6 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         valueAnimator.start()
         valueAnimator.doOnEnd {
             // ** 각 텍스뷰에 대한 행동 정의
-            val app = AppClass()
             when(position){
                 // Select Bell 클릭 시
                 0 -> {
@@ -106,15 +122,22 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                         when(idx){
                             // Normal 클릭 시
                             0 -> {
-
+                                app.wayOfAlarm = 0
                             }
                             // Calculate 클릭 시
                             1 -> {
+                                app.wayOfAlarm = 1  // Calculator 사용 on
+                                //
+                                val counter = arrayOf("1", "2", "3", "4", "5")
+                                val builder = AlertDialog.Builder(context)
+                                builder.setTitle(context.getString(R.string.settingItem_calRepeat))
+                                builder.setSingleChoiceItems(counter, app.wayOfAlarm , null)
+                                builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
 
+                                builder.show()
                             }
                         }
                     }
-
                     builder.show()
                 }
                 // Set On/Off Notification 클릭 시
@@ -135,6 +158,7 @@ class SettingViewHolder(view : View) : RecyclerView.ViewHolder(view){
     val binder : SettingRowBinding = SettingRowBinding.bind(view)
 
     val row_mainText = binder.settingText
+    val row_SubText = binder.settingSubText
     val row_image = binder.settingImage
     val row_view = binder.rowItemView
 }
