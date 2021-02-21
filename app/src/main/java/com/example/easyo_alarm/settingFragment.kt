@@ -24,6 +24,7 @@ class settingFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         binder.settingRecycler.layoutManager = LinearLayoutManager(requireContext())
         binder.settingRecycler.adapter = SettingRecyclerAdapter(requireContext())
         Log.d("settingFragment", "onResume()")

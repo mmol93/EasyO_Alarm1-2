@@ -43,6 +43,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         // ** item중 Sub 텍스트뷰 설정하기
         val subItem1 = "아직 미정"
         var subItem2 = ""
+
         if (app.wayOfAlarm == 0){
             subItem2 = context.getString(R.string.settingItem_sub_alarmMode1)
         }else{
@@ -65,7 +66,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
 
         // 각 itemView 클릭 시
         holder.row_view.setOnClickListener {
-            // 클릭된 항목은 텍스트 색 바뀌게 하기 &
+            // 클릭된 항목은 텍스트 색 바뀌게 하기 & 각 함목에 대한 클릭 리스너도 여기에 있음
             changeTextColorAndListener(holder.row_mainText, Color.BLACK, Color.rgb(0,204,204), View.LAYOUT_DIRECTION_LTR, 400, position)
         }
     }
@@ -107,11 +108,11 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 // Set Alarm Mode 클릭 시
                 1 -> {
                     textView.text = context.getString(R.string.settingItem_alarmMode)
-                    // * 항목 선택 Dialog 설정
+                    // ** 항목 선택 Dialog 설정
                     val modeItem = arrayOf(context.getString(R.string.settingItem_alarmModeItem1), context.getString(R.string.settingItem_alarmModeItem2))
                     val builder = AlertDialog.Builder(context)
                     builder.setTitle(context.getString(R.string.settingItem_alarmMode))
-                    builder.setSingleChoiceItems(modeItem, 0 , null)
+                    builder.setSingleChoiceItems(modeItem, app.wayOfAlarm , null)
                     builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
 
                     // * 아이템 선택했을 때 리스너 설정(람다식)
@@ -122,16 +123,18 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                         when(idx){
                             // Normal 클릭 시
                             0 -> {
-                                app.wayOfAlarm = 0
+                                app.wayOfAlarm = 0  // Calculator 사용 off
+                                Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
                             }
                             // Calculate 클릭 시
                             1 -> {
                                 app.wayOfAlarm = 1  // Calculator 사용 on
+                                Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
                                 //
                                 val counter = arrayOf("1", "2", "3", "4", "5")
                                 val builder = AlertDialog.Builder(context)
                                 builder.setTitle(context.getString(R.string.settingItem_calRepeat))
-                                builder.setSingleChoiceItems(counter, app.wayOfAlarm , null)
+                                builder.setSingleChoiceItems(counter, app.counter , null)
                                 builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
 
                                 builder.show()
