@@ -14,6 +14,8 @@
         android:supportsRtl="true"
         android:name=".AppClass"
         android:theme="@style/Theme.EasyO_Alarm">
+        <service android:name=".Service"
+            android:stopWithTask="false"/>
         <activity android:name=".FrontAlarmActivity"></activity>
         <activity android:name=".ShortAlarmSetActivity" />
         <activity android:name=".AlarmSetActivity" /> <!-- value 의 경우 현재 테스트용임 -->

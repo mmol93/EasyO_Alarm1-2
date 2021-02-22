@@ -1,6 +1,8 @@
 package com.example.easyo_alarm
 
 import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -10,6 +12,9 @@ import com.example.easyo_alarm.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.iammert.library.readablebottombar.ReadableBottomBar
+import java.io.DataInputStream
+import java.io.DataOutputStream
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     // 메인 바인딩
@@ -25,13 +30,42 @@ class MainActivity : AppCompatActivity() {
     // 세팅 화면 프래그먼트
     val settingFragment = com.example.easyo_alarm.settingFragment()
 
+    // AppClass 변수 선언
+    lateinit var app : AppClass
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
 
-        // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
+        // *** Task 종료에 대한 서비스를 실시한다
+        startService(Intent(this, Service::class.java))
 
+        // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
+        app = application as AppClass
+        // 내부저장소에서 데이터를 읽어온다
+        try {
+            // 먼저 데이터를 가져온다
+            // 파일 읽어오기
+            val fis = openFileInput("data1.bat")
+            val dis = DataInputStream(fis)
+
+            val data1 = dis.readInt()
+            val data2 = dis.readInt()
+
+            app.wayOfAlarm = data1
+            app.counter = data2
+        }catch (e:Exception){
+            // 어플을 처음 사용하는 거라서 데이터가 없는 경우에는 기본 값으로 만들어 준다
+            val fos = openFileOutput("data1.bat",Context.MODE_PRIVATE)
+
+            val dos = DataOutputStream(fos)
+            dos.writeInt(app.wayOfAlarm)
+            dos.writeInt(app.counter)
+
+            dos.flush()
+            dos.close()
+        }
 
         // *** 애드몹 초기화
         MobileAds.initialize(this) {}
