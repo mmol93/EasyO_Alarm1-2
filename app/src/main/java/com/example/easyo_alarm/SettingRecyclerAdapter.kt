@@ -30,7 +30,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     }
 
     override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
-        app = AppClass()
+        app = context.applicationContext as AppClass
         // *** RecyclerView의 각 item 설정하기
         // ** item 중 텍스트뷰 설정하기
         val item1 = context.getString(R.string.settingItem_selectAlarm)
@@ -71,6 +71,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         }
     }
 
+    // Set Alarm Mode 항목 클릭 했을 때 호출됨 (텍스트 색 바뀌게 하기 & 각 함목에 대한 클릭 리스너도 여기에 있음)
     fun changeTextColorAndListener(textView: TextView, fromColor: Int, toColor: Int, direction: Int = View.LAYOUT_DIRECTION_LTR, duration:Long = 200, position : Int) {
         val ori_text = textView.text
         var startValue = 0
@@ -107,6 +108,8 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 }
                 // Set Alarm Mode 클릭 시
                 1 -> {
+                    Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
                     textView.text = context.getString(R.string.settingItem_alarmMode)
                     // ** 항목 선택 Dialog 설정
                     val modeItem = arrayOf(context.getString(R.string.settingItem_alarmModeItem1), context.getString(R.string.settingItem_alarmModeItem2))
@@ -136,7 +139,32 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                                 builder.setTitle(context.getString(R.string.settingItem_calRepeat))
                                 builder.setSingleChoiceItems(counter, app.counter , null)
                                 builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
-
+                                builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                                    val alert = dialogInterface as AlertDialog
+                                    val idx = alert.listView.checkedItemPosition
+                                    when(idx){
+                                        0 -> {
+                                            app.counter = 1
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                        1 -> {
+                                            app.counter = 2
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                        2 -> {
+                                            app.counter = 3
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                        3 -> {
+                                            app.counter = 4
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                        4 -> {
+                                            app.counter = 5
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                    }
+                                }
                                 builder.show()
                             }
                         }

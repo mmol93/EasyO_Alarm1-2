@@ -25,19 +25,19 @@ class MainActivity : AppCompatActivity() {
     // 세팅 화면 프래그먼트
     val settingFragment = com.example.easyo_alarm.settingFragment()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
 
-        // 1. 애드몹 초기화
+        // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
+
+
+        // *** 애드몹 초기화
         MobileAds.initialize(this) {}
-        // 2. 애드몹 로드
+        // ** 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         mainBinder.adView.loadAd(adRequest)
-
-        val receiver = ComponentName(this, Receiver::class.java)
 
         // 최초 화면은 알람탭의 화면을 보여주게 한다
         val tran = supportFragmentManager.beginTransaction()

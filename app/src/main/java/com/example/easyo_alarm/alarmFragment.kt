@@ -15,7 +15,6 @@ class alarmFragment : Fragment() {
     val doneAlarmActivity = 100         // 알람 액티비티
     val doneShortAlarmActivity = 200    // 퀵 알람 액티비티 반환값용 변수
     lateinit var binder: FragmentAlarmBinding   // 데이터 바인더용 변수
-    lateinit var app : AppClass
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_alarm, null)
