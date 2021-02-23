@@ -84,10 +84,10 @@
 - Set On/Off Notification : (트위터 비슷한)새 모양
 - App Info : i 모양 아이콘
 
-35. Set Alarm Mode 기능 구현하기 - ing
+35. Set Alarm Mode 기능 구현하기 - C
 - recyclerView의 row를 re-design 하는중 - C
-- AppClass에 있는 변수들은 파일 입출력으로 하여 앱 open 시 데이터 읽어오게 하기
+- AppClass에 있는 변수들은 파일 입출력으로 하여 앱 open 시 데이터 읽어오게 하기 - C
 
-36. 계산 문제 답 틀릭 시 진동 오게 하기(FrontAlarmActivity)
+36. 계산 문제 답 틀릭 시 진동 오게 하기(FrontAlarmActivity) - C
 
 37.

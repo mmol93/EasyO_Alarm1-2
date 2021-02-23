@@ -123,7 +123,17 @@ class FrontAlarmActivity : AppCompatActivity() {
                         Log.d("FrontAlarmActivity", "problem2: $problem2")
                         Log.d("FrontAlarmActivity", "user_answer: $user_answer")
                         calculateProblemFragment.binder.answerText.text = ""
-                        // 틀릴 시 진동하게 하기 - 미구현
+
+                        // 틀릴 시 진동하게 하기 - 살짝만 진동
+                        val arrayTime = longArrayOf(0, 500, 0, 0)
+                        val arrayAmplitudes = intArrayOf(0, 150, 0, 0)
+                        vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, 0))
+                        } else {
+                            vib.vibrate(500)
+                        }
                     }
                     if (counter >= app.counter){
                         if (progress == 0){
