@@ -114,14 +114,6 @@ class makeAlarm(
         Log.d("makeAlarm", "min: $min")
         Log.d("makeAlarm", "requestCode: $requestCode")
 
-        // 위에서 설정한 시간(Calendar.getInstance)에 알람이 울리게 한다
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-//            // API23 이상에서는 setExactAndAllowWhileIdle을 사용해야한다.
-//            alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-//        }else{
-//            alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-//        }
-
         // 위에서 울린 알림이 매일 울리게 설정한다
         val intervalDay = (24 * 60 * 60 * 1000).toLong() // 24시간
 //
@@ -131,7 +123,7 @@ class makeAlarm(
         alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,  intervalDay, pendingIntent)
     }
 
-    // *** 이미 있는 알람을 삭제한다.
+    // *** 이미 있는 알람을 취소한다.
     fun cancelAlarm(requestCode: Int){
         val intent = Intent(context, Receiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -143,7 +135,7 @@ class makeAlarm(
 
 class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        // *** 휴대폰을 재부팅 했을 때 ***
+        // ** 휴대폰을 재부팅 했을 때
         if (intent!!.action == "android.intent.action.BOOT_COMPLETED") {
             Log.d("makeAlarm", "재부팅됨")
             // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
@@ -208,6 +200,7 @@ class Receiver : BroadcastReceiver() {
                 }
             }
         }
+        // ** 10분 연장 버튼을 클릭했을 때
         else if(intent!!.action == "POSTPHONETIME"){
             Log.d("makeAlarm", "알람 연장됨")
             // 넘어온 intent에서 progress 데이터를 가져온다
@@ -221,6 +214,7 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.putExtra("progress", progress)
             context?.startActivity(frontAlarmActivity)
         }
+        // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{
             Log.d("makeAlarm", "onReceive() 호출")
             val toast = Toast.makeText(context, "BroadcastReceiver() 호출", Toast.LENGTH_LONG)
@@ -249,8 +243,11 @@ class Receiver : BroadcastReceiver() {
                 context?.startActivity(frontAlarmActivity)
             }
 
+            // quick 알람은 울린 후 자동으로 해당 알람의 토글을 off로 설정한다
             if (arrayFromMakeAlarm!![8] == 1){
-                // quick 알람이르므로 자동으로 토글 off - 미구현
+                // SQL의 requestCode 컬럼의 모든 데이터를 검색한다 -> 해당 requestCode가 있는 row 인덱스를 추출한다
+                // -> 해당 인덱스의 데이터를 삭제한다 -> 해당 알람을 cancel한다
+
             }
         }
     }

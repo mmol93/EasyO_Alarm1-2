@@ -90,4 +90,11 @@
 
 36. 계산 문제 답 틀릭 시 진동 오게 하기(FrontAlarmActivity) - C
 
-37.
+37. Set On/Off Notification 기능 구현하기 - ing
+- notification 클릭 시 어플 실행
+- Set On/Off Notification 구조 : AlertDialog(on / off 만 선택할 수 있음) = Set Alarm Mode와 동일함
+- notification으로 보여줄 정보 :
+
+38. quick 알람의 경우 울린 후 토글을 off로 하거나 알람 자체를 삭제하기 - ing
+
+39.
