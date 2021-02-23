@@ -1,6 +1,7 @@
 package com.example.easyo_alarm
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.res.ColorStateList
@@ -67,12 +68,14 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         // 각 itemView 클릭 시
         holder.row_view.setOnClickListener {
             // 클릭된 항목은 텍스트 색 바뀌게 하기 & 각 함목에 대한 클릭 리스너도 여기에 있음
-            changeTextColorAndListener(holder.row_mainText, Color.BLACK, Color.rgb(0,204,204), View.LAYOUT_DIRECTION_LTR, 400, position)
+            changeTextColorAndListener(holder.row_mainText, holder.row_SubText, Color.BLACK, Color.rgb(0,204,204), View.LAYOUT_DIRECTION_LTR, 400, position)
         }
     }
 
     // Set Alarm Mode 항목 클릭 했을 때 호출됨 (텍스트 색 바뀌게 하기 & 각 함목에 대한 클릭 리스너도 여기에 있음)
-    fun changeTextColorAndListener(textView: TextView, fromColor: Int, toColor: Int, direction: Int = View.LAYOUT_DIRECTION_LTR, duration:Long = 200, position : Int) {
+    @SuppressLint("SetTextI18n")
+    fun changeTextColorAndListener(textView: TextView, subTextView: TextView, fromColor: Int, toColor: Int,
+                                   direction: Int = View.LAYOUT_DIRECTION_LTR, duration:Long = 200, position : Int) {
         val ori_text = textView.text
         var startValue = 0
         var endValue = 0
@@ -104,7 +107,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
             when(position){
                 // Select Bell 클릭 시
                 0 -> {
-                    textView.text = context.getString(R.string.settingItem_selectAlarm)
+                    textView.text = context.getString(R.string.settingItem_selectAlarm) // 색 변환 애니메이션 실시 후 원래 색으로 돌리는 역할
                 }
                 // Set Alarm Mode 클릭 시
                 1 -> {
@@ -122,22 +125,23 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
                         val alert = dialogInterface as AlertDialog
                         val idx = alert.listView.checkedItemPosition
-                        // 선택된 아이템의 position에 따라 행동 조건 넣기
+                        // * 선택된 아이템의 position에 따라 행동 조건 넣기
                         when(idx){
                             // Normal 클릭 시
                             0 -> {
                                 app.wayOfAlarm = 0  // Calculator 사용 off
                                 Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                                subTextView.text = context.getString(R.string.settingItem_sub_alarmMode1)
                             }
                             // Calculate 클릭 시
                             1 -> {
                                 app.wayOfAlarm = 1  // Calculator 사용 on
                                 Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
-                                //
+                                // * 반복 횟수 설정하기 => AlertDialog 띄우기
                                 val counter = arrayOf("1", "2", "3", "4", "5")
                                 val builder = AlertDialog.Builder(context)
                                 builder.setTitle(context.getString(R.string.settingItem_calRepeat))
-                                builder.setSingleChoiceItems(counter, app.counter , null)
+                                builder.setSingleChoiceItems(counter, app.counter - 1  , null)
                                 builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
                                 builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
                                     val alert = dialogInterface as AlertDialog
@@ -164,8 +168,13 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                                             Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
                                         }
                                     }
+                                    subTextView.text = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
+                                            app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
                                 }
                                 builder.show()
+                                // 선택한 값을 SettingRecyclerAdapter의 subTextView에 반영해야함
+                                subTextView.text = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
+                                        app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
                             }
                         }
                     }

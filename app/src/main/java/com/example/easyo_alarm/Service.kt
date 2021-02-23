@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import java.io.DataOutputStream
 
 class Service : Service() {
@@ -14,6 +15,7 @@ class Service : Service() {
     // 이 앱이 완전히 종료됐을 때 호출
     override fun onTaskRemoved(rootIntent: Intent?) {
         super.onTaskRemoved(rootIntent)
+        Log.d("Service", "Task 종료됨")
         val app : AppClass = application as AppClass
 
         // AppClass에 저장되어 있는 변수들을 파일에 저장한다

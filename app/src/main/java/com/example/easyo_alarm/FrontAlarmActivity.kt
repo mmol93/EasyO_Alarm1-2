@@ -36,7 +36,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_alarm)
         binder = ActivityFrontAlarmBinding.inflate(layoutInflater)
-        val app = AppClass()
+        val app = application as AppClass
         val calculateProblemFragment = CalculateProblemFragment()
 
         // *** 화면에 보여줄 시간을 가져온다
