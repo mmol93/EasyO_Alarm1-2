@@ -39,12 +39,13 @@ class makeAlarm(
         // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
         // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
         // 넘겨줄 항목은 다음과 같다.
-        // Sun ~ Sat, progress, quick, hour, min => 11개의 항목을 가진 리스트
+        // Sun ~ Sat, progress, quick, hour, min, requestCode => 12개의 항목을 가진 리스트
         var ListForPendingIntent = mutableListOf<Int>()
         ListForPendingIntent.add(progress)
         ListForPendingIntent.add(quick)
         ListForPendingIntent.add(hour)
         ListForPendingIntent.add(min)
+        ListForPendingIntent.add(requestCode)
 
         // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
         ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>
@@ -89,12 +90,13 @@ class makeAlarm(
         // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
         // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
         // 넘겨줄 항목은 다음과 같다.
-        // Sun ~ Sat, progress, quick, hour, min => 11개의 항목을 가진 리스트
+        // Sun ~ Sat, progress, quick, hour, min, requestCode => 12개의 항목을 가진 리스트
         var ListForPendingIntent = mutableListOf<Int>()
         ListForPendingIntent.add(progress)
         ListForPendingIntent.add(quick)
         ListForPendingIntent.add(hour)
         ListForPendingIntent.add(min)
+        ListForPendingIntent.add(requestCode)
 
         // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
         ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>
@@ -116,8 +118,6 @@ class makeAlarm(
 
         // 위에서 울린 알림이 매일 울리게 설정한다
         val intervalDay = (24 * 60 * 60 * 1000).toLong() // 24시간
-//
-//        var selectTime = calendar.timeInMillis
 
         // 지정한 시간에 매일 알람 울리게 설정
         alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,  intervalDay, pendingIntent)
@@ -228,7 +228,8 @@ class Receiver : BroadcastReceiver() {
             val presentMin = calendar.get(Calendar.MINUTE)
             val arrayFromMakeAlarm = intent!!.getIntegerArrayListExtra("arrayForPendingIntent")
 
-            // 순서대로 일 ~ 토, progress, quick, hour, min  = 11개 항목 들어있음
+            // 순서대로 일 ~ 토, progress, quick, hour, min, requestCode = 12개 항목 들어있음
+            // index 0~6 : 일 ~ 토  /  7: progress / 8: quick / 9: hour / 10: min / 11: requestCode
             Log.d("makeAlarm", "arrayFromMakeAlarm form onReceive(): $arrayFromMakeAlarm")
             Log.d("makeAlarm", "present_week: $present_week")
 
@@ -247,7 +248,33 @@ class Receiver : BroadcastReceiver() {
             if (arrayFromMakeAlarm!![8] == 1){
                 // SQL의 requestCode 컬럼의 모든 데이터를 검색한다 -> 해당 requestCode가 있는 row 인덱스를 추출한다
                 // -> 해당 인덱스의 데이터를 삭제한다 -> 해당 알람을 cancel한다
+                val requestCode = arrayFromMakeAlarm[11]
 
+                val SQLHelper = SQLHelper(context!!)
+                val sql = "select * from MaidAlarm"
+                val c1 = SQLHelper.writableDatabase.rawQuery(sql, null)
+
+                // SQL에서 해당 데이터 row를 삭제하기 -> 자동으로 RecyclerView에서도 사라질 예정임
+                // Quick의 경우 원래 1번만 울리게 설정되어 있기 때문에 굳이 알람을 Cancel할 필요는 없다
+                while (c1.moveToNext()){
+                    // 해당 row를 삭제하기 위해 idx의 값을 가져온다
+                    val index1 = c1.getColumnIndex("idx")
+                    // 위에 정의되어 있는 requestCode과 같은 reqeustCoed를 찾기 위해 가져온다
+                    val index2 = c1.getColumnIndex("requestCode")
+
+                    val SQLKeyIndex = c1.getInt(index1)
+                    val SQLRequestCode = c1.getInt(index2)
+                    // 위에 정의되어 있는 requestCode과 같은 requestCode를 찾아서 해당 row를 삭제
+                    if (requestCode == SQLRequestCode){
+                        val sqlDelete = "delete from MaidAlarm Where idx = ?"
+                        val arg1 = arrayOf(SQLKeyIndex.toString())
+
+                        SQLHelper.writableDatabase.execSQL(sqlDelete, arg1)
+                        SQLHelper.close()   // 삭제를 한 이후는 필요가 없으니 SQL을
+                        Log.d("makeAlarm", "Quick 알람 자동 삭제됨")
+                        break
+                    }
+                }
             }
         }
     }
