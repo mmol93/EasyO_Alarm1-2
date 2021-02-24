@@ -66,7 +66,7 @@
 29. FrontAlarmActivity가 보여지고 있을 때 backButton으로 액티비티 종료 못하게 하기 = 꼭 문제 풀거나 ok 버튼으로만 종료 가능하게 하기 - C
 
 30. 설정탭 만들기
-- RecyclerView 만들기 - ing
+- RecyclerView 만들기 - C
 
 31. alarmFragment에서 슬라이드하면 FloatingButton 사라지게 하기
 
