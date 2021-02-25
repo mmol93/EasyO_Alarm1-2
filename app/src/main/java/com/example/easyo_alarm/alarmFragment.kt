@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyo_alarm.databinding.FragmentAlarmBinding
 import java.util.*
@@ -54,6 +55,16 @@ class alarmFragment : Fragment() {
         binder.alarmListRecycle.layoutManager = LinearLayoutManager(requireContext())
         binder.alarmListRecycle.adapter = RecyclerAdapter(requireContext(), SQLHelper, size)
         Log.d("index", "size: $size")
+
+        if (size > 0){
+            // RecentAlarm 갱신하기
+            val recentAlarm = RecentAlarm()
+            val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+            binder.RecentTimeTextview.text = ""
+            binder.RecentTimeTextview.append("${recentTimeList[7]}시 ${recentTimeList[8]}분")
+        }else{
+            binder.RecentTimeTextview.text = "알람을 설정해주세요!"
+        }
     }
 
     // *** 액티비티에서 돌아왔을 때 - SQL 데이터에 설정한 알람의 값을 갱신 + 알람 매니저에 보내기만 하면된다 ***

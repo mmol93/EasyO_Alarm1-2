@@ -287,21 +287,24 @@ class AlarmSetActivity : AppCompatActivity() {
 
     // NumberPickerHour/Min, 각 요일의 텍스트를 클릭할 때 마다 알람까지 남은 시간 표기하는 메서드
     fun informNextAlarm(localHour : Int){
+        Log.d("AlarmSetActivity", "numberPickerAMPM: ${binder.numberPickerAMPM.value}")
         restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
         if (binder.numberPickerAMPM.value == 0){
-            restOfHour = diffTime.diffHour(localHour)
+            restOfHour = diffTime.diffHour(localHour, binder.numberPickerMin.value)
             restOfWeek = diffTime.diffWeek(weekList, localHour, binder.numberPickerMin.value)
             binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
         }else{
-            val localHour2 = localHour + 12
-            restOfHour = diffTime.diffHour(localHour2)
-            restOfWeek = diffTime.diffWeek(weekList, localHour2, binder.numberPickerMin.value)
+            var localHour2 = localHour + 12
             // 24시는 0시로 설정되게 한다
-            if (restOfHour == 24){
-                restOfHour = 0
+            if (localHour2 == 24){
+                localHour2 = 0
             }
+            restOfHour = diffTime.diffHour(localHour2, binder.numberPickerMin.value)
+            restOfWeek = diffTime.diffWeek(weekList, localHour2, binder.numberPickerMin.value)
             binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
         }
+        Log.d("AlarmSetActivity", "restOfWeek: $restOfWeek")
+        Log.d("AlarmSetActivity", "restOfHour: $restOfHour")
     }
 
 }

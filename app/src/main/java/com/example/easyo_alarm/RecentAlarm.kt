@@ -1,5 +1,6 @@
 package com.example.easyo_alarm
 
+import android.util.Log
 import java.util.*
 
 // SQL 데이터 안에서 가장 최근의 알람을 찾아낸다
@@ -68,6 +69,7 @@ class RecentAlarm {
         // 토글 버튼이 on인 것들만 판별
         for (i in idxList){
             if (switch[i-1] == 1){
+                weekList.clear()
                 val hour = hourList[i-1]
                 val min = minList[i-1]
                 weekList.add(Sun[i-1])
@@ -80,7 +82,7 @@ class RecentAlarm {
 
                 val diffTime = diffTime()
                 val diffWeek = diffTime.diffWeek(weekList, hour, min)   // 알람까지 남은 일 수
-                var diffHour = diffTime.diffHour(hour)  // 남은 시간
+                var diffHour = diffTime.diffHour(hour, min)  // 남은 시간
                 var diffMin = diffTime.diffMin(min) // 남은 분
 
                 var diffHourString = ""
@@ -102,6 +104,8 @@ class RecentAlarm {
                 // 새로운 숫자를 만든다
                 val resultTime = diffWeek.toString() + diffHourString + diffMinString
                 timeList.add(resultTime.toInt())
+                Log.d("RecentAlarm", "weekList: $weekList")
+                Log.d("RecentAlarm", "resultTime: $resultTime")
             }
         }
         // timeList 안에서 제일 작은 숫자만 골라낸다

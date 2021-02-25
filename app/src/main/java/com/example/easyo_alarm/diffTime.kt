@@ -5,18 +5,17 @@ import android.widget.Toast
 import java.util.*
 
 class diffTime {
+    // 오늘의 요일을 가져온다
+    val calendar = Calendar.getInstance()
+    val presentWeek = calendar.get(Calendar.DAY_OF_WEEK)
+    val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
+    val presentMin = calendar.get(Calendar.MINUTE)
 
     // 현재 요일과 예약한 요일중 제일 빠른 요일을 찾는 메서드
     // 매개변수로 해당 알람의 weekList와 알람 시간을 받는다
     // 반환값 : xx일 뒤 알람의 "xx" 부분 = 즉, 가장 가까운 알람의 남은 일 수 반환
     fun diffWeek(weekList:List<Int>, hour : Int, min : Int) : Int {
         // weekList : 해당 알람의 weekList
-
-        // 오늘의 요일을 가져온다
-        val calendar = Calendar.getInstance()
-        val presentWeek = calendar.get(Calendar.DAY_OF_WEEK)
-        val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
-        val presentMin = calendar.get(Calendar.MINUTE)
         var diff = 0
         val restOfDay = mutableListOf<Int>()
 
@@ -103,16 +102,15 @@ class diffTime {
     // 현재 시간과 설정한 알람의 시간의 차이를 구하는 메서드
     // 매개변수: 알람 시간
     // 반환값 : 알람시간까지 남은 시간
-    fun diffHour(hour:Int) : Int {
-        // 지금 시간을 가져온다
-        val calendar = Calendar.getInstance()
-        val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
-
+    fun diffHour(hour:Int, min:Int) : Int {
         // 예약한 시간과 현재 시간의 차이를 계산하여 남은 시간 반환
-        if (hour - presentHour >= 0){
-            return hour - presentHour
+        val totalMin = hour * 60 + min
+        val presentTotalMin = presentHour * 60 + presentMin
+
+        if (totalMin - presentTotalMin >= 0){
+            return ((totalMin - presentTotalMin) / 60)
         }else{
-            return 24 - (presentHour - hour)
+            return (24*60 - (presentTotalMin - totalMin)) / 60
         }
     }
 
