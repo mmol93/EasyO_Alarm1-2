@@ -61,9 +61,52 @@ class alarmFragment : Fragment() {
             val recentAlarm = RecentAlarm()
             val recentTimeList = recentAlarm.checkSQL(SQLHelper)
             binder.RecentTimeTextview.text = ""
-            binder.RecentTimeTextview.append("${recentTimeList[7]}시 ${recentTimeList[8]}분")
+            // 시간 부분 입력
+            var recentHour = ""
+            var recentMin = ""
+            if (recentTimeList[7] < 10){
+                recentHour = "0${recentTimeList[7]}"
+            }else{
+                recentHour = "${recentTimeList[7]}"
+            }
+            if (recentTimeList[8] < 10){
+                recentMin = "0${recentTimeList[8]}"
+            }else{
+                recentMin = "${recentTimeList[8]}"
+            }
+            binder.RecentTimeTextview.append(getString(R.string.alarmSetFragment_nextAlarm) + " $recentHour : $recentMin \n")
+
+            // 월요일에 알람 있을 때 ~ 일요일에 알람 있을 때 -> 요일 부분 입력
+            if (recentTimeList[1] == 1){
+                binder.RecentTimeTextview.append(getString(R.string.week_mon) + ", ")
+            }
+            if (recentTimeList[2] == 1){
+                binder.RecentTimeTextview.append(getString(R.string.week_tue) + ", ")
+            }
+            if (recentTimeList[3] == 1){
+                binder.RecentTimeTextview.append(getString(R.string.week_wed) + ", ")
+            }
+            if (recentTimeList[4] == 1){
+                binder.RecentTimeTextview.append(getString(R.string.week_thur) + ", ")
+            }
+            if (recentTimeList[5] == 1){
+                binder.RecentTimeTextview.append(getString(R.string.week_fri) + ", ")
+            }
+            if (recentTimeList[6] == 1){
+                binder.RecentTimeTextview.append(getString(R.string.week_sat) + ", ")
+            }
+            if (recentTimeList[0] == 1){
+                binder.RecentTimeTextview.append(getString(R.string.week_sun) + ", ")
+            }
+            if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
+                || recentTimeList[5] == 1 || recentTimeList[6] == 1){
+                var text = binder.RecentTimeTextview.text
+                // 텍스트의 제일 마지막 문자(콤마)를 삭제
+                text = text.removeRange(text.length -2, text.length-1)
+                binder.RecentTimeTextview.text = text
+            }
         }else{
-            binder.RecentTimeTextview.text = "알람을 설정해주세요!"
+            binder.RecentTimeTextview.text = getString(R.string.alarmSetFragment_noAlarm)
         }
     }
 
