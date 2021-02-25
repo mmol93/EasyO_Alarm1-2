@@ -7,11 +7,6 @@ class RecentAlarm {
     fun checkSQL(SQLHelper : SQLHelper): MutableList<Int> {
         val timeList = mutableListOf<Int>() // 여기에 SQL 데이터에서 뽑아낸 시간 차이 정보가 들어간다
 
-        val calendar = Calendar.getInstance()
-        val presentWeek = calendar.get(Calendar.DAY_OF_WEEK)
-        val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
-        val presentMin = calendar.get(Calendar.MINUTE)
-
         // diffWeek로 오늘로부터 몇 일 뒤의 알람인지 알 수 있다
         // diffHour로 몇 시간 뒤의 알람인지알 수 있다
         // diffMin로 몇 분 뒤의 알람인지 알 수 있다
