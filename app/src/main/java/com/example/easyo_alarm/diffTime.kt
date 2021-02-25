@@ -24,70 +24,55 @@ class diffTime {
                 // i는 인덱스이기 때문에 요일이랑 같아지기 위해서는 +1이 필요함
                 diff = presentWeek - (i + 1)    // 오늘 요일 - 알람 예약 요일
                 // 일 -> 토까지 순서대로 진행하며 시간 계산을 통해 남은 일수를 restOfDay에 넣는다
+                val totalMin = hour * 60 + min
+                val presentTotalMin = presentHour * 60 + presentMin
+
                 when(diff){
                     0 -> {
-                        if (hour - presentHour >= 0){
-                            // 분까지 확실히 계산해서 현재보다 미래 알람인지, 과거인지 인지해야한다
-                                // 둘 다 미래일 때만 당일로 취급
-                                if (min - presentMin >= 0){
-                                    restOfDay.add(0)
-                                }else{
-                                    restOfDay.add(6)
-                                }
+                        if (totalMin - presentTotalMin >= 0){
+                            restOfDay.add(0)
                         }else{
                             restOfDay.add(6)
                         }
                     }
                     -1, 6 -> {
-                        if (hour - presentHour >= 0){
-                            if (min - presentMin >= 0){
-                                restOfDay.add(1)
-                            }
+                        if (totalMin - presentTotalMin >= 0){
+                            restOfDay.add(1)
                         }else{
                             restOfDay.add(0)
                         }
                     }
                     -2, 5 -> {
-                      if (hour - presentHour >= 0){
-                          if (min - presentMin >= 0){
-                              restOfDay.add(2)
-                          }
-                      }else{
-                          restOfDay.add(1)
-                      }
+                        if (totalMin - presentTotalMin >= 0){
+                            restOfDay.add(2)
+                        }else{
+                            restOfDay.add(1)
+                        }
                     }
                     -3, 4 -> {
-                        if (hour - presentHour >= 0){
-                            if (min - presentMin >= 0){
-                                restOfDay.add(3)
-                            }
+                        if (totalMin - presentTotalMin >= 0){
+                            restOfDay.add(3)
                         }else{
                             restOfDay.add(2)
                         }
                     }
                     -4, 3 -> {
-                        if (hour - presentHour >= 0){
-                            if (min - presentMin >= 0){
-                                restOfDay.add(4)
-                            }
+                        if (totalMin - presentTotalMin >= 0){
+                            restOfDay.add(4)
                         }else{
                             restOfDay.add(3)
                         }
                     }
                     -5, 2 -> {
-                        if (hour - presentHour >= 0){
-                            if (min - presentMin >= 0){
-                                restOfDay.add(5)
-                            }
+                        if (totalMin - presentTotalMin >= 0){
+                            restOfDay.add(5)
                         }else{
                             restOfDay.add(4)
                         }
                     }
                     -6, 1 -> {
-                        if (hour - presentHour >= 0){
-                            if (min - presentMin >= 0){
-                                restOfDay.add(6)
-                            }
+                        if (totalMin - presentTotalMin >= 0){
+                            restOfDay.add(6)
                         }else{
                             restOfDay.add(5)
                         }
