@@ -9,4 +9,7 @@ class AppClass : Application() {
 
     // 계산 문제에서 사용될 변수
     var counter = 1 // 문제 반복 몇 번 할지
+
+    // notification 의 on / off 스위치
+    var notificationSwitch = 0
 }

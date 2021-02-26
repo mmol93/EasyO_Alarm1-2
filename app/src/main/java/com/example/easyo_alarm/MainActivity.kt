@@ -40,17 +40,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
 
+        // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
+        app = application as AppClass
+
         // *** 테스트로 notification을 호출해본다
         val notification = notification()
         val notificationManager =getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
-        notification.makeNotification(this, notificationManager)
+        notification.makeNotification(app, this, notificationManager)
 
         // *** Task 종료에 대한 서비스를 실시한다
         startService(Intent(this, Service::class.java))
 
-        // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
-        app = application as AppClass
         // 내부저장소에서 데이터를 읽어온다
         try {
             // 먼저 데이터를 가져온다
@@ -60,9 +61,11 @@ class MainActivity : AppCompatActivity() {
 
             val data1 = dis.readInt()
             val data2 = dis.readInt()
+            val data3 = dis.readInt()
 
             app.wayOfAlarm = data1
             app.counter = data2
+            app.notificationSwitch = data3
         }catch (e:Exception){
             // 어플을 처음 사용하는 거라서 데이터가 없는 경우에는 기본 값으로 만들어 준다
             val fos = openFileOutput("data1.bat",Context.MODE_PRIVATE)
@@ -70,6 +73,7 @@ class MainActivity : AppCompatActivity() {
             val dos = DataOutputStream(fos)
             dos.writeInt(app.wayOfAlarm)
             dos.writeInt(app.counter)
+            dos.writeInt(app.notificationSwitch)
 
             dos.flush()
             dos.close()

@@ -50,6 +50,7 @@
     <string name="settingItem_calRepeat">Calculate Repeat</string>
     <string name="alarmSetFragment_noAlarm">Please set the alarm</string>
     <string name="alarmSetFragment_nextAlarm">(Next Alarm)</string>
+    <string name="notification_Title">Maid Alarm</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

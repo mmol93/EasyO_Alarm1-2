@@ -9,10 +9,11 @@ import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
+import com.example.easyo_alarm.AppClass
 import com.example.easyo_alarm.R
 
 class notification {
-    fun makeNotification(context : Context, notificationManager : NotificationManager){
+    fun makeNotification(app : AppClass, context : Context, notificationManager : NotificationManager){
         // 8. notification 함수 호출
         // 채널 id와 이름 지정
         val builder1 = getNotification(context, "chanel1", "첫 번째 채널", notificationManager)
@@ -30,14 +31,23 @@ class notification {
         // 주로 미확인 문자 메시지 수를 표기할 때 사용
         builder1.setNumber(100)
 
-        // 알람이 계속 뜬 상채로 있게하기
-        builder1.setOngoing(true)
+        // notification on/off 설정에 따라 구별하여 notification 만들기
+        if (app.notificationSwitch == 1){
+            // 알람이 계속 뜬 상채로 있게하기
+            builder1.setOngoing(true)
 
-        // 전체 알락 삭제를 눌러도 삭제 안되게 하기
-        builder1.setAutoCancel(true)
+            // 전체 알락 삭제를 눌러도 삭제 안되게 하기
+            builder1.setAutoCancel(true)
+        }else{
+            // 알람 개별 삭제 가능
+            builder1.setOngoing(false)
+
+            // 전체 알락 삭제를 눌러도 삭제 가능하게 하기
+            builder1.setAutoCancel(false)
+        }
 
         // 11. notification 타이틀 설정
-        builder1.setContentTitle("타이틀1")
+        builder1.setContentTitle(context.getString(R.string.notification_Title))
 
         // 12. notification 메시지 설정
         builder1.setContentText("텍스트1")
