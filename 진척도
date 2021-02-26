@@ -95,9 +95,7 @@
 - notification 클릭 시 어플 실행
 - Set On/Off Notification 구조 : 액티비티 실행 -> 제일 위에 on/off 버튼 있고 그 아래에는 fragment 존재함
 -> off 클릭 시 프래그먼트 부분 안보임 -> on 클릭 시 각종 설정 화면 나옴
-- 설정하면 구성: 대략적인 설명(매일 20시에 다음 날 울릴 알람 말해줌 - 내일 20시 15분 외 1건 알람이 있습니다) / 없을 경우 notification 안옴
-- notification으로 보여줄 정보 : 매일 20시 쯤에 다음 날 울릴 알람이 있으면 notification으로 알려줌
-- notification 갱신 타이밍: 알람 울렸을 때, 토글 off 했을 때, 알람 삭제했을 때, 알람 생성했을 때
+
 
 38. quick 알람의 경우 울린 후 알람 자체를 삭제하기 - C
 - SQL데이터를 삭제하면 자동으로 RecyclerView에 있는 항목도 삭제됨

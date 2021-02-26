@@ -56,9 +56,6 @@ class notification {
         // notification의 내용은 계속 바뀐다. 단지 알람은 최초 한번만 실시됨
         builder1.setOnlyAlertOnce(true)
 
-        // 알림을 항상 무음으로 처리
-        builder1.setSound(null)
-
         // 알림에 진동이 오지 않게 처리
         builder1.setVibrate(null)
 
@@ -86,6 +83,12 @@ class notification {
             // 5. Notification 보여줄 때 진동 사용 여부
             chanel.enableVibration(false)
 
+            // notification의 소리를 off로 한다
+            chanel.setSound(null, null)
+
+            // 진동이 없게 설정
+            chanel.enableVibration(false)
+
             // 6. 알림 메시지를 관리하는 객체에 채널을 등록한다
             manager.createNotificationChannel(chanel)
 
@@ -95,6 +98,11 @@ class notification {
         }else{
             // Builder에 deprecate가 생기는 이유는 8.0 이상부턴 지원하지 않기 때문
             val builder = NotificationCompat.Builder(context)
+
+            builder.setSound(null)
+
+            // 알림에 진동이 오지 않게 처리
+            builder.setVibrate(null)
             return builder
         }
     }
