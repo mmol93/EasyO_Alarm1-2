@@ -1,5 +1,6 @@
 package com.example.easyo_alarm
 
+import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.easyo_alarm.databinding.ActivityMainBinding
+import com.example.easyo_alarm.notification.notification
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.iammert.library.readablebottombar.ReadableBottomBar
@@ -37,6 +39,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
+
+        // *** 테스트로 notification을 호출해본다
+        val notification = notification()
+        val notificationManager =getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
+        notification.makeNotification(this, notificationManager)
 
         // *** Task 종료에 대한 서비스를 실시한다
         startService(Intent(this, Service::class.java))
