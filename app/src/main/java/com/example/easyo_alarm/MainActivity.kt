@@ -44,10 +44,10 @@ class MainActivity : AppCompatActivity() {
         app = application as AppClass
 
         // *** 테스트로 notification을 호출해본다
-        val notification = notification()
-        val notificationManager =getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
-        notification.makeNotification(app, this, notificationManager)
+//        val notification = notification()
+//        val notificationManager =getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+//        notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
+//        notification.makeNotification(app, this, notificationManager)
 
         // *** Task 종료에 대한 서비스를 실시한다
         startService(Intent(this, Service::class.java))

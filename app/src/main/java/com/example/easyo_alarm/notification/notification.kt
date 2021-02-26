@@ -47,10 +47,20 @@ class notification {
         }
 
         // 11. notification 타이틀 설정
-        builder1.setContentTitle(context.getString(R.string.notification_Title))
+        builder1.setContentTitle(app.recentTime)
 
         // 12. notification 메시지 설정
-        builder1.setContentText("텍스트1")
+        builder1.setContentText(app.recentWeek)
+
+        // 띠링 하는 알람이 한번만 울리게 설정
+        // notification의 내용은 계속 바뀐다. 단지 알람은 최초 한번만 실시됨
+        builder1.setOnlyAlertOnce(true)
+
+        // 알림을 항상 무음으로 처리
+        builder1.setSound(null)
+
+        // 알림에 진동이 오지 않게 처리
+        builder1.setVibrate(null)
 
         // 13. getNotification.build(): 주어진 정보(옵션)를 종합하여 새로운 Notification 객체 반환
         val notification = builder1.build()

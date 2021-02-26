@@ -1,5 +1,7 @@
 package com.example.easyo_alarm
 
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +12,14 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyo_alarm.databinding.FragmentAlarmBinding
+import com.example.easyo_alarm.notification.notification
 import java.util.*
 
 class alarmFragment : Fragment() {
     val doneAlarmActivity = 100         // 알람 액티비티
     val doneShortAlarmActivity = 200    // 퀵 알람 액티비티 반환값용 변수
     lateinit var binder: FragmentAlarmBinding   // 데이터 바인더용 변수
+    lateinit var app : AppClass
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_alarm, null)
@@ -37,13 +41,13 @@ class alarmFragment : Fragment() {
             startActivityForResult(shortAlarmSetActivity, doneShortAlarmActivity)
             true
         }
+        app = context!!.applicationContext as AppClass
     }
 
     // *** SQL 데이터에서 값을 다 가져와서 RecyclerAdapter에 보내기만 한다 ***
     // *** SQL 데이터 갱신에 따른 index 및 데이터 재배열은 리스트에서 삭제할 때만 한다 ***
     override fun onResume() {
         super.onResume()
-
         // 어댑터에 SQL 객체 정보와 레코드의 size를 보낸다
         val SQLHelper = SQLHelper(activity!!)
         val sql = "select * from MaidAlarm"
@@ -60,6 +64,7 @@ class alarmFragment : Fragment() {
             // RecentAlarm 갱신하기
             val recentAlarm = RecentAlarm()
             val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+            var textForWeek = ""     // notification에 사용하기 위한 텍스트를 정의1
             binder.RecentTimeTextview.text = ""
             // 시간 부분 입력
             var recentHour = ""
@@ -75,28 +80,36 @@ class alarmFragment : Fragment() {
                 recentMin = "${recentTimeList[8]}"
             }
             binder.RecentTimeTextview.append(getString(R.string.alarmSetFragment_nextAlarm) + " $recentHour : $recentMin \n")
+            app.recentTime = "$recentHour : $recentMin"
 
             // 월요일에 알람 있을 때 ~ 일요일에 알람 있을 때 -> 요일 부분 입력
             if (recentTimeList[1] == 1){
                 binder.RecentTimeTextview.append(getString(R.string.week_mon) + ", ")
+                textForWeek = textForWeek + getString(R.string.week_mon) + ", "
             }
             if (recentTimeList[2] == 1){
                 binder.RecentTimeTextview.append(getString(R.string.week_tue) + ", ")
+                textForWeek = textForWeek + getString(R.string.week_tue) + ", "
             }
             if (recentTimeList[3] == 1){
                 binder.RecentTimeTextview.append(getString(R.string.week_wed) + ", ")
+                textForWeek = textForWeek + getString(R.string.week_wed) + ", "
             }
             if (recentTimeList[4] == 1){
                 binder.RecentTimeTextview.append(getString(R.string.week_thur) + ", ")
+                textForWeek = textForWeek + getString(R.string.week_thur) + ", "
             }
             if (recentTimeList[5] == 1){
                 binder.RecentTimeTextview.append(getString(R.string.week_fri) + ", ")
+                textForWeek = textForWeek + getString(R.string.week_fri) + ", "
             }
             if (recentTimeList[6] == 1){
                 binder.RecentTimeTextview.append(getString(R.string.week_sat) + ", ")
+                textForWeek = textForWeek + getString(R.string.week_sat) + ", "
             }
             if (recentTimeList[0] == 1){
                 binder.RecentTimeTextview.append(getString(R.string.week_sun) + ", ")
+                textForWeek = textForWeek + getString(R.string.week_sun) + ", "
             }
             if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
                 || recentTimeList[5] == 1 || recentTimeList[6] == 1){
@@ -104,9 +117,22 @@ class alarmFragment : Fragment() {
                 // 텍스트의 제일 마지막 문자(콤마)를 삭제
                 text = text.removeRange(text.length -2, text.length-1)
                 binder.RecentTimeTextview.text = text
+
+                // textForWeek에서 마지막 부분 콤마 제거하기
+                if (textForWeek.length > 2){
+                    textForWeek = textForWeek.removeRange(textForWeek.length -2, textForWeek.length-1)
+                }
+                app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
             }
         }else{
             binder.RecentTimeTextview.text = getString(R.string.alarmSetFragment_noAlarm)
+        }
+        //
+        if (app.recentTime.length > 0 && app.recentWeek.length > 0){
+            val notification = notification()
+            val notificationManager =context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
+            notification.makeNotification(app, context!!, notificationManager)
         }
     }
 

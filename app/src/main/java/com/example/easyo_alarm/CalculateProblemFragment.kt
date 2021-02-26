@@ -11,7 +11,6 @@ import kotlin.random.Random
 
 class CalculateProblemFragment : Fragment() {
     lateinit var binder : FragmentCalculateProblemBinding
-    val app = AppClass()
     var initial = 0
     // 액티비티에서 변수 가져오기 (액티비티 -> 프래그먼트 순서로 뷰, 변수, 메서드가 정의된다)
 

@@ -12,4 +12,10 @@ class AppClass : Application() {
 
     // notification 의 on / off 스위치
     var notificationSwitch = 0
+
+    // 가장 최근 울릴 알람
+    var recentTime = ""
+
+    // 가장 최근 울릴 알람의 요일
+    var recentWeek = ""
 }
