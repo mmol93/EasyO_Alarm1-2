@@ -19,6 +19,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.animation.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyo_alarm.databinding.SettingRowBinding
+import com.example.easyo_alarm.notification.notification
 
 class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<SettingViewHolder>() {
     lateinit var app : AppClass
@@ -175,6 +176,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                                 // 선택한 값을 SettingRecyclerAdapter의 subTextView에 반영해야함
                                 subTextView.text = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
                                         app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
+
                             }
                         }
                     }
@@ -183,6 +185,27 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 // Set On/Off Notification 클릭 시
                 2 -> {
                     textView.text = context.getString(R.string.settingItem_notification)
+                    // * AlertDialog 만들기
+                    val modeItem = arrayOf(context.getString(R.string.settingItem_notificationOff), context.getString(R.string.settingItem_notificationOn))
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle(context.getString(R.string.settingItem_notification))
+                    builder.setSingleChoiceItems(modeItem, app.notificationSwitch , null)
+                    builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
+
+                    builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                        val alert = dialogInterface as AlertDialog
+                        val idx = alert.listView.checkedItemPosition
+
+                        when(idx){
+                            0 -> { app.notificationSwitch = 0}
+                            1 -> { app.notificationSwitch = 1}
+                        }
+                        if (app.notificationSwitch == 0){
+                            val notification = notification()
+                            notification.cancelNotification(context)
+                        }
+                    }
+                    builder.show()
                 }
                 // AppInfo 클릭 시
                 3 -> {

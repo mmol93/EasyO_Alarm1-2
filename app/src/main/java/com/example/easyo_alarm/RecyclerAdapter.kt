@@ -11,9 +11,11 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyo_alarm.databinding.MainalarmRawBinding
+import com.example.easyo_alarm.notification.notification
 
 
 class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size : Int) : RecyclerView.Adapter<ViewHolder>(){
+    lateinit var app : AppClass
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.mainalarm_raw, parent, false))
@@ -21,6 +23,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
 
     // onBindViewHolder의 position은 0부터 시작한다
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        app = context.applicationContext as AppClass
         // *** SQL의 모든 데이터를 가져와서 어댑터에 등록시킨다
         val sql_select = "select * from MaidAlarm"
         val c1 = SQLHelper.writableDatabase.rawQuery(sql_select, null)
@@ -219,6 +222,18 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     SQLHelper.close()
                     notifyItemRemoved(position)  // 데이터를 삭제하고 나서 RecyclerView를 업데이트
                     notifyItemRangeChanged(position, size)  // 삭제하고나서 어댑터의 item Range 갱신
+
+                    // 남아있는 SQL 데이터가 없을 때
+                    if (size == 0){
+                        // notification 제거하기
+                        val notification = notification()
+                        notification.cancelNotification(context)
+                    }
+                    else{
+                        val alarmFragment = alarmFragment()
+                        alarmFragment.renewDisplay(SQLHelper)
+                    }
+
                 }
             }
 

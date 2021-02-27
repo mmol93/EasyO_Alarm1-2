@@ -111,10 +111,10 @@ class RecentAlarm {
         // timeList 안에서 제일 작은 숫자만 골라낸다
         val recentTime = timeList.minOrNull()?:0
         val resultIdx = timeList.indexOf(recentTime)    // 여기에 제일 가까운 알람의 인덱스가 들어간다
-
-        // 위 resultIdx를 이용하여 해당 인덱스의 Hour, Min을 알 수 있다
-        val resultHour = hourList[resultIdx]
-        val resultMin = minList[resultIdx]
+        // 알람이 있지만 모든 알람의 토글이 off 상태일 때
+        if (resultIdx == -1){
+            return mutableListOf<Int>(-1)
+        }
 
         val totalResult = mutableListOf<Int>(Sun[resultIdx], Mon[resultIdx], Tue[resultIdx], Wed[resultIdx],
         Thu[resultIdx], Fri[resultIdx], Sat[resultIdx], hourList[resultIdx], minList[resultIdx])

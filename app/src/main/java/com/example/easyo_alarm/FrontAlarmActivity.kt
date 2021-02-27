@@ -154,11 +154,13 @@ class FrontAlarmActivity : AppCompatActivity() {
                 // 음악 재생을 멈춘다 - 미구현
             }
 
-            // ok 버튼을 눌렀을 때 notification의 내용을 갱신해준다
-            val notification = notification()
-            val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
-            notification.makeNotification(app, this, notificationManager)
+            if (app.notificationSwitch == 1){
+                // ok 버튼을 눌렀을 때 notification의 내용을 갱신해준다
+                val notification = notification()
+                val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
+                notification.makeNotification(app, this, notificationManager)
+            }
         }
 
         // "10분 뒤" 버튼 클릭 시 동작 설정

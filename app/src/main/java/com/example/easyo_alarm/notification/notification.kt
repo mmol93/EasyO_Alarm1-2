@@ -24,7 +24,7 @@ class notification {
         // 10. notification의 큰 아이콘 설정(작업표시줄을 늘려서 볼 때 나오는 Notification 아이콘)
         // 큰 아이콘은 bitmap으로만 받아서 표시할 수 있다
         // 그래서 bitmap으로 디코딩을 해야한다
-        val bitmap  = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.ic_launcher )
+        val bitmap  = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.ic_launcher)
         builder1.setLargeIcon(bitmap)
 
         // 숫자 설정(알림 메시지 안에 숫자 표시가능)
@@ -107,7 +107,8 @@ class notification {
         }
     }
 
-    fun cancelNotification(){
-
+    fun cancelNotification(context : Context){
+        val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        manager.cancel(10)
     }
 }

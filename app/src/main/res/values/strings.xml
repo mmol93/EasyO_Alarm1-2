@@ -45,6 +45,8 @@
     <string name="settingItem_sub_info">Version, OpenSource, Email, etc.</string>
     <string name="settingItem_notification">Set On/Off Notification</string>
     <string name="settingItem_sub_notification">You can turn off the notification</string>
+    <string name="settingItem_notificationOn">On NextAlarm</string>
+    <string name="settingItem_notificationOff">Off NextAlarm</string>
     <string name="settingItem_alarmModeItem1">Normal</string>
     <string name="settingItem_alarmModeItem2">Calculator</string>
     <string name="settingItem_calRepeat">Calculate Repeat</string>

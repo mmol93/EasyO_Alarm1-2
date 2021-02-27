@@ -11,11 +11,14 @@ class AppClass : Application() {
     var counter = 1 // 문제 반복 몇 번 할지
 
     // notification 의 on / off 스위치
-    var notificationSwitch = 0
+    var notificationSwitch = 1
 
     // 가장 최근 울릴 알람
     var recentTime = ""
 
     // 가장 최근 울릴 알람의 요일
     var recentWeek = ""
+
+    // 1일 때 에러 발생했다는 의미임
+    var errorCode = 0
 }
