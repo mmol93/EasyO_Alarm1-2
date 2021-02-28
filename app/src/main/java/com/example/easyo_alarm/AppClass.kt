@@ -1,6 +1,8 @@
 package com.example.easyo_alarm
 
 import android.app.Application
+import android.content.Context
+import com.example.easyo_alarm.databinding.FragmentAlarmBinding
 
 class AppClass : Application() {
 
@@ -21,4 +23,13 @@ class AppClass : Application() {
 
     // 1일 때 에러 발생했다는 의미임
     var errorCode = 0
+
+    // alarmFragment의 binder 변수
+    // 1. RecyclerAdapter.kt에서 쓰레기 버튼 클릭 시 alarmFragment에 있는 view를 컨트롤 하기 위해 사용됨
+    lateinit var binder_alarmFragent : FragmentAlarmBinding
+
+    // alarmFragment의 context 변수
+    // 1. RecyclerAdapter.kt에서 쓰레기 버튼 클릭 시 alarmFragment에 있는 view를 컨트롤 하기 위해 사용됨
+    lateinit var context_alarmFragent : Context
+
 }

@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
+import com.example.easyo_alarm.databinding.FragmentAlarmBinding
 import com.example.easyo_alarm.databinding.MainalarmRawBinding
 import com.example.easyo_alarm.notification.notification
 
@@ -231,9 +233,8 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     }
                     else{
                         val alarmFragment = alarmFragment()
-                        alarmFragment.renewDisplay(SQLHelper)
+                        alarmFragment.renewDisplay(SQLHelper, app.binder_alarmFragent, app)
                     }
-
                 }
             }
 
