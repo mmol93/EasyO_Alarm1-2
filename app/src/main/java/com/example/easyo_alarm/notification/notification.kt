@@ -2,7 +2,9 @@ package com.example.easyo_alarm.notification
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -10,6 +12,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import com.example.easyo_alarm.AppClass
+import com.example.easyo_alarm.MainActivity
 import com.example.easyo_alarm.R
 
 class notification {
@@ -59,6 +62,13 @@ class notification {
         // 알림에 진동이 오지 않게 처리
         builder1.setVibrate(null)
 
+        // ** notification 클릭 시 MainActivity를 실행한다
+        val intent = Intent(context, MainActivity::class.java)
+        val pending = PendingIntent.getActivity(context, 10, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        // 클릭시 해당 intent를 연다
+        builder1.setContentIntent(pending)
+
+
         // 13. getNotification.build(): 주어진 정보(옵션)를 종합하여 새로운 Notification 객체 반환
         val notification = builder1.build()
 
@@ -78,7 +88,7 @@ class notification {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             // 3. 채널 객체 생성
             // IMPORTANCE_HIGH로 하지 않으면 메시지가 안나올 가능성 있음
-            val chanel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_HIGH)
+            val chanel = NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW)
 
             // 5. Notification 보여줄 때 진동 사용 여부
             chanel.enableVibration(false)

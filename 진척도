@@ -91,24 +91,19 @@
 
 36. 계산 문제 답 틀릭 시 진동 오게 하기(FrontAlarmActivity) - C
 
-37. Set On/Off Notification 기능 구현하기 - ing
+37. Set On/Off Notification 기능 구현하기
 - notification 클릭 시 어플 실행
-- Set On/Off Notification 구조 : 액티비티 실행 -> 제일 위에 on/off 버튼 있고 그 아래에는 fragment 존재함
--> off 클릭 시 프래그먼트 부분 안보임 -> on 클릭 시 각종 설정 화면 나옴
-
 
 38. quick 알람의 경우 울린 후 알람 자체를 삭제하기 - C
-- SQL데이터를 삭제하면 자동으로 RecyclerView에 있는 항목도 삭제됨
+- SQL데이터를 삭제하면 자동으로 RecyclerView에 있는 항목도 삭제됨 - C
 
-39. 메인 RecyclerView의 제일 위에 TextView 추가해서 다음 알람 추가...?
+39. 메인 RecyclerView의 제일 위에 TextView 추가해서 다음 알람 추가 - C
 
 40. 알람 반복횟수 or 미루는 횟수에 따라 다른 음성 나오게 하기
 - 첫 번째 : (밝은 목소리)주인님! 일어나세요! or 아침이에요! 일어나세요!
 - 두 번째 : 빨리 안일어나면 아침밥은 없어요!
 - 세 번째 : (우는 목소리)주인님 일어나세요
 
-41. RecyclerAdapter에 텍스트뷰, notification에 대한 정보를 넘겨주고 Recycler에서 동작 시 Fragment에서 변화가 있게 변경한다
+41. recycleradapter의 아이템을 클릭할 경우 알람을 변경할 수 있게 만든다
 
-42. recycleradapter의 아이템을 클릭할 경우 알람을 변경할 수 있게 만든다
-
-43.
+42.
