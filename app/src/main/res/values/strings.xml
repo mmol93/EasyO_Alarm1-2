@@ -53,6 +53,9 @@
     <string name="alarmSetFragment_noAlarm">Please set the alarm</string>
     <string name="alarmSetFragment_nextAlarm">(Next Alarm)</string>
     <string name="notification_Title">Maid Alarm</string>
+    <string name="infoItem_support">Could you support me?</string>
+    <string name="infoItem_contact">Contact</string>
+    <string name="infoItem_version">Version</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

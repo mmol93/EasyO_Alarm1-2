@@ -3,20 +3,24 @@
     package="com.example.easyo_alarm">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".AppClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".AppClass"
         android:theme="@style/Theme.EasyO_Alarm">
-        <service android:name=".Service"
-            android:stopWithTask="false"/>
-        <activity android:name=".FrontAlarmActivity"></activity>
+        <activity android:name=".InfoActivity"></activity>
+
+        <service
+            android:name=".Service"
+            android:stopWithTask="false" />
+
+        <activity android:name=".FrontAlarmActivity" />
         <activity android:name=".ShortAlarmSetActivity" />
         <activity android:name=".AlarmSetActivity" /> <!-- value 의 경우 현재 테스트용임 -->
         <!-- 실제로 앱 배포시에는 자신의 광고 ID 참조하기 -->
@@ -27,17 +31,19 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Receiver"
+        <receiver
+            android:name=".Receiver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="POSTPHONETIME"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="POSTPHONETIME" />
             </intent-filter>
-            </receiver>
+        </receiver>
     </application>
 
 </manifest>

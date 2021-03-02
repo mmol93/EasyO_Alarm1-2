@@ -212,7 +212,6 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     textView.text = context.getString(R.string.settingItem_info)
                 }
             }
-
         }
     }
 }
