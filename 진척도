@@ -1,6 +1,6 @@
 1. 껏다켜도 알람 울릴 수 있게 알람 매니저 재가동하는 코드 짜기 - C
 
-2. notification 알람으로 가장 가까운 다 알람 알려주기(일시정지)
+2. notification 알람으로 가장 가까운 다 알람 알려주기 - C
 - 이 기능은 on/off 가능 - 설정 탭에서 지정 가능
 - 표시해줄 알람은 사용자가 수동으로 지정하게 만들기
 - 이 기능은 새로운 클래스를 만들어서 진행하기
@@ -68,7 +68,7 @@
 30. 설정탭 만들기
 - RecyclerView 만들기 - C
 
-31. alarmFragment에서 슬라이드하면 FloatingButton 사라지게 하기
+31. alarmFragment에서 슬라이드하면 FloatingButton 사라지게 하기 - ing
 
 32. 계산기 on/off에 따른 RecyclerView에 그림 바꾸게 하기
 
@@ -91,7 +91,7 @@
 
 36. 계산 문제 답 틀릭 시 진동 오게 하기(FrontAlarmActivity) - C
 
-37. Set On/Off Notification 기능 구현하기
+37. Set On/Off Notification 기능 구현하기 - C
 - notification 클릭 시 어플 실행
 
 38. quick 알람의 경우 울린 후 알람 자체를 삭제하기 - C
@@ -110,4 +110,10 @@
 - SQL 데이터를 업데이트 하는 동시에 해당 수정한 알람의 requestCode를 cancel하고 새로운 requestCode의 alarm을 등록해야함
 - 그럴 경우 기존의 onActivityResult와 다른 새로운 onActivityResult도 만들어야함
 
-42.
+42. setting의 info 부분 기능 구현하기
+- 클릭시 새로운 액티비티 나옴
+- 버전 및 아이콘 보여줌
+- 후원 탭 있음
+- 문의 메일 탭 있음
+- openSource 정보 있음
+-
