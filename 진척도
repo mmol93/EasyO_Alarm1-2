@@ -104,6 +104,10 @@
 - 두 번째 : 빨리 안일어나면 아침밥은 없어요!
 - 세 번째 : (우는 목소리)주인님 일어나세요
 
-41. recycleradapter의 아이템을 클릭할 경우 알람을 변경할 수 있게 만든다
+41. recycleradapter의 아이템을 클릭할 경우 알람을 변경할 수 있게 만든다 - Cancel
+- 이제와서 구현하기에는 너무 복잡함
+- RecyclerView의 textView 클릭 -> 수정 activity 띄우기 -> 수정 후 save 클릭
+- SQL 데이터를 업데이트 하는 동시에 해당 수정한 알람의 requestCode를 cancel하고 새로운 requestCode의 alarm을 등록해야함
+- 그럴 경우 기존의 onActivityResult와 다른 새로운 onActivityResult도 만들어야함
 
 42.

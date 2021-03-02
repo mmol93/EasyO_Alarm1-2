@@ -33,7 +33,8 @@ class SQLHelper : SQLiteOpenHelper {
                 Sat integer not null default 0,
                 quick integer not null default 0,
                 requestCode integer not null,
-                switch integer not null default 1
+                switch integer not null default 1,
+                notification integer not null default 0
                 )
         """.trimIndent()
 

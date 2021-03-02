@@ -230,6 +230,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                         // notification 제거하기
                         val notification = notification()
                         notification.cancelNotification(context)
+                        app.binder_alarmFragent.RecentTimeTextview.text = context.getString(R.string.alarmSetFragment_noAlarm)
                     }
                     else{
                         val alarmFragment = alarmFragment()
