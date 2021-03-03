@@ -112,6 +112,7 @@ class alarmFragment : Fragment() {
                     binder.RecentTimeTextview.append(context.getString(R.string.week_sun) + ", ")
                     textForWeek = textForWeek + context.getString(R.string.week_sun) + ", "
                 }
+                // 체크된 요일을 문자로 표시한다
                 if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
                         || recentTimeList[5] == 1 || recentTimeList[6] == 1){
                     var text = binder.RecentTimeTextview.text
@@ -125,6 +126,7 @@ class alarmFragment : Fragment() {
                     }
                     app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
                 }
+                // notification 갱신
                 if (app.recentTime.length > 0 && app.recentWeek.length > 0 && app.notificationSwitch == 1 && size > 0){
                     val notification = notification()
                     val notificationManager =context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

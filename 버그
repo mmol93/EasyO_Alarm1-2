@@ -48,4 +48,9 @@
 - appClass에 대한 정의를 잘못했음
 - context.applicationContext As AppClass()로 변경
 
-14. (02.23) Quick 알람의 경우 울린 후 RecyclerView의 토글 버튼 자동 off되게 하기
+14. (02.23) Quick 알람의 경우 울린 후 RecyclerView에서 자동으로 해당 item 항목 삭제되게 하기- C
+
+15 (03.02) Quick 알람의 경우 울린 후 notification도 갱신하기
+- 일단 FrontActivity에서 "ok"버튼 클릭시 notification을 갱신하긴함
+- 일반 알람 생성 후 ok 버튼 클릭하면 notification을 갱신만 하지 더 이상 울릴 알람이 없을 때 notification을 제거하지 않는다
+- 즉, 다른 알람이 남아 있을 경우 갱신되지만 다른 알람이 없을 경우에는 삭제되지 않고 그대로 남아있게 된다

@@ -40,6 +40,11 @@ class FrontAlarmActivity : AppCompatActivity() {
         binder = ActivityFrontAlarmBinding.inflate(layoutInflater)
         val app = application as AppClass
         val calculateProblemFragment = CalculateProblemFragment()
+        // SQL에 대한 변수 선언
+        val SQLHelper = SQLHelper(this)
+        val sql = "select * from MaidAlarm"
+        val c1 = SQLHelper.writableDatabase.rawQuery(sql, null)
+        val size = c1.count
 
         // *** 화면에 보여줄 시간을 가져온다
         val calendar = Calendar.getInstance()
@@ -137,6 +142,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                             vib.vibrate(500)
                         }
                     }
+                    // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료
                     if (counter >= app.counter){
                         if (progress == 0){
                             vib.cancel()
@@ -146,6 +152,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                     }
                 }
             }
+            // 계산문제를 설정하지 않았을 때
             else{
                 if (progress == 0){
                     vib.cancel()
@@ -153,13 +160,33 @@ class FrontAlarmActivity : AppCompatActivity() {
                 finish()
                 // 음악 재생을 멈춘다 - 미구현
             }
-
-            if (app.notificationSwitch == 1){
-                // ok 버튼을 눌렀을 때 notification의 내용을 갱신해준다
+            // 그 다음으로 울릴 알람이 없다면 notification 삭제하기
+            if (size > 0) {
+                val recentAlarm = RecentAlarm()
+                val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+                // 알림은 있지만 모든 토글이 off 일 때 -> notification 삭제
+                if (recentTimeList[0] == -1) {
+                    val notification = notification()
+                    notification.cancelNotification(this)
+                }
+            }
+            // 남아있는 알람이 없다면 notification 삭제
+            else if (size == 0){
                 val notification = notification()
-                val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
-                notification.makeNotification(app, this, notificationManager)
+                notification.cancelNotification(this)
+            }
+            // 남아있는 알람이 있다면 notification 갱신
+            else{
+                // 설정에서 notification이 "사용 상태"로 되어 있을 때
+                // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
+                // 여기서는 notificatrion에 대한 갱신만 해주면 된다
+                if (app.notificationSwitch == 1){
+                    // ok 버튼을 눌렀을 때 notification의 내용을 갱신해준다
+                    val notification = notification()
+                    val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
+                    notification.makeNotification(app, this, notificationManager)
+                }
             }
         }
 
@@ -180,8 +207,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             intent.putExtra("progress", progress)
 
             // 10분뒤 알람이므로 현재 시간에 + 10분(10 * 60 * 1000)을 해준다
-            // 지금은 테스트로 1분
-            val intervalTen = 1 * 60 * 1000
+            val intervalTen = 10 * 60 * 1000
 
             // 한번 쓰고 버릴 알람이기 때문에 requestCode는 1로 설정한다
             val pendingIntent = PendingIntent.getBroadcast(
