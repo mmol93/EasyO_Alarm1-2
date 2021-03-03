@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.Spannable
@@ -210,6 +211,8 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 // AppInfo 클릭 시
                 3 -> {
                     textView.text = context.getString(R.string.settingItem_info)
+                    val intent = Intent(context, InfoActivity::class.java)
+                    context.startActivity(intent)
                 }
             }
         }
