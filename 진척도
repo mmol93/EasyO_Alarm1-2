@@ -110,10 +110,19 @@
 - SQL 데이터를 업데이트 하는 동시에 해당 수정한 알람의 requestCode를 cancel하고 새로운 requestCode의 alarm을 등록해야함
 - 그럴 경우 기존의 onActivityResult와 다른 새로운 onActivityResult도 만들어야함
 
-42. setting의 info 부분 기능 구현하기
+42. setting의 info 부분 기능 구현하기- C
 - 클릭시 새로운 액티비티 나옴
 - 버전 및 아이콘 보여줌
 - 후원 탭 있음
 - 문의 메일 탭 있음
 - openSource 정보 있음
--
+
+43. info의 후원 항목 구현하기
+- 구글 플레이 인앱 기능 넣기
+
+44. info의 문의 메일 항목 구현하기
+- mail intent 구현하기
+
+45. openSource 항목 구현하기
+- AlertDialog에서 RecyclerView로 만들기
+- 해당 RecyclerView에 각각의 이용한 openSource 정보 넣기
