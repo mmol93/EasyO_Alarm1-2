@@ -44,7 +44,6 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
                 holder.binder.infoImage.setImageResource(R.drawable.info_open)
                 holder.binder.infoText.text = context.getString(R.string.infoItem_openSource)
                 holder.binder.infoSubText.text = context.getString(R.string.infoItem_subOpenSource)
-                holder.binder.infoSubText.text = ""
                 holder.binder.rowItemView.setOnClickListener {
                     // 오픈소스 항목 입력
                     val listItem = arrayOf("Apache2.0", "GNU General Public License v3.0", "com.github.iammert:ReadableBottomBar:0.2",

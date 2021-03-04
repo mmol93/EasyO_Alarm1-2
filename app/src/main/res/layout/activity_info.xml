@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/itemBackground"
     tools:context=".InfoActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -20,13 +21,43 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="54dp"
-            android:layout_height="16dp"
-            android:text="TextView"
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="186dp"
+            android:layout_height="142dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/icon_maidalarm_round" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/info_name"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="v1.0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.4"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    </LinearLayout>
 </LinearLayout>
