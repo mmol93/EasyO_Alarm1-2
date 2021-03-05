@@ -70,7 +70,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         // *** 음악 파일 실행 - 미구현
         // 먼저 progress 값을 가져온다
         val progress = intent.getIntExtra("progress", -1)
-        app.recentProgress = progress
+        app.lastProgress = progress
 
         if (progress == -1){
             Log.d("FrontAlarmActivity", "FrontAlarmActivity 의 Vibrate 쪽에 에러 발생")

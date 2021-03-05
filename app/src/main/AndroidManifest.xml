@@ -43,7 +43,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="POSTPHONETIME" />
-                <action android:name="SoundStop" />
             </intent-filter>
         </receiver>
     </application>

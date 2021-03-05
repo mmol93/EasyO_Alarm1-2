@@ -214,18 +214,6 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.putExtra("progress", progress)
             context?.startActivity(frontAlarmActivity)
         }
-        else if(intent!!.action == "SoundStop"){
-            Log.d("makeAlarm", "1분뒤 다시 울림")
-            val progress = intent.getIntExtra("progress", -1)
-            Log.d("makeAlarm", "progress: $progress")
-
-            // 다시 FrontAlarmActivity를 띄워야한다
-            val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
-            frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            // FrontAlarmActivity 를 띄위기 위해선 progress 데이터를 intent로 넘겨줘야한다.
-            frontAlarmActivity.putExtra("progress", progress)
-            context?.startActivity(frontAlarmActivity)
-        }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{
             Log.d("makeAlarm", "onReceive() 호출 - else부분")

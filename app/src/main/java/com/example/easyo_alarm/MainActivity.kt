@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private var mBackPressed: Long = 0
 
 
+
+
     // 알람 화면 프래그먼트
     val alarmFragment = com.example.easyo_alarm.alarmFragment()
     // 세팅 화면 프래그먼트
@@ -110,6 +112,22 @@ class MainActivity : AppCompatActivity() {
             }
         })
         setContentView(mainBinder.root)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("Exit", "Task 종료됨")
+        val app : AppClass = application as AppClass
+
+        // AppClass에 저장되어 있는 변수들을 파일에 저장한다
+        val fos = openFileOutput("data1.bat", Context.MODE_PRIVATE)
+
+        val dos = DataOutputStream(fos)
+        dos.writeInt(app.wayOfAlarm)
+        dos.writeInt(app.counter)
+
+        dos.flush()
+        dos.close()
     }
 
     // ** 연속 두 번 클릭하여 종료하기

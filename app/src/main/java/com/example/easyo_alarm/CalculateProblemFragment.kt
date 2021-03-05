@@ -134,42 +134,36 @@ class CalculateProblemFragment : Fragment() {
 
     // 계산 문제를 풀 때는 소리를 끄게 한다
     fun stopSound(){
-        // 이미 꺼져있는데 발동하면 에러를 일으킬 수 있으니 try~catch로 처리한다
-        try {
-            // 소리를 끈다 - 미구현
+        if (app.threadTrigger == 0){
+            // 트리거를 on해서 중복해서 발동하지 않게 한다
+            app.threadTrigger = 1
+            Log.d("makeAlarm", "thread 발동함")
+            // 이미 꺼져있는데 발동하면 에러를 일으킬 수 있으니 try~catch로 처리한다
+            try {
+                // 소리를 끈다 - 미구현
+                if (app.lastProgress > 0){
 
-            // Receiver를 반동시킨다
-            val alarmManager: AlarmManager? =
-                    context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+                }
+                // thread로 1분 대기
+                val thread = object : Thread(){
+                    override fun run() {
+                        super.run()
+                        SystemClock.sleep(60 * 1000)
+                        // 도중에 "10분 뒤" 버튼이나 "ok"버튼을 눌렀을 경우 트리거는 0이되어 다시 소리가 나지 않게 한다
+                        if (app.threadTrigger == 1){
+                            // 음악파일 재생
+                            Log.d("makeAlarm", "다시 음악 재생")
 
-            val receiver = Receiver()
-            val filter = IntentFilter("SoundStop")
-            context!!.registerReceiver(receiver, filter)
+                        }
+                        Log.d("makeAlarm", "thread 끝남")
+                        // 트리거가 끝났으니 원래대로 돌려준다
+                        app.threadTrigger = 0
+                    }
+                }
+                thread.start()
+            }catch (e:Exception){
 
-            val calendar = Calendar.getInstance()
-            val intent = Intent("SoundStop")
-
-            intent.putExtra("progress", app.recentProgress)
-
-            // 1분뒤
-            val interval = 60 * 1000
-            // 한번 쓰고 버릴 알람이기 때문에 requestCode는 2로 설정한다
-            val pendingIntent = PendingIntent.getBroadcast(
-                    context,
-                    2,
-                    intent,
-                    PendingIntent.FLAG_ONE_SHOT
-            )
-            // 위에서 설정한 시간(Calendar.getInstance)에 알람이 울리게 한다
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                // API23 이상에서는 setExactAndAllowWhileIdle을 사용해야한다.
-                alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + interval, pendingIntent)
-            }else{
-                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + interval, pendingIntent)
             }
-            Log.d("makeAlarm", "stopSound() 발동함")
-        }catch (e:Exception){
-
         }
     }
 }

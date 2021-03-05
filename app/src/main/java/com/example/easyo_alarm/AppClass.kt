@@ -35,6 +35,9 @@ class AppClass : Application() {
     lateinit var vibrate : Vibrator
 
     // 가장 최근 울린 알람의 progress
-    var recentProgress = 0
+    var lastProgress = 0
+
+    // thread 트리거
+    var threadTrigger = 0
 
 }
