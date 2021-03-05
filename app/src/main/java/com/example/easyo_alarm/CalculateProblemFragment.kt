@@ -1,5 +1,11 @@
 package com.example.easyo_alarm
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -9,12 +15,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.easyo_alarm.databinding.FragmentCalculateProblemBinding
 import java.lang.Exception
+import java.util.*
 import kotlin.random.Random
 
 class CalculateProblemFragment : Fragment() {
     lateinit var binder : FragmentCalculateProblemBinding
     var initial = 0
-    var stopSoundCounter = 0
     var threadRunning = false
     lateinit var app : AppClass
 
@@ -127,31 +133,39 @@ class CalculateProblemFragment : Fragment() {
 
     // 계산 문제를 풀 때는 소리를 끄게 한다
     fun stopSound(){
-        if (stopSoundCounter == 0){
-            stopSoundCounter = 1
-            threadRunning = true
-            // 소리 끄기 - 미구현
+        // 이미 꺼져있는데 발동하면 에러를 일으킬 수 있으니 try~catch로 처리한다
+        try {
+            // 소리를 끈다 - 미구현
 
-            // 소리를 끈 상태에서 thread로 시간 카운트 하기 - 2분
-            val thread1 = object : Thread(){
-                override fun run() {
-                    super.run()
-                    while (threadRunning){
-                        // 2분간 슬립
-                        SystemClock.sleep(120 * 1000)
+            // Receiver를 반동시킨다
+            val alarmManager: AlarmManager? =
+                    context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
-                        // 노래 켜기 - 미구현
-                        // 10분 뒤 버튼을 눌렀는데 or 알람을 확인했는데 다시 울리는건 안됨
-                        // soundControl = 1 : 알람 끝났거나 연장됐으니 소리 울리는건 안됨
-                        if (app.soundControl == 0){
+            val receiver = Receiver()
+            val filter = IntentFilter("SoundStop")
+            context!!.registerReceiver(receiver, filter)
 
-                        }
-                        // thread 정지
-                        threadRunning = false
-                    }
-                }
+            val calendar = Calendar.getInstance()
+            val intent = Intent("SoundStop")
+
+            // 2분뒤
+            val interval = 2 * 60 * 1000
+            // 한번 쓰고 버릴 알람이기 때문에 requestCode는 2로 설정한다
+            val pendingIntent = PendingIntent.getBroadcast(
+                    context,
+                    2,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+            )
+            // 위에서 설정한 시간(Calendar.getInstance)에 알람이 울리게 한다
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                // API23 이상에서는 setExactAndAllowWhileIdle을 사용해야한다.
+                alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + interval, pendingIntent)
+            }else{
+                alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + interval, pendingIntent)
             }
-            thread1.start()
+        }catch (e:Exception){
+
         }
     }
 }

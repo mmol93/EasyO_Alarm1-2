@@ -214,9 +214,21 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.putExtra("progress", progress)
             context?.startActivity(frontAlarmActivity)
         }
+        else if(intent!!.action == "SoundStop"){
+            Log.d("makeAlarm", "2분뒤 다시 울림")
+            val progress = intent.getIntExtra("progress", -1)
+            Log.d("makeAlarm", "progress: $progress")
+
+            // 다시 FrontAlarmActivity를 띄워야한다
+            val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
+            frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            // FrontAlarmActivity 를 띄위기 위해선 progress 데이터를 intent로 넘겨줘야한다.
+            frontAlarmActivity.putExtra("progress", progress)
+            context?.startActivity(frontAlarmActivity)
+        }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{
-            Log.d("makeAlarm", "onReceive() 호출")
+            Log.d("makeAlarm", "onReceive() 호출 - else부분")
             val toast = Toast.makeText(context, "BroadcastReceiver() 호출", Toast.LENGTH_LONG)
             toast.show()
             // 오늘이 알람에서 설정한 요일과 맞는지 확인하기 위해 오늘 날짜의 요일을 가져온다
@@ -244,7 +256,7 @@ class Receiver : BroadcastReceiver() {
                 context?.startActivity(frontAlarmActivity)
             }
 
-            // quick 알람은 울린 후 자동으로 해당 알람의 토글을 off로 설정한다
+            // quick 알람은 울린 후 자동으로 해당 알람을 삭제한다
             if (arrayFromMakeAlarm!![8] == 1){
                 // SQL의 requestCode 컬럼의 모든 데이터를 검색한다 -> 해당 requestCode가 있는 row 인덱스를 추출한다
                 // -> 해당 인덱스의 데이터를 삭제한다 -> 해당 알람을 cancel한다

@@ -103,9 +103,6 @@ class FrontAlarmActivity : AppCompatActivity() {
 
         // ok버튼 클릭 시
         binder.buttonOk.setOnClickListener {
-            // ok 버튼 클릭 = 알람이 끝났으니 알람 소리 울리면 안됨
-            app.soundControl = 1
-
             // 알람 울릴 때 계산 문제를 사용할 때
             if (app.wayOfAlarm == 1){
                 // 설정에서 지정한 계산문제 풀이 횟수 보다 작을 때
@@ -138,6 +135,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                         val arrayTime = longArrayOf(0, 500, 0, 0)
                         val arrayAmplitudes = intArrayOf(0, 150, 0, 0)
                         vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        app.vibrate = vib
 
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                             vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, 0))
@@ -163,6 +161,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                 finish()
                 // 음악 재생을 멈춘다 - 미구현
             }
+
             // 그 다음으로 울릴 알람이 없다면 notification 삭제하기
             if (size > 0) {
                 val recentAlarm = RecentAlarm()
@@ -204,8 +203,6 @@ class FrontAlarmActivity : AppCompatActivity() {
 
             val calendar = Calendar.getInstance()
             val intent = Intent("POSTPHONETIME")
-
-            app.soundControl = 1
 
             // 다음 알람에도 progress 데이터는 필요하기 때문에 넘겨준다
             // 즉, FrontAlarmActivity를 호출하기 위해서 필요한 필수 데이터는 progress뿐
