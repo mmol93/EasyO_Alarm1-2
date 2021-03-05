@@ -17,21 +17,13 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
     }
 
     override fun getItemCount(): Int {
-        return 3
+        return 2
     }
 
     override fun onBindViewHolder(holder: InfoViewHolder, position: Int) {
         when(position){
-            // * 0 : 후원탭
+            // * 0 : 문의탭
             0 ->{
-                holder.binder.infoImage.setImageResource(R.drawable.info_support)
-                holder.binder.infoText.text = context.getString(R.string.infoItem_support)
-                holder.binder.infoSubText.text = context.getString(R.string.infoItem_subSupport)
-                holder.binder.rowItemView.setOnClickListener {
-                }
-            }
-            // * 1 : 문의탭
-            1 -> {
                 holder.binder.infoImage.setImageResource(R.drawable.info_emal)
                 holder.binder.infoText.text = context.getString(R.string.infoItem_contact)
                 holder.binder.infoSubText.text = context.getString(R.string.infoItem_subContact)
@@ -39,8 +31,8 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
 
                 }
             }
-            // * 2 : 오픈소스탭
-            2 ->{
+            // * 1 : 오픈소스탭
+            1 -> {
                 holder.binder.infoImage.setImageResource(R.drawable.info_open)
                 holder.binder.infoText.text = context.getString(R.string.infoItem_openSource)
                 holder.binder.infoSubText.text = context.getString(R.string.infoItem_subOpenSource)
@@ -83,6 +75,14 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
 
                 }
             }
+            // * 2 : 후원탭 - 현재 미사용 상태
+//            2 ->{
+//                holder.binder.infoImage.setImageResource(R.drawable.info_support)
+//                holder.binder.infoText.text = context.getString(R.string.infoItem_support)
+//                holder.binder.infoSubText.text = context.getString(R.string.infoItem_subSupport)
+//                holder.binder.rowItemView.setOnClickListener {
+//                }
+//            }
         }
     }
 }

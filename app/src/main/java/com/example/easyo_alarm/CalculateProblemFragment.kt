@@ -1,6 +1,7 @@
 package com.example.easyo_alarm
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,7 +13,8 @@ import kotlin.random.Random
 class CalculateProblemFragment : Fragment() {
     lateinit var binder : FragmentCalculateProblemBinding
     var initial = 0
-    // 액티비티에서 변수 가져오기 (액티비티 -> 프래그먼트 순서로 뷰, 변수, 메서드가 정의된다)
+    var stopSoundCounter = 0
+    var threadRunning = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -112,10 +114,35 @@ class CalculateProblemFragment : Fragment() {
         FrontAlarmActivity.user_answer = binder.answerText.text.toString().toInt()
     }
 
+    // 뷰에 문제 게시
     fun setProblem(){
         val FrontAlarmActivity = activity as FrontAlarmActivity
-        // 뷰에 문제 게시
         binder.problemText1.text = FrontAlarmActivity.problem1.toString()
         binder.problemText2.text = FrontAlarmActivity.problem2.toString()
+    }
+
+    // 계산 문제를 풀 때는 소리를 끄게 한다
+    fun stopSound(){
+        if (stopSoundCounter == 0){
+            stopSoundCounter = 1
+            threadRunning = true
+            // 소리 끄기
+
+            // 소리를 끈 상태에서 thread로 시간 카운트 하기 - 1분
+            val thread1 = object : Thread(){
+                override fun run() {
+                    super.run()
+                    while (threadRunning){
+                        // 2분간 슬립
+                        SystemClock.sleep(120 * 1000)
+                        // 노래 끄기 - 미구현 - 이 부분은 try - catch로 구현한다(도중에 10분뒤 누를 가능성도 있기 때문에)
+
+                        // thread 정지
+                        threadRunning = false
+                    }
+                }
+            }
+            thread1.start()
+        }
     }
 }
