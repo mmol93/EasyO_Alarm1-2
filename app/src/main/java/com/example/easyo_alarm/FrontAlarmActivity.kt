@@ -16,6 +16,7 @@ import android.util.Log
 import com.example.easyo_alarm.databinding.ActivityFrontAlarmBinding
 import com.example.easyo_alarm.databinding.FragmentCalculateProblemBinding
 import com.example.easyo_alarm.notification.notification
+import java.lang.Exception
 import java.util.*
 import kotlin.random.Random
 import kotlin.random.Random.Default.nextInt
@@ -150,9 +151,15 @@ class FrontAlarmActivity : AppCompatActivity() {
                             vib.cancel()
                         }
                         finish()
-                        // 2분뒤 소리 울리는거 취소
-                        cancelTwoMinuteSound()
+                        // 1분뒤 소리 울리는거 취소 - 트리거 취소
+                        app.threadTrigger = 0
+
                         // 음악 재생을 멈춘다 - 미구현
+                        try {
+
+                        }catch (e:Exception){
+
+                        }
                     }
                 }
             }
@@ -227,19 +234,17 @@ class FrontAlarmActivity : AppCompatActivity() {
             }else{
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + intervalTen, pendingIntent)
             }
-            // 2분뒤 소리 울리는거 취소
-            cancelTwoMinuteSound()
+            // 1분뒤 소리 울리는거 취소 = 트리거 취소
+            app.threadTrigger = 0
+            // 소리 끄기
+            try {
+
+            }catch (e:Exception){
+
+            }
             finish()
         }
         setContentView(binder.root)
     }
-    // 2분뒤 다시 울릴지도 모르는 Receiver 취소
-    fun cancelTwoMinuteSound(){
-        val alarmManager: AlarmManager? = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-        val intent = Intent(this, Receiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(this, 2, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        Log.d("makeAlarm", "Cancel(): requestCode: 2")
-        // 6. 해당 펜딩인텐트에 있는 알람을 해제(삭제, 취소)한다
-        alarmManager!!.cancel(pendingIntent)
-    }
+
 }
