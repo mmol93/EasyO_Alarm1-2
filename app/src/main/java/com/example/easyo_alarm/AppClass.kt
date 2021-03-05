@@ -32,4 +32,7 @@ class AppClass : Application() {
     // 1. RecyclerAdapter.kt에서 쓰레기 버튼 클릭 시 alarmFragment에 있는 view를 컨트롤 하기 위해 사용됨
     lateinit var context_alarmFragent : Context
 
+    // 10분뒤 버튼을 눌렀을 때: 1 (평소에는 0가 기본 값)
+    var soundControl = 0
+
 }

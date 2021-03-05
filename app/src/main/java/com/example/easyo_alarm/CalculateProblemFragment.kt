@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.easyo_alarm.databinding.FragmentCalculateProblemBinding
+import java.lang.Exception
 import kotlin.random.Random
 
 class CalculateProblemFragment : Fragment() {
@@ -15,6 +16,7 @@ class CalculateProblemFragment : Fragment() {
     var initial = 0
     var stopSoundCounter = 0
     var threadRunning = false
+    lateinit var app : AppClass
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +32,8 @@ class CalculateProblemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val FrontAlarmActivity = activity as FrontAlarmActivity
+        app = context!!.applicationContext as AppClass
+
         // 뷰에 문제 게시
         binder.problemText1.text = FrontAlarmActivity.problem1.toString()
         binder.problemText2.text = FrontAlarmActivity.problem2.toString()
@@ -126,17 +130,22 @@ class CalculateProblemFragment : Fragment() {
         if (stopSoundCounter == 0){
             stopSoundCounter = 1
             threadRunning = true
-            // 소리 끄기
+            // 소리 끄기 - 미구현
 
-            // 소리를 끈 상태에서 thread로 시간 카운트 하기 - 1분
+            // 소리를 끈 상태에서 thread로 시간 카운트 하기 - 2분
             val thread1 = object : Thread(){
                 override fun run() {
                     super.run()
                     while (threadRunning){
                         // 2분간 슬립
                         SystemClock.sleep(120 * 1000)
-                        // 노래 끄기 - 미구현 - 이 부분은 try - catch로 구현한다(도중에 10분뒤 누를 가능성도 있기 때문에)
 
+                        // 노래 켜기 - 미구현
+                        // 10분 뒤 버튼을 눌렀는데 or 알람을 확인했는데 다시 울리는건 안됨
+                        // soundControl = 1 : 알람 끝났거나 연장됐으니 소리 울리는건 안됨
+                        if (app.soundControl == 0){
+
+                        }
                         // thread 정지
                         threadRunning = false
                     }
