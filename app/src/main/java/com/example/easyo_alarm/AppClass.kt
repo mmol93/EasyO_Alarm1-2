@@ -8,7 +8,7 @@ import com.example.easyo_alarm.databinding.FragmentAlarmBinding
 class AppClass : Application() {
 
     // 0 : 계산 문제 모드 off / 1 : 계산 문제 모드 on
-    var wayOfAlarm = 0  // 계산 문제를 제출할지 말지 선택(설정 탭에서 선택 가능)
+    var wayOfAlarm = 1  // 계산 문제를 제출할지 말지 선택(설정 탭에서 선택 가능)
 
     // 계산 문제에서 사용될 변수
     var counter = 1 // 문제 반복 몇 번 할지
@@ -17,13 +17,11 @@ class AppClass : Application() {
     var notificationSwitch = 1
 
     // 가장 최근 울릴 알람
+    // 시간:분 형태
     var recentTime = ""
 
     // 가장 최근 울릴 알람의 요일
     var recentWeek = ""
-
-    // 1일 때 에러 발생했다는 의미임
-    var errorCode = 0
 
     // alarmFragment의 binder 변수
     // 1. RecyclerAdapter.kt에서 쓰레기 버튼 클릭 시 alarmFragment에 있는 view를 컨트롤 하기 위해 사용됨
@@ -36,6 +34,7 @@ class AppClass : Application() {
     // vibration 조절하기
     lateinit var vibrate : Vibrator
 
-    //
+    // 가장 최근 울린 알람의 progress
+    var recentProgress = 0
 
 }

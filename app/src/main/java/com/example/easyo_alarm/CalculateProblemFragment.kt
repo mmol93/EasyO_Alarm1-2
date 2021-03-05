@@ -47,6 +47,7 @@ class CalculateProblemFragment : Fragment() {
         // 숫자패드 1 클릭했을 때
         binder.button1.setOnClickListener {
             setNumber(1)
+            stopSound()
         }
 
         // 숫자패드 2 클릭했을 때
@@ -148,14 +149,16 @@ class CalculateProblemFragment : Fragment() {
             val calendar = Calendar.getInstance()
             val intent = Intent("SoundStop")
 
-            // 2분뒤
-            val interval = 2 * 60 * 1000
+            intent.putExtra("progress", app.recentProgress)
+
+            // 1분뒤
+            val interval = 60 * 1000
             // 한번 쓰고 버릴 알람이기 때문에 requestCode는 2로 설정한다
             val pendingIntent = PendingIntent.getBroadcast(
                     context,
                     2,
                     intent,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_ONE_SHOT
             )
             // 위에서 설정한 시간(Calendar.getInstance)에 알람이 울리게 한다
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -164,6 +167,7 @@ class CalculateProblemFragment : Fragment() {
             }else{
                 alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis + interval, pendingIntent)
             }
+            Log.d("makeAlarm", "stopSound() 발동함")
         }catch (e:Exception){
 
         }

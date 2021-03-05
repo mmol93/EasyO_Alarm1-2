@@ -215,7 +215,7 @@ class Receiver : BroadcastReceiver() {
             context?.startActivity(frontAlarmActivity)
         }
         else if(intent!!.action == "SoundStop"){
-            Log.d("makeAlarm", "2분뒤 다시 울림")
+            Log.d("makeAlarm", "1분뒤 다시 울림")
             val progress = intent.getIntExtra("progress", -1)
             Log.d("makeAlarm", "progress: $progress")
 
