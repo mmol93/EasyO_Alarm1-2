@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
+import android.view.WindowManager
 import com.example.easyo_alarm.databinding.ActivityFrontAlarmBinding
 import com.example.easyo_alarm.databinding.FragmentCalculateProblemBinding
 import com.example.easyo_alarm.notification.notification
@@ -38,6 +39,9 @@ class FrontAlarmActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_alarm)
+        // 현재 화면이 자동으로 꺼지지 않게 유지
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
         binder = ActivityFrontAlarmBinding.inflate(layoutInflater)
         val app = application as AppClass
         val calculateProblemFragment = CalculateProblemFragment()
