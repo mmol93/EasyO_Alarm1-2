@@ -26,9 +26,6 @@ class MainActivity : AppCompatActivity() {
     private val TIME_INTERVAL = 2000    // 2 초내에 더블 클릭시...
     private var mBackPressed: Long = 0
 
-
-
-
     // 알람 화면 프래그먼트
     val alarmFragment = com.example.easyo_alarm.alarmFragment()
     // 세팅 화면 프래그먼트
@@ -44,6 +41,14 @@ class MainActivity : AppCompatActivity() {
 
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
         app = application as AppClass
+
+        // 현재 기기의 dpi를 가져온다
+        app.dpi = resources.displayMetrics.density
+        val dpiCheck = CheckDpi(app.dpi)
+        app.dpiString = dpiCheck.getDpiString()
+
+        // dpi에 따라 뷰의 크기를 변경한다
+        mainBinder.adView.height
 
         // *** 테스트로 notification을 호출해본다
 //        val notification = notification()

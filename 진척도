@@ -122,9 +122,14 @@
 - 딱히 좋은 이미지로 보이지 않음...
 - 차라리 나중에 인기 좀 있는거 같으면 유료 버전(광고 없는 버전)을 넣는게 나을듯
 
-44. info의 문의 메일 항목 구현하기
+44. info의 문의 메일 항목 구현하기 - C
 - mail intent 구현하기
 
 45. openSource 항목 구현하기 - C
 - AlertDialog에서 RecyclerView로 만들기
 - 해당 RecyclerView에 각각의 이용한 openSource 정보 넣기
+
+46. notification 아이콘 바꾸기
+-
+
+47. 이어폰 모드에서는 어떻게 되는지 생각하기
