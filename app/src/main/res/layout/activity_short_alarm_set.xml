@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="50dp"
+            android:textSize="@dimen/activity_short_main_textSize"
             android:text="@string/quick_title"
             android:gravity="center"
             tools:ignore="NestedWeights" />
@@ -103,93 +103,70 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
         <Button
             android:id="@+id/button60"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:textSize="@dimen/activity_short_minButton_textSize"
             android:text="@string/quick_60" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
         <Button
             android:id="@+id/button30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:text="@string/quick_30" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
 
         <Button
             android:id="@+id/button15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:text="@string/quick_15" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-
         <Button
             android:id="@+id/button10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:text="@string/quick_10" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
 
         <Button
             android:id="@+id/button5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:text="@string/quick_5" />
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
 
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="15dp"
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
             android:text="@string/quick_1"/>
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
     </LinearLayout>
 
     <Space
@@ -243,7 +220,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
-            android:textSize="17dp"
+            android:textSize="19dp"
             android:text="@string/cancelBtn" />
 
         <Space
@@ -255,7 +232,7 @@
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="17dp"
+            android:textSize="19dp"
             android:layout_weight="2"
             android:text="@string/saveBtn" />
 
