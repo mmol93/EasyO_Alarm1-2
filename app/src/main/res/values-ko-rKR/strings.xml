@@ -58,4 +58,5 @@
     <string name="infoItem_version">버전</string>
     <string name="infoItem_subVersion">버전</string>
     <string name="infoItem_openSource">오픈소스</string>
+    <string name="info_name">메이드알람</string>
 </resources>

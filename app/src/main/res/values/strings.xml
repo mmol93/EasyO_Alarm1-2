@@ -5,7 +5,7 @@
     <string name="Alarm">Alarm</string>
     <string name="Setting">Setting</string>
     <string name="quick_title">Quick Alarm</string>
-    <string name="bannerID">ca-app-pub-9481402975436770/6115199631</string>
+    <string name="bannerID" translatable="false">ca-app-pub-9481402975436770/6115199631</string>
     <string name="quick_60">+60min</string>
     <string name="quick_30">+30min</string>
     <string name="quick_15">+15min</string>
@@ -71,12 +71,12 @@
     <string name="infoItem_version">Version</string>
     <string name="infoItem_subVersion">Version</string>
     <string name="infoItem_openSource">Open Source</string>
-    <string name="infoItem_subOpenSource">Apache, GPL3.0 etc</string>
+    <string name="infoItem_subOpenSource" translatable="false">Apache, GPL3.0 etc</string>
 
     <string name="info_name">Maid Alarm</string>
 
     <!-- 여기 아래는 전부 라이센스 관련 String-->
-    <string name="license_Apache">Apache License
+    <string name="license_Apache" translatable="false">Apache License
 
 Version 2.0, January 2004
 
@@ -130,17 +130,17 @@ You may add Your own copyright statement to Your modifications and may provide a
 
 END OF TERMS AND CONDITIONS</string>
 
-    <string name="license_GPL">GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007
+    <string name="license_GPL" translatable="false">GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007
 
 Copyright © 2007 Free Software Foundation, Inc. https://fsf.org/
 
 Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.</string>
 
-    <string name="license_bottomTap">com.github.iammert:ReadableBottomBar:0.2</string>
+    <string name="license_bottomTap" translatable="false">com.github.iammert:ReadableBottomBar:0.2</string>
 
-    <string name="license_floatingButton">com.github.imtuann:FloatingActionButtonExpandable:1.1.2</string>
+    <string name="license_floatingButton" translatable="false">com.github.imtuann:FloatingActionButtonExpandable:1.1.2</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
 </resources>
