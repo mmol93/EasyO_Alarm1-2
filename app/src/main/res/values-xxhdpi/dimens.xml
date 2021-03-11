@@ -4,5 +4,5 @@
     <dimen name="activity_short_minButton_textSize">15dp</dimen>
     <dimen name="activity_short_main_textSize">60dp</dimen>
     <dimen name="fragment_alarm_recentAlarm_textSize">27dp</dimen>
-    
+
 </resources>

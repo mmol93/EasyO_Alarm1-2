@@ -120,6 +120,17 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         // seekBar의 Progress 값을 가져온다
         binder.volumeSeekBar.setOnSeekBarChangeListener(seekListener)
 
+        // * 볼륨 이미지 클릭 시
+        binder.imageView2.setOnClickListener {
+            if (binder.volumeSeekBar.progress > 0){
+                binder.volumeSeekBar.progress = 0
+                binder.imageView2.setImageResource(R.drawable.volume_mute)
+            }else{
+                binder.volumeSeekBar.progress = 100
+                binder.imageView2.setImageResource(R.drawable.volume_icon)
+            }
+        }
+
         setContentView(binder.root)
     }
 
@@ -145,6 +156,11 @@ class ShortAlarmSetActivity : AppCompatActivity() {
             when (seekBar?.id) {
                 R.id.volumeSeekBar -> {
                     seekValue = progress
+                    if (progress == 0){
+                        binder.imageView2.setImageResource(R.drawable.volume_mute)
+                    }else{
+                        binder.imageView2.setImageResource(R.drawable.volume_icon)
+                    }
                 }
             }
         }

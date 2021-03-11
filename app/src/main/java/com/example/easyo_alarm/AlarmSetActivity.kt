@@ -280,7 +280,7 @@ class AlarmSetActivity : AppCompatActivity() {
             return 1
         }
         else{
-            textView.setBackgroundColor(Color.parseColor("#aaaaaa"))
+            textView.setBackgroundColor(Color.parseColor("#FFFFFF"))
             return 0
         }
     }

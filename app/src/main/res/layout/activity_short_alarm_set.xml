@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/itemBackground"
     tools:context=".ShortAlarmSetActivity">
 
     <LinearLayout
@@ -141,7 +142,7 @@
             android:id="@+id/button10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.9"
             android:textSize="@dimen/activity_short_minButton_textSize"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
@@ -221,6 +222,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
             android:textSize="19dp"
+            android:backgroundTint="@color/teal_700"
             android:text="@string/cancelBtn" />
 
         <Space
@@ -234,6 +236,7 @@
             android:layout_height="wrap_content"
             android:textSize="19dp"
             android:layout_weight="2"
+            android:backgroundTint="@color/teal_700"
             android:text="@string/saveBtn" />
 
         <Space

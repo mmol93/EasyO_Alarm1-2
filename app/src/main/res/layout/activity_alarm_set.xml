@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/itemBackground"
     tools:context=".AlarmSetActivity">
 
     <!-- adUnitId 의 경우 현재 테스트용임 -->
@@ -84,8 +85,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
+                android:layout_weight="0.9"
+                android:background="@android:color/white"
                 android:fontFamily="@font/nanumgothicbold"
                 android:gravity="center"
                 android:text="@string/week_mon"
@@ -97,8 +98,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
+                android:layout_weight="1.2"
+                android:background="@android:color/white"
                 android:fontFamily="@font/nanumgothicbold"
                 android:gravity="center"
                 android:text="@string/week_tue"
@@ -110,8 +111,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:layout_weight="1"
-                android:background="@android:color/darker_gray"
+                android:layout_weight="0.9"
+                android:background="@android:color/white"
                 android:fontFamily="@font/nanumgothicbold"
                 android:gravity="center"
                 android:text="@string/week_wed"
@@ -124,7 +125,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:background="@android:color/darker_gray"
+                android:background="@android:color/white"
                 android:fontFamily="@font/nanumgothicbold"
                 android:gravity="center"
                 android:text="@string/week_thur"
@@ -134,10 +135,10 @@
                 android:id="@+id/alarmSet_fri"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1.25"
+                android:layout_weight="1.35"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@android:color/darker_gray"
+                android:background="@android:color/white"
                 android:fontFamily="@font/nanumgothicbold"
                 android:gravity="center"
                 android:text="@string/week_fri"
@@ -150,7 +151,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:background="@android:color/darker_gray"
+                android:background="@android:color/white"
                 android:fontFamily="@font/nanumgothicbold"
                 android:gravity="center"
                 android:text="@string/week_sat"
@@ -163,7 +164,7 @@
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight="1"
-                android:background="@android:color/darker_gray"
+                android:background="@android:color/white"
                 android:fontFamily="@font/nanumgothicbold"
                 android:gravity="center"
                 android:text="@string/week_sun"
@@ -186,7 +187,7 @@
 
             <SeekBar
                 android:id="@+id/volumeSeekBar"
-                style="@style/Widget.AppCompat.SeekBar"
+                style="@android:style/Widget.DeviceDefault.Light.SeekBar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="6"
@@ -223,6 +224,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/teal_700"
                 android:text="@string/cancelBtn" />
 
             <Button
@@ -231,6 +233,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/teal_700"
                 android:text="@string/saveBtn" />
         </LinearLayout>
     </LinearLayout>
