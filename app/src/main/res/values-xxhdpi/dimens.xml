@@ -3,5 +3,11 @@
     <!-- activity_short_alarm_set-->
     <dimen name="activity_short_minButton_textSize">15dp</dimen>
     <dimen name="activity_short_main_textSize">60dp</dimen>
+
+    <!-- activity_alarm_set-->
+    <dimen name="activity_alarm_layout4_bottom">20dp</dimen>
+    <dimen name="activity_alarm_layout7_Top">20dp</dimen>
+
+    <!-- fragment_alarm-->
     <dimen name="fragment_alarm_recentAlarm_textSize">27dp</dimen>
 </resources>

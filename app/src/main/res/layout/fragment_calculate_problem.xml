@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <Space
+    <dpace
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1.5" />
@@ -26,7 +26,7 @@
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="00"
             android:textColor="@color/black"
-            android:textSize="35sp"
+            android:textSize="35dp"
             />
 
         <TextView
@@ -36,7 +36,7 @@
             android:fontFamily="@font/nanumgothicextrabold"
             android:text=" + "
             android:textColor="@color/black"
-            android:textSize="35sp"
+            android:textSize="35dp"
             />
 
         <TextView
@@ -46,7 +46,7 @@
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="00"
             android:textColor="@color/black"
-            android:textSize="35sp"
+            android:textSize="35dp"
             />
 
         <TextView
@@ -56,7 +56,7 @@
             android:fontFamily="@font/nanumgothicextrabold"
             android:text=" = "
             android:textColor="@color/black"
-            android:textSize="35sp"
+            android:textSize="35dp"
             />
 
         <TextView
@@ -66,7 +66,7 @@
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="?"
             android:textColor="@color/black"
-            android:textSize="35sp"
+            android:textSize="35dp"
             />
     </LinearLayout>
 
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="1" />
 
         <Button
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="2" />
 
         <Button
@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="3" />
     </LinearLayout>
 
@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="4" />
 
         <Button
@@ -121,7 +121,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="5" />
 
         <Button
@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="6" />
 
     </LinearLayout>
@@ -146,7 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="7" />
 
         <Button
@@ -154,7 +154,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="8" />
 
         <Button
@@ -162,7 +162,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="9" />
 
     </LinearLayout>
@@ -178,7 +178,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="C" />
 
         <Button
@@ -186,7 +186,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="0" />
 
         <Button
@@ -194,12 +194,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:textSize="25sp"
+            android:textSize="25dp"
             android:text="AC" />
 
     </LinearLayout>
 
-    <Space
+    <dpace
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="3" />

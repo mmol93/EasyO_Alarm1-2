@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ReadableBottomBar</string>
+    <string name="app_name">MaidAlarm</string>
 
     <!-- 여기 밑은 activity_short_alarm에서 사용-->
     <string name="Alarm">Alarm</string>

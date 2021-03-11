@@ -22,12 +22,12 @@ class notification {
         val builder1 = getNotification(context, "chanel1", "첫 번째 채널", notificationManager)
 
         // 9. notification의 작은 아이콘 설정(상단 작업표시줄에 상시 표시되는 작은 아이콘)
-        builder1.setSmallIcon(android.R.drawable.ic_menu_search)
+        builder1.setSmallIcon(R.drawable.notification_icon)
 
         // 10. notification의 큰 아이콘 설정(작업표시줄을 늘려서 볼 때 나오는 Notification 아이콘)
         // 큰 아이콘은 bitmap으로만 받아서 표시할 수 있다
         // 그래서 bitmap으로 디코딩을 해야한다
-        val bitmap  = BitmapFactory.decodeResource(Resources.getSystem(), R.mipmap.ic_launcher)
+        val bitmap  = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.notification_icon)
         builder1.setLargeIcon(bitmap)
 
         // 숫자 설정(알림 메시지 안에 숫자 표시가능)
