@@ -25,7 +25,7 @@
     <string name="list_dialog_Yes">응</string>
     <string name="list_dialog_No">아니</string>
     <string name="front_moreTime">10분 뒤</string>
-    <string name="front_ok">좋아!</string>
+    <string name="front_ok">확인</string>
     <string name="alarmSet_AM">오전</string>
     <string name="alarmSet_PM">오후</string>
     <string name="alarmSet_Toast">요일을 선택해주세요</string>

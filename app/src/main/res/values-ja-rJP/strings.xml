@@ -25,7 +25,7 @@
     <string name="list_dialog_Yes">うん</string>
     <string name="list_dialog_No">いいえ</string>
     <string name="front_moreTime">10分後また</string>
-    <string name="front_ok">ｵｰｹｰ</string>
+    <string name="front_ok">確認</string>
     <string name="alarmSet_AM">午前</string>
     <string name="alarmSet_PM">午後</string>
     <string name="alarmSet_Toast">週を選んでください</string>
