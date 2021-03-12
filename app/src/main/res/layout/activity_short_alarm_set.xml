@@ -43,9 +43,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="@dimen/activity_short_main_textSize"
-            android:text="@string/quick_title"
             android:gravity="center"
+            android:text="@string/quick_title"
+            android:fontFamily="@font/nanumgothicextrabold"
+            android:textSize="@dimen/activity_short_main_textSize"
             tools:ignore="NestedWeights" />
 
     </LinearLayout>

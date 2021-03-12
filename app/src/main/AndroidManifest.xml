@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/icon_maidalarm_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyO_Alarm">
-        <activity android:name=".LicenseActivity"></activity>
+        <activity android:name=".SelectRingActivity"></activity>
+        <activity android:name=".LicenseActivity" />
         <activity android:name=".InfoActivity" />
 
         <service
