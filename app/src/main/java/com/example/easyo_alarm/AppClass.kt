@@ -7,11 +7,8 @@ import com.example.easyo_alarm.databinding.FragmentAlarmBinding
 
 class AppClass : Application() {
 
-    // 현재 기기의 해상도(float 버전)
-    var dpi : Float = 0.0f
-
-    // 현재 기기의 해상도(String 버전)
-    var dpiString = ""
+    // 처음 사용 설명서 표시 유무
+    var initialStart = 0
 
     // 0 : 계산 문제 모드 off / 1 : 계산 문제 모드 on
     var wayOfAlarm = 1  // 계산 문제를 제출할지 말지 선택(설정 탭에서 선택 가능)
@@ -46,4 +43,6 @@ class AppClass : Application() {
     // thread 트리거
     var threadTrigger = 0
 
+    // 어떤 음악을 울릴지 지정
+    var bellIndex = 0
 }

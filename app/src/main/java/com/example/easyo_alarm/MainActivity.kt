@@ -42,20 +42,6 @@ class MainActivity : AppCompatActivity() {
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
         app = application as AppClass
 
-        // 현재 기기의 dpi를 가져온다
-        app.dpi = resources.displayMetrics.density
-        val dpiCheck = CheckDpi(app.dpi)
-        app.dpiString = dpiCheck.getDpiString()
-
-        // dpi에 따라 뷰의 크기를 변경한다
-        mainBinder.adView.height
-
-        // *** 테스트로 notification을 호출해본다
-//        val notification = notification()
-//        val notificationManager =getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-//        notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
-//        notification.makeNotification(app, this, notificationManager)
-
         // *** Task 종료에 대한 서비스를 실시한다
         startService(Intent(this, Service::class.java))
 
@@ -69,10 +55,15 @@ class MainActivity : AppCompatActivity() {
             val data1 = dis.readInt()
             val data2 = dis.readInt()
             val data3 = dis.readInt()
+            val data4 = dis.readInt()
+            val data5 = dis.readInt()
 
             app.wayOfAlarm = data1
             app.counter = data2
             app.notificationSwitch = data3
+            app.initialStart = data4
+            app.bellIndex = data5
+            Log.d("MainActivity", "앱을 기동했습니다.")
         }catch (e:Exception){
             // 어플을 처음 사용하는 거라서 데이터가 없는 경우에는 기본 값으로 만들어 준다
             val fos = openFileOutput("data1.bat",Context.MODE_PRIVATE)
@@ -81,9 +72,12 @@ class MainActivity : AppCompatActivity() {
             dos.writeInt(app.wayOfAlarm)
             dos.writeInt(app.counter)
             dos.writeInt(app.notificationSwitch)
+            dos.writeInt(app.initialStart)
+            dos.writeInt(app.bellIndex)
 
             dos.flush()
             dos.close()
+            Log.d("MainActivity", "처음 앱을 기동했습니다.")
         }
 
         // *** 애드몹 초기화

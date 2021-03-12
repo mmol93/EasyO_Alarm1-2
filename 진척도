@@ -68,8 +68,6 @@
 30. 설정탭 만들기
 - RecyclerView 만들기 - C
 
-31. alarmFragment에서 슬라이드하면 FloatingButton 사라지게 하기 - ing
-
 32. 계산기 on/off에 따른 RecyclerView에 그림 바꾸게 하기
 
 33. 설정화면(탭) 리스트 만들기 - ing
@@ -132,3 +130,5 @@
 46. notification 아이콘 바꾸기 - C
 
 47. 이어폰 모드에서는 어떻게 되는지 생각하기
+
+48. RecyclerView 슬라이드하면 FloatingButton 숨겨지게 하기 - ing
