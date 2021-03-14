@@ -1,26 +1,23 @@
 package com.example.easyo_alarm
 
 import android.app.AlarmManager
-import android.app.Application
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.media.MediaPlayer
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.example.easyo_alarm.databinding.ActivityFrontAlarmBinding
-import com.example.easyo_alarm.databinding.FragmentCalculateProblemBinding
 import com.example.easyo_alarm.notification.notification
-import java.lang.Exception
 import java.util.*
 import kotlin.random.Random
-import kotlin.random.Random.Default.nextInt
 
 class FrontAlarmActivity : AppCompatActivity() {
     lateinit var binder : ActivityFrontAlarmBinding
@@ -30,6 +27,8 @@ class FrontAlarmActivity : AppCompatActivity() {
     var problem2 = Random.nextInt(1, 10)
     var user_answer = 0
     lateinit var vib : Vibrator // 진동관련 변수 - 여기서 정의해야 ok버튼의 리스너에서 사용가능
+    lateinit var mediaPlayer: MediaPlayer
+    private val MAX_VOLUME : Int = 50
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -73,6 +72,11 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
 
         // *** 음악 파일 실행 - 미구현
+        val currVolume = MAX_VOLUME - 1
+        mediaPlayer = MediaPlayer.create(this, R.raw.normal1)
+        mediaPlayer.setVolume(1f, 1f)
+        mediaPlayer.start()
+
         // 먼저 progress 값을 가져온다
         val progress = intent.getIntExtra("progress", -1)
         app.lastProgress = progress
@@ -157,13 +161,6 @@ class FrontAlarmActivity : AppCompatActivity() {
                         finish()
                         // 1분뒤 소리 울리는거 취소 - 트리거 취소
                         app.threadTrigger = 0
-
-                        // 음악 재생을 멈춘다 - 미구현
-                        try {
-
-                        }catch (e:Exception){
-
-                        }
                     }
                 }
             }
@@ -173,7 +170,6 @@ class FrontAlarmActivity : AppCompatActivity() {
                     vib.cancel()
                 }
                 finish()
-                // 음악 재생을 멈춘다 - 미구현
             }
 
             // 그 다음으로 울릴 알람이 없다면 notification 삭제하기
@@ -193,7 +189,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             }
             // 남아있는 알람이 있다면 notification 갱신
             else{
-                // 설정에서 notification이 "사용 상태"로 되어 있을 때
+                // 설정에서 xnotification이 "사용 상태"로 되어 있을 때
                 // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
                 // 여기서는 notificatrion에 대한 갱신만 해주면 된다
                 if (app.notificationSwitch == 1){
@@ -240,15 +236,22 @@ class FrontAlarmActivity : AppCompatActivity() {
             }
             // 1분뒤 소리 울리는거 취소 = 트리거 취소
             app.threadTrigger = 0
-            // 소리 끄기
-            try {
 
-            }catch (e:Exception){
-
-            }
             finish()
         }
         setContentView(binder.root)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // 액티비티 종료 시 음악 끄기
+        try {
+            mediaPlayer.release()
+            vib.cancel()
+        }
+        catch (e: Exception){
+
+        }
     }
 
 }

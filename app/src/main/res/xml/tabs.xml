@@ -2,9 +2,11 @@
 <tabs>
     <tab
         drawable = "@drawable/tab_alarm"
+        fontFamily = "@font/nanumgothicextrabold"
         text="@string/Alarm" />
 
     <tab
         drawable="@drawable/tab_setting"
+        fontFamily = "@font/nanumgothicextrabold"
         text="@string/Setting" />
 </tabs>

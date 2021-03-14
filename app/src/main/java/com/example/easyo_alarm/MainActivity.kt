@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
             app.initialStart = data4
             app.bellIndex = data5
             Log.d("MainActivity", "앱을 기동했습니다.")
+
         }catch (e:Exception){
             // 어플을 처음 사용하는 거라서 데이터가 없는 경우에는 기본 값으로 만들어 준다
             val fos = openFileOutput("data1.bat",Context.MODE_PRIVATE)
