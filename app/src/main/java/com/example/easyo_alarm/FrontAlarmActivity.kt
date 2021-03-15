@@ -7,10 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.media.MediaPlayer
-import android.os.Build
-import android.os.Bundle
-import android.os.VibrationEffect
-import android.os.Vibrator
+import android.os.*
 import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +26,9 @@ class FrontAlarmActivity : AppCompatActivity() {
     lateinit var vib : Vibrator // 진동관련 변수 - 여기서 정의해야 ok버튼의 리스너에서 사용가능
     lateinit var mediaPlayer: MediaPlayer
     private val MAX_VOLUME : Int = 50
+    private val increaseVolumeHandler = Handler()
+    private var lastVolumeValue = 0.1f
+    private val INCREASE_VOLUME_DELAY = 3000L
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -76,6 +76,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         mediaPlayer = MediaPlayer.create(this, R.raw.normal1)
         mediaPlayer.setVolume(1f, 1f)
         mediaPlayer.start()
+
 
         // 먼저 progress 값을 가져온다
         val progress = intent.getIntExtra("progress", -1)
@@ -247,11 +248,20 @@ class FrontAlarmActivity : AppCompatActivity() {
         // 액티비티 종료 시 음악 끄기
         try {
             mediaPlayer.release()
+            increaseVolumeHandler.removeCallbacksAndMessages(null)
             vib.cancel()
         }
         catch (e: Exception){
 
         }
+    }
+
+    private fun scheduleVolumeIncrease() {
+        increaseVolumeHandler.postDelayed({
+            lastVolumeValue = Math.min(lastVolumeValue + 0.1f, 1f)
+            mediaPlayer?.setVolume(lastVolumeValue, lastVolumeValue)
+            scheduleVolumeIncrease()
+        }, INCREASE_VOLUME_DELAY)
     }
 
 }
