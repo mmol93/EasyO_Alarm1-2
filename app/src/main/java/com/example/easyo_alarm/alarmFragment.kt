@@ -4,12 +4,14 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.easyo_alarm.databinding.FragmentAlarmBinding
 import com.example.easyo_alarm.notification.notification
@@ -50,6 +52,33 @@ class alarmFragment : Fragment() {
         try {
             binder.alarmListRecycle.layoutManager = LinearLayoutManager(requireContext())
             binder.alarmListRecycle.adapter = RecyclerAdapter(requireContext(), SQLHelper, size)
+            binder.alarmListRecycle.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                Log.d("alarmFragment", "드래그중")
+                when(v?.id){
+                    R.id.alarmList_recycle -> {
+                        // 리사이클로뷰를 스크롤 하면 floating 버튼이 안보이도록 한다
+                        binder.fab.isGone = true
+                        Log.d("alarmFragment", "드래그중")
+                        // 2초 뒤 다시 floating 버튼이 보이게 설정한다
+                        val thread = object : Thread(){
+                            override fun run() {
+                                super.run()
+                                // 2초
+                                SystemClock.sleep(2 * 1000)
+                                // 2초가 지난 후 floating 버튼을 되돌리려고 할 때 프로그램을 종료할 가능성 있음
+                                // 종료되고 실시하면 에러 발생
+                                try {
+                                    binder.fab.isGone = false
+                                }
+                                catch (e:Exception){
+
+                                }
+                            }
+                        }
+                        thread.start()
+                    }
+                }
+            }
         }catch (e:Exception){
 
         }
