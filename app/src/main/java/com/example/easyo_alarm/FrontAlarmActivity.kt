@@ -6,6 +6,9 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.media.AudioAttributes
+import android.media.AudioFocusRequest
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.*
 import android.util.Log
@@ -16,6 +19,7 @@ import com.example.easyo_alarm.notification.notification
 import java.util.*
 import kotlin.random.Random
 
+
 class FrontAlarmActivity : AppCompatActivity() {
     lateinit var binder : ActivityFrontAlarmBinding
 
@@ -25,10 +29,10 @@ class FrontAlarmActivity : AppCompatActivity() {
     var user_answer = 0
     lateinit var vib : Vibrator // 진동관련 변수 - 여기서 정의해야 ok버튼의 리스너에서 사용가능
     lateinit var mediaPlayer: MediaPlayer
-    private val MAX_VOLUME : Int = 50
-    private val increaseVolumeHandler = Handler()
-    private var lastVolumeValue = 0.1f
-    private val INCREASE_VOLUME_DELAY = 3000L
+    var currentVolume : Int = 0
+    var maxVolume : Int = 0
+    var minVolume : Int = 0
+    lateinit var audioManager: AudioManager
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -71,16 +75,16 @@ class FrontAlarmActivity : AppCompatActivity() {
             binder.FrontMin.text = "$present_min"
         }
 
-        // *** 음악 파일 실행 - 미구현
-        val currVolume = MAX_VOLUME - 1
-        mediaPlayer = MediaPlayer.create(this, R.raw.normal1)
-        mediaPlayer.setVolume(1f, 1f)
-        mediaPlayer.start()
-
-
         // 먼저 progress 값을 가져온다
         val progress = intent.getIntExtra("progress", -1)
         app.lastProgress = progress
+
+        // *** 음악 파일 실행 - 미구현
+        // 알람 울리기 전 볼륨 강제 조절
+        adjustVolume(progress)
+        mediaPlayer = MediaPlayer.create(this, R.raw.normal1)
+        mediaPlayer.setVolume(1f, 1f)
+        mediaPlayer.start()
 
         if (progress == -1){
             Log.d("FrontAlarmActivity", "FrontAlarmActivity 의 Vibrate 쪽에 에러 발생")
@@ -248,7 +252,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         // 액티비티 종료 시 음악 끄기
         try {
             mediaPlayer.release()
-            increaseVolumeHandler.removeCallbacksAndMessages(null)
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
             vib.cancel()
         }
         catch (e: Exception){
@@ -256,12 +260,14 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
     }
 
-    private fun scheduleVolumeIncrease() {
-        increaseVolumeHandler.postDelayed({
-            lastVolumeValue = Math.min(lastVolumeValue + 0.1f, 1f)
-            mediaPlayer?.setVolume(lastVolumeValue, lastVolumeValue)
-            scheduleVolumeIncrease()
-        }, INCREASE_VOLUME_DELAY)
+    // 볼륨 강제 조절
+    fun adjustVolume(volume : Int){
+        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+        currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+        val factor = volume.toFloat() / 100
+        val targetVolume = (maxVolume * factor).toInt()
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVolume, AudioManager.FLAG_PLAY_SOUND)
     }
 
 }
