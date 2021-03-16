@@ -23,6 +23,7 @@ class CalculateProblemFragment : Fragment() {
     var initial = 0
     var threadRunning = false
     lateinit var app : AppClass
+    lateinit var FrontAlarmActivity : FrontAlarmActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +38,9 @@ class CalculateProblemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val FrontAlarmActivity = activity as FrontAlarmActivity
+        FrontAlarmActivity = activity as FrontAlarmActivity
         app = context!!.applicationContext as AppClass
+
 
         // 뷰에 문제 게시
         binder.problemText1.text = FrontAlarmActivity.problem1.toString()
@@ -103,25 +105,28 @@ class CalculateProblemFragment : Fragment() {
         // 숫자패드 C를 클릭했을 때 = 제일 마지막 글자 삭제
         binder.buttonC.setOnClickListener {
             var text = binder.answerText.text
-            if (text.length <= 1){
+            Log.d("Calculate", "text.length: ${text.length}")
+            if (text.length <= 1 || text.toString() == ""){
                 binder.answerText.text = ""
             }else{
-                text = text.removeRange(text.length -2, text.length-1)
+                text = text.removeRange(text.length -1, text.length)
                 binder.answerText.text = text
+
+                // answer는 입력될 때 마다 FrontAlarmActivity로 보내진다
+                FrontAlarmActivity.user_answer = binder.answerText.text.toString().toInt()
             }
         }
     }
 
     // 클릭한 버튼의 숫자를 textView에 입력
     fun setNumber(int : Int){
+        // 일단 처음 뭔가 입력하면 공란으로 만듬
         if (initial == 0){
             binder.answerText.text = ""
             initial =1
         }
         binder.answerText.append(int.toString())
-        var answer = 0 // 숫자를 입력할 때 마다 정답이 해당 변수에 들어감
         // answer는 입력될 때 마다 FrontAlarmActivity로 보내진다
-        val FrontAlarmActivity = activity as FrontAlarmActivity
         FrontAlarmActivity.user_answer = binder.answerText.text.toString().toInt()
     }
 

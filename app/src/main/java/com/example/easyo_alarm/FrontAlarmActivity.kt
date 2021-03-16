@@ -251,8 +251,11 @@ class FrontAlarmActivity : AppCompatActivity() {
         super.onDestroy()
         // 액티비티 종료 시 음악 끄기
         try {
+            // 음악 끄기
             mediaPlayer.release()
+            // 볼륨 원래대로 되돌리기
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
+            // 진동 끄기
             vib.cancel()
         }
         catch (e: Exception){
