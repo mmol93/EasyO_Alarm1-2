@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/itemBackground"
     tools:context=".SelectRingActivity">
 
     <LinearLayout
@@ -17,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
-            android:text="@string/typeOfBell_Korean"
+            android:text="@string/typeOfBell_Normal"
+            android:textColor="@color/teal_700"
             android:textSize="23sp" />
 
         <RadioGroup
@@ -25,11 +27,32 @@
             android:layout_height="match_parent">
 
             <RadioButton
-                android:id="@+id/radioButton_K1"
+                android:id="@+id/radioButton_N1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/nanumgothicextrabold"
-                android:text="@string/typeOfBell_Korean_Minjjeong" />
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Normal_Bar" />
+
+            <RadioButton
+                android:id="@+id/radioButton_N2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Normal_Guitar" />
+
+            <RadioButton
+                android:id="@+id/radioButton_N3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Normal_Happy" />
+
+            <RadioButton
+                android:id="@+id/radioButton_N4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Normal_Country" />
 
             <TextView
                 android:id="@+id/type_japanese"
@@ -37,8 +60,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
                 android:fontFamily="@font/nanumgothicextrabold"
-                android:text="@string/typeOfBell_Japanese"
+                android:text="@string/typeOfBell_Korean"
+                android:textColor="@color/teal_700"
                 android:textSize="23sp" />
+
+            <RadioButton
+                android:id="@+id/radioButton_K1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Korean_Minjjeong" />
         </RadioGroup>
 
     </LinearLayout>
