@@ -55,46 +55,55 @@ class CalculateProblemFragment : Fragment() {
         // 숫자패드 2 클릭했을 때
         binder.button2.setOnClickListener {
             setNumber(2)
+            stopSound()
         }
 
         // 숫자패드 3 클릭했을 때
         binder.button3.setOnClickListener {
             setNumber(3)
+            stopSound()
         }
 
         // 숫자패드 4 클릭했을 때
         binder.button4.setOnClickListener {
             setNumber(4)
+            stopSound()
         }
 
         // 숫자패드 5 클릭했을 때
         binder.button5.setOnClickListener {
             setNumber(5)
+            stopSound()
         }
 
         // 숫자패드 6을 클릭했을 때
         binder.button6.setOnClickListener {
             setNumber(6)
+            stopSound()
         }
 
         // 숫자패드 7을 클릭했을 때
         binder.button7.setOnClickListener {
             setNumber(7)
+            stopSound()
         }
 
         // 숫자패드 8을 클릭했을 때
         binder.button8.setOnClickListener {
             setNumber(8)
+            stopSound()
         }
 
         // 숫자패드 9를 클릭했을 때
         binder.button9.setOnClickListener {
             setNumber(9)
+            stopSound()
         }
 
         // 숫자패드 0을 클릭했을 때
         binder.button0.setOnClickListener {
             setNumber(0)
+            stopSound()
         }
 
         // 숫자패드 AC를 클릭했을 때 = 전부 삭제
