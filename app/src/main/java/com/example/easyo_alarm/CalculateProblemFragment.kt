@@ -147,18 +147,20 @@ class CalculateProblemFragment : Fragment() {
             try {
                 // 소리를 끈다 - 미구현
                 if (app.lastProgress > 0){
-
+                    app.mediaPlayer.pause()
                 }
                 // thread로 1분 대기
                 val thread = object : Thread(){
                     override fun run() {
                         super.run()
-                        SystemClock.sleep(60 * 1000)
+                        SystemClock.sleep(10 * 1000)
                         // 도중에 "10분 뒤" 버튼이나 "ok"버튼을 눌렀을 경우 트리거는 0이되어 다시 소리가 나지 않게 한다
                         if (app.threadTrigger == 1){
                             // 음악파일 재생
                             Log.d("makeAlarm", "다시 음악 재생")
-
+                            app.mediaPlayer.setVolume(1f, 1f)
+                            app.mediaPlayer.isLooping = true
+                            app.mediaPlayer.start()
                         }
                         Log.d("makeAlarm", "thread 끝남")
                         // 트리거가 끝났으니 원래대로 돌려준다

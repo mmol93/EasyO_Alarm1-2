@@ -84,6 +84,9 @@ class FrontAlarmActivity : AppCompatActivity() {
         adjustVolume(progress)
         mediaPlayer = MediaPlayer.create(this, R.raw.normal1)
         mediaPlayer.setVolume(1f, 1f)
+        mediaPlayer.isLooping = true
+        // 동시에 버튼 클릭시 일시 정지를 위해 appClass에도 값을 저장한다
+        app.mediaPlayer = mediaPlayer
         mediaPlayer.start()
 
         if (progress == -1){

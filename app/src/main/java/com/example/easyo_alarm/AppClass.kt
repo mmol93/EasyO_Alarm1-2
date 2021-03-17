@@ -2,6 +2,7 @@ package com.example.easyo_alarm
 
 import android.app.Application
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Vibrator
 import com.example.easyo_alarm.databinding.FragmentAlarmBinding
 
@@ -45,4 +46,7 @@ class AppClass : Application() {
 
     // 어떤 음악을 울릴지 지정
     var bellIndex = 0
+
+    // 버튼 클릭 시 음악 정지를 위해 설정
+    lateinit var mediaPlayer: MediaPlayer
 }
