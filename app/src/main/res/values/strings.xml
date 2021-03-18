@@ -83,11 +83,12 @@
 
 
     <string name="typeOfBell_Korean">Korean-Voice</string>
-    <string name="typeOfBell_Korean_Minjjeong">Minjjeong</string>
+    <string name="typeOfBell_Korean_MinJjeong">Minjjeong</string>
+    <string name="typeOfBell_Korean_Jeongyeon">Jeongyeon</string>
 
 
-    <string name="typeOfBell_Japanese">Japanese-Voice</string>
-    <string name="typeOfBell_English">English-Voice</string>
+    <string name="typeOfBell_Japanese">Japanese-Voice(coming soon)</string>
+    <string name="typeOfBell_English">English-Voice(coming soon)</string>
 
 
 

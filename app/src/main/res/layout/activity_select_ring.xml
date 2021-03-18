@@ -14,7 +14,7 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/type_korean"
+            android:id="@+id/type_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
@@ -55,7 +55,7 @@
                 android:text="@string/typeOfBell_Normal_Country" />
 
             <TextView
-                android:id="@+id/type_japanese"
+                android:id="@+id/type_korean"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
@@ -69,11 +69,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicbold"
-                android:text="@string/typeOfBell_Korean_Minjjeong" />
+                android:text="@string/typeOfBell_Korean_Jeongyeon" />
+
+            <RadioButton
+                android:id="@+id/radioButton_K2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Korean_MinJjeong" />
+
+            <TextView
+                android:id="@+id/type_japanese"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="@string/typeOfBell_English"
+                android:textColor="@color/teal_700"
+                android:textSize="23sp" />
+
+            <RadioButton
+                android:id="@+id/radioButton_E1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Korean_MinJjeong" />
+
+            <RadioButton
+                android:id="@+id/radioButton_E2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Korean_Jeongyeon" />
+
+            <TextView
+                android:id="@+id/type_japanese2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:text="@string/typeOfBell_Japanese"
+                android:textColor="@color/teal_700"
+                android:textSize="23sp" />
         </RadioGroup>
 
     </LinearLayout>
-
-
 
 </ScrollView>
