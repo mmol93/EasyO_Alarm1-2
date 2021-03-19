@@ -7,11 +7,10 @@
     android:orientation="vertical"
     android:background="@color/itemBackground"
     tools:context=".SelectRingActivity">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/type_normal"
@@ -79,7 +78,7 @@
                 android:text="@string/typeOfBell_Korean_MinJjeong" />
 
             <TextView
-                android:id="@+id/type_japanese"
+                android:id="@+id/type_english"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
@@ -103,7 +102,7 @@
                 android:text="@string/typeOfBell_Korean_Jeongyeon" />
 
             <TextView
-                android:id="@+id/type_japanese2"
+                android:id="@+id/type_japanese"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="23dp"
@@ -111,8 +110,14 @@
                 android:text="@string/typeOfBell_Japanese"
                 android:textColor="@color/teal_700"
                 android:textSize="23sp" />
-        </RadioGroup>
 
+            <RadioButton
+                android:id="@+id/radioButton_J1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nanumgothicbold"
+                android:text="@string/typeOfBell_Korean_Jeongyeon" />
+        </RadioGroup>
     </LinearLayout>
 
 </ScrollView>
