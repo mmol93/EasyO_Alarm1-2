@@ -75,6 +75,8 @@
 
     <string name="info_name">Maid Alarm</string>
 
+    <string name="test_play">Play</string>
+
     <string name="typeOfBell_Normal">Normal-Bell</string>
     <string name="typeOfBell_Normal_Bar">JazzBar</string>
     <string name="typeOfBell_Normal_Guitar">JazzGuitar</string>

@@ -12,6 +12,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_play"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:text="@string/test_play" />
+
+            <Button
+                android:id="@+id/button_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="10dp"
+                android:text="@string/front_ok" />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/type_normal"
             android:layout_width="match_parent"
@@ -22,6 +44,7 @@
             android:textSize="23sp" />
 
         <RadioGroup
+            android:id="@+id/RadioGroup"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -93,13 +116,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicbold"
                 android:text="@string/typeOfBell_Korean_MinJjeong" />
-
-            <RadioButton
-                android:id="@+id/radioButton_E2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/nanumgothicbold"
-                android:text="@string/typeOfBell_Korean_Jeongyeon" />
 
             <TextView
                 android:id="@+id/type_japanese"
