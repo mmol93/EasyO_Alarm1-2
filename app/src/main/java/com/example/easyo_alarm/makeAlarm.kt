@@ -236,10 +236,8 @@ class Receiver : BroadcastReceiver() {
             // 알람에서 설정한 요일일 때만 액티비티 띄워서 알람 울리게 설정
             // 설정 알람 시간이랑 동일할 때만 울리게 한다.
             if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
-                Log.d("makeAlarm", "${present_week}요일입니다.")
                 val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
                 frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                // arrayFromMakeAlarm[7] 에는 progress 대한 정보 들어있음
                 frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
                 context?.startActivity(frontAlarmActivity)
             }

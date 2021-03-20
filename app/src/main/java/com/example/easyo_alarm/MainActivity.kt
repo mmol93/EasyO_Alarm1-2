@@ -1,22 +1,22 @@
 package com.example.easyo_alarm
 
-import android.app.NotificationManager
-import android.content.ComponentName
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
+import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.easyo_alarm.databinding.ActivityMainBinding
-import com.example.easyo_alarm.notification.notification
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import java.io.DataInputStream
 import java.io.DataOutputStream
-import java.lang.Exception
+
 
 class MainActivity : AppCompatActivity() {
     // 메인 바인딩
@@ -34,10 +34,39 @@ class MainActivity : AppCompatActivity() {
     // AppClass 변수 선언
     lateinit var app : AppClass
 
+    // 부여할 권한 리스트
+    val permissionList = arrayOf(
+        Manifest.permission.SYSTEM_ALERT_WINDOW,
+        Manifest.permission.VIBRATE,
+        Manifest.permission.WAKE_LOCK,
+        Manifest.permission.RECEIVE_BOOT_COMPLETED
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
+
+        if (!Settings.canDrawOverlays(this)) {
+            // ask for setting
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            )
+            startActivityForResult(intent, 0)
+        }
+
+        // 권한 확인
+        for (permission in permissionList){
+
+            val check = checkCallingOrSelfPermission(permission)
+            if (check == PackageManager.PERMISSION_GRANTED){
+                Log.d("MainActivity", "권한 확인")
+            }else{
+                requestPermissions(permissionList, 0)
+                Log.d("MainActivity", "권한 거부")
+            }
+        }
 
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
         app = application as AppClass
@@ -65,9 +94,9 @@ class MainActivity : AppCompatActivity() {
             app.bellIndex = data5
             Log.d("MainActivity", "앱을 기동했습니다.")
 
-        }catch (e:Exception){
+        }catch (e: Exception){
             // 어플을 처음 사용하는 거라서 데이터가 없는 경우에는 기본 값으로 만들어 준다
-            val fos = openFileOutput("data1.bat",Context.MODE_PRIVATE)
+            val fos = openFileOutput("data1.bat", Context.MODE_PRIVATE)
 
             val dos = DataOutputStream(fos)
             dos.writeInt(app.wayOfAlarm)
@@ -140,8 +169,10 @@ class MainActivity : AppCompatActivity() {
             return;
         }
         else {
-            Toast.makeText(getBaseContext(),
-            getString(R.string.backButtonDoubleClick), Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                getBaseContext(),
+                getString(R.string.backButtonDoubleClick), Toast.LENGTH_SHORT
+            ).show();
         }
         mBackPressed = System.currentTimeMillis();
     }

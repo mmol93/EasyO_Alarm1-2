@@ -44,6 +44,8 @@ class FrontAlarmActivity : AppCompatActivity() {
         setContentView(R.layout.activity_front_alarm)
         // 현재 화면이 자동으로 꺼지지 않게 유지
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+        window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD)
 
         binder = ActivityFrontAlarmBinding.inflate(layoutInflater)
         val app = application as AppClass
