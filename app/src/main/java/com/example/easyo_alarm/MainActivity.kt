@@ -125,6 +125,9 @@ class MainActivity : AppCompatActivity() {
         val dos = DataOutputStream(fos)
         dos.writeInt(app.wayOfAlarm)
         dos.writeInt(app.counter)
+        dos.writeInt(app.notificationSwitch)
+        dos.writeInt(app.initialStart)
+        dos.writeInt(app.bellIndex)
 
         dos.flush()
         dos.close()

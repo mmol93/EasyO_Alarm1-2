@@ -60,6 +60,7 @@ class SelectRingActivity : AppCompatActivity() {
             app.mediaPlayer.setVolume(1f, 1f)
             app.mediaPlayer.isLooping = true
             app.mediaPlayer.start()
+            Log.d("SelectRingActivity", "소리 울림")
         }
         setContentView(binder.root)
     }
