@@ -1,19 +1,24 @@
 package com.example.easyo_alarm
 
 import android.app.AlertDialog
+import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
+import android.os.SystemClock
 import android.util.Log
+import android.view.DragEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.isGone
 import androidx.recyclerview.widget.RecyclerView
 import com.example.easyo_alarm.databinding.FragmentAlarmBinding
 import com.example.easyo_alarm.databinding.MainalarmRawBinding
 import com.example.easyo_alarm.notification.notification
+import java.lang.Exception
 
 
 class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size : Int) : RecyclerView.Adapter<ViewHolder>(){
@@ -129,8 +134,9 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             holder.row_switch.isChecked = false
         }
 
-        // *** switch on/off 의 변화에 따른 행동 정의
+        // *** switch(토글) on/off 의 변화에 따른 행동 정의
         holder.row_switch.setOnCheckedChangeListener() { compoundButton: CompoundButton, b: Boolean ->
+            // 토글 버튼이 on일 경우
             // 알람 매니저에 알람 등록하기
             if (holder.row_switch.isChecked){
                 val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tue[position], Wed[position], Thu[position], Fri[position], Sat[position])
@@ -145,13 +151,39 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     SQLHelper.writableDatabase.execSQL(sql_update, arg1)
                     Log.d("RecyclerAdapter", "position: $position")
 
-                }else{  // normal 알람의 경우
+                }else{ // normal 알람의 경우
                     reNewAlarm.addNewAlarm_normal()
                     // SQL 데이터에 있는 switch 컬럼도 바꿔줘야 switch의 기록이 유지된다
                     val sql_update = "update MaidAlarm set switch = ? where idx = ?"
                     val arg1 = arrayOf(1, position + 1)
                     SQLHelper.writableDatabase.execSQL(sql_update, arg1)
                 }
+                // notification 재설정
+                val recentAlarm = RecentAlarm()
+                val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+                // 1개라도 on인 토글이 있을 때
+                if (recentTimeList[0] != -1){
+                    // 시간 부분 입력
+                    var recentHour = ""
+                    var recentMin = ""
+                    if (recentTimeList[7] < 10){
+                        recentHour = "0${recentTimeList[7]}"
+                    }else{
+                        recentHour = "${recentTimeList[7]}"
+                    }
+                    if (recentTimeList[8] < 10){
+                        recentMin = "0${recentTimeList[8]}"
+                    }else{
+                        recentMin = "${recentTimeList[8]}"
+                    }
+                    app.recentTime = "$recentHour : $recentMin"
+                    Log.d("RecyclerAdapter", "recentHour: $recentHour, recentMin: $recentMin")
+                }
+                val notification = notification()
+                val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
+                notification.makeNotification(app, context!!, notificationManager)
+                Log.d("RecyclerAdapter", "토글 on")
             }
             // 알람 매니저에 해당 알람 캔슬하기
             else{
@@ -160,14 +192,42 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
 
                 reNewAlarm.cancelAlarm(requestCode[position])
 
-
                 // switch를 off할 경우 SQL 데이터에 있는 switch 컬럼도 바꿔줘야 switch의 기록이 유지된다
                 val sql_update = "update MaidAlarm set switch = ? where idx = ?"
                 val arg1 = arrayOf(0, position + 1)
                 SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+
+                // notification 재설정
+                val recentAlarm = RecentAlarm()
+                val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+                // 모든 토글이 off 일 때 = notification cancel
+                if (recentTimeList[0] == -1){
+                    val notification = notification()
+                    notification.cancelNotification(context!!)
+                    Log.d("RecyclerAdapter", "토글 off")
+                }else{
+                    // 시간 부분 입력
+                    var recentHour = ""
+                    var recentMin = ""
+                    if (recentTimeList[7] < 10){
+                        recentHour = "0${recentTimeList[7]}"
+                    }else{
+                        recentHour = "${recentTimeList[7]}"
+                    }
+                    if (recentTimeList[8] < 10){
+                        recentMin = "0${recentTimeList[8]}"
+                    }else{
+                        recentMin = "${recentTimeList[8]}"
+                    }
+                    app.recentTime = "$recentHour : $recentMin"
+                    val notification = notification()
+                    val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
+                    notification.makeNotification(app, context!!, notificationManager)
+                    Log.d("RecyclerAdapter", "토글 off")
+                }
             }
         }
-
         // *** 쓰레기통 아이콘을 눌렀을 때 = 해당 리스트 삭제하기 ***
         holder.row_trash.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(context)
@@ -256,6 +316,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val binder : MainalarmRawBinding = MainalarmRawBinding.bind(view)
 
+    val row_groupView = binder.rowGroupView
     val row_clock = binder.rowClcok
     val row_trash = binder.shortImageTrash
     val row_sun = binder.rowSun

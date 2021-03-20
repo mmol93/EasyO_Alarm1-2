@@ -78,10 +78,10 @@
     <string name="test_play">Play</string>
 
     <string name="typeOfBell_Normal">Normal-Bell</string>
-    <string name="typeOfBell_Normal_Bar">JazzBar</string>
-    <string name="typeOfBell_Normal_Guitar">JazzGuitar</string>
-    <string name="typeOfBell_Normal_Happy">HappyTown</string>
-    <string name="typeOfBell_Normal_Country">CountryPop</string>
+    <string name="typeOfBell_Normal_Bar" translatable="false">JazzBar</string>
+    <string name="typeOfBell_Normal_Guitar" translatable="false">JazzGuitar</string>
+    <string name="typeOfBell_Normal_Happy" translatable="false">HappyTown</string>
+    <string name="typeOfBell_Normal_Country" translatable="false">CountryPop</string>
 
 
     <string name="typeOfBell_Korean">Korean-Voice</string>

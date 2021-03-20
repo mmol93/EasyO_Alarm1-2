@@ -65,8 +65,12 @@ class RecentAlarm {
             quick.add(c1.getInt(index13))
             switch.add(c1.getInt(index14))
         }
+        Log.d("RecentAlarm", "idxList: $idxList")
+        Log.d("RecentAlarm", "switch: $switch")
         val weekList = mutableListOf<Int>()
         // 토글 버튼이 on인 것들만 판별
+        // idxList = SQL의 인덱스 리스트 = 1부터 시작
+        // switch = 행렬 = 0부터 시작
         for (i in idxList){
             if (switch[i-1] == 1){
                 weekList.clear()
@@ -106,11 +110,15 @@ class RecentAlarm {
                 timeList.add(resultTime.toInt())
                 Log.d("RecentAlarm", "weekList: $weekList")
                 Log.d("RecentAlarm", "resultTime: $resultTime")
+                Log.d("RecentAlarm", "timeList: $timeList")
             }
         }
         // timeList 안에서 제일 작은 숫자만 골라낸다
         val recentTime = timeList.minOrNull()?:0
         val resultIdx = timeList.indexOf(recentTime)    // 여기에 제일 가까운 알람의 인덱스가 들어간다
+        Log.d("RecentAlarm", "recentTime: $recentTime")
+        Log.d("RecentAlarm", "resultIdx: $resultIdx")
+
         // 알람이 있지만 모든 알람의 토글이 off 상태일 때
         if (resultIdx == -1){
             return mutableListOf<Int>(-1)
@@ -119,6 +127,7 @@ class RecentAlarm {
         val totalResult = mutableListOf<Int>(Sun[resultIdx], Mon[resultIdx], Tue[resultIdx], Wed[resultIdx],
         Thu[resultIdx], Fri[resultIdx], Sat[resultIdx], hourList[resultIdx], minList[resultIdx])
 
+        // 가장 최근 울릴 알람의 SQL 데이터 row를 반환한다
         return totalResult
     }
 }

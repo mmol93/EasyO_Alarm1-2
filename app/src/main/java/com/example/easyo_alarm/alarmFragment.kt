@@ -6,10 +6,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -52,33 +51,6 @@ class alarmFragment : Fragment() {
         try {
             binder.alarmListRecycle.layoutManager = LinearLayoutManager(requireContext())
             binder.alarmListRecycle.adapter = RecyclerAdapter(requireContext(), SQLHelper, size)
-            binder.alarmListRecycle.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                Log.d("alarmFragment", "드래그중")
-                when(v?.id){
-                    R.id.alarmList_recycle -> {
-                        // 리사이클로뷰를 스크롤 하면 floating 버튼이 안보이도록 한다
-                        binder.fab.isGone = true
-                        Log.d("alarmFragment", "드래그중")
-                        // 2초 뒤 다시 floating 버튼이 보이게 설정한다
-                        val thread = object : Thread(){
-                            override fun run() {
-                                super.run()
-                                // 2초
-                                SystemClock.sleep(2 * 1000)
-                                // 2초가 지난 후 floating 버튼을 되돌리려고 할 때 프로그램을 종료할 가능성 있음
-                                // 종료되고 실시하면 에러 발생
-                                try {
-                                    binder.fab.isGone = false
-                                }
-                                catch (e:Exception){
-
-                                }
-                            }
-                        }
-                        thread.start()
-                    }
-                }
-            }
         }catch (e:Exception){
 
         }
@@ -169,8 +141,39 @@ class alarmFragment : Fragment() {
         }
     }
 
+    private val dragListener = View.OnDragListener { v, event ->
+        Log.d("alarmFragment", "드래그중")
+        when(event.action){
+            DragEvent.ACTION_DRAG_STARTED -> {
+                // 리사이클로뷰를 스크롤 하면 floating 버튼이 안보이도록 한다
+                binder.fab.isGone = true
+                // 2초 뒤 다시 floating 버튼이 보이게 설정한다
+                val thread = object : Thread(){
+                    override fun run() {
+                        super.run()
+                        // 2초
+                        SystemClock.sleep(2 * 1000)
+                        // 2초가 지난 후 floating 버튼을 되돌리려고 할 때 프로그램을 종료할 가능성 있음
+                        // 종료되고 실시하면 에러 발생
+                        try {
+                            binder.fab.isGone = false
+                        }
+                        catch (e:Exception){
+
+                        }
+                    }
+                }
+                thread.start()
+            }
+        }
+        true
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binder.fab.setOnDragListener(dragListener)
+
         // 플로팅 버튼 한 번 누름: 일반 알람 설정창
         binder.fab.setOnClickListener {
             val alarmActivity = Intent(activity, AlarmSetActivity::class.java)
@@ -186,6 +189,34 @@ class alarmFragment : Fragment() {
         app = context!!.applicationContext as AppClass
         app.binder_alarmFragent = binder
         app.context_alarmFragent = context!!
+
+        binder.alarmListRecycle.setOnDragListener { v, event ->
+            when(event.action){
+                DragEvent.ACTION_DRAG_STARTED -> {
+                    // 리사이클로뷰를 스크롤 하면 floating 버튼이 안보이도록 한다
+                    binder.fab.isGone = true
+                    Log.d("alarmFragment", "드래그중")
+                    // 2초 뒤 다시 floating 버튼이 보이게 설정한다
+                    val thread = object : Thread(){
+                        override fun run() {
+                            super.run()
+                            // 2초
+                            SystemClock.sleep(2 * 1000)
+                            // 2초가 지난 후 floating 버튼을 되돌리려고 할 때 프로그램을 종료할 가능성 있음
+                            // 종료되고 실시하면 에러 발생
+                            try {
+                                binder.fab.isGone = false
+                            }
+                            catch (e:Exception){
+
+                            }
+                        }
+                    }
+                    thread.start()
+                }
+            }
+            true
+        }
     }
     // alarmFragment에 있는 모든 View 정보를 갱신한다(textView, notification, recyclerView)
     // onResume()에서 갱신될 때 사용된다

@@ -59,4 +59,11 @@
     <string name="infoItem_subVersion">ﾊﾞｰｼﾞｮﾝ</string>
     <string name="infoItem_openSource">ｵｰﾌﾟﾝｿｰｽ</string>
     <string name="info_name">メードアラーム</string>
+    <string name="typeOfBell_Korean_MinJjeong">ミンジョン</string>
+    <string name="typeOfBell_Korean_Jeongyeon">ジヨン</string>
+    <string name="test_play">テスト</string>
+    <string name="typeOfBell_Normal">一般アラーム</string>
+    <string name="typeOfBell_Korean">韓国語</string>
+    <string name="typeOfBell_Japanese">日本語</string>
+    <string name="typeOfBell_English">英語</string>
 </resources>

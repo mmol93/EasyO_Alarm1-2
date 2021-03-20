@@ -30,10 +30,6 @@ class notification {
         val bitmap  = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.notification_icon)
         builder1.setLargeIcon(bitmap)
 
-        // 숫자 설정(알림 메시지 안에 숫자 표시가능)
-        // 주로 미확인 문자 메시지 수를 표기할 때 사용
-        builder1.setNumber(100)
-
         // notification on/off 설정에 따라 구별하여 notification 만들기
         if (app.notificationSwitch == 1){
             // 알람이 계속 뜬 상채로 있게하기
@@ -99,10 +95,10 @@ class notification {
             // 진동이 없게 설정
             chanel.enableVibration(false)
 
-            // 6. 알림 메시지를 관리하는 객체에 채널을 등록한다
+            // 알림 메시지를 관리하는 객체에 채널을 등록한다
             manager.createNotificationChannel(chanel)
 
-            // 7. 알림 컨텐츠를 생성한다
+            // 알림 컨텐츠를 생성한다
             val builder = NotificationCompat.Builder(context, id)
             return builder
         }else{
