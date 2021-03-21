@@ -74,5 +74,5 @@
 - WINDOW ALERT PERMISSION 필요함
 - 설명을 위한 dialog도 설정함
 
-22. (03.21) 토글 on/off 변화에 따라 Main에 있는 textView가 반응하지 않음
+22. (03.21) 토글 on/off 변화에 따라 alarmFragment에 있는 textView가 반응하지 않음
 - notification은 잘 됨

@@ -41,6 +41,7 @@
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="@string/typeOfBell_Normal"
             android:textColor="@color/teal_700"
+            android:paddingStart="10dp"
             android:textSize="23sp" />
 
         <RadioGroup
@@ -53,12 +54,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicbold"
+                android:textSize="17dp"
                 android:text="@string/typeOfBell_Normal_Bar" />
 
             <RadioButton
                 android:id="@+id/radioButton_N2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:text="@string/typeOfBell_Normal_Guitar" />
 
@@ -66,6 +69,7 @@
                 android:id="@+id/radioButton_N3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:text="@string/typeOfBell_Normal_Happy" />
 
@@ -73,6 +77,7 @@
                 android:id="@+id/radioButton_N4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:text="@string/typeOfBell_Normal_Country" />
 
@@ -84,12 +89,14 @@
                 android:fontFamily="@font/nanumgothicextrabold"
                 android:text="@string/typeOfBell_Korean"
                 android:textColor="@color/teal_700"
+                android:paddingStart="10dp"
                 android:textSize="23sp" />
 
             <RadioButton
                 android:id="@+id/radioButton_K1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:text="@string/typeOfBell_Korean_Jeongyeon" />
 
@@ -97,6 +104,7 @@
                 android:id="@+id/radioButton_K2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:text="@string/typeOfBell_Korean_MinJjeong" />
 
@@ -108,12 +116,14 @@
                 android:fontFamily="@font/nanumgothicextrabold"
                 android:text="@string/typeOfBell_English"
                 android:textColor="@color/teal_700"
+                android:paddingStart="10dp"
                 android:textSize="23sp" />
 
             <RadioButton
                 android:id="@+id/radioButton_E1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:text="@string/typeOfBell_Korean_MinJjeong" />
 
@@ -125,12 +135,14 @@
                 android:fontFamily="@font/nanumgothicextrabold"
                 android:text="@string/typeOfBell_Japanese"
                 android:textColor="@color/teal_700"
+                android:paddingStart="10dp"
                 android:textSize="23sp" />
 
             <RadioButton
                 android:id="@+id/radioButton_J1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:text="@string/typeOfBell_Korean_Jeongyeon" />
         </RadioGroup>

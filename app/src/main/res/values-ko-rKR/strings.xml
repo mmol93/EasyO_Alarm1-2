@@ -62,7 +62,7 @@
     <string name="test_play">미리듣기</string>
     <string name="typeOfBell_Normal">일반 알람음</string>
     <string name="typeOfBell_Korean_MinJjeong">민정</string>
-    <string name="typeOfBell_Korean_Jeongyeon">지연</string>
+    <string name="typeOfBell_Korean_Jeongyeon">정연</string>
     <string name="typeOfBell_Korean">한국어</string>
     <string name="typeOfBell_Japanese">일본어</string>
     <string name="typeOfBell_English">영어</string>
