@@ -66,4 +66,6 @@
     <string name="typeOfBell_Korean">韓国語</string>
     <string name="typeOfBell_Japanese">日本語</string>
     <string name="typeOfBell_English">英語</string>
+    <string name="permission_dialogTitle">権限</string>
+    <string name="permission_dialogMessage">ｱﾗｰﾑを前面表示するため必要です。\nぜひ許可してください。。。</string>
 </resources>

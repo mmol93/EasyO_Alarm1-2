@@ -2,6 +2,7 @@ package com.example.easyo_alarm
 
 import android.Manifest
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -9,13 +10,16 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.example.easyo_alarm.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import java.io.DataInputStream
 import java.io.DataOutputStream
+import kotlin.system.exitProcess
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +27,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var mainBinder : ActivityMainBinding
 
     // 뒤로가기 두번 연속 클릭으로 종료 변수 설정
-    private val TIME_INTERVAL = 2000    // 2 초내에 더블 클릭시...
+    // 2 초내에 더블 클릭시...
+    private val TIME_INTERVAL = 2000
     private var mBackPressed: Long = 0
+
+    // 권한 확인용 액티비티 콜백 코드
+    private val permissionCode = 100
 
     // 알람 화면 프래그먼트
     val alarmFragment = com.example.easyo_alarm.alarmFragment()
@@ -34,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     // AppClass 변수 선언
     lateinit var app : AppClass
 
-    // 부여할 권한 리스트
+    // 확인할 권한 리스트
     val permissionList = arrayOf(
         Manifest.permission.SYSTEM_ALERT_WINDOW,
         Manifest.permission.VIBRATE,
@@ -47,22 +55,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
 
-        if (!Settings.canDrawOverlays(this)) {
-            // ask for setting
-            val intent = Intent(
-                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:$packageName")
-            )
-            startActivityForResult(intent, 0)
-        }
-
         // 권한 확인
         for (permission in permissionList){
-
             val check = checkCallingOrSelfPermission(permission)
             if (check == PackageManager.PERMISSION_GRANTED){
                 Log.d("MainActivity", "권한 확인")
-            }else{
+            }
+            // SYSTEM_ALERT_WINDOW의 경우 requestPermissions로 권한을 얻을 수 없기에 따로 처리
+            else if (permission == Manifest.permission.SYSTEM_ALERT_WINDOW){
+                if (!Settings.canDrawOverlays(this)) {
+                    // ask for setting
+                    val intent = Intent(
+                            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                            Uri.parse("package:$packageName")
+                    )
+                    startActivityForResult(intent, permissionCode)
+                }
+            }
+            else{
                 requestPermissions(permissionList, 0)
                 Log.d("MainActivity", "권한 거부")
             }
@@ -141,6 +151,36 @@ class MainActivity : AppCompatActivity() {
             }
         })
         setContentView(mainBinder.root)
+    }
+
+    override fun startActivityForResult(intent: Intent?, requestCode: Int) {
+        super.startActivityForResult(intent, requestCode)
+
+        // 모든 권한을 다 얻었는지 한번 더 체크
+        if (requestCode == permissionCode){
+            for (permission in permissionList){
+                val check = checkCallingOrSelfPermission(permission)
+                if (check == PackageManager.PERMISSION_DENIED){
+                    // 거부된 권한이 있을 경우 실행이 불가능 하다는 메시지를 남긴다
+                    val dialogBuilder = AlertDialog.Builder(this)
+
+                    dialogBuilder.setTitle(getString(R.string.permission_dialogTitle))
+                    dialogBuilder.setMessage(getString(R.string.permission_dialogMessage))
+                    dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
+
+                    // AlertDialog를 취소하면 앱 꺼지게 하기
+                    dialogBuilder.setNegativeButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                        ActivityCompat.finishAffinity(this)
+                        exitProcess(0)
+                    }
+                    dialogBuilder.setOnCancelListener {
+                        ActivityCompat.finishAffinity(this)
+                        exitProcess(0)
+                    }
+                    dialogBuilder.show()
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

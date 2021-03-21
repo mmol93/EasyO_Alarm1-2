@@ -66,4 +66,6 @@
     <string name="typeOfBell_Korean">한국어</string>
     <string name="typeOfBell_Japanese">일본어</string>
     <string name="typeOfBell_English">영어</string>
+    <string name="permission_dialogTitle">권한</string>
+    <string name="permission_dialogMessage">알람을 보여주기 위해 필요한 권한입니다.\n꼭 허가해주세요 ㅠㅠ</string>
 </resources>
