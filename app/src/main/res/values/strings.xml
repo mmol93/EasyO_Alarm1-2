@@ -93,8 +93,10 @@
     <string name="typeOfBell_English">English-Voice(coming soon)</string>
 
     <string name="permission_dialogTitle">Permission</string>
+    <string name="permission_dialogGotIt">I did it</string>
     <string name="permission_dialogMessage">
         it is used to show alarm pop-up in the background \nplease allow that</string>
+
 
 
 

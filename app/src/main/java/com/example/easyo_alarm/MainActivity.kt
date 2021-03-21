@@ -55,27 +55,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
 
-        // 권한 확인
-        for (permission in permissionList){
-            val check = checkCallingOrSelfPermission(permission)
-            if (check == PackageManager.PERMISSION_GRANTED){
-                Log.d("MainActivity", "권한 확인")
-            }
-            // SYSTEM_ALERT_WINDOW의 경우 requestPermissions로 권한을 얻을 수 없기에 따로 처리
-            else if (permission == Manifest.permission.SYSTEM_ALERT_WINDOW){
-                if (!Settings.canDrawOverlays(this)) {
-                    // ask for setting
-                    val intent = Intent(
-                            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                            Uri.parse("package:$packageName")
-                    )
-                    startActivityForResult(intent, permissionCode)
-                }
-            }
-            else{
-                requestPermissions(permissionList, 0)
-                Log.d("MainActivity", "권한 거부")
-            }
+        // 오버레이 권한 확인
+        if (!Settings.canDrawOverlays(this)) {
+            // ask for setting
+            val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:$packageName")
+            )
+            startActivityForResult(intent, permissionCode)
         }
 
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
@@ -158,28 +145,35 @@ class MainActivity : AppCompatActivity() {
 
         // 모든 권한을 다 얻었는지 한번 더 체크
         if (requestCode == permissionCode){
-            for (permission in permissionList){
-                val check = checkCallingOrSelfPermission(permission)
-                if (check == PackageManager.PERMISSION_DENIED){
-                    // 거부된 권한이 있을 경우 실행이 불가능 하다는 메시지를 남긴다
-                    val dialogBuilder = AlertDialog.Builder(this)
+            // 거부된 권한이 있을 경우 실행이 불가능 하다는 메시지를 남긴다
+            val dialogBuilder = AlertDialog.Builder(this)
 
-                    dialogBuilder.setTitle(getString(R.string.permission_dialogTitle))
-                    dialogBuilder.setMessage(getString(R.string.permission_dialogMessage))
-                    dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
+            dialogBuilder.setTitle(getString(R.string.permission_dialogTitle))
+            dialogBuilder.setMessage(getString(R.string.permission_dialogMessage))
+            dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
 
-                    // AlertDialog를 취소하면 앱 꺼지게 하기
-                    dialogBuilder.setNegativeButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
-                        ActivityCompat.finishAffinity(this)
-                        exitProcess(0)
-                    }
-                    dialogBuilder.setOnCancelListener {
-                        ActivityCompat.finishAffinity(this)
-                        exitProcess(0)
-                    }
-                    dialogBuilder.show()
+            // overlay 권한을 허용 했는지 dialog로 확인
+            // 이상하게 Activity 단게에서 확인하면 에러가 발생함...
+            // 이용자가 버튼을 클릭 후 확인하는 방식으로 변경
+            dialogBuilder.setNegativeButton(getString(R.string.permission_dialogGotIt)){ dialogInterface: DialogInterface, i: Int ->
+                if (Settings.canDrawOverlays(this)){
+
+                }
+                else{
+                    ActivityCompat.finishAffinity(this)
+                    exitProcess(0)
                 }
             }
+            dialogBuilder.setOnCancelListener {
+                if (Settings.canDrawOverlays(this)){
+
+                }
+                else{
+                    ActivityCompat.finishAffinity(this)
+                    exitProcess(0)
+                }
+            }
+            dialogBuilder.show()
         }
     }
 
