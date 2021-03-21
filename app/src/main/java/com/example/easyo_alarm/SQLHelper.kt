@@ -18,6 +18,7 @@ class SQLHelper : SQLiteOpenHelper {
         // requestCode: 알람을 생성한 시간(Calendar.getInstance())의 timeInMillis가 담긴다(이미 지나간 시간은 유니크 숫자라서 사용)
         // -> 알람 매니저를 호출할 때 requestCode로 사용된다
         // switch: Recycler의 아이템중 토글 버튼 기록 = 따로 지정할 필요 x
+        // notification : 나중에 추가할 기능에 대비한 컬럼 생성 (지금은 사용안함)
         val sql = """
             create table MaidAlarm
                 (idx integer primary key,

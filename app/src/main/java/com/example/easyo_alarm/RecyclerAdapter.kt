@@ -28,6 +28,15 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.mainalarm_raw, parent, false))
     }
 
+    fun renewText(){
+        // ** Fragment에 있는 textView 갱신하기
+        app.binder_alarmFragent.RecentTimeTextview.text = context.getString(R.string.alarmSetFragment_nextAlarm)
+        app.binder_alarmFragent.RecentTimeTextview.append(" ")
+        app.binder_alarmFragent.RecentTimeTextview.append(app.recentTime)
+        app.binder_alarmFragent.RecentTimeTextview.append("\n")
+        app.binder_alarmFragent.RecentTimeTextview.append(app.recentWeek)
+    }
+
     // onBindViewHolder의 position은 0부터 시작한다
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         app = context.applicationContext as AppClass
@@ -158,7 +167,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     val arg1 = arrayOf(1, position + 1)
                     SQLHelper.writableDatabase.execSQL(sql_update, arg1)
                 }
-                // notification 재설정
+                // ** notification 재설정
                 val recentAlarm = RecentAlarm()
                 val recentTimeList = recentAlarm.checkSQL(SQLHelper)
                 // 1개라도 on인 토글이 있을 때
@@ -179,10 +188,14 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     app.recentTime = "$recentHour : $recentMin"
                     Log.d("RecyclerAdapter", "recentHour: $recentHour, recentMin: $recentMin")
                 }
+                // notification 갱신
                 val notification = notification()
                 val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
                 notification.makeNotification(app, context!!, notificationManager)
+
+                // ** Fragment에 있는 textView 갱신하기
+                renewText()
                 Log.d("RecyclerAdapter", "토글 on")
             }
             // 알람 매니저에 해당 알람 캔슬하기
@@ -205,6 +218,8 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     val notification = notification()
                     notification.cancelNotification(context!!)
                     Log.d("RecyclerAdapter", "토글 off")
+                    // ** Fragment에 있는 textView 갱신하기
+                    app.binder_alarmFragent.RecentTimeTextview.text = context.getString(R.string.alarmSetFragment_noAlarm)
                 }else{
                     // 시간 부분 입력
                     var recentHour = ""
@@ -225,6 +240,8 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
                     notification.makeNotification(app, context!!, notificationManager)
                     Log.d("RecyclerAdapter", "토글 off")
+                    // ** Fragment에 있는 textView 갱신하기
+                    renewText()
                 }
             }
         }
