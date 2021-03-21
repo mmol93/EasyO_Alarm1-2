@@ -126,6 +126,7 @@ class RecentAlarm {
             return mutableListOf<Int>(-1)
         }
 
+        // 전체 알람 SQL 데이터에서 제일 가까운 알람에 대한 인덱스가 들어간다
         val resultIdx = requestCode.indexOf(requestCode_switch[resultIdxInSwitch])
 
         Log.d("RecentAlarm", "recentTime: $recentTime")
