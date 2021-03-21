@@ -68,6 +68,7 @@ class RecentAlarm {
         Log.d("RecentAlarm", "idxList: $idxList")
         Log.d("RecentAlarm", "switch: $switch")
         val weekList = mutableListOf<Int>()
+        val requestCode_switch = mutableListOf<Int>()
         // 토글 버튼이 on인 것들만 판별
         // idxList = SQL의 인덱스 리스트 = 1부터 시작
         // switch = 행렬 = 0부터 시작
@@ -83,6 +84,8 @@ class RecentAlarm {
                 weekList.add(Thu[i-1])
                 weekList.add(Fri[i-1])
                 weekList.add(Sat[i-1])
+                // requestCode는 모든 알람 데이터에서 인덱스를 찾기 위해 사용됨
+                requestCode_switch.add(requestCode[i-1])
 
                 val diffTime = diffTime()
                 val diffWeek = diffTime.diffWeek(weekList, hour, min)   // 알람까지 남은 일 수
@@ -107,6 +110,7 @@ class RecentAlarm {
 
                 // 새로운 숫자를 만든다
                 val resultTime = diffWeek.toString() + diffHourString + diffMinString
+                // timeList 안에는 토글이 on 인 모든 숫자가 들어간다
                 timeList.add(resultTime.toInt())
                 Log.d("RecentAlarm", "weekList: $weekList")
                 Log.d("RecentAlarm", "resultTime: $resultTime")
@@ -115,14 +119,17 @@ class RecentAlarm {
         }
         // timeList 안에서 제일 작은 숫자만 골라낸다
         val recentTime = timeList.minOrNull()?:0
-        val resultIdx = timeList.indexOf(recentTime)    // 여기에 제일 가까운 알람의 인덱스가 들어간다
-        Log.d("RecentAlarm", "recentTime: $recentTime")
-        Log.d("RecentAlarm", "resultIdx: $resultIdx")
+        val resultIdxInSwitch = timeList.indexOf(recentTime)    // 여기에 switch on 리스트 안에서 제일 가까운 알람의 인덱스가 들어간다
 
         // 알람이 있지만 모든 알람의 토글이 off 상태일 때
-        if (resultIdx == -1){
+        if (resultIdxInSwitch == -1){
             return mutableListOf<Int>(-1)
         }
+
+        val resultIdx = requestCode.indexOf(requestCode_switch[resultIdxInSwitch])
+
+        Log.d("RecentAlarm", "recentTime: $recentTime")
+        Log.d("RecentAlarm", "resultIdx: $resultIdx")
 
         val totalResult = mutableListOf<Int>(Sun[resultIdx], Mon[resultIdx], Tue[resultIdx], Wed[resultIdx],
         Thu[resultIdx], Fri[resultIdx], Sat[resultIdx], hourList[resultIdx], minList[resultIdx])
