@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.easyo_alarm.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import java.io.DataInputStream
@@ -111,7 +112,8 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(this) {}
         // ** 애드몹 로드
         val adRequest = AdRequest.Builder().build()
-        mainBinder.adView.loadAd(adRequest)
+        val adView = findViewById<AdView>(R.id.adView)
+        adView.loadAd(adRequest)
 
         // 최초 화면은 알람탭의 화면을 보여주게 한다
         val tran = supportFragmentManager.beginTransaction()

@@ -16,7 +16,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_maidalarm_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EasyO_Alarm">
+        android:theme="@style/Theme.EasyO_Alarm"
+        android:hardwareAccelerated="true">
         <activity android:name=".SelectRingActivity"/>
         <activity android:name=".LicenseActivity" />
         <activity android:name=".InfoActivity" />
@@ -33,7 +34,7 @@
         <!-- 실제로 앱 배포시에는 자신의 광고 ID 참조하기 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-9481402975436770~6533361405" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
