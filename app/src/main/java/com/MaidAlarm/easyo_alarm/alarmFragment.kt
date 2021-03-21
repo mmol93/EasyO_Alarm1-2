@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
 import android.view.*
+import androidx.core.view.isGone
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MaidAlarm.easyo_alarm.databinding.FragmentAlarmBinding
