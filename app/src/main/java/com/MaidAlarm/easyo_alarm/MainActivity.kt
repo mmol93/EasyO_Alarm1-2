@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -44,10 +45,9 @@ class MainActivity : AppCompatActivity() {
 
     // 확인할 권한 리스트
     val permissionList = arrayOf(
-        Manifest.permission.SYSTEM_ALERT_WINDOW,
         Manifest.permission.VIBRATE,
         Manifest.permission.WAKE_LOCK,
-        Manifest.permission.RECEIVE_BOOT_COMPLETED
+        Manifest.permission.RECEIVE_BOOT_COMPLETED,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +63,18 @@ class MainActivity : AppCompatActivity() {
                     Uri.parse("package:$packageName")
             )
             startActivityForResult(intent, permissionCode)
+        }
+
+        // 다른 권한 확인
+        for (permission in permissionList){
+            val check = checkCallingOrSelfPermission(permission)
+            if (check == PackageManager.PERMISSION_GRANTED){
+                Log.d("MainActivity", "${permission} 승인됨")
+            }
+            else{
+                Log.d("MainActivity", "${permission} 거부됨")
+                requestPermissions(permissionList, 0)
+            }
         }
 
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
@@ -113,6 +125,7 @@ class MainActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         val adView = findViewById<AdView>(R.id.adView)
         adView.loadAd(adRequest)
+        mainBinder.adView.bringToFront()
 
         // 최초 화면은 알람탭의 화면을 보여주게 한다
         val tran = supportFragmentManager.beginTransaction()

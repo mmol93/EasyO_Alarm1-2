@@ -5,7 +5,7 @@
     <string name="Alarm">Alarm</string>
     <string name="Setting">Setting</string>
     <string name="quick_title">Quick Alarm</string>
-    <string name="MainBannerID" translatable="false">ca-app-pub-9481402975436770/6115199631</string>
+    <string name="MainBannerID" translatable="false">ca-app-pub-9481402975436770/4351498697</string>
     <string name="FrontBannerID" translatable="false">ca-app-pub-9481402975436770/7075872565</string>
     <string name="alarmSetBannerID" translatable="false">ca-app-pub-9481402975436770/8005810851</string>
     <string name="quickSetBannerID" translatable="false">ca-app-pub-9481402975436770/2592227296</string>

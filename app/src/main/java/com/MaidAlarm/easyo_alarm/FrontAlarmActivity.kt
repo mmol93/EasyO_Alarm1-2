@@ -141,18 +141,16 @@ class FrontAlarmActivity : AppCompatActivity() {
         // progress가 0일 때는 진동이 울리게 정한다
         else if(progress == 0){
             Log.d("FrontAlarmActivity", "진동울리는중")
-            val arrayTime = longArrayOf(1000, 1000, 1000, 1000)
-            val arrayAmplitudes = intArrayOf(0, 150, 0, 150)
+            val pattern = LongArray(2) { 500 }
             vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, 1))
+                vib.vibrate(VibrationEffect.createWaveform(pattern, 1))
             } else {
                 vib.vibrate(1000)
             }
         }
         Log.d("FrontAlarmActivity", "progress: $progress")
-
 
         // *** 계산 문제를 표시할지 말지 결정한다
         // AppClass 변수의 wayOfAlarm = 1 일 때만 계산 문제를 보여준다

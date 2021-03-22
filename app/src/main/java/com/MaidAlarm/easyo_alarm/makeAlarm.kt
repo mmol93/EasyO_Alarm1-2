@@ -111,9 +111,8 @@ class makeAlarm(
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT
         )
-        Log.d("makeAlarm", "Set exact Time: " + Date().toString())
-        Log.d("makeAlarm", "hour: $hour")
-        Log.d("makeAlarm", "min: $min")
+        Log.d("makeAlarm", "알람 등록한 시간: " + Date().toString())
+        Log.d("makeAlarm", "설정된 시간: ${hour}시 ${min}분")
         Log.d("makeAlarm", "requestCode: $requestCode")
 
         // 위에서 울린 알림이 매일 울리게 설정한다
@@ -236,10 +235,13 @@ class Receiver : BroadcastReceiver() {
             // 알람에서 설정한 요일일 때만 액티비티 띄워서 알람 울리게 설정
             // 설정 알람 시간이랑 동일할 때만 울리게 한다.
             if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
+                Log.d("makeAlarm", "지금 울릴 알람 맞음")
                 val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
                 frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
                 context?.startActivity(frontAlarmActivity)
+            }else{
+                Log.d("makeAlarm", "지금 울릴 알람 아님")
             }
 
             // quick 알람은 울린 후 자동으로 해당 알람을 삭제한다
