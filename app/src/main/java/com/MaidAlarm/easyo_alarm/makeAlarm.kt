@@ -76,50 +76,7 @@ class makeAlarm(
 
     // *** 매일 울리는 새로운 알람을 알람 매니저에 등록한다
     fun addNewAlarm_normal(){
-        val quick = 0   // 이 메서드는 normal 이므로 반복해서 울린다.
-
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = System.currentTimeMillis()
-            // 정확한 시간 설정
-            set(Calendar.HOUR_OF_DAY, hour)
-            set(Calendar.MINUTE, min)
-            set(Calendar.SECOND, 0)
-        }
-
-        val intent = Intent(context, Receiver::class.java)
-        // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
-        // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
-        // 넘겨줄 항목은 다음과 같다.
-        // Sun ~ Sat, progress, quick, hour, min, requestCode => 12개의 항목을 가진 리스트
-        var ListForPendingIntent = mutableListOf<Int>()
-        ListForPendingIntent.add(progress)
-        ListForPendingIntent.add(quick)
-        ListForPendingIntent.add(hour)
-        ListForPendingIntent.add(min)
-        ListForPendingIntent.add(requestCode)
-
-        // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
-        ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>
-
-        // intent에 putIntent를 하기 위해선 List -> array로 변환필요
-        Log.d("makeAlarm", "ListForPendingIntent: $ListForPendingIntent")
-        intent.putExtra("arrayForPendingIntent", ListForPendingIntent)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                requestCode,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        Log.d("makeAlarm", "알람 등록한 시간: " + Date().toString())
-        Log.d("makeAlarm", "설정된 시간: ${hour}시 ${min}분")
-        Log.d("makeAlarm", "requestCode: $requestCode")
-
-        // 위에서 울린 알림이 매일 울리게 설정한다
-        val intervalDay = (24 * 60 * 60 * 1000).toLong() // 24시간
-
-        // 지정한 시간에 매일 알람 울리게 설정
-        alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,  intervalDay, pendingIntent)
+        addNewAlarm_normal_exact(alarmManager!!, context, weekList, progress, hour, min, requestCode)
     }
 
     // *** 이미 있는 알람을 취소한다.
@@ -276,6 +233,78 @@ class Receiver : BroadcastReceiver() {
                     }
                 }
             }
+            // quick 알람이 아닐 경우
+            else{
+                val alarmManager: AlarmManager? = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
+
+                // 0 ~ 6까지 = 일요~토요
+                val weekList = mutableListOf<Int>()
+                weekList.add(arrayFromMakeAlarm[0])
+                weekList.add(arrayFromMakeAlarm[1])
+                weekList.add(arrayFromMakeAlarm[2])
+                weekList.add(arrayFromMakeAlarm[3])
+                weekList.add(arrayFromMakeAlarm[4])
+                weekList.add(arrayFromMakeAlarm[5])
+                weekList.add(arrayFromMakeAlarm[6])
+
+                addNewAlarm_normal_exact(alarmManager!!, context, weekList, arrayFromMakeAlarm[7], arrayFromMakeAlarm[9], arrayFromMakeAlarm[10], arrayFromMakeAlarm[11])
+            }
         }
     }
+}
+
+fun addNewAlarm_normal_exact(alarmManager: AlarmManager, context: Context, weekList: List<Int>, progress: Int, hour: Int, min: Int, requestCode: Int){
+    val quick = 0   // 이 메서드는 normal 이므로 반복해서 울린다.
+
+    val calendar: Calendar = Calendar.getInstance().apply {
+        timeInMillis = System.currentTimeMillis()
+        // 정확한 시간 설정
+        set(Calendar.HOUR_OF_DAY, hour)
+        set(Calendar.MINUTE, min)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
+    var calendarMillis = calendar.timeInMillis
+
+    // 지정한 시간이 현재 시간보다 과거일 경우 + interval을 해줘야한다
+    val curCalendar = Calendar.getInstance()
+    if (curCalendar.timeInMillis > calendarMillis){
+        val intervalDay = (24 * 60 * 60 * 1000).toLong() // 24시간
+        calendarMillis += intervalDay
+    }
+
+    val intent = Intent(context, Receiver::class.java)
+    // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
+    // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
+    // 넘겨줄 항목은 다음과 같다.
+    // Sun ~ Sat, progress, quick, hour, min, requestCode => 12개의 항목을 가진 리스트
+    var ListForPendingIntent = mutableListOf<Int>()
+    ListForPendingIntent.add(progress)
+    ListForPendingIntent.add(quick)
+    ListForPendingIntent.add(hour)
+    ListForPendingIntent.add(min)
+    ListForPendingIntent.add(requestCode)
+
+    // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
+    ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>
+
+    // intent에 putIntent를 하기 위해선 List -> array로 변환필요
+    Log.d("makeAlarm", "ListForPendingIntent: $ListForPendingIntent")
+    intent.putExtra("arrayForPendingIntent", ListForPendingIntent)
+
+    val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            requestCode,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+    )
+    Log.d("makeAlarm", "알람 등록한 시간: " + Date().toString())
+    Log.d("makeAlarm", "설정된 시간: ${hour}시 ${min}분")
+    Log.d("makeAlarm", "requestCode: $requestCode")
+
+    // 위에서 울린 알림이 매일 울리게 설정한다
+
+
+    // 지정한 시간에 매일 알람 울리게 설정
+    alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendarMillis, pendingIntent)
 }
