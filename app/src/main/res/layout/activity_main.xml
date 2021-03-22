@@ -2,25 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/itemBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
+    <LinearLayout
+        android:id="@+id/lineaLayout"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_centerHorizontal="true"
-        app:adSize="BANNER"
-        app:adUnitId="@string/MainBannerID">
-    </com.google.android.gms.ads.AdView>
+        android:layout_height="50dp"
+        android:orientation="vertical">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            app:adSize="BANNER"
+            app:adUnitId="@string/MainBannerID" />
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/BottomBar"
-        android:layout_below="@+id/adView"
+        android:layout_below="@+id/lineaLayout"
         android:layout_alignEnd="@+id/BottomBar"
         android:layout_marginTop="-0dp"
         android:layout_marginEnd="-1dp"
