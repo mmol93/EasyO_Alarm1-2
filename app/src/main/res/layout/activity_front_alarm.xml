@@ -20,7 +20,9 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             app:adSize="BANNER"
-            app:adUnitId="@string/FrontBannerID" />
+            app:adUnitId="@string/FrontBannerID">
+
+        </com.google.android.gms.ads.AdView>
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

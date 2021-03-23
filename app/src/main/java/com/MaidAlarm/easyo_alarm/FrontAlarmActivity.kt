@@ -319,5 +319,4 @@ class FrontAlarmActivity : AppCompatActivity() {
         val targetVolume = (maxVolume * factor).toInt()
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVolume, AudioManager.FLAG_PLAY_SOUND)
     }
-
 }
