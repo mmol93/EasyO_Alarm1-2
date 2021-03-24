@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.MaidAlarm.easyo_alarm.databinding.ActivityMainBinding
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -126,6 +127,12 @@ class MainActivity : AppCompatActivity() {
         val adView = findViewById<AdView>(R.id.adView)
         adView.loadAd(adRequest)
         mainBinder.adView.bringToFront()
+        mainBinder.adView.adListener = object : AdListener(){
+            override fun onAdFailedToLoad(p0: Int) {
+                super.onAdFailedToLoad(p0)
+                Log.d("MainActivity", "광고 로드 실패")
+            }
+        }
 
         // 최초 화면은 알람탭의 화면을 보여주게 한다
         val tran = supportFragmentManager.beginTransaction()
@@ -225,3 +232,4 @@ class MainActivity : AppCompatActivity() {
         mBackPressed = System.currentTimeMillis();
     }
 }
+

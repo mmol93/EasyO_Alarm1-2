@@ -15,6 +15,10 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.MaidAlarm.easyo_alarm.databinding.ActivityFrontAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import java.io.DataInputStream
 import java.util.*
 import kotlin.random.Random
@@ -63,6 +67,21 @@ class FrontAlarmActivity : AppCompatActivity() {
         val sql = "select * from MaidAlarm"
         val c1 = SQLHelper.writableDatabase.rawQuery(sql, null)
         val size = c1.count
+
+        // 광고 초기화
+        // *** 애드몹 초기화
+        MobileAds.initialize(this) {}
+        // ** 애드몹 로드
+        val adRequest = AdRequest.Builder().build()
+        val adView = findViewById<AdView>(R.id.adView)
+        adView.loadAd(adRequest)
+        binder.adView.bringToFront()
+        binder.adView.adListener = object : AdListener(){
+            override fun onAdFailedToLoad(p0: Int) {
+                super.onAdFailedToLoad(p0)
+                Log.d("FrontActivity", "광고 로드 실패")
+            }
+        }
 
         try {
             // 지정한 알람음 데이터를 가져온다
