@@ -81,7 +81,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                 super.onAdFailedToLoad(p0)
                 Log.d("FrontActivity", "front 광고 로드 실패")
             }
-            override fun onAdOpened() {
+            override fun onAdLoaded() {
                 super.onAdOpened()
                 Log.d("adMob", "front 광고 열림 성공")
             }

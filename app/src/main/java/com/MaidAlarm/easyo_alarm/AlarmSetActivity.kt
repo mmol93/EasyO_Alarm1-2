@@ -61,8 +61,8 @@ class AlarmSetActivity : AppCompatActivity() {
                 Log.d("adMob", "alarmSet 광고 로드 실패")
             }
 
-            override fun onAdOpened() {
-                super.onAdOpened()
+            override fun onAdLoaded() {
+                super.onAdLoaded()
                 Log.d("adMob", "alarmSet 광고 열림 성공")
             }
         }

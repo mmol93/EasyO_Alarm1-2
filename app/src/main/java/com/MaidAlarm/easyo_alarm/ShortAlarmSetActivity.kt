@@ -37,7 +37,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
                 super.onAdFailedToLoad(p0)
                 Log.d("FrontActivity", "quickSet 광고 로드 실패")
             }
-            override fun onAdOpened() {
+            override fun onAdLoaded() {
                 super.onAdOpened()
                 Log.d("adMob", "quickSet 광고 열림 성공")
             }

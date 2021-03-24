@@ -134,7 +134,7 @@ class MainActivity : AppCompatActivity() {
                 Log.d("adMob", "메인광고 로드 실패")
             }
 
-            override fun onAdOpened() {
+            override fun onAdLoaded() {
                 super.onAdOpened()
                 Log.d("adMob", "메인광고 열림 성공")
             }
