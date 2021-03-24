@@ -32,6 +32,7 @@ class FrontAlarmActivity : AppCompatActivity() {
     var currentVolume : Int = 0
     var maxVolume : Int = 0
     lateinit var audioManager: AudioManager
+    lateinit var app : AppClass
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -55,7 +56,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
 
         binder = ActivityFrontAlarmBinding.inflate(layoutInflater)
-        val app = application as AppClass
+        app = application as AppClass
         val calculateProblemFragment = CalculateProblemFragment()
         // SQL에 대한 변수 선언
         val SQLHelper = SQLHelper(this)
@@ -309,6 +310,43 @@ class FrontAlarmActivity : AppCompatActivity() {
 
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+        // 액티비티 전환시 음악 정지
+        // 알람이 울리는 동시에 다른 액티비티를 띄우거나
+        // 알람 액티비티를 무시하고 다른 창을 띄울 경우 진동이 꺼지지 않는 버그 발생
+        try {
+            // 음악 끄기
+            mediaPlayer.pause()
+            // 볼륨 원래대로 되돌리기
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
+            // 진동 끄기
+            vib.cancel()
+        }
+        catch (e: Exception){
+
+        }
+    }
+
+    override fun onResume() {
+        // 알람 화면으로 다시 돌아 왔을 때는 다시 음악 실행 및 진동 실시
+        super.onResume()
+        try {
+            if (!mediaPlayer.isPlaying){
+                mediaPlayer.start()
+                val pattern = LongArray(2) { 500 }
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    vib.vibrate(VibrationEffect.createWaveform(pattern, 1))
+                } else {
+                    vib.vibrate(1000)
+                }
+            }
+        }catch (e:Exception){
+
+        }
+
+}
 
     // 볼륨 강제 조절
     fun adjustVolume(volume : Int){
