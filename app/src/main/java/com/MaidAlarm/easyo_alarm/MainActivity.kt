@@ -131,12 +131,12 @@ class MainActivity : AppCompatActivity() {
         mainBinder.adView.adListener = object : AdListener(){
             override fun onAdFailedToLoad(p0: Int) {
                 super.onAdFailedToLoad(p0)
-                Log.d("adMob", "광고 로드 실패")
+                Log.d("adMob", "메인광고 로드 실패")
             }
 
             override fun onAdOpened() {
                 super.onAdOpened()
-                Log.d("adMob", "광고 열림 성공")
+                Log.d("adMob", "메인광고 열림 성공")
             }
         }
 

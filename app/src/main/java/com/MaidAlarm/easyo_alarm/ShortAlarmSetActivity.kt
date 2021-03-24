@@ -3,9 +3,11 @@ package com.MaidAlarm.easyo_alarm
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
 import com.MaidAlarm.easyo_alarm.databinding.ActivityShortAlarmSetBinding
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import java.util.*
@@ -29,6 +31,17 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         // 2. 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
+
+        binder.adView.adListener = object : AdListener(){
+            override fun onAdFailedToLoad(p0: Int) {
+                super.onAdFailedToLoad(p0)
+                Log.d("FrontActivity", "quickSet 광고 로드 실패")
+            }
+            override fun onAdOpened() {
+                super.onAdOpened()
+                Log.d("adMob", "quickSet 광고 열림 성공")
+            }
+        }
 
         // +60분 버튼 클릭시
         binder.button60.setOnClickListener {
