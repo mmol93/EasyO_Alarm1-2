@@ -127,6 +127,15 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             holder.row_sat.setBackgroundColor(Color.parseColor("#1ABC9C"))
         }
 
+        // *** progress 값에 따라 음량 그림을 달리 표시한다
+        when (progressList[position]){
+            0 -> holder.row_volume.setImageResource(R.drawable.volume0)
+            in 1..25 -> holder.row_volume.setImageResource(R.drawable.volume01)
+            in 26..50 -> holder.row_volume.setImageResource(R.drawable.volume2)
+            in 51..75 -> holder.row_volume.setImageResource(R.drawable.volume3)
+            in 76..100 -> holder.row_volume.setImageResource(R.drawable.volume4)
+        }
+
         // *** switch를 SQL에 저장한 switch 값을 적용한다
         if (switch[position] == 1){
             Log.d("RecyclerAdapter", "switch: ${switch[position]}")
@@ -338,4 +347,5 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val row_fri = binder.rowFri
     val row_sat = binder.rowSat
     val row_switch = binder.rowSwitch
+    val row_volume = binder.rowImageVolume
 }
