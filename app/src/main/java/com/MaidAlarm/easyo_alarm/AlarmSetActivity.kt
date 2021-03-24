@@ -9,6 +9,7 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import com.MaidAlarm.easyo_alarm.databinding.ActivityAlarmSetBinding
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import java.util.ArrayList
@@ -53,6 +54,18 @@ class AlarmSetActivity : AppCompatActivity() {
         // 2. 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
+
+        binder.adView.adListener = object : AdListener(){
+            override fun onAdFailedToLoad(p0: Int) {
+                super.onAdFailedToLoad(p0)
+                Log.d("adMob", "광고 로드 실패")
+            }
+
+            override fun onAdOpened() {
+                super.onAdOpened()
+                Log.d("adMob", "광고 열림 성공")
+            }
+        }
 
         // numberPicker의 시간 부분 최대, 최소값 설정
         binder.numberPickerHour.maxValue = 12
