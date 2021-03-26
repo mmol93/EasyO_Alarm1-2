@@ -88,16 +88,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
 
         try {
-            // 지정한 알람음 데이터를 가져온다
-            when(app.bellIndex){
-                0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
-                1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
-                2 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_happytown)
-                3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_country)
-                10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
-                11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
-            }
-        }catch (e:Exception){
             // 파일 읽어오기
             val fis = openFileInput("data1.bat")
             val dis = DataInputStream(fis)
@@ -114,6 +104,17 @@ class FrontAlarmActivity : AppCompatActivity() {
             app.initialStart = data4
             app.bellIndex = data5
 
+            when(app.bellIndex){
+                0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
+                1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
+                2 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_happytown)
+                3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_country)
+                10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
+                11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
+            }
+            
+        }catch (e:Exception){
+            // 지정한 알람음 데이터를 가져온다
             when(app.bellIndex){
                 0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
                 1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
@@ -368,7 +369,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         }catch (e:Exception){
 
         }
-
 }
 
     // 볼륨 강제 조절

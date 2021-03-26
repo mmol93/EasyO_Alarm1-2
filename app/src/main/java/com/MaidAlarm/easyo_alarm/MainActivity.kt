@@ -204,9 +204,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("Exit", "Task 종료됨")
+    override fun onStop() {
+        super.onStop()
+        Toast.makeText(this, "onStop 호출됨", Toast.LENGTH_SHORT).show()
         val app : AppClass = application as AppClass
 
         // AppClass에 저장되어 있는 변수들을 파일에 저장한다
@@ -231,7 +231,7 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             Toast.makeText(
-                getBaseContext(),
+                    baseContext,
                 getString(R.string.backButtonDoubleClick), Toast.LENGTH_SHORT
             ).show();
         }
