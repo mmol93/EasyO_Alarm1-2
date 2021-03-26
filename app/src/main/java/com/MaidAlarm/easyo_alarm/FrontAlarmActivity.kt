@@ -17,7 +17,6 @@ import com.MaidAlarm.easyo_alarm.databinding.ActivityFrontAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import java.io.DataInputStream
 import java.util.*
@@ -37,6 +36,7 @@ class FrontAlarmActivity : AppCompatActivity() {
     var maxVolume : Int = 0
     lateinit var audioManager: AudioManager
     lateinit var app : AppClass
+    lateinit var wakeLock : PowerManager
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -46,6 +46,18 @@ class FrontAlarmActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_alarm)
+
+        // 잠금화면에서 불 들어오게 하기
+        val wakeLock: PowerManager.WakeLock =
+                (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                    newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
+                        acquire()
+                    }
+                }
+
+        // 10초만 지속되게 하기
+        wakeLock.acquire(10*1000L )
+
         // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄우기
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1){
@@ -112,8 +124,8 @@ class FrontAlarmActivity : AppCompatActivity() {
                 10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
                 11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
             }
-            
-        }catch (e:Exception){
+
+        }catch (e: Exception){
             // 지정한 알람음 데이터를 가져온다
             when(app.bellIndex){
                 0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
@@ -366,13 +378,13 @@ class FrontAlarmActivity : AppCompatActivity() {
                     vib.vibrate(1000)
                 }
             }
-        }catch (e:Exception){
+        }catch (e: Exception){
 
         }
 }
 
     // 볼륨 강제 조절
-    fun adjustVolume(volume : Int){
+    fun adjustVolume(volume: Int){
         audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
