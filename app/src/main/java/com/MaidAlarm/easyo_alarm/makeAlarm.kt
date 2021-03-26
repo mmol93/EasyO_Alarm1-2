@@ -5,9 +5,11 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.media.AudioManager
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -193,9 +195,22 @@ class Receiver : BroadcastReceiver() {
             // 설정 알람 시간이랑 동일할 때만 울리게 한다.
             if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
                 Log.d("makeAlarm", "지금 울릴 알람 맞음")
+
+                // 볼륨 강제 설정
+                val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+                val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+                val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+                // arrayFromMakeAlarm[7] = progress
+                val factor = arrayFromMakeAlarm[7].toFloat() / 100
+                val targetVolume = (maxVolume * factor).toInt()
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVolume, AudioManager.FLAG_PLAY_SOUND)
+
+                Log.d("FrontActivity", "targetVolume: $targetVolume")
+                Log.d("FrontActivity", "currentVolume: ${audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)}")
                 val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
                 frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
+                frontAlarmActivity.putExtra("currentVolume", currentVolume)
                 context?.startActivity(frontAlarmActivity)
             }else{
                 Log.d("makeAlarm", "지금 울릴 알람 아님")
@@ -250,9 +265,14 @@ class Receiver : BroadcastReceiver() {
                 addNewAlarm_normal_exact(alarmManager!!, context, weekList, arrayFromMakeAlarm[7], arrayFromMakeAlarm[9], arrayFromMakeAlarm[10], arrayFromMakeAlarm[11])
             }
         }
+        // 볼륨 강제 조절
+        fun adjustVolume(volume: Int){
+
+        }
     }
 }
 
+// 일반 알람 만들기
 fun addNewAlarm_normal_exact(alarmManager: AlarmManager, context: Context, weekList: List<Int>, progress: Int, hour: Int, min: Int, requestCode: Int){
     val quick = 0   // 이 메서드는 normal 이므로 반복해서 울린다.
 
@@ -308,3 +328,6 @@ fun addNewAlarm_normal_exact(alarmManager: AlarmManager, context: Context, weekL
     // 지정한 시간에 매일 알람 울리게 설정
     alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendarMillis, pendingIntent)
 }
+
+
+

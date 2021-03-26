@@ -1,10 +1,12 @@
 package com.MaidAlarm.easyo_alarm
 
 import android.Manifest
+import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -16,7 +18,6 @@ import androidx.core.app.ActivityCompat
 import com.MaidAlarm.easyo_alarm.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import java.io.DataInputStream
@@ -46,9 +47,9 @@ class MainActivity : AppCompatActivity() {
 
     // 확인할 권한 리스트
     val permissionList = arrayOf(
-        Manifest.permission.VIBRATE,
-        Manifest.permission.WAKE_LOCK,
-        Manifest.permission.RECEIVE_BOOT_COMPLETED,
+            Manifest.permission.VIBRATE,
+            Manifest.permission.WAKE_LOCK,
+            Manifest.permission.RECEIVE_BOOT_COMPLETED,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +65,16 @@ class MainActivity : AppCompatActivity() {
                     Uri.parse("package:$packageName")
             )
             startActivityForResult(intent, permissionCode)
+        }
+
+        val n = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        if (n.isNotificationPolicyAccessGranted) {
+            val audioManager = applicationContext.getSystemService(AUDIO_SERVICE) as AudioManager
+            audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
+        } else {
+            // Ask the user to grant access
+            val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
+            startActivity(intent)
         }
 
         // 다른 권한 확인
@@ -232,7 +243,7 @@ class MainActivity : AppCompatActivity() {
         else {
             Toast.makeText(
                     baseContext,
-                getString(R.string.backButtonDoubleClick), Toast.LENGTH_SHORT
+                    getString(R.string.backButtonDoubleClick), Toast.LENGTH_SHORT
             ).show();
         }
         mBackPressed = System.currentTimeMillis();

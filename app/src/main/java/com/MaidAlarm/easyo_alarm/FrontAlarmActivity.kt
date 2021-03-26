@@ -162,15 +162,17 @@ class FrontAlarmActivity : AppCompatActivity() {
 
         // 먼저 progress 값을 가져온다
         val progress = intent.getIntExtra("progress", -1)
+        currentVolume = intent.getIntExtra("currentVolume", 0)
         app.lastProgress = progress
 
         // *** 음악 파일 실행 - 미구현
         // 알람 울리기 전 볼륨 강제 조절
-        adjustVolume(progress)
-        mediaPlayer = app.mediaPlayer
-        mediaPlayer.setVolume(1f, 1f)
-        mediaPlayer.isLooping = true
-        mediaPlayer.start()
+        if (progress > 0){
+            mediaPlayer = app.mediaPlayer
+            mediaPlayer.setVolume(1f, 1f)
+            mediaPlayer.isLooping = true
+            mediaPlayer.start()
+        }
 
         if (progress == -1){
             Log.d("FrontAlarmActivity", "FrontAlarmActivity 의 Vibrate 쪽에 에러 발생")
@@ -381,15 +383,5 @@ class FrontAlarmActivity : AppCompatActivity() {
         }catch (e: Exception){
 
         }
-}
-
-    // 볼륨 강제 조절
-    fun adjustVolume(volume: Int){
-        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
-        currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
-        maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
-        val factor = volume.toFloat() / 100
-        val targetVolume = (maxVolume * factor).toInt()
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVolume, AudioManager.FLAG_PLAY_SOUND)
     }
 }
