@@ -100,11 +100,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
             val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
             val presentMin = calendar.get(Calendar.MINUTE)
             var toast_min = presentMin + min
-            // 현재 분 + 설정 분 = 60분 이상이면 시간에 +1하기
-            if (toast_min >= 60){
-                hour += 1
-                toast_min -= 60
-            }
+
             val toast_day : Int = (presentHour + hour) / 24
             val taost_hour : Int = (presentHour + hour) % 24
 
@@ -146,6 +142,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         setContentView(binder.root)
     }
 
+    // +1분 등 버튼 클릭 시 분 변수에 해당 버튼에 해당하는 값을 더해줌
     fun addMinute(add1: Int) {
         min += add1
         if (min >= 60) {
@@ -163,6 +160,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         }
     }
 
+    // SeekBar 리스너
     val seekListener = object : SeekBar.OnSeekBarChangeListener {
         override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
             when (seekBar?.id) {
