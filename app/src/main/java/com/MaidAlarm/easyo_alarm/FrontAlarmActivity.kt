@@ -36,7 +36,6 @@ class FrontAlarmActivity : AppCompatActivity() {
     var maxVolume : Int = 0
     lateinit var audioManager: AudioManager
     lateinit var app : AppClass
-    lateinit var wakeLock : PowerManager
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -73,6 +72,8 @@ class FrontAlarmActivity : AppCompatActivity() {
 
         binder = ActivityFrontAlarmBinding.inflate(layoutInflater)
         app = application as AppClass
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
         val calculateProblemFragment = CalculateProblemFragment()
         // SQL에 대한 변수 선언
         val SQLHelper = SQLHelper(this)
@@ -82,7 +83,7 @@ class FrontAlarmActivity : AppCompatActivity() {
 
         // 광고 초기화
         // *** 애드몹 초기화
-        MobileAds.initialize(this) {}
+//        MobileAds.initialize(this) {}
         // ** 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
@@ -163,6 +164,9 @@ class FrontAlarmActivity : AppCompatActivity() {
         // 먼저 progress 값을 가져온다
         val progress = intent.getIntExtra("progress", -1)
         currentVolume = intent.getIntExtra("currentVolume", 0)
+
+
+        Log.d("FrontAlarmActivity", "currentVolume in Front: $currentVolume")
         app.lastProgress = progress
 
         // *** 음악 파일 실행 - 미구현
@@ -173,6 +177,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             mediaPlayer.isLooping = true
             mediaPlayer.start()
         }
+
 
         if (progress == -1){
             Log.d("FrontAlarmActivity", "FrontAlarmActivity 의 Vibrate 쪽에 에러 발생")
@@ -347,10 +352,12 @@ class FrontAlarmActivity : AppCompatActivity() {
         catch (e: Exception){
 
         }
+        Log.d("FrontActivity", "onDestroy()")
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
+
         // 액티비티 전환시 음악 정지
         // 알람이 울리는 동시에 다른 액티비티를 띄우거나
         // 알람 액티비티를 무시하고 다른 창을 띄울 경우 진동이 꺼지지 않는 버그 발생
@@ -365,6 +372,8 @@ class FrontAlarmActivity : AppCompatActivity() {
         catch (e: Exception){
 
         }
+        Log.d("FrontActivity", "onPause()")
+        Log.d("FrontActivity", "volume in onStop: $currentVolume")
     }
 
     override fun onResume() {

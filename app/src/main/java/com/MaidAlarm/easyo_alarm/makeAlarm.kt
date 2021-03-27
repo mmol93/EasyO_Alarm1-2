@@ -10,6 +10,7 @@ import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
+import com.google.android.gms.ads.MobileAds
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -196,6 +197,9 @@ class Receiver : BroadcastReceiver() {
             if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
                 Log.d("makeAlarm", "지금 울릴 알람 맞음")
 
+                // 광고 초기화
+                MobileAds.initialize(context) {}
+
                 // 볼륨 강제 설정
                 val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
                 val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
@@ -206,7 +210,7 @@ class Receiver : BroadcastReceiver() {
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVolume, AudioManager.FLAG_PLAY_SOUND)
 
                 Log.d("FrontActivity", "targetVolume: $targetVolume")
-                Log.d("FrontActivity", "currentVolume: ${audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)}")
+                Log.d("FrontActivity", "currentVolume: ${currentVolume}")
                 val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
                 frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
