@@ -361,19 +361,18 @@ class FrontAlarmActivity : AppCompatActivity() {
         // 액티비티 전환시 음악 정지
         // 알람이 울리는 동시에 다른 액티비티를 띄우거나
         // 알람 액티비티를 무시하고 다른 창을 띄울 경우 진동이 꺼지지 않는 버그 발생
-        try {
-            // 음악 끄기
-            mediaPlayer.pause()
-            // 볼륨 원래대로 되돌리기
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
-            // 진동 끄기
-            vib.cancel()
-        }
-        catch (e: Exception){
-
-        }
-        Log.d("FrontActivity", "onPause()")
-        Log.d("FrontActivity", "volume in onStop: $currentVolume")
+//        try {
+//            // 음악 끄기
+//            mediaPlayer.pause()
+//            // 볼륨 원래대로 되돌리기
+//            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
+//            // 진동 끄기
+//            vib.cancel()
+//        }
+//        catch (e: Exception){
+//
+//        }
+//        Log.d("FrontActivity", "volume in onStop: $currentVolume")
     }
 
     override fun onResume() {
