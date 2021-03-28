@@ -46,17 +46,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_alarm)
 
-        // 잠금화면에서 불 들어오게 하기
-        val wakeLock: PowerManager.WakeLock =
-                (getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                    newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                        acquire()
-                    }
-                }
-
-        // 10초만 지속되게 하기
-        wakeLock.acquire(10*1000L )
-
         // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄우기
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1){
