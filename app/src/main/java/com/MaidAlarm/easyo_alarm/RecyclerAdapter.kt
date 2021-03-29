@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.NotificationManager
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -150,7 +151,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
         holder.row_clockText.setOnClickListener {
             val setHour = hourList[position]
             val setMin = minList[position]
-            val setWeek = mutableSetOf<Int>()
+            var setWeek = mutableListOf<Int>()
 
             setWeek.add(Sun[position])
             setWeek.add(Mon[position])
@@ -160,7 +161,15 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             setWeek.add(Fri[position])
             setWeek.add(Sat[position])
 
-            
+            // as ArrayList로 변환을 해줘야 putIntegerArrayListExtra에 들어감
+            setWeek = setWeek as ArrayList<Int>
+
+            val alarmActivity = Intent(context, AlarmSetActivity::class.java)
+            alarmActivity.putExtra("setHour", setHour)
+            alarmActivity.putExtra("setMin", setMin)
+            alarmActivity.putIntegerArrayListExtra("setWeek", setWeek)
+
+            context.startActivity(alarmActivity)
         }
 
         // *** switch(토글) on/off 의 변화에 따른 행동 정의
