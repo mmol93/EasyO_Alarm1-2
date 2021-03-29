@@ -92,16 +92,16 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
         // ** 뷰에 시간을 세팅한다 **
         // 단, 시간과 분은 반드시 2자리로 표현하게 한다.
         if (hourList[position].toString().length < 2 && minList[position].toString().length < 2){
-            holder.row_clock.text = "0${hourList[position]} : 0${minList[position]}"
+            holder.row_clockText.text = "0${hourList[position]} : 0${minList[position]}"
 
         }else if (hourList[position].toString().length < 2){
-            holder.row_clock.text = "0${hourList[position]} : ${minList[position]}"
+            holder.row_clockText.text = "0${hourList[position]} : ${minList[position]}"
 
         }else if (minList[position].toString().length < 2){
-            holder.row_clock.text = "${hourList[position]} : 0${minList[position]}"
+            holder.row_clockText.text = "${hourList[position]} : 0${minList[position]}"
 
         }else{
-            holder.row_clock.text = "${hourList[position]} : ${minList[position]}"
+            holder.row_clockText.text = "${hourList[position]} : ${minList[position]}"
         }
 
         // ** 각 요일별로 텍스트에 배경색을 넣어 구분을 하게 한다. **
@@ -144,6 +144,23 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
         else {
             Log.d("RecyclerAdapter", "switch: ${switch[position]}")
             holder.row_switch.isChecked = false
+        }
+
+        // *** 각 항목의 텍스트뷰를 클릭했을 때 행동 정의
+        holder.row_clockText.setOnClickListener {
+            val setHour = hourList[position]
+            val setMin = minList[position]
+            val setWeek = mutableSetOf<Int>()
+
+            setWeek.add(Sun[position])
+            setWeek.add(Mon[position])
+            setWeek.add(Tue[position])
+            setWeek.add(Wed[position])
+            setWeek.add(Thu[position])
+            setWeek.add(Fri[position])
+            setWeek.add(Sat[position])
+
+            
         }
 
         // *** switch(토글) on/off 의 변화에 따른 행동 정의
@@ -337,7 +354,7 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val binder : MainalarmRawBinding = MainalarmRawBinding.bind(view)
 
     val row_groupView = binder.rowGroupView
-    val row_clock = binder.rowClcok
+    val row_clockText = binder.rowClcok
     val row_trash = binder.shortImageTrash
     val row_sun = binder.rowSun
     val row_mon = binder.rowMon

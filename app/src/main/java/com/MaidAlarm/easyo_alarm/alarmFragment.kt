@@ -138,38 +138,40 @@ class alarmFragment : Fragment() {
         }
     }
 
-    private val dragListener = View.OnDragListener { v, event ->
-        Log.d("alarmFragment", "드래그중")
-        when(event.action){
-            DragEvent.ACTION_DRAG_STARTED -> {
-                // 리사이클로뷰를 스크롤 하면 floating 버튼이 안보이도록 한다
-                binder.fab.isGone = true
-                // 2초 뒤 다시 floating 버튼이 보이게 설정한다
-                val thread = object : Thread(){
-                    override fun run() {
-                        super.run()
-                        // 2초
-                        SystemClock.sleep(2 * 1000)
-                        // 2초가 지난 후 floating 버튼을 되돌리려고 할 때 프로그램을 종료할 가능성 있음
-                        // 종료되고 실시하면 에러 발생
-                        try {
-                            binder.fab.isGone = false
-                        }
-                        catch (e:Exception){
-
-                        }
-                    }
-                }
-                thread.start()
-            }
-        }
-        true
-    }
+    // 21.03.29 - 기능 실현이 안되서 일단 숨김
+//    private val dragListener = View.OnDragListener { v, event ->
+//        Log.d("alarmFragment", "드래그중")
+//        when(event.action){
+//            DragEvent.ACTION_DRAG_STARTED -> {
+//                // 리사이클로뷰를 스크롤 하면 floating 버튼이 안보이도록 한다
+//                binder.fab.isGone = true
+//                // 2초 뒤 다시 floating 버튼이 보이게 설정한다
+//                val thread = object : Thread(){
+//                    override fun run() {
+//                        super.run()
+//                        // 2초
+//                        SystemClock.sleep(2 * 1000)
+//                        // 2초가 지난 후 floating 버튼을 되돌리려고 할 때 프로그램을 종료할 가능성 있음
+//                        // 종료되고 실시하면 에러 발생
+//                        try {
+//                            binder.fab.isGone = false
+//                        }
+//                        catch (e:Exception){
+//
+//                        }
+//                    }
+//                }
+//                thread.start()
+//            }
+//        }
+//        true
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binder.fab.setOnDragListener(dragListener)
+        // 21.03.29 - 기능 실현이 안되서 일단 숨김
+//        binder.fab.setOnDragListener(dragListener)
 
         // 플로팅 버튼 한 번 누름: 일반 알람 설정창
         binder.fab.setOnClickListener {
