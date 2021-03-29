@@ -93,6 +93,8 @@
     <string name="typeOfBell_Korean_MinJjeong">Minjjeong</string>
     <string name="typeOfBell_Korean_Jeongyeon">Jeongyeon</string>
 
+    <string name="AlarmSetActivityModi_error"> An error has occurred\nplease delete this alarm and set again</string>
+
 
     <string name="typeOfBell_Japanese">Japanese-Voice(coming soon)</string>
     <string name="typeOfBell_English">English-Voice(coming soon)</string>
@@ -101,9 +103,6 @@
     <string name="permission_dialogGotIt">I did it</string>
     <string name="permission_dialogMessage">
         it is used to show alarm pop-up in the background \nplease allow that</string>
-
-
-
 
 
     <!-- 여기 아래는 전부 라이센스 관련 String-->

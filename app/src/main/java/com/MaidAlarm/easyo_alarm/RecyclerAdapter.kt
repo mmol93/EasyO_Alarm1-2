@@ -164,12 +164,13 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             // as ArrayList로 변환을 해줘야 putIntegerArrayListExtra에 들어감
             setWeek = setWeek as ArrayList<Int>
 
-            val alarmActivity = Intent(context, AlarmSetActivity::class.java)
-            alarmActivity.putExtra("setHour", setHour)
-            alarmActivity.putExtra("setMin", setMin)
-            alarmActivity.putIntegerArrayListExtra("setWeek", setWeek)
+            val alarmActivityModi = Intent(context, AlarmSetActivityModi::class.java)
+            alarmActivityModi.putExtra("position", position)
+            alarmActivityModi.putExtra("setHour", setHour)
+            alarmActivityModi.putExtra("setMin", setMin)
+            alarmActivityModi.putIntegerArrayListExtra("setWeek", setWeek)
 
-            context.startActivity(alarmActivity)
+            context.startActivity(alarmActivityModi)
         }
 
         // *** switch(토글) on/off 의 변화에 따른 행동 정의
