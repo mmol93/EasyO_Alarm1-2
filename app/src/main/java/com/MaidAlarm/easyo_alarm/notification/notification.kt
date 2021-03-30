@@ -62,7 +62,6 @@ class notification {
         // 클릭시 해당 intent를 연다
         builder1.setContentIntent(pending)
 
-
         // 13. getNotification.build(): 주어진 정보(옵션)를 종합하여 새로운 Notification 객체 반환
         val notification = builder1.build()
 

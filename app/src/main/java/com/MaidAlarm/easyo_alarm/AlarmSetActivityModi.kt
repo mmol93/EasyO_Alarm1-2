@@ -17,6 +17,7 @@ import java.util.ArrayList
 class AlarmSetActivityModi : AppCompatActivity() {
     lateinit var binder : ActivityAlarmSetModiBinding
     lateinit var app : AppClass
+    lateinit var SQLHelper : SQLHelper
 
     // diffTime에 대한 객체 생성
     val diffTime = com.MaidAlarm.easyo_alarm.diffTime()
@@ -34,18 +35,27 @@ class AlarmSetActivityModi : AppCompatActivity() {
         setContentView(R.layout.activity_alarm_set_modi)
         binder = ActivityAlarmSetModiBinding.inflate(layoutInflater)
         app = application as AppClass
+        SQLHelper = SQLHelper(this)
 
         // 아래의 getIntExtra는 RecyclerAdapter에서 옴
         val position = intent.getIntExtra("position", -1)
         var setHour = intent.getIntExtra("setHour", 0)
-        val setMin = intent.getIntExtra("setMin", 0)
+        var setMin = intent.getIntExtra("setMin", 0)
+        val requestCode = intent.getIntExtra("requestCode", 0)
+        val setProgress = intent.getIntExtra("setProgress", 0)
+        var setQuick = intent.getIntExtra("setQuick", 0)
         weekList = intent.getIntegerArrayListExtra("setWeek")!!
         var setAMPM = 0
 
-        // 제대로된 아이템의 위치를 알 수 없을 경우 토스트 출력 후 액티비티 종료
-        if (position == -1){
+        // 제대로된 아이템의 위치를 알 수 없거나 requestCode가 이상할 경우 토스트 출력 후 액티비티 종료
+        if (position == -1 || requestCode == 0){
             Toast.makeText(this, getString(R.string.AlarmSetActivityModi_error), Toast.LENGTH_SHORT).show()
             finish()
+        }
+
+        // quick 알람을 수정할 경우 일반 알람으로 바뀐다는 것을 통지
+        if (setQuick == 1){
+            Toast.makeText(this, getString(R.string.AlarmSetActivityModi_quickToNormal), Toast.LENGTH_LONG).show()
         }
 
         // 1. 애드몹 초기화
@@ -65,11 +75,6 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 Log.d("adMob", "alarmSet 광고 열림 성공")
             }
         }
-
-        // 아래 항목은 잘 들어오는거 확인됨
-        Log.d("AlarmSetActivityModi", "setHour: $setHour")
-        Log.d("AlarmSetActivityModi", "setMin: $setMin")
-        Log.d("AlarmSetActivityModi", "weekList: $weekList")
 
         // numberPicker의 시간 부분 최대, 최소값 설정
         binder.numberPickerHour.maxValue = 12
@@ -91,22 +96,46 @@ class AlarmSetActivityModi : AppCompatActivity() {
             setAMPM = 1
         }
 
+        // 시간 및 오전오후 표시
         binder.numberPickerHour.value = setHour
         binder.numberPickerMin.value = setMin
         binder.numberPickerAMPM.value = setAMPM
 
-        Log.d("AlarmSetActivityModi", "numberPickerHour: ${binder.numberPickerHour.value}")
-        Log.d("AlarmSetActivityModi", "numberPickerMin: ${binder.numberPickerMin.value}")
-        Log.d("AlarmSetActivityModi", "numberPickerAMPM: ${binder.numberPickerAMPM.value}")
+        // 사운드 이미지 갱신 - setProgress가 0일 경우에만 실시한다
+        if (setProgress == 0){
+            binder.imageVolume.setImageResource(R.drawable.volume_mute)
+        }
+
+        // 아래 항목은 잘 들어오는거 확인됨
+        Log.d("AlarmSetActivityModi", "before_setHour: $setHour")
+        Log.d("AlarmSetActivityModi", "before_setMin: $setMin")
+        Log.d("AlarmSetActivityModi", "before_setAMPM: $setAMPM")
+        Log.d("AlarmSetActivityModi", "before_position: $position")
+
+        Log.d("AlarmSetActivityModi", "before_weekList: $weekList")
 
         // 요일 클릭에 대한 변수 정의
-        var Sun = 0
-        var Mon = 0
-        var Tue = 0
-        var Wed = 0
-        var Thu = 0
-        var Fri = 0
-        var Sat = 0
+        var Sun = weekList[0]
+        var Mon = weekList[1]
+        var Tue = weekList[2]
+        var Wed = weekList[3]
+        var Thu = weekList[4]
+        var Fri = weekList[5]
+        var Sat = weekList[6]
+
+        // 위 결과에 따라 각 요일에 색 칠하기
+        textWeek_initial(binder.alarmSetSun, Sun)
+        textWeek_initial(binder.alarmSetMon, Mon)
+        textWeek_initial(binder.alarmSetTues, Tue)
+        textWeek_initial(binder.alarmSetWed, Wed)
+        textWeek_initial(binder.alarmSetThur, Thu)
+        textWeek_initial(binder.alarmSetFri, Fri)
+        textWeek_initial(binder.alarmSetSat, Sat)
+
+        // *** seekBar도 초기값 설정해주기
+        binder.volumeSeekBar.progress = setProgress
+
+        seekValue = setProgress
 
         // numberPickerHour 터치시
         binder.numberPickerHour.setOnValueChangedListener { picker, oldVal, newVal ->
@@ -129,6 +158,86 @@ class AlarmSetActivityModi : AppCompatActivity() {
         // Cancel 버튼 클릭 시
         binder.buttonCancel.setOnClickListener {
             finish()
+        }
+
+        // *** save 버튼 클릭 시
+        binder.buttonSave.setOnClickListener {
+            if (Sun == 1 || Mon == 1 || Tue == 1 || Wed == 1 || Thu == 1 || Fri == 1 || Sat== 1){
+                // ** 시간, 분에 대한 설정
+                // binder.numberPickerAMPM.value == 0은 AM을 가리킨다
+                if (binder.numberPickerAMPM.value == 0){
+                    setHour = binder.numberPickerHour.value
+                }else{
+                    setHour = binder.numberPickerHour.value + 12
+                    // 24시는 0시로 설정되게 한다
+                    if (setHour == 24){
+                        setHour = 0
+                    }
+                }
+
+                setMin = binder.numberPickerMin.value
+
+                // SQL에서 해당 row의 데이터를 변경한다
+                var sql_update = "update MaidAlarm set hourData = ? where  idx = ?"
+                // ** position은 리스트의 인덱스이기 때문에 sql의 인덱스와 맞추기 위해서는 +1을 해줘야한다
+                // ** update의 경우 컬럼 1개당 1개씩 수정을 해야한다...
+                // 시간 데이터 수정
+                var arg1 = arrayOf("$setHour", "${position + 1}")
+                SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+
+                // 분 데이터 수정
+                sql_update = "update MaidAlarm set minData = ? where  idx = ?"
+                arg1 = arrayOf("$setMin", "${position + 1}")
+                SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+
+                // 볼륨(progress) 데이터 수정
+                sql_update = "update MaidAlarm set progressData = ? where  idx = ?"
+                arg1 = arrayOf("$seekValue", "${position + 1}")
+                SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+
+                // * 각 요일별로도 새로운 데이터를 다 넣어야한다
+                val argWeek = arrayOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+                var i = 0
+                for (week in argWeek){
+                    sql_update = "update MaidAlarm set $week = ? where  idx = ?"
+                    arg1 = arrayOf("${weekList[i]}", "${position + 1}")
+                    SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+                    i += 1
+                }
+
+                // requestCode 부분 수정
+                sql_update = "update MaidAlarm set requestCode = ? where  idx = ?"
+                arg1 = arrayOf("$requestCode", "${position + 1}")
+                SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+
+                // quick 부분 수정 - 수정할 시 반드시 0이 들어가게 된다 = 변경하면 무조건 normal 알람으로 변경됨
+                setQuick = 0
+                sql_update = "update MaidAlarm set quick = ? where  idx = ?"
+                arg1 = arrayOf("$setQuick", "${position + 1}")
+                SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+
+                Log.d("AlarmSetActivityModi", "after_setHour: $setHour")
+                Log.d("AlarmSetActivityModi", "after_setMin: $setMin")
+                Log.d("AlarmSetActivityModi", "after_setAMPM: $setAMPM")
+                Log.d("AlarmSetActivityModi", "after_requestCode: $requestCode")
+                Log.d("AlarmSetActivityModi", "after_position: $position")
+                Log.d("AlarmSetActivityModi", "after_quick: $setQuick")
+                Log.d("AlarmSetActivityModi", "after_weekList: $weekList")
+
+                SQLHelper.close()
+
+                // 해당 requestCode로 Notification을 갱신해준다
+                val newAlarm = makeAlarm(this, setHour, setMin, binder.volumeSeekBar.progress, weekList, requestCode)
+                newAlarm.addNewAlarm_normal()
+
+                finish()
+            }
+
+            // ** 요일을 하나라도 설정하지 않을 경우 Toast로 알려준다
+            else{
+                val toast = Toast.makeText(this, getString(R.string.alarmSet_Toast), Toast.LENGTH_LONG)
+                toast.show()
+            }
         }
 
         // 일요 텍스트 클릭
@@ -247,7 +356,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
         setContentView(binder.root)
     }
 
-    // 텍스트뷰에 색깔 넣기
+    // 텍스트뷰에 색깔 넣기 - 클릭 시
     fun textWeek(textView : TextView, week : Int) : Int {
         if (week == 0){
             textView.setBackgroundColor(Color.parseColor("#1ABC9C"))
@@ -256,6 +365,18 @@ class AlarmSetActivityModi : AppCompatActivity() {
         else{
             textView.setBackgroundColor(Color.parseColor("#FFFFFF"))
             return 0
+        }
+    }
+
+    // 텍스트뷰에 색깔 넣기 - 최초 기동 시
+    fun textWeek_initial(textView : TextView, week : Int) : Int {
+        if (week == 1){
+            textView.setBackgroundColor(Color.parseColor("#1ABC9C"))
+            return 0
+        }
+        else{
+            textView.setBackgroundColor(Color.parseColor("#FFFFFF"))
+            return 1
         }
     }
 
@@ -285,7 +406,6 @@ class AlarmSetActivityModi : AppCompatActivity() {
 
     // NumberPickerHour/Min, 각 요일의 텍스트를 클릭할 때 마다 알람까지 남은 시간 표기하는 메서드
     fun informNextAlarm(localHour : Int){
-        Log.d("AlarmSetActivity", "numberPickerAMPM: ${binder.numberPickerAMPM.value}")
         restOfMin = diffTime.diffMin(binder.numberPickerMin.value)
         if (binder.numberPickerAMPM.value == 0){
             restOfHour = diffTime.diffHour(localHour, binder.numberPickerMin.value)
@@ -301,7 +421,5 @@ class AlarmSetActivityModi : AppCompatActivity() {
             restOfWeek = diffTime.diffWeek(weekList, localHour2, binder.numberPickerMin.value)
             binder.alarmSetInform.text = diffTime.makeTextWithDiffTime(this, restOfWeek, restOfHour, restOfMin)
         }
-        Log.d("AlarmSetActivity", "restOfWeek: $restOfWeek")
-        Log.d("AlarmSetActivity", "restOfHour: $restOfHour")
     }
 }

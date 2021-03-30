@@ -69,4 +69,6 @@
     <string name="permission_dialogTitle">権限</string>
     <string name="permission_dialogMessage">ｱﾗｰﾑを前面表示するため必要です。\nぜひ許可してください。。。</string>
     <string name="permission_dialogGotIt">やった！</string>
+    <string name="AlarmSetActivityModi_error">エラーが発生しました。アラームを削除して再登録してください。</string>
+    <string name="AlarmSetActivityModi_quickToNormal">Quickアラームを修正すると、一般アラームに変わります。</string>
 </resources>

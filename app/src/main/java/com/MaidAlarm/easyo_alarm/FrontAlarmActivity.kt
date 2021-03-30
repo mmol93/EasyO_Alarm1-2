@@ -274,7 +274,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             }
             // 남아있는 알람이 있다면 notification 갱신
             else{
-                // 설정에서 xnotification이 "사용 상태"로 되어 있을 때
+                // 설정에서 notification이 "사용 상태"로 되어 있을 때
                 // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
                 // 여기서는 notificatrion에 대한 갱신만 해주면 된다
                 if (app.notificationSwitch == 1){

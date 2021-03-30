@@ -94,6 +94,7 @@
     <string name="typeOfBell_Korean_Jeongyeon">Jeongyeon</string>
 
     <string name="AlarmSetActivityModi_error"> An error has occurred\nplease delete this alarm and set again</string>
+    <string name="AlarmSetActivityModi_quickToNormal"> if you revise this alarm, \nit will change to normal alarm from quick alarm</string>
 
 
     <string name="typeOfBell_Japanese">Japanese-Voice(coming soon)</string>

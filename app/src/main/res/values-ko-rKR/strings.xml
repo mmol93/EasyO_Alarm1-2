@@ -69,4 +69,6 @@
     <string name="permission_dialogTitle">권한</string>
     <string name="permission_dialogMessage">알람을 보여주기 위해 필요한 권한입니다.\n꼭 허가해주세요 ㅠㅠ</string>
     <string name="permission_dialogGotIt">했어요</string>
+    <string name="AlarmSetActivityModi_error">에러가 발생했어요... 현재 알람을 삭제하고 다시 설정해주세요ㅠㅠ</string>
+    <string name="AlarmSetActivityModi_quickToNormal">퀵 알람을 수정하면 일반 알람으로 변경되요!</string>
 </resources>

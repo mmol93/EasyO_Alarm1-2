@@ -168,6 +168,9 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             alarmActivityModi.putExtra("position", position)
             alarmActivityModi.putExtra("setHour", setHour)
             alarmActivityModi.putExtra("setMin", setMin)
+            alarmActivityModi.putExtra("requestCode", requestCode[position])
+            alarmActivityModi.putExtra("setProgress", progressList[position])
+            alarmActivityModi.putExtra("setQuick", quick[position])
             alarmActivityModi.putIntegerArrayListExtra("setWeek", setWeek)
 
             context.startActivity(alarmActivityModi)
