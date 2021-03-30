@@ -257,10 +257,11 @@ class FrontAlarmActivity : AppCompatActivity() {
                 finish()
             }
 
+            val recentAlarm = RecentAlarm()
+            val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+
             // 그 다음으로 울릴 알람이 없다면 notification 삭제하기
             if (size > 0) {
-                val recentAlarm = RecentAlarm()
-                val recentTimeList = recentAlarm.checkSQL(SQLHelper)
                 // 알림은 있지만 모든 토글이 off 일 때 -> notification 삭제
                 if (recentTimeList[0] == -1) {
                     val notification = notification()
@@ -278,11 +279,62 @@ class FrontAlarmActivity : AppCompatActivity() {
                 // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
                 // 여기서는 notificatrion에 대한 갱신만 해주면 된다
                 if (app.notificationSwitch == 1){
+                    // * 가장 가까운 알람의 시간 알아내기
+                    var recentHour = ""
+                    var recentMin = ""
+                    if (recentTimeList[7] < 10){
+                        recentHour = "0${recentTimeList[7]}"
+                    }else{
+                        recentHour = "${recentTimeList[7]}"
+                    }
+                    if (recentTimeList[8] < 10){
+                        recentMin = "0${recentTimeList[8]}"
+                    }else{
+                        recentMin = "${recentTimeList[8]}"
+                    }
+                    app.recentTime = "$recentHour : $recentMin"
+
+                    // * 가장 가까운 알람의 요일 알아내기
+                    var textForWeek = ""
+                    if (recentTimeList[1] == 1){
+                        textForWeek = textForWeek + getString(R.string.week_mon) + ", "
+                    }
+                    if (recentTimeList[2] == 1){
+                        textForWeek = textForWeek + getString(R.string.week_tue) + ", "
+                    }
+                    if (recentTimeList[3] == 1){
+                        textForWeek = textForWeek + getString(R.string.week_wed) + ", "
+                    }
+                    if (recentTimeList[4] == 1){
+                        textForWeek = textForWeek + getString(R.string.week_thur) + ", "
+                    }
+                    if (recentTimeList[5] == 1){
+                        textForWeek = textForWeek + getString(R.string.week_fri) + ", "
+                    }
+                    if (recentTimeList[6] == 1){
+                        textForWeek = textForWeek + getString(R.string.week_sat) + ", "
+                    }
+                    if (recentTimeList[0] == 1){
+                        textForWeek = textForWeek + getString(R.string.week_sun) + ", "
+                    }
+
+                    // 체크된 요일을 문자로 표시한다
+                    if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
+                            || recentTimeList[5] == 1 || recentTimeList[6] == 1){
+
+                        // textForWeek에서 마지막 부분 콤마 제거하기
+                        if (textForWeek.length > 2){
+                            textForWeek = textForWeek.removeRange(textForWeek.length -2, textForWeek.length-1)
+                        }
+                        app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
+                    }
+
                     // ok 버튼을 눌렀을 때 notification의 내용을 갱신해준다
                     val notification = notification()
                     val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                     notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
                     notification.makeNotification(app, this, notificationManager)
+
                 }
             }
         }
