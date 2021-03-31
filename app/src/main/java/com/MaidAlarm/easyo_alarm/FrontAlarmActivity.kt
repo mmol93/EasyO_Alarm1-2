@@ -1,9 +1,6 @@
 package com.MaidAlarm.easyo_alarm
 
-import android.app.AlarmManager
-import android.app.KeyguardManager
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -45,6 +42,13 @@ class FrontAlarmActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_alarm)
+
+        // 최근 실행한 앱 목록에서 안보이게 하기
+        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val tasks = am.appTasks
+        if (tasks != null && tasks.size > 0) {
+            tasks[0].setExcludeFromRecents(true)
+        }
 
         // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄우기
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -199,7 +203,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         // ok버튼 클릭 시
         binder.buttonOk.setOnClickListener {
             // 알람 울릴 때 계산 문제를 사용할 때
-            if (app.wayOfAlarm == 1){
+            if (app.wayOfAlarm == 1) {
                 // 설정에서 지정한 계산문제 풀이 횟수 보다 작을 때
                 if (counter < app.counter) {
                     // 정답을 맞췄을 때
@@ -239,8 +243,8 @@ class FrontAlarmActivity : AppCompatActivity() {
                         }
                     }
                     // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료
-                    if (counter >= app.counter){
-                        if (progress == 0){
+                    if (counter >= app.counter) {
+                        if (progress == 0) {
                             vib.cancel()
                         }
                         finish()
@@ -250,92 +254,108 @@ class FrontAlarmActivity : AppCompatActivity() {
                 }
             }
             // 계산문제를 설정하지 않았을 때
-            else{
-                if (progress == 0){
+            else {
+                if (progress == 0) {
                     vib.cancel()
                 }
                 finish()
             }
 
-            val recentAlarm = RecentAlarm()
-            val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+            var recentAlarm = RecentAlarm()
+            var recentTimeList = recentAlarm.checkSQL(SQLHelper)
 
             // 그 다음으로 울릴 알람이 없다면 notification 삭제하기
             if (size > 0) {
                 // 알림은 있지만 모든 토글이 off 일 때 -> notification 삭제
                 if (recentTimeList[0] == -1) {
+
                     val notification = notification()
                     notification.cancelNotification(this)
                 }
+                // 남아있는 알람이 있다면 notification 갱신
+                else {
+                    // 현재 시간(시간 + 분)과 울린 알람의 시간(시간 + 분)이 동일함
+                        // -> notification을 갱신하더라도 지금 울린 알람이 제일 가까운 알람으로 인식됨
+                    val thread = object : Thread(){
+                        override fun run() {
+                            super.run()
+                            Log.d("FrontActivity", "스레드 시작")
+                            sleep(60*1000)
+                            // 설정에서 notification이 "사용 상태"로 되어 있을 때
+                            // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
+                            // 여기서는 notificatrion에 대한 갱신만 해주면 된다
+                            if (app.notificationSwitch == 1) {
+                                // * 가장 가까운 알람의 시간 알아내기
+                                    // Thread 이후 한 번 더 변수로 가져와야 직전 울린 알람을 제외하고 최근 알람을 알 수 있다
+                                recentAlarm = RecentAlarm()
+                                recentTimeList = recentAlarm.checkSQL(SQLHelper)
+
+                                var recentHour = ""
+                                var recentMin = ""
+                                if (recentTimeList[7] < 10) {
+                                    recentHour = "0${recentTimeList[7]}"
+                                } else {
+                                    recentHour = "${recentTimeList[7]}"
+                                }
+                                if (recentTimeList[8] < 10) {
+                                    recentMin = "0${recentTimeList[8]}"
+                                } else {
+                                    recentMin = "${recentTimeList[8]}"
+                                }
+                                app.recentTime = "$recentHour : $recentMin"
+
+                                // * 가장 가까운 알람의 요일 알아내기
+                                var textForWeek = ""
+                                if (recentTimeList[1] == 1) {
+                                    textForWeek = textForWeek + getString(R.string.week_mon) + ", "
+                                }
+                                if (recentTimeList[2] == 1) {
+                                    textForWeek = textForWeek + getString(R.string.week_tue) + ", "
+                                }
+                                if (recentTimeList[3] == 1) {
+                                    textForWeek = textForWeek + getString(R.string.week_wed) + ", "
+                                }
+                                if (recentTimeList[4] == 1) {
+                                    textForWeek = textForWeek + getString(R.string.week_thur) + ", "
+                                }
+                                if (recentTimeList[5] == 1) {
+                                    textForWeek = textForWeek + getString(R.string.week_fri) + ", "
+                                }
+                                if (recentTimeList[6] == 1) {
+                                    textForWeek = textForWeek + getString(R.string.week_sat) + ", "
+                                }
+                                if (recentTimeList[0] == 1) {
+                                    textForWeek = textForWeek + getString(R.string.week_sun) + ", "
+                                }
+
+                                // 체크된 요일을 문자로 표시한다
+                                if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
+                                        || recentTimeList[5] == 1 || recentTimeList[6] == 1) {
+
+                                    // textForWeek에서 마지막 부분 콤마 제거하기
+                                    if (textForWeek.length > 2) {
+                                        textForWeek = textForWeek.removeRange(textForWeek.length - 2, textForWeek.length - 1)
+                                    }
+                                    app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
+                                }
+                                // ok 버튼을 눌렀을 때 notification의 내용을 갱신해준다
+                                val notification = notification()
+                                val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                                notification.getNotification(this@FrontAlarmActivity, "chanel1", "첫 번째 채널", notificationManager)
+                                notification.makeNotification(app, this@FrontAlarmActivity, notificationManager)
+                                Log.d("FrontActivity", "recentTime: ${app.recentTime}")
+                                Log.d("FrontActivity", "recentWeek: ${app.recentWeek}")
+                                Log.d("FrontActivity", "스레드 끝")
+                            }
+                        }
+                    }
+                    thread.start()
+                }
             }
             // 남아있는 알람이 없다면 notification 삭제
-            else if (size == 0){
+            else{
                 val notification = notification()
                 notification.cancelNotification(this)
-            }
-            // 남아있는 알람이 있다면 notification 갱신
-            else{
-                // 설정에서 notification이 "사용 상태"로 되어 있을 때
-                // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
-                // 여기서는 notificatrion에 대한 갱신만 해주면 된다
-                if (app.notificationSwitch == 1){
-                    // * 가장 가까운 알람의 시간 알아내기
-                    var recentHour = ""
-                    var recentMin = ""
-                    if (recentTimeList[7] < 10){
-                        recentHour = "0${recentTimeList[7]}"
-                    }else{
-                        recentHour = "${recentTimeList[7]}"
-                    }
-                    if (recentTimeList[8] < 10){
-                        recentMin = "0${recentTimeList[8]}"
-                    }else{
-                        recentMin = "${recentTimeList[8]}"
-                    }
-                    app.recentTime = "$recentHour : $recentMin"
-
-                    // * 가장 가까운 알람의 요일 알아내기
-                    var textForWeek = ""
-                    if (recentTimeList[1] == 1){
-                        textForWeek = textForWeek + getString(R.string.week_mon) + ", "
-                    }
-                    if (recentTimeList[2] == 1){
-                        textForWeek = textForWeek + getString(R.string.week_tue) + ", "
-                    }
-                    if (recentTimeList[3] == 1){
-                        textForWeek = textForWeek + getString(R.string.week_wed) + ", "
-                    }
-                    if (recentTimeList[4] == 1){
-                        textForWeek = textForWeek + getString(R.string.week_thur) + ", "
-                    }
-                    if (recentTimeList[5] == 1){
-                        textForWeek = textForWeek + getString(R.string.week_fri) + ", "
-                    }
-                    if (recentTimeList[6] == 1){
-                        textForWeek = textForWeek + getString(R.string.week_sat) + ", "
-                    }
-                    if (recentTimeList[0] == 1){
-                        textForWeek = textForWeek + getString(R.string.week_sun) + ", "
-                    }
-
-                    // 체크된 요일을 문자로 표시한다
-                    if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
-                            || recentTimeList[5] == 1 || recentTimeList[6] == 1){
-
-                        // textForWeek에서 마지막 부분 콤마 제거하기
-                        if (textForWeek.length > 2){
-                            textForWeek = textForWeek.removeRange(textForWeek.length -2, textForWeek.length-1)
-                        }
-                        app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
-                    }
-
-                    // ok 버튼을 눌렀을 때 notification의 내용을 갱신해준다
-                    val notification = notification()
-                    val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notification.getNotification(this, "chanel1", "첫 번째 채널", notificationManager)
-                    notification.makeNotification(app, this, notificationManager)
-
-                }
             }
         }
 

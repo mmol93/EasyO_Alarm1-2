@@ -1,12 +1,11 @@
 package com.MaidAlarm.easyo_alarm
 
 import android.Manifest
-import android.app.NotificationManager
+import android.app.ActivityManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.AudioManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -56,6 +55,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
+
+        // 최근 실행한 앱 목록에서 안보이게 하기
+        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val tasks = am.appTasks
+        if (tasks != null && tasks.size > 0) {
+            tasks[0].setExcludeFromRecents(true)
+        }
 
         // 오버레이 권한 확인
         if (!Settings.canDrawOverlays(this)) {

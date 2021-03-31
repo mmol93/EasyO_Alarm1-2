@@ -174,6 +174,10 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.putExtra("progress", progress)
             context?.startActivity(frontAlarmActivity)
         }
+        else if (intent!!.action == "RENEWNOTIFICATION"){
+            Log.d("makeAlarm", "notification 갱신됨")
+
+        }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{
             // 잠금화면에서 불 들어오게 하기
@@ -188,7 +192,6 @@ class Receiver : BroadcastReceiver() {
             wakeLock.acquire(10*1000L )
 
             Log.d("makeAlarm", "onReceive() 호출 - else부분")
-            val toast = Toast.makeText(context, "BroadcastReceiver() 호출", Toast.LENGTH_LONG).show()
             // 오늘이 알람에서 설정한 요일과 맞는지 확인하기 위해 오늘 날짜의 요일을 가져온다
             val calendar = Calendar.getInstance()
             // 밑에서 사용될 arrayFromMakeAlarm의 경우 인덱스가 0부터 시작
