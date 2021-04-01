@@ -9,6 +9,7 @@ import android.media.MediaPlayer
 import android.os.*
 import android.util.Log
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.MaidAlarm.easyo_alarm.databinding.ActivityFrontAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
@@ -30,7 +31,6 @@ class FrontAlarmActivity : AppCompatActivity() {
     lateinit var vib : Vibrator // 진동관련 변수 - 여기서 정의해야 ok버튼의 리스너에서 사용가능
     lateinit var mediaPlayer: MediaPlayer
     var currentVolume : Int = 0
-    var maxVolume : Int = 0
     lateinit var audioManager: AudioManager
     lateinit var app : AppClass
 
@@ -77,7 +77,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         // 광고 초기화
         // *** 애드몹 초기화
         MobileAds.initialize(this) {}
-        
+
         // ** 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
@@ -163,7 +163,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         Log.d("FrontAlarmActivity", "currentVolume in Front: $currentVolume")
         app.lastProgress = progress
 
-        // *** 음악 파일 실행 - 미구현
+        // *** 음악 파일 실행
         // 알람 울리기 전 볼륨 강제 조절
         if (progress > 0){
             mediaPlayer = app.mediaPlayer
@@ -395,6 +395,8 @@ class FrontAlarmActivity : AppCompatActivity() {
             // 1분뒤 소리 울리는거 취소 = 트리거 취소
             app.threadTrigger = 0
 
+            Toast.makeText(this, getString(R.string.front_10minutes), Toast.LENGTH_LONG).show()
+
             finish()
         }
         setContentView(binder.root)
@@ -415,26 +417,6 @@ class FrontAlarmActivity : AppCompatActivity() {
 
         }
         Log.d("FrontActivity", "onDestroy()")
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        // 액티비티 전환시 음악 정지
-        // 알람이 울리는 동시에 다른 액티비티를 띄우거나
-        // 알람 액티비티를 무시하고 다른 창을 띄울 경우 진동이 꺼지지 않는 버그 발생
-//        try {
-//            // 음악 끄기
-//            mediaPlayer.pause()
-//            // 볼륨 원래대로 되돌리기
-//            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
-//            // 진동 끄기
-//            vib.cancel()
-//        }
-//        catch (e: Exception){
-//
-//        }
-//        Log.d("FrontActivity", "volume in onStop: $currentVolume")
     }
 
     override fun onResume() {

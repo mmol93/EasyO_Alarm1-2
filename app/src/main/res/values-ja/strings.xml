@@ -71,4 +71,5 @@
     <string name="permission_dialogGotIt">やった！</string>
     <string name="AlarmSetActivityModi_error">エラーが発生しました。アラームを削除して再登録してください。</string>
     <string name="AlarmSetActivityModi_quickToNormal">Quickアラームを修正すると、一般アラームに変わります。</string>
+    <string name="front_10minutes">10分後アラームが鳴ります。</string>
 </resources>

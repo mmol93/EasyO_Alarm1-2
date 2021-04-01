@@ -38,6 +38,7 @@
 
     <string name="front_moreTime">10 minutes</string>
     <string name="front_ok">OK</string>
+    <string name="front_10minutes">The alarm informs in 10minutes</string>
 
     <string name="alarmSet_AM">AM</string>
     <string name="alarmSet_PM">PM</string>

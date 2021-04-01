@@ -163,6 +163,18 @@ class Receiver : BroadcastReceiver() {
         // ** 10분 연장 버튼을 클릭했을 때
         else if(intent!!.action == "POSTPHONETIME"){
             Log.d("makeAlarm", "알람 연장됨")
+
+            // 휴식 상태인 휴대폰 깨우기
+            val wakeLock: PowerManager.WakeLock =
+                (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                    newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
+                        acquire()
+                    }
+                }
+
+            // 10초만 지속되게 하기
+            wakeLock.acquire(10*1000L )
+
             // 넘어온 intent에서 progress 데이터를 가져온다
             val progress = intent.getIntExtra("progress", -1)
             Log.d("makeAlarm", "progress: $progress")
@@ -180,7 +192,7 @@ class Receiver : BroadcastReceiver() {
         }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{
-            // 잠금화면에서 불 들어오게 하기
+            // 휴식 상태인 휴대폰 깨우기
             val wakeLock: PowerManager.WakeLock =
                     (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                         newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
@@ -263,7 +275,7 @@ class Receiver : BroadcastReceiver() {
                     }
                 }
             }
-            // quick 알람이 아닐 경우
+            // quick 알람이 아닐 경우 -> 24시간 뒤 다시 울리게 설정한다
             else{
                 val alarmManager: AlarmManager? = context!!.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
@@ -279,10 +291,6 @@ class Receiver : BroadcastReceiver() {
 
                 addNewAlarm_normal_exact(alarmManager!!, context, weekList, arrayFromMakeAlarm[7], arrayFromMakeAlarm[9], arrayFromMakeAlarm[10], arrayFromMakeAlarm[11])
             }
-        }
-        // 볼륨 강제 조절
-        fun adjustVolume(volume: Int){
-
         }
     }
 }
