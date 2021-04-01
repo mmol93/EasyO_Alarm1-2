@@ -76,7 +76,8 @@ class FrontAlarmActivity : AppCompatActivity() {
 
         // 광고 초기화
         // *** 애드몹 초기화
-//        MobileAds.initialize(this) {}
+        MobileAds.initialize(this) {}
+        
         // ** 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)

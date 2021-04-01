@@ -211,9 +211,6 @@ class Receiver : BroadcastReceiver() {
             if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
                 Log.d("makeAlarm", "지금 울릴 알람 맞음")
 
-                // 광고 초기화
-                MobileAds.initialize(context) {}
-
                 // 볼륨 강제 설정
                 val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
                 val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
