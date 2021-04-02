@@ -35,7 +35,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         binder.adView.adListener = object : AdListener(){
             override fun onAdFailedToLoad(p0: Int) {
                 super.onAdFailedToLoad(p0)
-                Log.d("FrontActivity", "quickSet 광고 로드 실패")
+                Log.d("ShortAlarmSetActivity", "quickSet 광고 로드 실패")
             }
             override fun onAdLoaded() {
                 super.onAdOpened()

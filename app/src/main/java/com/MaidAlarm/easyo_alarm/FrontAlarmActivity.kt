@@ -66,6 +66,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         binder = ActivityFrontAlarmBinding.inflate(layoutInflater)
         app = application as AppClass
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         val calculateProblemFragment = CalculateProblemFragment()
         // SQL에 대한 변수 선언
@@ -159,7 +160,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         val progress = intent.getIntExtra("progress", -1)
         currentVolume = intent.getIntExtra("currentVolume", 0)
 
-
         Log.d("FrontAlarmActivity", "currentVolume in Front: $currentVolume")
         app.lastProgress = progress
 
@@ -180,7 +180,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         else if(progress == 0){
             Log.d("FrontAlarmActivity", "진동울리는중")
             val pattern = LongArray(2) { 500 }
-            vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 vib.vibrate(VibrationEffect.createWaveform(pattern, 1))
@@ -404,36 +403,13 @@ class FrontAlarmActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // 액티비티 종료 시 음악 끄기
-        try {
-            // 음악 끄기
-            mediaPlayer.release()
-            // 볼륨 원래대로 되돌리기
-            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
-            // 진동 끄기
-            vib.cancel()
-        }
-        catch (e: Exception){
+        // 음악 끄기
+        mediaPlayer.release()
+        // 볼륨 원래대로 되돌리기
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
+        // 진동 끄기
+        vib.cancel()
 
-        }
         Log.d("FrontActivity", "onDestroy()")
-    }
-
-    override fun onResume() {
-        // 알람 화면으로 다시 돌아 왔을 때는 다시 음악 실행 및 진동 실시
-        super.onResume()
-        try {
-            if (!mediaPlayer.isPlaying){
-                mediaPlayer.start()
-                val pattern = LongArray(2) { 500 }
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    vib.vibrate(VibrationEffect.createWaveform(pattern, 1))
-                } else {
-                    vib.vibrate(1000)
-                }
-            }
-        }catch (e: Exception){
-
-        }
     }
 }
