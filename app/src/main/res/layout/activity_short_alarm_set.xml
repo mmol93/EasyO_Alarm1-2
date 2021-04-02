@@ -103,20 +103,21 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button60"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
+            android:layout_weight="1"
             android:textSize="@dimen/activity_short_minButton_textSize"
             android:text="@string/quick_60" />
         <Button
             android:id="@+id/button30"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/activity_short_minButton_textSize"
@@ -126,7 +127,7 @@
 
         <Button
             android:id="@+id/button15"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/activity_short_minButton_textSize"
@@ -137,13 +138,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button10"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.9"
+            android:layout_weight="1"
             android:textSize="@dimen/activity_short_minButton_textSize"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
@@ -151,7 +153,7 @@
 
         <Button
             android:id="@+id/button5"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/activity_short_minButton_textSize"
@@ -161,7 +163,7 @@
 
         <Button
             android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/activity_short_minButton_textSize"

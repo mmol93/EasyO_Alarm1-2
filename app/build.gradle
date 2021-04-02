@@ -61,7 +61,5 @@ dependencies {
     implementation 'com.github.iammert:ReadableBottomBar:0.2'
     implementation 'com.github.imtuann:FloatingActionButtonExpandable:1.1.2'
     implementation 'com.google.android.gms:play-services-ads:19.8.0'
-    implementation 'com.xw.repo:bubbleseekbar:3.20-lite'
-    implementation 'com.github.warkiz.widget:indicatorseekbar:2.1.2'
-    implementation 'com.minimize.library:seekbar-compat:0.3.0'
+    implementation 'info.hoang8f:fbutton:1.0.5'
 }
