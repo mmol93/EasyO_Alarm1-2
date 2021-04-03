@@ -172,6 +172,8 @@ Everyone is permitted to copy and distribute verbatim copies of this license doc
 
     <string name="license_floatingButton" translatable="false">com.github.imtuann:FloatingActionButtonExpandable:1.1.2</string>
 
+    <string name="license_NormalButton" translatable="false">com.github.sabujak-sabujak:RoundedButton:v0.1.1</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>

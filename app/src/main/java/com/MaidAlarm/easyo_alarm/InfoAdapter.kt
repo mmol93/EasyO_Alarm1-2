@@ -45,7 +45,7 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
                 holder.binder.rowItemView.setOnClickListener {
                     // 오픈소스 항목 입력
                     val listItem = arrayOf("Apache2.0", "GNU General Public License v3.0", "com.github.iammert:ReadableBottomBar:0.2",
-                            "com.github.imtuann:FloatingActionButtonExpandable:1.1.2")
+                            "com.github.imtuann:FloatingActionButtonExpandable:1.1.2", "com.github.sabujak-sabujak:RoundedButton:v0.1.1")
                     // 리스트 다이얼로그 만들기
                     val dialogBuilder = AlertDialog.Builder(context)
                     dialogBuilder.setTitle(context.getString(R.string.infoItem_openSource))
@@ -71,6 +71,10 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
                                 // floatingButton
                                 3 -> {
                                     intent.putExtra("content", context.getString(R.string.license_floatingButton))
+                                }
+                                // NormalButton
+                                4 -> {
+                                    intent.putExtra("content", context.getString(R.string.license_NormalButton))
                                 }
                             }
                             context.startActivity(intent)
