@@ -30,7 +30,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1" />
+        android:layout_weight="0.07" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,13 +54,13 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.1" />
+        android:layout_weight="0.07" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_weight="0.2"
+        android:layout_weight="0.1"
         android:orientation="horizontal">
 
         <TextView
@@ -106,34 +106,57 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <life.sabujak.roundedbutton.RoundedButton
             android:id="@+id/button60"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="9dp"
-            android:layout_marginRight="9dp"
-            android:layout_weight="1"
-            android:textSize="@dimen/activity_short_minButton_textSize"
-            android:text="@string/quick_60" />
-        <Button
-            android:id="@+id/button30"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/quick_60"
+            android:textColor="#ffffff"
+            android:layout_margin="9dp"
+            android:fontFamily="@font/nanumgothicextrabold"
             android:textSize="@dimen/activity_short_minButton_textSize"
-            android:layout_marginLeft="9dp"
-            android:layout_marginRight="9dp"
-            android:text="@string/quick_30" />
+            app:buttonCornerRadius="20dp"
+            app:buttonGradientEndColor="@color/teal_700"
+            app:buttonGradientStartColor="@color/teal_200" />
 
-        <Button
-            android:id="@+id/button15"
-            android:layout_width="0dp"
+        <life.sabujak.roundedbutton.RoundedButton
+            android:id="@+id/button30"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:gravity="center"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
-            android:text="@string/quick_15" />
+            android:padding="15dp"
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:fontFamily="@font/nanumgothicextrabold"
+            android:layout_weight="1"
+            android:text="@string/quick_30"
+            android:textColor="#ffffff"
+            app:buttonGradientStartColor="@color/teal_200"
+            app:buttonGradientEndColor="@color/teal_700"
+            app:buttonCornerRadius="20dp"
+            />
+
+        <life.sabujak.roundedbutton.RoundedButton
+            android:id="@+id/button15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:layout_marginLeft="9dp"
+            android:layout_marginRight="9dp"
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:fontFamily="@font/nanumgothicextrabold"
+            android:layout_weight="1"
+            android:text="@string/quick_15"
+            android:textColor="#ffffff"
+            app:buttonGradientStartColor="@color/teal_200"
+            app:buttonGradientEndColor="@color/teal_700"
+            app:buttonCornerRadius="20dp"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -141,35 +164,56 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <life.sabujak.roundedbutton.RoundedButton
             android:id="@+id/button10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="@dimen/activity_short_minButton_textSize"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
-            android:text="@string/quick_10" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/quick_10"
+            android:fontFamily="@font/nanumgothicextrabold"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            app:buttonCornerRadius="20dp"
+            app:buttonGradientEndColor="@color/teal_700"
+            app:buttonGradientStartColor="@color/teal_200" />
 
-        <Button
+        <life.sabujak.roundedbutton.RoundedButton
             android:id="@+id/button5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/quick_5"
+            android:textColor="#ffffff"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
-            android:text="@string/quick_5" />
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:fontFamily="@font/nanumgothicextrabold"
+            app:buttonCornerRadius="20dp"
+            app:buttonGradientEndColor="@color/teal_700"
+            app:buttonGradientStartColor="@color/teal_200" />
 
-        <Button
+        <life.sabujak.roundedbutton.RoundedButton
             android:id="@+id/button1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/quick_1"
+            android:textColor="#ffffff"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
-            android:text="@string/quick_1"/>
+            android:textSize="@dimen/activity_short_minButton_textSize"
+            android:fontFamily="@font/nanumgothicextrabold"
+            app:buttonCornerRadius="20dp"
+            app:buttonGradientEndColor="@color/teal_700"
+            app:buttonGradientStartColor="@color/teal_200" />
 
     </LinearLayout>
 
@@ -207,7 +251,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.13"/>
+        android:layout_weight="0.1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -251,6 +295,6 @@
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3" />
+        android:layout_weight="0.4" />
 
 </LinearLayout>

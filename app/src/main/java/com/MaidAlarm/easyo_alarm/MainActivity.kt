@@ -73,16 +73,6 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, permissionCode)
         }
 
-//        val n = applicationContext.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-////        if (n.isNotificationPolicyAccessGranted) {
-////            val audioManager = applicationContext.getSystemService(AUDIO_SERVICE) as AudioManager
-////            audioManager.ringerMode = AudioManager.RINGER_MODE_SILENT
-////        } else {
-////            // Ask the user to grant access
-////            val intent = Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS)
-////            startActivity(intent)
-////        }
-
         // 다른 권한 확인
         for (permission in permissionList){
             val check = checkCallingOrSelfPermission(permission)
