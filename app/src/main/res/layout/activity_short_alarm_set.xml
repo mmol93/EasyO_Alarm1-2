@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="13dp"
             android:text="@string/quick_60"
             android:textColor="#ffffff"
             android:layout_margin="9dp"
@@ -129,7 +129,7 @@
             android:gravity="center"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
-            android:padding="15dp"
+            android:padding="13dp"
             android:textSize="@dimen/activity_short_minButton_textSize"
             android:fontFamily="@font/nanumgothicextrabold"
             android:layout_weight="1"
@@ -145,7 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="13dp"
             android:layout_marginLeft="9dp"
             android:layout_marginRight="9dp"
             android:textSize="@dimen/activity_short_minButton_textSize"
@@ -172,7 +172,7 @@
             android:layout_marginRight="9dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="13dp"
             android:text="@string/quick_10"
             android:fontFamily="@font/nanumgothicextrabold"
             android:textColor="#ffffff"
@@ -187,7 +187,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="13dp"
             android:text="@string/quick_5"
             android:textColor="#ffffff"
             android:layout_marginLeft="9dp"
@@ -204,7 +204,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:padding="15dp"
+            android:padding="13dp"
             android:text="@string/quick_1"
             android:textColor="#ffffff"
             android:layout_marginLeft="9dp"
@@ -263,28 +263,40 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <Button
+        <life.sabujak.roundedbutton.RoundedButton
             android:id="@+id/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
-            android:textSize="19dp"
-            android:backgroundTint="@color/teal_700"
-            android:text="@string/cancelBtn" />
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/cancelBtn"
+            android:fontFamily="@font/nanumgothicextrabold"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            app:buttonCornerRadius="20dp"
+            app:buttonGradientEndColor="@color/purple_500"
+            app:buttonGradientStartColor="@color/teal_200" />
 
         <Space
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
-        <Button
+        <life.sabujak.roundedbutton.RoundedButton
             android:id="@+id/button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="19dp"
-            android:layout_weight="2"
-            android:backgroundTint="@color/teal_700"
-            android:text="@string/saveBtn" />
+            android:layout_weight="2.5"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/saveBtn"
+            android:fontFamily="@font/nanumgothicextrabold"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            app:buttonCornerRadius="20dp"
+            app:buttonGradientEndColor="@color/purple_500"
+            app:buttonGradientStartColor="@color/teal_200" />
 
         <Space
             android:layout_width="wrap_content"
