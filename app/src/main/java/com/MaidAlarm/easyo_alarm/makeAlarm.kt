@@ -179,6 +179,15 @@ class Receiver : BroadcastReceiver() {
             val progress = intent.getIntExtra("progress", -1)
             Log.d("makeAlarm", "progress: $progress")
 
+            // 볼륨 강제 설정(else에 있는 볼륨 강제 설정이랑 다름)
+            val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+            val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+            val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)
+            // arrayFromMakeAlarm[7] = progress
+            val factor = progress.toFloat() / 100
+            val targetVolume = (maxVolume * factor).toInt()
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVolume, AudioManager.FLAG_PLAY_SOUND)
+
             // 다시 FrontAlarmActivity를 띄워야한다
             val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
             frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -223,7 +232,7 @@ class Receiver : BroadcastReceiver() {
             if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
                 Log.d("makeAlarm", "지금 울릴 알람 맞음")
 
-                // 볼륨 강제 설정
+                // 볼륨 강제 설정(10분뒤 울리는 알람이랑 설정 방법 조금 다름)
                 val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
                 val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
                 val maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)

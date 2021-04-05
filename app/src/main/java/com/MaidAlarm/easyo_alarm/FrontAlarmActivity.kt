@@ -164,7 +164,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         app.lastProgress = progress
 
         // *** 음악 파일 실행
-        // 알람 울리기 전 볼륨 강제 조절
         if (progress > 0){
             mediaPlayer = app.mediaPlayer
             mediaPlayer.setVolume(1f, 1f)
