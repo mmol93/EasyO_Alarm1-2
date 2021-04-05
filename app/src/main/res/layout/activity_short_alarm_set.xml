@@ -8,24 +8,16 @@
     android:background="@color/itemBackground"
     tools:context=".ShortAlarmSetActivity">
 
-    <LinearLayout
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_weight="0.02"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:adSize="BANNER"
+        app:adUnitId="@string/quickSetBannerID">
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            app:adSize="BANNER"
-            app:adUnitId="@string/quickSetBannerID">
-
-        </com.google.android.gms.ads.AdView>
-
-    </LinearLayout>
+    </com.google.android.gms.ads.AdView>
 
     <Space
         android:layout_width="match_parent"
