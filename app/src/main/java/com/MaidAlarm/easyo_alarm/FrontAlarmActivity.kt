@@ -236,9 +236,9 @@ class FrontAlarmActivity : AppCompatActivity() {
                         app.vibrate = vib
 
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, 0))
+                            vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, -1))
                         } else {
-                            vib.vibrate(500)
+                            vib.vibrate(arrayTime, -1)
                         }
                     }
                     // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료

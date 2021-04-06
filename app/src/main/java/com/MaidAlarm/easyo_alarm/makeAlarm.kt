@@ -357,7 +357,7 @@ fun addNewAlarm_normal_exact(alarmManager: AlarmManager, context: Context, weekL
     // 위에서 울린 알림이 매일 울리게 설정한다
 
 
-    // 지정한 시간에 매일 알람 울리게 설정
+    // 다시 지정한 시간에 알람 울리게 설정
     alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendarMillis, pendingIntent)
 }
 
