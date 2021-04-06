@@ -82,8 +82,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         // ** 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
-
-        binder.adView.bringToFront()
         binder.adView.adListener = object : AdListener(){
             override fun onAdFailedToLoad(p0: Int) {
                 super.onAdFailedToLoad(p0)

@@ -58,8 +58,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
             Toast.makeText(this, getString(R.string.AlarmSetActivityModi_quickToNormal), Toast.LENGTH_LONG).show()
         }
 
-        // 1. 애드몹 초기화
-        MobileAds.initialize(this) {}
+
         // 2. 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)

@@ -49,8 +49,6 @@ class AlarmSetActivity : AppCompatActivity() {
         var Fri = 0
         var Sat = 0
 
-        // 1. 애드몹 초기화
-        MobileAds.initialize(this) {}
         // 2. 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)

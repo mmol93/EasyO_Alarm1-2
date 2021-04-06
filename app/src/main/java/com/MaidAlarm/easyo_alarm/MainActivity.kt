@@ -133,8 +133,6 @@ class MainActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         mainBinder.adView.loadAd(adRequest)
 
-        mainBinder.adView.bringToFront()
-
         mainBinder.adView.adListener = object : AdListener(){
             override fun onAdFailedToLoad(p0: Int) {
                 super.onAdFailedToLoad(p0)
