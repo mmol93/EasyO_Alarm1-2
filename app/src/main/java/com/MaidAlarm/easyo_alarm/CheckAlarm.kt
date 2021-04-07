@@ -6,7 +6,6 @@ import android.content.Intent
 import android.util.Log
 import java.util.*
 
-
 class CheckAlarm(val context: Context){
     fun checkAlarm(requestCode: Int){
         val intent = Intent(context, Receiver::class.java)
