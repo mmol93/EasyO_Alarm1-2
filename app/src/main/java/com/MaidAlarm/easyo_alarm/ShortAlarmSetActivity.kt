@@ -26,8 +26,6 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         setContentView(R.layout.activity_short_alarm_set)
         binder = ActivityShortAlarmSetBinding.inflate(layoutInflater)
 
-        // 1. 애드몹 초기화
-        MobileAds.initialize(this) {}
         // 2. 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
