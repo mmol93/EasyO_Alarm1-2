@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/icon_maidalarm_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyO_Alarm">
-        <activity android:name=".AlarmSetActivityModi"></activity>
+        <activity android:name=".Developer"></activity>
+        <activity android:name=".AlarmSetActivityModi" />
         <activity android:name=".SelectRingActivity" />
         <activity android:name=".LicenseActivity" />
         <activity android:name=".InfoActivity" />

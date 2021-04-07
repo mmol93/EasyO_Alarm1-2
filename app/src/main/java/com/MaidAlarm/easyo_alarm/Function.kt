@@ -23,8 +23,7 @@ class Function {
             Sat: MutableList<Int>,
             requestCode: MutableList<Int>,
             quick: MutableList<Int>,
-            switch: MutableList<Int>)
-        {
+            switch: MutableList<Int>) {
         val app = context.applicationContext as AppClass
         // *** SQL의 모든 데이터를 가져와서 어댑터에 등록시킨다
         val sql_select = "select * from MaidAlarm"
@@ -63,6 +62,20 @@ class Function {
             switch.add(c1.getInt(index14))
         }
     }
+    // SQL의 모든 row에서 requestCode 컬럼 부분만 가져오기
+    fun CheckRequestCodeSQL(context: Context, SQLHelper: SQLHelper, requestCode: MutableList<Int>): MutableList<Int> {
+        val app = context.applicationContext as AppClass
+        // *** SQL의 모든 데이터를 가져와서 어댑터에 등록시킨다
+        val sql_select = "select * from MaidAlarm"
+        val c1 = SQLHelper.writableDatabase.rawQuery(sql_select, null)
+
+        while (c1.moveToNext()){
+            val index12 = c1.getColumnIndex("requestCode")
+            requestCode.add(c1.getInt(index12))
+        }
+        return requestCode
+    }
+
     // 현재 앱의 버전을 가져옴
     fun checkAppVersion(context: Context) : String {
         val pi: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)

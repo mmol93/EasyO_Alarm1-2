@@ -22,7 +22,7 @@
         android:layout_weight="1">
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/info_imageView1"
             android:layout_width="186dp"
             android:layout_height="142dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +42,7 @@
             android:fontFamily="@font/nanumgothicextrabold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+            app:layout_constraintTop_toBottomOf="@+id/info_imageView1" />
 
         <TextView
             android:id="@+id/info_textView2"
