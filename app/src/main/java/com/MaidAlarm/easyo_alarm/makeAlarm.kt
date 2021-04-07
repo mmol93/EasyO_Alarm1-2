@@ -38,6 +38,9 @@ class makeAlarm(
             set(Calendar.MINUTE, min)
             set(Calendar.SECOND, 0)
         }
+        // 지금 울린 알람 기록
+        val function = Function()
+        function.saveFile("data2.bat", context)
 
         val intent = Intent(context, Receiver::class.java)
         // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
@@ -179,6 +182,10 @@ class Receiver : BroadcastReceiver() {
             val progress = intent.getIntExtra("progress", -1)
             Log.d("makeAlarm", "progress: $progress")
 
+            // 지금 울린 알람 기록
+            val function = Function()
+            function.saveFile("data2.bat", context)
+
             // 볼륨 강제 설정(else에 있는 볼륨 강제 설정이랑 다름)
             val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
@@ -231,6 +238,10 @@ class Receiver : BroadcastReceiver() {
             // 설정 알람 시간이랑 동일할 때만 울리게 한다.
             if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
                 Log.d("makeAlarm", "지금 울릴 알람 맞음")
+
+                // 지금 울린 알람 기록
+                val function = Function()
+                function.saveFile("data2.bat", context)
 
                 // 볼륨 강제 설정(10분뒤 울리는 알람이랑 설정 방법 조금 다름)
                 val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager

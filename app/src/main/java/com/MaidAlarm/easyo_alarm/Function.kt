@@ -3,6 +3,10 @@ package com.MaidAlarm.easyo_alarm
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import java.io.DataOutputStream
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
 
 
 class Function {
@@ -80,5 +84,18 @@ class Function {
     fun checkAppVersion(context: Context) : String {
         val pi: PackageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
         return pi.versionName
+    }
+
+    // 파일 데이터 저장(data2.bat)
+    fun saveFile(fileName : String, context: Context){
+        val currentDateTime = Calendar.getInstance().time
+        var dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
+
+        val fos = context.openFileOutput(fileName, Context.MODE_PRIVATE)
+        val dos = DataOutputStream(fos)
+        dos.writeChars(dateFormat)
+
+        dos.flush()
+        dos.close()
     }
 }

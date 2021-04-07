@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.MaidAlarm.easyo_alarm.databinding.ActivityDeveloperBinding
+import java.io.DataInputStream
 
 // 개발자가 확인할 필요 있는 기능들을 넣어놓음
 class Developer : AppCompatActivity() {
@@ -45,7 +46,18 @@ class Developer : AppCompatActivity() {
         }
         // 여태 울린 알람의 이력을 가져온다
         binder.button1CheckHistoy.setOnClickListener {
+            try {
+                // 먼저 데이터를 가져온다
+                // 파일 읽어오기
+                val fis = openFileInput("data2.bat")
+                val dis = DataInputStream(fis)
 
+                val lastAlarmHistory = dis.readLine()
+
+                binder.textView.text = lastAlarmHistory
+            }catch (e:Exception){
+                binder.textView.text = "최근 울린 알람 없음"
+            }
         }
         setContentView(binder.root)
     }
