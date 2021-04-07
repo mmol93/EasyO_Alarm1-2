@@ -18,6 +18,10 @@ class InfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_info)
         binder = ActivityInfoBinding.inflate(layoutInflater)
 
+        val function = Function()
+        // 현재 버전 이름을 텍스트뷰에 넣기
+        binder.infoTextView2.text = function.checkAppVersion(this)
+
         setContentView(binder.root)
     }
 }

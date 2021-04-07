@@ -34,7 +34,7 @@
             app:srcCompat="@mipmap/icon_maidalarm_round" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/info_textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/info_name"
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/info_textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="v1.0"
@@ -53,7 +53,7 @@
             android:fontFamily="@font/nanumgothicextrabold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            app:layout_constraintTop_toBottomOf="@+id/info_textView1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
