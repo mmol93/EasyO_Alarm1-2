@@ -72,4 +72,8 @@
     <string name="AlarmSetActivityModi_error">에러가 발생했어요... 현재 알람을 삭제하고 다시 설정해주세요ㅠㅠ</string>
     <string name="AlarmSetActivityModi_quickToNormal">퀵 알람을 수정하면 일반 알람으로 변경되요!</string>
     <string name="front_10minutes">10분 뒤에 알람이 울립니다.</string>
+    <string name="main_updateDownloading">업데이트중입니다. 어플 또는 휴대폰 전원을 끄지마세요</string>
+    <string name="main_updateDownloadDone">업데이트가 끝났습니다. 어플을 재시작하면 적용됩니다.</string>
+    <string name="main_updateFailed">업데이트에 실패했습니다. 어플을 재부팅 해주세요</string>
+    <string name="main_updateAccepted">업데이트가 곧 시작됩니다.</string>
 </resources>

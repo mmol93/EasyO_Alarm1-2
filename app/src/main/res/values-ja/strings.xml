@@ -72,4 +72,8 @@
     <string name="AlarmSetActivityModi_error">エラーが発生しました。アラームを削除して再登録してください。</string>
     <string name="AlarmSetActivityModi_quickToNormal">Quickアラームを修正すると、一般アラームに変わります。</string>
     <string name="front_10minutes">10分後アラームが鳴ります。</string>
+    <string name="main_updateDownloading">ｱｯﾌﾟﾃﾞｰﾄ中です。ｱﾌﾟﾘ又は電源を消さないでください。</string>
+    <string name="main_updateDownloadDone">ｱｯﾌﾟﾃﾞｰﾄが終わりました。ｱﾌﾟﾘの再起動後適用されます。</string>
+    <string name="main_updateFailed">ｱｯﾌﾟﾃﾞｰﾄが失敗しました。ｱﾌﾟﾘを再起動してください。</string>
+    <string name="main_updateAccepted">ｱｯﾌﾟﾃﾞｰﾄを始めます。</string>
 </resources>

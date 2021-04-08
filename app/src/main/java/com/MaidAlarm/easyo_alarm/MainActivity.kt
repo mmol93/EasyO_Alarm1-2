@@ -112,15 +112,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 인앱 업데이트 상태 리스너
-        val listener = InstallStateUpdatedListener { state ->
+        val updateListener = InstallStateUpdatedListener { state ->
             if (state.installStatus() == InstallStatus.DOWNLOADING) {
-                Toast.makeText(this, "업데이트 내용을 다운로드중입니다\n 앱을 강제로 종료하지 말아주세요", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.main_updateDownloading), Toast.LENGTH_LONG).show()
             }
             else if (state.installStatus() == InstallStatus.DOWNLOADED){
-                Toast.makeText(this, "업데이트가 완료되었습니다.\n앱을 다시 껏다가 다시 시작할 경우 업데이트가 적용됩니다.",
-                Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
             }
         }
+        appUpdateManager.registerListener(updateListener)
 
 
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
@@ -183,7 +183,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // 최초 화면은 알람탭의 화면을 보여주게 한다
+        // ** 앱 실행 시 모든 알람 다시 예약하기(갱신)
+        val function = Function()
+        function.makeAlarmWithAllSQL(this)
+
+        // ** 최초 화면은 알람탭의 화면을 보여주게 한다
         val tran = supportFragmentManager.beginTransaction()
         tran.replace(R.id.container, alarmFragment)
 
@@ -253,11 +257,11 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE_UPDATE) {
             // 업데이트가 실패했을 경우
             if (resultCode != RESULT_OK) {
-                Toast.makeText(this, "업데이트가 실패했습니다. 앱을 재실행 해주세요", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.main_updateFailed), Toast.LENGTH_LONG).show()
             }
             // 업데이트를 수락했을 경우
             else{
-                Toast.makeText(this, "업데이트를 실시합니다.", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.main_updateAccepted), Toast.LENGTH_LONG).show()
             }
         }
     }
