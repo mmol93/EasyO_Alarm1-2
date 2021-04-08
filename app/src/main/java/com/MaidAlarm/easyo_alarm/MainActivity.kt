@@ -17,7 +17,14 @@ import androidx.core.app.ActivityCompat
 import com.MaidAlarm.easyo_alarm.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.InstallStatus
+import com.google.android.play.core.install.model.UpdateAvailability
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import java.io.DataInputStream
 import java.io.DataOutputStream
@@ -44,11 +51,15 @@ class MainActivity : AppCompatActivity() {
     // AppClass 변수 선언
     lateinit var app : AppClass
 
+    // 앱 업데이트 검사
+    lateinit var appUpdateManager: AppUpdateManager
+    private val REQUEST_CODE_UPDATE = 10
+
     // 확인할 권한 리스트
     val permissionList = arrayOf(
-            Manifest.permission.VIBRATE,
-            Manifest.permission.WAKE_LOCK,
-            Manifest.permission.RECEIVE_BOOT_COMPLETED,
+        Manifest.permission.VIBRATE,
+        Manifest.permission.WAKE_LOCK,
+        Manifest.permission.RECEIVE_BOOT_COMPLETED,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,8 +78,8 @@ class MainActivity : AppCompatActivity() {
         if (!Settings.canDrawOverlays(this)) {
             // ask for setting
             val intent = Intent(
-                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:$packageName")
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
             )
             startActivityForResult(intent, permissionCode)
         }
@@ -84,6 +95,33 @@ class MainActivity : AppCompatActivity() {
                 requestPermissions(permissionList, 0)
             }
         }
+
+        // *** 앱 업데이트 있는지 검사
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+
+        // AppUpdateManager 업데이트 초기화
+        appUpdateManager?.let {
+            it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    // 있을 경우 업데이트 실시
+                    appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE,this, REQUEST_CODE_UPDATE)
+                }
+            }
+        }
+
+        // 인앱 업데이트 상태 리스너
+        val listener = InstallStateUpdatedListener { state ->
+            if (state.installStatus() == InstallStatus.DOWNLOADING) {
+                Toast.makeText(this, "업데이트 내용을 다운로드중입니다\n 앱을 강제로 종료하지 말아주세요", Toast.LENGTH_LONG).show()
+            }
+            else if (state.installStatus() == InstallStatus.DOWNLOADED){
+                Toast.makeText(this, "업데이트가 완료되었습니다.\n앱을 다시 껏다가 다시 시작할 경우 업데이트가 적용됩니다.",
+                Toast.LENGTH_LONG).show()
+            }
+        }
+
 
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
         app = application as AppClass
@@ -134,7 +172,7 @@ class MainActivity : AppCompatActivity() {
         mainBinder.adView.loadAd(adRequest)
 
         mainBinder.adView.adListener = object : AdListener(){
-            override fun onAdFailedToLoad(p0: Int) {
+            override fun onAdFailedToLoad(p0: LoadAdError) {
                 super.onAdFailedToLoad(p0)
                 Log.d("adMob", "메인광고 로드 실패")
             }
@@ -207,6 +245,21 @@ class MainActivity : AppCompatActivity() {
             }
             dialogBuilder.show()
         }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_UPDATE) {
+            // 업데이트가 실패했을 경우
+            if (resultCode != RESULT_OK) {
+                Toast.makeText(this, "업데이트가 실패했습니다. 앱을 재실행 해주세요", Toast.LENGTH_LONG).show()
+            }
+            // 업데이트를 수락했을 경우
+            else{
+                Toast.makeText(this, "업데이트를 실시합니다.", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     override fun onStop() {
@@ -236,8 +289,8 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             Toast.makeText(
-                    baseContext,
-                    getString(R.string.backButtonDoubleClick), Toast.LENGTH_SHORT
+                baseContext,
+                getString(R.string.backButtonDoubleClick), Toast.LENGTH_SHORT
             ).show();
         }
         mBackPressed = System.currentTimeMillis();

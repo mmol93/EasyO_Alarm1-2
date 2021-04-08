@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.MaidAlarm.easyo_alarm.databinding.ActivityAlarmSetModiBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import java.util.ArrayList
 
@@ -64,7 +65,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
         binder.adView.loadAd(adRequest)
 
         binder.adView.adListener = object : AdListener(){
-            override fun onAdFailedToLoad(p0: Int) {
+            override fun onAdFailedToLoad(p0: LoadAdError) {
                 super.onAdFailedToLoad(p0)
                 Log.d("adMob", "alarmSet 광고 로드 실패")
             }
