@@ -79,7 +79,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         // *** 애드몹 초기화
         MobileAds.initialize(this) {}
 
-        // ** 애드몹 로드 
+        // ** 애드몹 로드
         // receiver로 띄운 액티비티에 바로 광고를 로드하면 정책위반임
         // -> 즉, 먼저 더미 액티비티(시간 확인등)를 띄우고 다음에 계산 문제 액티비티에 광고를 띄우는 것이 알맞음
 //        val adRequest = AdRequest.Builder().build()
