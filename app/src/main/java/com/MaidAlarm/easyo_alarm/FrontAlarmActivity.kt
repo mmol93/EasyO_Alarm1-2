@@ -279,10 +279,10 @@ class FrontAlarmActivity : AppCompatActivity() {
                         override fun run() {
                             super.run()
                             Log.d("FrontActivity", "스레드 시작")
-                            sleep(60*1000)
+                            SystemClock.sleep(60*1000)
                             // 설정에서 notification이 "사용 상태"로 되어 있을 때
                             // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
-                            // 여기서는 notificatrion에 대한 갱신만 해주면 된다
+                            // 여기서는 notification에 대한 갱신만 해주면 된다
                             if (app.notificationSwitch == 1) {
                                 // * 가장 가까운 알람의 시간 알아내기
                                     // Thread 이후 한 번 더 변수로 가져와야 직전 울린 알람을 제외하고 최근 알람을 알 수 있다
