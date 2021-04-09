@@ -100,13 +100,24 @@ class Function {
     }
 
     // 파일 데이터 저장(makeAlarm에서 data2.bat 사용중 - 최근 울린 알람 기록용)
-    fun saveFileAsDate(fileName : String, context: Context){
+    fun saveFileAsString(fileName : String, context: Context){
         val currentDateTime = Calendar.getInstance().time
         var dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
 
         val fos = context.openFileOutput(fileName, Context.MODE_PRIVATE)
         val dos = DataOutputStream(fos)
         dos.writeChars(dateFormat)
+
+        dos.flush()
+        dos.close()
+    }
+
+    fun saveFileWithCurrentTime(fileName : String, context: Context){
+        val currentTimeMilli = System.currentTimeMillis()
+
+        val fos = context.openFileOutput(fileName, Context.MODE_PRIVATE)
+        val dos = DataOutputStream(fos)
+        dos.writeLong(currentTimeMilli)
 
         dos.flush()
         dos.close()

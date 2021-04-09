@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -28,6 +29,7 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import java.io.DataInputStream
 import java.io.DataOutputStream
+import java.util.*
 import kotlin.system.exitProcess
 
 
@@ -54,6 +56,12 @@ class MainActivity : AppCompatActivity() {
     // 앱 업데이트 검사
     lateinit var appUpdateManager: AppUpdateManager
     private val REQUEST_CODE_UPDATE = 10
+
+    // update 확인에 사용할 변수들
+    private val function = Function()
+    private var lastUpdate = 0L
+    private var currentTime = System.currentTimeMillis()
+    private val updateInterval : Long = 7 * 24 * 60 * 60 * 1000 // 7일 뒤
 
     // 확인할 권한 리스트
     val permissionList = arrayOf(
@@ -99,12 +107,23 @@ class MainActivity : AppCompatActivity() {
         // *** 앱 업데이트 있는지 검사
         appUpdateManager = AppUpdateManagerFactory.create(this)
 
+        // 업데이트 주기 확인을 위해 데이터 가져오기
+        try{
+            val fis = openFileInput("data3.bat")
+            val dis = DataInputStream(fis)
+
+            lastUpdate = dis.readLong()
+        }catch (e:Exception){
+
+        }
+
         // AppUpdateManager 업데이트 초기화
         appUpdateManager?.let {
             it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
                 // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
+                // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) && currentTime - lastUpdate >= updateInterval) {
                     // 있을 경우 업데이트 실시
                     appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE,this, REQUEST_CODE_UPDATE)
                 }
@@ -147,7 +166,6 @@ class MainActivity : AppCompatActivity() {
             app.notificationSwitch = data3
             app.initialStart = data4
             app.bellIndex = data5
-
 
             Log.d("MainActivity", "앱을 기동했습니다.")
 
@@ -257,9 +275,9 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_UPDATE) {
-            // 업데이트를 거부했을 경우
+            // 업데이트를 거부했을 경우 -> 거부한 시간을 파일 데이터로써 집어넣는다
             if (resultCode != RESULT_OK) {
-                Toast.makeText(this, getString(R.string.main_updateRejected), Toast.LENGTH_LONG).show()
+                function.saveFileWithCurrentTime("data3.bat", this)
             }
             // 업데이트를 수락했을 경우
             else{
