@@ -40,7 +40,7 @@ class makeAlarm(
         }
         // 지금 울린 알람 기록
         val function = Function()
-        function.saveFile("data2.bat", context)
+        function.saveFileAsDate("data2.bat", context)
 
         val intent = Intent(context, Receiver::class.java)
         // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
@@ -133,7 +133,7 @@ class Receiver : BroadcastReceiver() {
 
             // 지금 울린 알람 기록
             val function = Function()
-            function.saveFile("data2.bat", context)
+            function.saveFileAsDate("data2.bat", context)
 
             // 볼륨 강제 설정(else에 있는 볼륨 강제 설정이랑 다름)
             val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -190,7 +190,7 @@ class Receiver : BroadcastReceiver() {
 
                 // 지금 울린 알람 기록
                 val function = Function()
-                function.saveFile("data2.bat", context)
+                function.saveFileAsDate("data2.bat", context)
 
                 // 볼륨 강제 설정(10분뒤 울리는 알람이랑 설정 방법 조금 다름)
                 val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager

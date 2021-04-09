@@ -147,6 +147,8 @@ class MainActivity : AppCompatActivity() {
             app.notificationSwitch = data3
             app.initialStart = data4
             app.bellIndex = data5
+
+
             Log.d("MainActivity", "앱을 기동했습니다.")
 
         }catch (e: Exception){
@@ -255,9 +257,9 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_UPDATE) {
-            // 업데이트가 실패했을 경우
+            // 업데이트를 거부했을 경우
             if (resultCode != RESULT_OK) {
-                Toast.makeText(this, getString(R.string.main_updateFailed), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.main_updateRejected), Toast.LENGTH_LONG).show()
             }
             // 업데이트를 수락했을 경우
             else{

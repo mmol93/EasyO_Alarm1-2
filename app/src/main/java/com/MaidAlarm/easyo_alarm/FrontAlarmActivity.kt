@@ -246,7 +246,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                         if (progress == 0) {
                             vib.cancel()
                         }
-                        finish()
+                        finishAffinity()
                         // 1분뒤 소리 울리는거 취소 - 트리거 취소
                         app.threadTrigger = 0
                     }
@@ -257,7 +257,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                 if (progress == 0) {
                     vib.cancel()
                 }
-                finish()
+                finishAffinity()
             }
 
             var recentAlarm = RecentAlarm()
@@ -395,7 +395,7 @@ class FrontAlarmActivity : AppCompatActivity() {
 
             Toast.makeText(this, getString(R.string.front_10minutes), Toast.LENGTH_LONG).show()
 
-            finish()
+            finishAffinity()
         }
         setContentView(binder.root)
     }

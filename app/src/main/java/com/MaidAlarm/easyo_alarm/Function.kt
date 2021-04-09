@@ -99,8 +99,8 @@ class Function {
         return pi.versionName
     }
 
-    // 파일 데이터 저장(data2.bat)
-    fun saveFile(fileName : String, context: Context){
+    // 파일 데이터 저장(makeAlarm에서 data2.bat 사용중 - 최근 울린 알람 기록용)
+    fun saveFileAsDate(fileName : String, context: Context){
         val currentDateTime = Calendar.getInstance().time
         var dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
 
