@@ -78,12 +78,19 @@
         android:layout_height="wrap_content"
         android:layout_weight="1.2">
 
-        <Button
+        <life.sabujak.roundedbutton.RoundedButton
             android:id="@+id/button_ok"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
+            android:gravity="center"
             android:layout_height="wrap_content"
             android:text="@string/front_ok"
             android:textSize="25dp"
+            android:fontFamily="@font/nanumgothicextrabold"
+            android:textColor="#ffffff"
+            app:buttonCornerRadius="20dp"
+            android:padding="12dp"
+            app:buttonGradientEndColor="@color/purple_500"
+            app:buttonGradientStartColor="@color/teal_200"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.827"
@@ -91,12 +98,18 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.2" />
 
-        <Button
+        <life.sabujak.roundedbutton.RoundedButton
             android:id="@+id/button10Min"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/front_moreTime"
             android:textSize="20dp"
+            android:fontFamily="@font/nanumgothicextrabold"
+            android:textColor="#ffffff"
+            app:buttonCornerRadius="20dp"
+            android:padding="12dp"
+            app:buttonGradientEndColor="@color/purple_500"
+            app:buttonGradientStartColor="@color/teal_200"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.172"

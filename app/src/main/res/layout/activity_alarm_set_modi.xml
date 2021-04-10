@@ -210,24 +210,38 @@
             android:layout_marginBottom="60dp"
             android:orientation="horizontal">
 
-            <Button
+            <life.sabujak.roundedbutton.RoundedButton
                 android:id="@+id/button_cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="0.8"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/cancelBtn"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/teal_700"
-                android:text="@string/cancelBtn" />
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                app:buttonCornerRadius="20dp"
+                app:buttonGradientEndColor="@color/purple_500"
+                app:buttonGradientStartColor="@color/teal_200" />
 
-            <Button
+            <life.sabujak.roundedbutton.RoundedButton
                 android:id="@+id/button_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/teal_700"
-                android:text="@string/saveBtn" />
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/saveBtn"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                app:buttonCornerRadius="20dp"
+                android:layout_marginRight="20dp"
+                app:buttonGradientEndColor="@color/purple_500"
+                app:buttonGradientStartColor="@color/teal_200" />
         </LinearLayout>
     </LinearLayout>
 
