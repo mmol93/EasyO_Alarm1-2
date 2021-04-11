@@ -71,7 +71,9 @@
         android:id="@+id/front_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="2"></FrameLayout>
+        android:layout_weight="2">
+
+    </FrameLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -106,7 +108,7 @@
             android:textSize="20dp"
             android:fontFamily="@font/nanumgothicextrabold"
             android:textColor="#ffffff"
-            app:buttonCornerRadius="20dp"
+            app:buttonCornerRadius="18dp"
             android:padding="12dp"
             app:buttonGradientEndColor="@color/purple_500"
             app:buttonGradientStartColor="@color/teal_200"

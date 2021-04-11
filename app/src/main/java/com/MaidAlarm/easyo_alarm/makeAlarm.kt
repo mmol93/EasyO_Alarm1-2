@@ -31,6 +31,17 @@ class makeAlarm(
     fun addNewAlarm_once(){
         val quick = 1   // 이 메서드는 once 이므로 반드시 한번만 울린다
 
+        // 휴식 상태인 휴대폰 깨우기
+        val wakeLock: PowerManager.WakeLock =
+                (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                    newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
+                        acquire()
+                    }
+                }
+
+        // 60초만 지속되게 하기
+        wakeLock.acquire(60*1000L )
+
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
             // 정확한 시간 설정
@@ -124,8 +135,8 @@ class Receiver : BroadcastReceiver() {
                     }
                 }
 
-            // 10초만 지속되게 하기
-            wakeLock.acquire(10*1000L )
+            // 60초만 지속되게 하기
+            wakeLock.acquire(60*1000L )
 
             // 넘어온 intent에서 progress 데이터를 가져온다
             val progress = intent.getIntExtra("progress", -1)
