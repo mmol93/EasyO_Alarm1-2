@@ -43,13 +43,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_alarm)
 
-        // 최근 실행한 앱 목록에서 안보이게 하기
-        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
-        val tasks = am.appTasks
-        if (tasks != null && tasks.size > 0) {
-            tasks[0].setExcludeFromRecents(true)
-        }
-
         // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄우기
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1){
@@ -402,6 +395,7 @@ class FrontAlarmActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+
         // 음악 끄기
         mediaPlayer.release()
         // 볼륨 원래대로 되돌리기

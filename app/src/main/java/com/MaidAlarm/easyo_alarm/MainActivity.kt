@@ -79,11 +79,11 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         // 최근 실행한 앱 목록에서 안보이게 하기
-        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
-        val tasks = am.appTasks
-        if (tasks != null && tasks.size > 0) {
-            tasks[0].setExcludeFromRecents(true)
-        }
+//        val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+//        val tasks = am.appTasks
+//        if (tasks != null && tasks.size > 0) {
+//            tasks[0].setExcludeFromRecents(true)
+//        }
 
         // 오버레이 권한 확인
         if (!Settings.canDrawOverlays(this)) {
