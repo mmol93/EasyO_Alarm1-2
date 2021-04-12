@@ -6,4 +6,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/itemBackground"
-    tools:context=".ShortAlarmSetActivity"/>
+    tools:context=".ShortAlarmSetActivity">
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+    <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+        android:id="@+id/custom_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end" />
+</LinearLayout>
