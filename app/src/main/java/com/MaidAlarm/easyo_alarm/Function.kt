@@ -69,11 +69,11 @@ class Function {
                 val makeAlarm = makeAlarm(context, hour, min, progress, weekList, requestCode)
 
                 // quick 알람일 경우
-                if (quick == 1){
+                if (quick == 1 && switch == 1){
                     makeAlarm.addNewAlarm_once()
                 }
                 // normal 알람일 경우
-                else{
+                else if (quick == 0 && switch == 1){
                     makeAlarm.addNewAlarm_normal()
                 }
             }

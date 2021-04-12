@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MaidAlarm.easyo_alarm.databinding.FragmentAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
+import com.robertlevonyan.views.customfloatingactionbutton.doOnExpand
 import java.lang.Exception
 import java.util.*
 
@@ -141,20 +142,23 @@ class alarmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 21.03.29 - 기능 실현이 안되서 일단 숨김
-//        binder.fab.setOnDragListener(dragListener)
+        // 길게 클릭 시 2초간 사라짐
+        binder.fab.setOnLongClickListener {
+            binder.fab1.isGone = true
+
+            true
+        }
 
         // 플로팅 버튼 한 번 누름: 일반 알람 설정창
-        binder.fab.setOnClickListener {
+        binder.fab2.setOnClickListener {
             val alarmActivity = Intent(activity, AlarmSetActivity::class.java)
             // 알람 세팅을 위한 액티비티 소환
             startActivityForResult(alarmActivity, doneAlarmActivity)
         }
         // 플로팅 버튼을 길게 눌렀을 때: 퀵알람
-        binder.fab.setOnLongClickListener {
+        binder.fab3.setOnClickListener {
             val shortAlarmSetActivity = Intent(activity, ShortAlarmSetActivity::class.java)
             startActivityForResult(shortAlarmSetActivity, doneShortAlarmActivity)
-            true
         }
         app = context!!.applicationContext as AppClass
         app.binder_alarmFragent = binder

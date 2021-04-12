@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_maidalarm_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EasyO_Alarm">
+        tools:replace="android:theme" android:theme="@style/Theme.EasyO_Alarm">
         <activity android:name=".Developer"></activity>
         <activity android:name=".AlarmSetActivityModi" />
         <activity android:name=".SelectRingActivity" />

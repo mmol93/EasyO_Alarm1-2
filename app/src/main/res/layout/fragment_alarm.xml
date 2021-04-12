@@ -26,19 +26,42 @@
         app:layout_constraintTop_toBottomOf="@+id/RecentTime_textview"
         tools:layout_editor_absoluteX="0dp" />
 
-    <com.tuann.floatingactionbuttonexpandable.FloatingActionButtonExpandable
+    <com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        app:fab_bg_color="@android:color/holo_blue_bright"
-        app:fab_icon="@drawable/floating_plus"
-        app:fab_typeface="fonts/RobotoSlab-Regular.ttf"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="bottom|end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.962" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/fab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabColor="@color/teal_200"
+            app:fabIcon="@drawable/ic_add"
+            app:fabSizes="normal"
+            />
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/fab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabColor="#ff9c10"
+            app:fabIcon="@drawable/ic_account_circle_black_24dp"
+            app:fabSizes="normal"
+            />
+
+        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
+            android:id="@+id/fab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:fabColor="#0b7bc1"
+            app:fabIcon="@drawable/ic_search_black_24dp"
+            app:fabSizes="normal" />
+    </com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,4 +10,8 @@
     <!-- fragment_alarm-->
     <dimen name="fragment_alarm_recentAlarm_textSize">25dp</dimen>
 
+    <dimen name="default_margin">22dp</dimen>
+    <dimen name="fab_size_normal">46dp</dimen>
+    <dimen name="fab_text_horizontal_margin_normal">11dp</dimen>
+    <dimen name="fab_default_elevation">1dp</dimen>
 </resources>
