@@ -14,6 +14,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import com.MaidAlarm.easyo_alarm.databinding.ActivityMainBinding
 import com.google.android.gms.ads.AdListener
@@ -74,6 +75,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         // 최근 실행한 앱 목록에서 안보이게 하기
         val am = getSystemService(ACTIVITY_SERVICE) as ActivityManager

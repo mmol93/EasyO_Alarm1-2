@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <!-- Dark 모드 사용안함-->
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
         <!--타이틀 바 삭제. -->
         <item name="windowActionBar">false</item>
