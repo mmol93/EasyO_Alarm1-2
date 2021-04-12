@@ -104,6 +104,8 @@ class makeAlarm(
         Log.d("makeAlarm", "Cancel(): requestCode: $requestCode")
         // 6. 해당 펜딩인텐트에 있는 알람을 해제(삭제, 취소)한다
         alarmManager?.cancel(pendingIntent)
+        // 이거를 해줘야 getBraodcast에서 캔슬된 알람을 확인할 수 있다.
+        pendingIntent.cancel()
     }
 }
 

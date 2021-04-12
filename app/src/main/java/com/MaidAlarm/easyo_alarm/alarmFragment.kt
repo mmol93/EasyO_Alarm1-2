@@ -4,6 +4,8 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
 import android.view.*
@@ -142,9 +144,25 @@ class alarmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binder.fabLayout.isClickable = false
+
         // 길게 클릭 시 2초간 사라짐
-        binder.fab.setOnLongClickListener {
+        binder.fab1.setOnLongClickListener {
             binder.fab1.isGone = true
+
+            val handler = Handler(Looper.myLooper()!!)
+
+            val thread = object : Thread(){
+                override fun run() {
+                    super.run()
+                    // 2초간 슬립
+                    SystemClock.sleep(2 * 1000)
+                    binder.fab1.isGone = false
+
+                    handler.post(this)
+                }
+            }
+            handler.post(thread)
 
             true
         }
@@ -164,33 +182,6 @@ class alarmFragment : Fragment() {
         app.binder_alarmFragent = binder
         app.context_alarmFragent = context!!
 
-        binder.alarmListRecycle.setOnDragListener { v, event ->
-            when(event.action){
-                DragEvent.ACTION_DRAG_STARTED -> {
-                    // 리사이클로뷰를 스크롤 하면 floating 버튼이 안보이도록 한다
-                    binder.fab.isGone = true
-                    Log.d("alarmFragment", "드래그중")
-                    // 2초 뒤 다시 floating 버튼이 보이게 설정한다
-                    val thread = object : Thread(){
-                        override fun run() {
-                            super.run()
-                            // 2초
-                            SystemClock.sleep(2 * 1000)
-                            // 2초가 지난 후 floating 버튼을 되돌리려고 할 때 프로그램을 종료할 가능성 있음
-                            // 종료되고 실시하면 에러 발생
-                            try {
-                                binder.fab.isGone = false
-                            }
-                            catch (e:Exception){
-
-                            }
-                        }
-                    }
-                    thread.start()
-                }
-            }
-            true
-        }
     }
     // alarmFragment에 있는 모든 View 정보를 갱신한다(textView, notification, recyclerView)
     // onResume()에서 갱신될 때 사용된다

@@ -27,7 +27,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout
-        android:id="@+id/fab"
+        android:id="@+id/fabLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="bottom|end"
