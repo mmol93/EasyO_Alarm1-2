@@ -76,7 +76,7 @@
     <string name="infoItem_subContact">Any bugs, questions</string>
     <string name="infoItem_version">Version</string>
     <string name="infoItem_subVersion">Version</string>
-    <string name="infoItem_openSource">Open Source</string>
+    <string name="infoItem_openSource">Open Source, Ref</string>
     <string name="infoItem_subOpenSource" translatable="false">Apache, GPL3.0 etc</string>
 
     <string name="info_name">Maid Alarm</string>

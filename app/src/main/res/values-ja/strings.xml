@@ -57,7 +57,7 @@
     <string name="infoItem_subContact">どんなﾊﾞｸﾞ、質問でも大丈夫です！</string>
     <string name="infoItem_version">ﾊﾞｰｼﾞｮﾝ</string>
     <string name="infoItem_subVersion">ﾊﾞｰｼﾞｮﾝ</string>
-    <string name="infoItem_openSource">ｵｰﾌﾟﾝｿｰｽ</string>
+    <string name="infoItem_openSource">ｵｰﾌﾟﾝｿｰｽ、参照</string>
     <string name="info_name">メードアラーム</string>
     <string name="typeOfBell_Korean_MinJjeong">ミンジョン</string>
     <string name="typeOfBell_Korean_Jeongyeon">ジヨン</string>

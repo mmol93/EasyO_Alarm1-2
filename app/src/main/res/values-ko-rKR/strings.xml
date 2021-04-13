@@ -57,7 +57,7 @@
     <string name="infoItem_subContact">어떤 버그, 질문이라도 좋아요!</string>
     <string name="infoItem_version">버전</string>
     <string name="infoItem_subVersion">버전</string>
-    <string name="infoItem_openSource">오픈소스</string>
+    <string name="infoItem_openSource">오픈소스, 참조</string>
     <string name="info_name">메이드알람</string>
     <string name="test_play">미리듣기</string>
     <string name="typeOfBell_Normal">일반 알람음</string>
@@ -74,7 +74,6 @@
     <string name="front_10minutes">10분 뒤에 알람이 울립니다.</string>
     <string name="main_updateDownloading">업데이트중입니다. 어플 또는 휴대폰 전원을 끄지마세요</string>
     <string name="main_updateDownloadDone">업데이트가 끝났습니다. 어플을 재시작하면 적용됩니다.</string>
-    <string name="main_updateFailed">업데이트에 실패했습니다. 어플을 재부팅 해주세요</string>
     <string name="main_updateAccepted">업데이트가 곧 시작됩니다.</string>
     <string name="update_dialogTitle">업데이트</string>
     <string name="update_dialogMessage">지금 업데이트를 하시겠어요?</string>
