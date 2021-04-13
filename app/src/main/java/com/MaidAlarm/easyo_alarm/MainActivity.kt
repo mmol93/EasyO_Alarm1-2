@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity() {
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                     && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) && currentTime - lastUpdate >= updateInterval) {
                     // 있을 경우 업데이트 실시
-                    appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE,this, REQUEST_CODE_UPDATE)
+                    appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE,this, REQUEST_CODE_UPDATE)
                 }
             }
         }
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
         // 인앱 업데이트 상태 리스너
         val updateListener = InstallStateUpdatedListener { state ->
             if (state.installStatus() == InstallStatus.DOWNLOADING) {
-                Toast.makeText(this, getString(R.string.main_updateDownloading), Toast.LENGTH_LONG).show()
+
             }
             else if (state.installStatus() == InstallStatus.DOWNLOADED){
                 Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
@@ -284,7 +284,8 @@ class MainActivity : AppCompatActivity() {
             }
             // 업데이트를 수락했을 경우
             else{
-                Toast.makeText(this, getString(R.string.main_updateAccepted), Toast.LENGTH_LONG).show()
+
+                Toast.makeText(this, getString(R.string.main_updateDownloading), Toast.LENGTH_LONG).show()
             }
         }
     }
