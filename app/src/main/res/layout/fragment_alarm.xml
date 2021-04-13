@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             app:fabColor="#0b7bc1"
-            app:fabIcon="@drawable/fast_icon"
+            app:fabIcon="@drawable/ic_fast"
             app:fabSizes="normal" />
     </com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout>
 
