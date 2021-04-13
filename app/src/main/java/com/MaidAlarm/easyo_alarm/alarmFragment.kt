@@ -10,6 +10,7 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.*
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MaidAlarm.easyo_alarm.databinding.FragmentAlarmBinding
@@ -148,18 +149,17 @@ class alarmFragment : Fragment() {
 
         // 길게 클릭 시 2초간 사라짐
         binder.fab1.setOnLongClickListener {
-            binder.fab1.isGone = true
+            binder.fab1.isInvisible = true
 
             val handler = Handler(Looper.myLooper()!!)
 
             val thread = object : Thread(){
                 override fun run() {
                     super.run()
-                    // 2초간 슬립
-                    SystemClock.sleep(2 * 1000)
-                    binder.fab1.isGone = false
+                    // 1초간 슬립
+                    SystemClock.sleep(1 * 1000)
+                    binder.fab1.isInvisible = false
 
-                    handler.post(this)
                 }
             }
             handler.post(thread)

@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fabColor="#ff9c10"
-            app:fabIcon="@drawable/ic_account_circle_black_24dp"
+            app:fabIcon="@drawable/ic_baseline_more_time_24"
             app:fabSizes="normal"
             />
 
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             app:fabColor="#0b7bc1"
-            app:fabIcon="@drawable/ic_search_black_24dp"
+            app:fabIcon="@drawable/fast_icon"
             app:fabSizes="normal" />
     </com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout>
 
