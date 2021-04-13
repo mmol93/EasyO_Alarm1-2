@@ -76,4 +76,6 @@
     <string name="main_updateDownloadDone">업데이트가 끝났습니다. 어플을 재시작하면 적용됩니다.</string>
     <string name="main_updateFailed">업데이트에 실패했습니다. 어플을 재부팅 해주세요</string>
     <string name="main_updateAccepted">업데이트가 곧 시작됩니다.</string>
+    <string name="update_dialogTitle">업데이트</string>
+    <string name="update_dialogMessage">지금 업데이트를 하시겠어요?</string>
 </resources>

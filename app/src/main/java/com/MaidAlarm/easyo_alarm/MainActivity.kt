@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -21,10 +22,13 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallStateUpdatedListener
 import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.AppUpdateType.FLEXIBLE
+import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.iammert.library.readablebottombar.ReadableBottomBar
@@ -128,17 +132,14 @@ class MainActivity : AppCompatActivity() {
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
                     && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) && currentTime - lastUpdate >= updateInterval) {
                     // 있을 경우 업데이트 실시
-                    appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE,this, REQUEST_CODE_UPDATE)
+                    appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE,this, REQUEST_CODE_UPDATE)
                 }
             }
         }
 
         // 인앱 업데이트 상태 리스너
         val updateListener = InstallStateUpdatedListener { state ->
-            if (state.installStatus() == InstallStatus.DOWNLOADING) {
-
-            }
-            else if (state.installStatus() == InstallStatus.DOWNLOADED){
+            if (state.installStatus() == InstallStatus.DOWNLOADED){
                 Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
             }
         }
@@ -275,6 +276,31 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        // 업데이트가 끝났을 경우
+        appUpdateManager
+            .appUpdateInfo
+            .addOnSuccessListener { appUpdateInfo ->
+                // 업뎃 다운이 끝났을 경우 설치를 해라고 알려줘야함
+                if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                    val dialogBuilder = AlertDialog.Builder(this)
+
+                    dialogBuilder.setTitle(getString(R.string.update_dialogTitle))
+                    dialogBuilder.setMessage(getString(R.string.update_dialogMessage))
+                    dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
+
+                    // YES 부분 버튼 설정
+                    dialogBuilder.setNegativeButton(getString(R.string.list_dialog_Yes)){ dialogInterface: DialogInterface, i: Int ->
+                        appUpdateManager.completeUpdate()
+                    }
+
+                    dialogBuilder.show()
+                }
+            }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_UPDATE) {
@@ -284,10 +310,11 @@ class MainActivity : AppCompatActivity() {
             }
             // 업데이트를 수락했을 경우
             else{
-
                 Toast.makeText(this, getString(R.string.main_updateDownloading), Toast.LENGTH_LONG).show()
             }
         }
+
+
     }
 
     override fun onStop() {

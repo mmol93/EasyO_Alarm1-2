@@ -76,4 +76,6 @@
     <string name="main_updateDownloadDone">ｱｯﾌﾟﾃﾞｰﾄが終わりました。ｱﾌﾟﾘの再起動後適用されます。</string>
     <string name="main_updateFailed">ｱｯﾌﾟﾃﾞｰﾄが失敗しました。ｱﾌﾟﾘを再起動してください。</string>
     <string name="main_updateAccepted">ｱｯﾌﾟﾃﾞｰﾄを始めます。</string>
+    <string name="update_dialogTitle">アップデート</string>
+    <string name="update_dialogMessage">アップデートを今しますか？</string>
 </resources>

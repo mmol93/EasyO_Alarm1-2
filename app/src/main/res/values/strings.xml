@@ -108,8 +108,10 @@
 
     <string name="main_updateDownloading">Updating now. Please don\'t shut down the app or phone</string>
     <string name="main_updateDownloadDone">Update is over. The update will be applied after restart the app</string>
-    <string name="main_updateRejected">Update is failed please restart the app</string>
     <string name="main_updateAccepted">Update will start</string>
+
+    <string name="update_dialogTitle">Update</string>
+    <string name="update_dialogMessage">Will you update now?</string>
 
 
 
