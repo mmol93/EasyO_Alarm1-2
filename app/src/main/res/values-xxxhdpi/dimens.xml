@@ -5,9 +5,5 @@
     <dimen name="activity_short_main_textSize">60dp</dimen>
     <dimen name="fragment_alarm_recentAlarm_textSize">27dp</dimen>
 
-    <dimen name="default_margin">30dp</dimen>
-    <dimen name="fab_size_normal">56dp</dimen>
-    <dimen name="fab_text_horizontal_margin_normal">16dp</dimen>
-    <dimen name="fab_default_elevation">1dp</dimen>
 
 </resources>

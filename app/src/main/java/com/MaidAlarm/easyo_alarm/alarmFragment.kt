@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MaidAlarm.easyo_alarm.databinding.FragmentAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
+import com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout
 import com.robertlevonyan.views.customfloatingactionbutton.doOnExpand
 import java.lang.Exception
 import java.util.*
@@ -146,6 +147,8 @@ class alarmFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binder.fabLayout.isClickable = false
+
+
 
         // 길게 클릭 시 2초간 사라짐
         binder.fab1.setOnLongClickListener {

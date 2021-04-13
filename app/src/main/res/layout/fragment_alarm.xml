@@ -31,6 +31,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="bottom|end"
+        app:fabMenuStyle="popUp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,10 +41,8 @@
             android:id="@+id/fab1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fabColor="@color/teal_200"
-            app:fabIcon="@drawable/ic_add"
-            app:fabSizes="normal"
-            />
+            app:fabColor="#acdace"
+            app:fabIcon="@drawable/ic_add" />
 
         <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
             android:id="@+id/fab2"
@@ -51,17 +50,17 @@
             android:layout_height="wrap_content"
             app:fabColor="#ff9c10"
             app:fabIcon="@drawable/ic_baseline_more_time_24"
-            app:fabSizes="normal"
+            app:fabSizes="mini"
             />
 
         <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
             android:id="@+id/fab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             app:fabColor="#0b7bc1"
             app:fabIcon="@drawable/ic_fast"
-            app:fabSizes="normal" />
+            app:fabSizes="mini"
+            />
     </com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
