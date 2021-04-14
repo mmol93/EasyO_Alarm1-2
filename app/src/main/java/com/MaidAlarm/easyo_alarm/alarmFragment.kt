@@ -163,26 +163,29 @@ class alarmFragment : Fragment() {
         binder.fab3.fabElevation = 1f
 
         val metrics = this.resources.displayMetrics
-        val width = metrics.widthPixels
-        val height = metrics.heightPixels
+//        val width = metrics.widthPixels
+//        val height = metrics.heightPixels
         var dpi = 0
-        val dp = 22 * height / 1000
+        var interval = 0f
 
         if (metrics.densityDpi<=160) { // mdpi
             dpi = 12;
+            interval = 55f
         } else if (metrics.densityDpi<=240) { // hdpi
             dpi = 18;
+            interval = 105f
         } else if (metrics.densityDpi<=320) { // xhdpi
             dpi = 24;
+            interval = 155f
         } else if (metrics.densityDpi<=480) { // xxhdpi
             dpi = 36;
+            interval = 205f
         } else if (metrics.densityDpi<=640) { // xxxhdpi
             dpi = 48;
+            interval = 255f
         }
 
-        val fabHeight = 160 * dp / dpi
-
-        binder.fabLayout.animationSize = fabHeight.toFloat()
+        binder.fabLayout.animationSize = interval
 
         // 길게 클릭 시 2초간 사라짐
         binder.fab1.setOnLongClickListener {
