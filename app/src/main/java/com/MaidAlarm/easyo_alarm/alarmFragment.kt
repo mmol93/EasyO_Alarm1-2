@@ -166,7 +166,7 @@ class alarmFragment : Fragment() {
         val width = metrics.widthPixels
         val height = metrics.heightPixels
         var dpi = 0
-        val dp = 50 * height / 1000
+        val dp = 22 * height / 1000
 
         if (metrics.densityDpi<=160) { // mdpi
             dpi = 12;
@@ -184,7 +184,6 @@ class alarmFragment : Fragment() {
 
         binder.fabLayout.animationSize = fabHeight.toFloat()
 
-        binder.fabLayout.animationSize = 200f
         // 길게 클릭 시 2초간 사라짐
         binder.fab1.setOnLongClickListener {
             binder.fab1.isInvisible = true
