@@ -164,10 +164,6 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.putExtra("progress", progress)
             context?.startActivity(frontAlarmActivity)
         }
-        else if (intent!!.action == "RENEWNOTIFICATION"){
-            Log.d("makeAlarm", "notification 갱신됨")
-
-        }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{
             // 휴식 상태인 휴대폰 깨우기

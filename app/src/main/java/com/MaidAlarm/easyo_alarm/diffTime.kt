@@ -114,6 +114,7 @@ class diffTime {
         }
     }
 
+
     // 위에 있는 메서드들을 이용해서 문자열을 만든다(예: xx일 xx시간 xx분 뒤 알람 울림)
     // 매개변수 : context 값, diffWeek 결과값, diffHour 결과값, diffMin 결과값
     // 반환값 : 문자열 반환
