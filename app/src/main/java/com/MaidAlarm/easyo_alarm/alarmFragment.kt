@@ -8,16 +8,14 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.util.Log
-import android.view.*
-import androidx.core.view.isGone
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MaidAlarm.easyo_alarm.databinding.FragmentAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
-import com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout
-import com.robertlevonyan.views.customfloatingactionbutton.doOnExpand
-import java.lang.Exception
 import java.util.*
 
 class alarmFragment : Fragment() {
@@ -26,7 +24,11 @@ class alarmFragment : Fragment() {
     lateinit var binder: FragmentAlarmBinding   // 데이터 바인더용 변수
     lateinit var app : AppClass
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_alarm, null)
         binder = FragmentAlarmBinding.bind(view)
         return view
@@ -34,13 +36,13 @@ class alarmFragment : Fragment() {
 
     // alarmFragment에 있는 모든 View 정보를 갱신한다(textView, notification, recyclerView)
     // RecyclerView에서 갱신될 때 사용된다
-    fun renewDisplay(SQLHelper2 : SQLHelper, binder : FragmentAlarmBinding, app : AppClass){
+    fun renewDisplay(SQLHelper2: SQLHelper, binder: FragmentAlarmBinding, app: AppClass){
         // 어댑터에 SQL 객체 정보와 레코드의 size를 보낸다
         val context = app.context_alarmFragent
         var SQLHelper : SQLHelper
         try {
             SQLHelper = SQLHelper(activity!!)
-        }catch (e:Exception){
+        }catch (e: Exception){
             SQLHelper = SQLHelper2
         }
 
@@ -53,7 +55,7 @@ class alarmFragment : Fragment() {
         try {
             binder.alarmListRecycle.layoutManager = LinearLayoutManager(requireContext())
             binder.alarmListRecycle.adapter = RecyclerAdapter(requireContext(), SQLHelper, size)
-        }catch (e:Exception){
+        }catch (e: Exception){
 
         }
 
@@ -120,12 +122,15 @@ class alarmFragment : Fragment() {
                         || recentTimeList[5] == 1 || recentTimeList[6] == 1){
                     var text = binder.RecentTimeTextview.text
                     // 텍스트의 제일 마지막 문자(콤마)를 삭제
-                    text = text.removeRange(text.length -2, text.length-1)
+                    text = text.removeRange(text.length - 2, text.length - 1)
                     binder.RecentTimeTextview.text = text
 
                     // textForWeek에서 마지막 부분 콤마 제거하기
                     if (textForWeek.length > 2){
-                        textForWeek = textForWeek.removeRange(textForWeek.length -2, textForWeek.length-1)
+                        textForWeek = textForWeek.removeRange(
+                            textForWeek.length - 2,
+                            textForWeek.length - 1
+                        )
                     }
                     app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
                 }
@@ -133,7 +138,12 @@ class alarmFragment : Fragment() {
                 if (app.recentTime.length > 0 && app.recentWeek.length > 0 && app.notificationSwitch == 1 && size > 0){
                     val notification = notification()
                     val notificationManager =context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
+                    notification.getNotification(
+                        context!!,
+                        "chanel1",
+                        "첫 번째 채널",
+                        notificationManager
+                    )
                     notification.makeNotification(app, context!!, notificationManager)
                 }
             }
@@ -146,10 +156,35 @@ class alarmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // fab의 메인 레이아웃의 경우 화면 전체이므로 클릭 안되게 설정
         binder.fabLayout.isClickable = false
+        binder.fab1.fabElevation = 1f
+        binder.fab2.fabElevation = 1f
+        binder.fab3.fabElevation = 1f
 
+        val metrics = this.resources.displayMetrics
+        val width = metrics.widthPixels
+        val height = metrics.heightPixels
+        var dpi = 0
+        val dp = 50 * height / 1000
 
+        if (metrics.densityDpi<=160) { // mdpi
+            dpi = 12;
+        } else if (metrics.densityDpi<=240) { // hdpi
+            dpi = 18;
+        } else if (metrics.densityDpi<=320) { // xhdpi
+            dpi = 24;
+        } else if (metrics.densityDpi<=480) { // xxhdpi
+            dpi = 36;
+        } else if (metrics.densityDpi<=640) { // xxxhdpi
+            dpi = 48;
+        }
 
+        val fabHeight = 160 * dp / dpi
+
+        binder.fabLayout.animationSize = fabHeight.toFloat()
+
+        binder.fabLayout.animationSize = 200f
         // 길게 클릭 시 2초간 사라짐
         binder.fab1.setOnLongClickListener {
             binder.fab1.isInvisible = true
@@ -188,12 +223,12 @@ class alarmFragment : Fragment() {
     }
     // alarmFragment에 있는 모든 View 정보를 갱신한다(textView, notification, recyclerView)
     // onResume()에서 갱신될 때 사용된다
-    fun renewDisplay(SQLHelper2 : SQLHelper){
+    fun renewDisplay(SQLHelper2: SQLHelper){
         // 어댑터에 SQL 객체 정보와 레코드의 size를 보낸다
         var SQLHelper : SQLHelper
         try {
             SQLHelper = SQLHelper(activity!!)
-        }catch (e:Exception){
+        }catch (e: Exception){
             SQLHelper = SQLHelper2
         }
 
@@ -206,7 +241,7 @@ class alarmFragment : Fragment() {
         try {
             binder.alarmListRecycle.layoutManager = LinearLayoutManager(requireContext())
             binder.alarmListRecycle.adapter = RecyclerAdapter(requireContext(), SQLHelper, size)
-        }catch (e:Exception){
+        }catch (e: Exception){
 
         }
 
@@ -272,19 +307,27 @@ class alarmFragment : Fragment() {
                         || recentTimeList[5] == 1 || recentTimeList[6] == 1){
                     var text = binder.RecentTimeTextview.text
                     // 텍스트의 제일 마지막 문자(콤마)를 삭제
-                    text = text.removeRange(text.length -2, text.length-1)
+                    text = text.removeRange(text.length - 2, text.length - 1)
                     binder.RecentTimeTextview.text = text
 
                     // textForWeek에서 마지막 부분 콤마 제거하기
                     if (textForWeek.length > 2){
-                        textForWeek = textForWeek.removeRange(textForWeek.length -2, textForWeek.length-1)
+                        textForWeek = textForWeek.removeRange(
+                            textForWeek.length - 2,
+                            textForWeek.length - 1
+                        )
                     }
                     app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
                 }
                 if (app.recentTime.length > 0 && app.recentWeek.length > 0 && app.notificationSwitch == 1 && size > 0){
                     val notification = notification()
                     val notificationManager =context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
+                    notification.getNotification(
+                        context!!,
+                        "chanel1",
+                        "첫 번째 채널",
+                        notificationManager
+                    )
                     notification.makeNotification(app, context!!, notificationManager)
                 }
             }
@@ -356,20 +399,34 @@ class alarmFragment : Fragment() {
                 // + weekList에도 내용을 갱신해준다
                 var alarmWeek_String = ""
                 when(alarmWeek){
-                    1 -> {alarmWeek_String = "Sun"
-                        weekList[0] = 1}
-                    2 -> {alarmWeek_String = "Mon"
-                        weekList[1] = 1}
-                    3 -> {alarmWeek_String = "Tue"
-                        weekList[2] = 1}
-                    4 -> {alarmWeek_String = "Wed"
-                        weekList[3] = 1}
-                    5 -> {alarmWeek_String = "Thu"
-                        weekList[4] = 1}
-                    6 -> {alarmWeek_String = "Fri"
-                        weekList[5] = 1}
-                    7 -> {alarmWeek_String = "Sat"
-                        weekList[6] = 1}
+                    1 -> {
+                        alarmWeek_String = "Sun"
+                        weekList[0] = 1
+                    }
+                    2 -> {
+                        alarmWeek_String = "Mon"
+                        weekList[1] = 1
+                    }
+                    3 -> {
+                        alarmWeek_String = "Tue"
+                        weekList[2] = 1
+                    }
+                    4 -> {
+                        alarmWeek_String = "Wed"
+                        weekList[3] = 1
+                    }
+                    5 -> {
+                        alarmWeek_String = "Thu"
+                        weekList[4] = 1
+                    }
+                    6 -> {
+                        alarmWeek_String = "Fri"
+                        weekList[5] = 1
+                    }
+                    7 -> {
+                        alarmWeek_String = "Sat"
+                        weekList[6] = 1
+                    }
                 }
                 Log.d("alarmFragment", "weekList: $weekList")
 
@@ -392,7 +449,14 @@ class alarmFragment : Fragment() {
 
                 // 알람 매니저에도 해당 알람 정보를 보내준다
                 // 필요 매개변수: context, 알람시간, 알람분, progress, 알람요일, requestCode(Int), quick 여부
-                val newAlarm = makeAlarm(requireContext(), alarmHour, alarmMin, progress!!, weekList, requestCode.toInt())
+                val newAlarm = makeAlarm(
+                    requireContext(),
+                    alarmHour,
+                    alarmMin,
+                    progress!!,
+                    weekList,
+                    requestCode.toInt()
+                )
                 newAlarm.addNewAlarm_once()
 
                 SQLHelper.close()
@@ -464,13 +528,33 @@ class alarmFragment : Fragment() {
                 val requestCode = presentDay.toString() + presentHour.toString() +
                         presentMin.toString() + presentSecond.toString()
 
-                val arg1 = arrayOf(hour, min, progress, Sun, Mon, Tue, Wed, Thu, Fri, Sat, requestCode.toInt(), 0)
+                val arg1 = arrayOf(
+                    hour,
+                    min,
+                    progress,
+                    Sun,
+                    Mon,
+                    Tue,
+                    Wed,
+                    Thu,
+                    Fri,
+                    Sat,
+                    requestCode.toInt(),
+                    0
+                )
 
                 SQLHelper.writableDatabase.execSQL(sql_insert, arg1)
 
                 // 알람 매니저에도 해당 알람 정보를 보내준다
                 // 필요 매개변수: context, 알람시간, 알람분, progress, 알람요일, requestCode(Int), quick 여부
-                val newAlarm = makeAlarm(requireContext(), hour!!, min!!, progress!!, weekList, requestCode.toInt())
+                val newAlarm = makeAlarm(
+                    requireContext(),
+                    hour!!,
+                    min!!,
+                    progress!!,
+                    weekList,
+                    requestCode.toInt()
+                )
                 newAlarm.addNewAlarm_normal()
 
                 SQLHelper.close()
