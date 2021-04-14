@@ -14,8 +14,8 @@ android {
         applicationId "com.MaidAlarm.easyo_alarm"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 17
-        versionName "1.52"
+        versionCode 18
+        versionName "1.53"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
