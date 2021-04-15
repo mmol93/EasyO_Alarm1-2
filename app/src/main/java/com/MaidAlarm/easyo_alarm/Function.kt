@@ -112,6 +112,7 @@ class Function {
         dos.close()
     }
 
+    // 업데이트 거부 시 해당 날짜 데이터 저장하게 하기
     fun saveFileWithCurrentTime(fileName : String, context: Context){
         val currentTimeMilli = System.currentTimeMillis()
 
