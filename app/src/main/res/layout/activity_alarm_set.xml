@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -211,8 +211,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginBottom="10dp">
+                android:orientation="horizontal">
 
                 <com.github.nikartm.button.FitButton
                     android:id="@+id/button_bell"
@@ -268,6 +267,58 @@
                     app:fb_textColor="#FFF"
                     app:fb_textPaddingStart="16dp" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:text="@string/alarmSet_selectBellTextTitle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:text="@string/alarmSet_selectModeTextTitle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/text_currentBell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:textSize="16dp"
+                    android:text="current Bell"/>
+
+                <TextView
+                    android:id="@+id/text_currentMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:textSize="16dp"
+                    android:text="current Mode"/>
             </LinearLayout>
 
             <LinearLayout

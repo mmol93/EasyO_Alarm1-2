@@ -50,7 +50,7 @@ class AlarmSetActivity : AppCompatActivity() {
         var Fri = 0
         var Sat = 0
 
-        // 2. 애드몹 로드
+        // 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
 
@@ -96,6 +96,17 @@ class AlarmSetActivity : AppCompatActivity() {
         binder.numberPickerAMPM.setOnValueChangedListener { picker, oldVal, newVal ->
             // 시간 계산하여 메시지 표시
             informNextAlarm(binder.numberPickerHour.value)
+        }
+
+        // SelectBell 클릭 시
+        binder.buttonBell.setOnClickListener {
+            val intent = Intent(this, SelectRingActivity::class.java)
+            this.startActivity(intent)
+        }
+
+        // SelectMode 클릭 시
+        binder.buttonMode.setOnClickListener {
+
         }
 
         // Cancel 버튼 클릭 시
