@@ -6,178 +6,210 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/itemBackground"
-    tools:context=".AlarmSetActivity">
-
-    <!-- adUnitId 의 경우 현재 테스트용임 -->
-    <!-- 실제로 앱 배포시에는 자신의 광고 ID 참조하기 -->
+    tools:context=".ShortAlarmSetActivity">
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:adSize="BANNER"
-        app:adUnitId="@string/alarmSetBannerID">
+        app:adUnitId="@string/quickSetBannerID">
 
     </com.google.android.gms.ads.AdView>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_marginTop="50dp"
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="@string/quick_title"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:textSize="@dimen/activity_short_main_textSize"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="40dp"
                 android:orientation="horizontal">
 
-                <NumberPicker
-                    android:id="@+id/numberPickerHour"
+                <TextView
+                    android:id="@+id/textView5"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:theme="@style/numberPickerCustomTheme" />
+                    android:textSize="60sp"
+                    android:text="+" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textView6_hour"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nanumgothicbold"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:text="00"
+                    android:textColor="@color/black"
+                    android:textSize="60sp" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanumgothicextrabold"
                     android:text=":"
                     android:textColor="@color/black"
-                    android:textSize="30sp" />
+                    android:textSize="60sp" />
 
-                <NumberPicker
-                    android:id="@+id/numberPickerMin"
+                <TextView
+                    android:id="@+id/textView8_min"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:theme="@style/numberPickerCustomTheme" />
-
-                <NumberPicker
-                    android:id="@+id/numberPickerAMPM"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="25dp"
-                    android:theme="@style/numberPickerCustomTheme" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="39dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:padding="2dp">
-
-                <TextView
-                    android:id="@+id/alarmSet_mon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:fontFamily="@font/nanumgothicbold"
-                    android:gravity="center"
-                    android:text="@string/week_mon"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/alarmSet_tues"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:fontFamily="@font/nanumgothicbold"
-                    android:gravity="center"
-                    android:text="@string/week_tue"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/alarmSet_wed"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:fontFamily="@font/nanumgothicbold"
-                    android:gravity="center"
-                    android:text="@string/week_wed"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/alarmSet_thur"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:fontFamily="@font/nanumgothicbold"
-                    android:gravity="center"
-                    android:text="@string/week_thur"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/alarmSet_fri"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:fontFamily="@font/nanumgothicbold"
-                    android:gravity="center"
-                    android:text="@string/week_fri"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/alarmSet_sat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:fontFamily="@font/nanumgothicbold"
-                    android:gravity="center"
-                    android:text="@string/week_sat"
-                    android:textColor="@color/black" />
-
-                <TextView
-                    android:id="@+id/alarmSet_sun"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_weight="1"
-                    android:background="@android:color/white"
-                    android:fontFamily="@font/nanumgothicbold"
-                    android:gravity="center"
-                    android:text="@string/week_sun"
-                    android:textColor="@color/black" />
-
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:text="00"
+                    android:textColor="@color/black"
+                    android:textSize="60sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/button60"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="13dp"
+                    android:text="@string/quick_60"
+                    android:textColor="#ffffff"
+                    android:layout_margin="9dp"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:textSize="@dimen/activity_short_minButton_textSize"
+                    app:buttonCornerRadius="20dp"
+                    app:buttonGradientEndColor="@color/teal_700"
+                    app:buttonGradientStartColor="@color/teal_200" />
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/button30"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="9dp"
+                    android:padding="13dp"
+                    android:textSize="@dimen/activity_short_minButton_textSize"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:layout_weight="1"
+                    android:text="@string/quick_30"
+                    android:textColor="#ffffff"
+                    app:buttonGradientStartColor="@color/teal_200"
+                    app:buttonGradientEndColor="@color/teal_700"
+                    app:buttonCornerRadius="20dp"
+                    />
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/button15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="13dp"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="9dp"
+                    android:textSize="@dimen/activity_short_minButton_textSize"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:layout_weight="1"
+                    android:text="@string/quick_15"
+                    android:textColor="#ffffff"
+                    app:buttonGradientStartColor="@color/teal_200"
+                    app:buttonGradientEndColor="@color/teal_700"
+                    app:buttonCornerRadius="20dp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/button10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="9dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="13dp"
+                    android:text="@string/quick_10"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/activity_short_minButton_textSize"
+                    app:buttonCornerRadius="20dp"
+                    app:buttonGradientEndColor="@color/teal_700"
+                    app:buttonGradientStartColor="@color/teal_200" />
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/button5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="13dp"
+                    android:text="@string/quick_5"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="9dp"
+                    android:textSize="@dimen/activity_short_minButton_textSize"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    app:buttonCornerRadius="20dp"
+                    app:buttonGradientEndColor="@color/teal_700"
+                    app:buttonGradientStartColor="@color/teal_200" />
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:padding="13dp"
+                    android:text="@string/quick_1"
+                    android:textColor="#ffffff"
+                    android:layout_marginLeft="9dp"
+                    android:layout_marginRight="9dp"
+                    android:textSize="@dimen/activity_short_minButton_textSize"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    app:buttonCornerRadius="20dp"
+                    app:buttonGradientEndColor="@color/teal_700"
+                    app:buttonGradientStartColor="@color/teal_200" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
                 <ImageView
-                    android:id="@+id/image_volume"
+                    android:id="@+id/imageView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -185,7 +217,7 @@
 
                 <SeekBar
                     android:id="@+id/volumeSeekBar"
-                    style="@android:style/Widget.DeviceDefault.Light.SeekBar"
+                    style="@style/Widget.AppCompat.SeekBar"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="6"
@@ -194,62 +226,174 @@
                     android:progress="100"
                     android:thumb="?android:attr/textSelectHandle" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/alarmSet_inform"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@drawable/round_shape"
-                android:fontFamily="@font/nanumgothic"
-                android:gravity="center"
-                android:padding="4dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="22dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <com.github.nikartm.button.FitButton
+                    android:id="@+id/button_bell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fb_fontFamilyRes="@font/nanumgothicextrabold"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:enabled="true"
+                    android:gravity="center_vertical"
+                    app:fb_backgroundColor="#FF7043"
+                    app:fb_cornerRadius="10dp"
+                    app:fb_divColor="#fff"
+                    app:fb_divHeight="40dp"
+                    app:fb_divWidth="1dp"
+                    app:fb_icon="@drawable/ic_thumb_up"
+                    app:fb_iconColor="#FFF"
+                    app:fb_iconHeight="28dp"
+                    app:fb_iconMarginEnd="16dp"
+                    app:fb_iconMarginStart="16dp"
+                    app:fb_iconPosition="left"
+                    app:fb_iconWidth="28dp"
+                    app:fb_rippleColor="#FBE9E7"
+                    app:fb_shape="rectangle"
+                    app:fb_text="@string/alarmSet_selectBell"
+                    app:fb_textColor="#FFF"
+                    app:fb_textPaddingStart="16dp" />
+
+                <com.github.nikartm.button.FitButton
+                    android:id="@+id/button_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fb_fontFamilyRes="@font/nanumgothicextrabold"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:enabled="true"
+                    android:gravity="center_vertical"
+                    app:fb_backgroundColor="#FF7043"
+                    app:fb_cornerRadius="10dp"
+                    app:fb_divColor="#fff"
+                    app:fb_divHeight="40dp"
+                    app:fb_divWidth="1dp"
+                    app:fb_icon="@drawable/ic_thumb_up"
+                    app:fb_iconColor="#FFF"
+                    app:fb_iconHeight="28dp"
+                    app:fb_iconMarginEnd="16dp"
+                    app:fb_iconMarginStart="16dp"
+                    app:fb_iconPosition="left"
+                    app:fb_iconWidth="28dp"
+                    app:fb_rippleColor="#FBE9E7"
+                    app:fb_shape="rectangle"
+                    app:fb_text="@string/alarmSet_selectMode"
+                    app:fb_textColor="#FFF"
+                    app:fb_textPaddingStart="16dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:text="@string/alarmSet_selectBellTextTitle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:text="@string/alarmSet_selectModeTextTitle" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp"
+                >
+
+                <TextView
+                    android:id="@+id/text_currentBell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:textSize="16dp"
+                    android:text="current Bell"/>
+
+                <TextView
+                    android:id="@+id/text_currentMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:textSize="16dp"
+                    android:text="current Mode"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="60dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <life.sabujak.roundedbutton.RoundedButton
                     android:id="@+id/button_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="0.8"
-                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:layout_weight="0.7"
                     android:gravity="center"
-                    android:padding="12dp"
+                    android:padding="15dp"
                     android:text="@string/cancelBtn"
+                    android:fontFamily="@font/nanumgothicextrabold"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
                     app:buttonCornerRadius="20dp"
                     app:buttonGradientEndColor="@color/purple_500"
                     app:buttonGradientStartColor="@color/teal_200" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <life.sabujak.roundedbutton.RoundedButton
                     android:id="@+id/button_save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:layout_weight="2.5"
                     android:gravity="center"
-                    android:padding="12dp"
+                    android:padding="15dp"
                     android:text="@string/saveBtn"
+                    android:fontFamily="@font/nanumgothicextrabold"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
                     app:buttonCornerRadius="20dp"
                     app:buttonGradientEndColor="@color/purple_500"
                     app:buttonGradientStartColor="@color/teal_200" />
 
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
             </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>
