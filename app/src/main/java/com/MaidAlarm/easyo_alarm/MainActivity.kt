@@ -336,7 +336,7 @@ class MainActivity : AppCompatActivity() {
         dos.close()
     }
 
-    // ** 연속 두 번 클릭하여 종료하기 
+    // ** 연속 두 번 클릭하여 종료하기
     override fun onBackPressed() {
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             super.onBackPressed();

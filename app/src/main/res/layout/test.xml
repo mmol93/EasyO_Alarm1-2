@@ -1,50 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/itemBackground"
     android:orientation="vertical"
-    tools:context=".ShortAlarmSetActivity">
+    android:background="@color/itemBackground"
+    tools:context=".AlarmSetActivity">
 
-    <com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout
-        android:id="@+id/floating_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+    <!-- adUnitId 의 경우 현재 테스트용임 -->
+    <!-- 실제로 앱 배포시에는 자신의 광고 ID 참조하기 -->
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-            android:id="@+id/fab1"
-            android:layout_width="wrap_content"
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:adSize="BANNER"
+        app:adUnitId="@string/alarmSetBannerID">
+
+    </com.google.android.gms.ads.AdView>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:fabColor="@color/teal_200"
-            app:fabIcon="@drawable/ic_add"
-            android:gravity="bottom|end"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-            android:id="@+id/fab2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabColor="#ff9c10"
-            app:fabIcon="@drawable/tab_alarm"
-            app:fabSizes="mini" />
+            <LinearLayout
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <com.robertlevonyan.views.customfloatingactionbutton.FloatingActionButton
-            android:id="@+id/fab3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fabColor="#0b7bc1"
-            app:fabIcon="@drawable/tab_alarm"
-            app:fabSizes="mini" />
-    </com.robertlevonyan.views.customfloatingactionbutton.FloatingLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <NumberPicker
+                    android:id="@+id/numberPickerHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:theme="@style/numberPickerCustomTheme" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:text=":"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerMin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:theme="@style/numberPickerCustomTheme" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerAMPM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:theme="@style/numberPickerCustomTheme" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:padding="2dp">
+
+                <TextView
+                    android:id="@+id/alarmSet_mon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:gravity="center"
+                    android:text="@string/week_mon"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/alarmSet_tues"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:gravity="center"
+                    android:text="@string/week_tue"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/alarmSet_wed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:gravity="center"
+                    android:text="@string/week_wed"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/alarmSet_thur"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:gravity="center"
+                    android:text="@string/week_thur"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/alarmSet_fri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:gravity="center"
+                    android:text="@string/week_fri"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/alarmSet_sat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:gravity="center"
+                    android:text="@string/week_sat"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/alarmSet_sun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:fontFamily="@font/nanumgothicbold"
+                    android:gravity="center"
+                    android:text="@string/week_sun"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/image_volume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/volume_icon" />
+
+                <SeekBar
+                    android:id="@+id/volumeSeekBar"
+                    style="@android:style/Widget.DeviceDefault.Light.SeekBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="6"
+                    android:max="100"
+                    android:min="0"
+                    android:progress="100"
+                    android:thumb="?android:attr/textSelectHandle" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/alarmSet_inform"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/round_shape"
+                android:fontFamily="@font/nanumgothic"
+                android:gravity="center"
+                android:padding="4dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="22dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="60dp"
+                android:orientation="horizontal">
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/button_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="0.8"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/cancelBtn"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    app:buttonCornerRadius="20dp"
+                    app:buttonGradientEndColor="@color/purple_500"
+                    app:buttonGradientStartColor="@color/teal_200" />
+
+                <life.sabujak.roundedbutton.RoundedButton
+                    android:id="@+id/button_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/nanumgothicextrabold"
+                    android:gravity="center"
+                    android:padding="12dp"
+                    android:text="@string/saveBtn"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    app:buttonCornerRadius="20dp"
+                    app:buttonGradientEndColor="@color/purple_500"
+                    app:buttonGradientStartColor="@color/teal_200" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

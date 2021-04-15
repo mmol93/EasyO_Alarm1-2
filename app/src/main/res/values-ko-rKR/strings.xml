@@ -77,4 +77,6 @@
     <string name="main_updateAccepted">업데이트가 곧 시작됩니다.</string>
     <string name="update_dialogTitle">업데이트</string>
     <string name="update_dialogMessage">지금 업데이트를 하시겠어요?</string>
+    <string name="alarmSet_selectBell">알람음</string>
+    <string name="alarmSet_selectMode">알람모드</string>
 </resources>

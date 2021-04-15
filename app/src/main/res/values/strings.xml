@@ -43,6 +43,8 @@
     <string name="alarmSet_AM">AM</string>
     <string name="alarmSet_PM">PM</string>
     <string name="alarmSet_Toast">Please set week... Master</string>
+    <string name="alarmSet_selectBell">Alarm Bell</string>
+    <string name="alarmSet_selectMode">Alarm Mode</string>
     <string name="alarmToast_inform1">Alarm will Ring</string>
     <string name="alarmToast_inform2">days</string>
     <string name="alarmToast_inform3">hours</string>

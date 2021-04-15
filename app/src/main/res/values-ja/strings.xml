@@ -78,4 +78,6 @@
     <string name="main_updateAccepted">ｱｯﾌﾟﾃﾞｰﾄを始めます。</string>
     <string name="update_dialogTitle">アップデート</string>
     <string name="update_dialogMessage">アップデートを今しますか？</string>
+    <string name="alarmSet_selectBell">ｱﾗｰﾑ音</string>
+    <string name="alarmSet_selectMode">ｱﾗｰﾑﾓｰﾄﾞ</string>
 </resources>
