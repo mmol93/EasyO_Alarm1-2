@@ -175,6 +175,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             alarmActivityModi.putExtra("setProgress", progressList[position])
             alarmActivityModi.putExtra("setQuick", quick[position])
             alarmActivityModi.putIntegerArrayListExtra("setWeek", setWeek)
+            alarmActivityModi.putExtra("bellIndex", bellIndex[position])
 
             context.startActivity(alarmActivityModi)
         }

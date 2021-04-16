@@ -31,6 +31,11 @@ class AlarmSetActivityModi : AppCompatActivity() {
     // 예약한 요일을 담는 List
     var weekList = ArrayList<Int>()
 
+    // 알람음 세팅 Activity에서 돌아오는 ResultCode
+    val selectRingActivityBack = 1
+
+    var bellIndex = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_set_modi)
@@ -46,6 +51,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
         val setProgress = intent.getIntExtra("setProgress", 0)
         var setQuick = intent.getIntExtra("setQuick", 0)
         weekList = intent.getIntegerArrayListExtra("setWeek")!!
+        bellIndex = intent.getIntExtra("bellIndex", 0)
         var setAMPM = 0
 
         // 제대로된 아이템의 위치를 알 수 없거나 requestCode가 이상할 경우 토스트 출력 후 액티비티 종료
@@ -133,7 +139,17 @@ class AlarmSetActivityModi : AppCompatActivity() {
         textWeek_initial(binder.alarmSetSat, Sat)
 
         // 알람음(bell) 설정에 따른 텍스트뷰 수정해주기
-        
+        when(bellIndex){
+            0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+            1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+            2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+            3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+            // 한국어 알람음
+            10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+            11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+            // 값이 null일 때(아마...)
+            else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+        }
 
         // *** seekBar도 초기값 설정해주기
         binder.volumeSeekBar.progress = setProgress
@@ -161,6 +177,12 @@ class AlarmSetActivityModi : AppCompatActivity() {
         // Cancel 버튼 클릭 시
         binder.buttonCancel.setOnClickListener {
             finish()
+        }
+
+        // SelectBell 클릭 시
+        binder.buttonBell.setOnClickListener {
+            val intent = Intent(this, SelectRingActivity::class.java)
+            this.startActivityForResult(intent, selectRingActivityBack)
         }
 
         // *** save 버튼 클릭 시
@@ -230,7 +252,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 SQLHelper.close()
 
                 // 해당 requestCode로 Notification을 갱신해준다
-                val newAlarm = makeAlarm(this, setHour, setMin, binder.volumeSeekBar.progress, weekList, requestCode, app.bellIndex)
+                val newAlarm = makeAlarm(this, setHour, setMin, binder.volumeSeekBar.progress, weekList, requestCode, bellIndex)
                 newAlarm.addNewAlarm_normal()
                 finish()
             }
@@ -356,6 +378,23 @@ class AlarmSetActivityModi : AppCompatActivity() {
         binder.volumeSeekBar.setOnSeekBarChangeListener(seekListener)
 
         setContentView(binder.root)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == selectRingActivityBack){
+            when(app.bellIndex){
+                0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+                3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                // 한국어 알람음
+                10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+                11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+                // 값이 null일 때(아마...)
+                else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+            }
+        }
     }
 
     // 텍스트뷰에 색깔 넣기 - 클릭 시

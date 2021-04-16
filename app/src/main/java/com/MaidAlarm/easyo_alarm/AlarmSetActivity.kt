@@ -281,19 +281,19 @@ class AlarmSetActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // 알람음 선택에서 돌아왔을 때
-        if (requestCode == selectRingActivityBack){
-            when(app.bellIndex){
-                0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
-                1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
-                2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
-                3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
-                // 한국어 알람음
-                10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
-                11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
-                // 값이 null일 때(아마...)
-                else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+            if (requestCode == selectRingActivityBack){
+                when(app.bellIndex){
+                    0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                    1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                    2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+                    3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                    // 한국어 알람음
+                    10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+                    11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+                    // 값이 null일 때(아마...)
+                    else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                }
             }
-        }
     }
 
     // seekBar에 대한 리스너 정의
