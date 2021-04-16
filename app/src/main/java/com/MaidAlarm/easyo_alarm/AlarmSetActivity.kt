@@ -12,7 +12,6 @@ import com.MaidAlarm.easyo_alarm.databinding.ActivityAlarmSetBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
 import java.util.ArrayList
 
 class AlarmSetActivity : AppCompatActivity() {
@@ -32,6 +31,11 @@ class AlarmSetActivity : AppCompatActivity() {
     var restOfHour : Int = 1
     var restOfMin : Int = 0
 
+    // 알람음 세팅 Activity에서 돌아오는 ResultCode
+    val selectRingActivityBack = 1
+
+    lateinit var app : AppClass
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // weekList 초기화
         for (i in 0..6){
@@ -40,6 +44,8 @@ class AlarmSetActivity : AppCompatActivity() {
         Log.d("AlarmSetActivity", "weekList: $weekList")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_set)
+        app = application as AppClass
+
         binder = ActivityAlarmSetBinding.inflate(layoutInflater)
         // 요일 클릭에 대한 변수 정의
         var Sun = 0
@@ -101,7 +107,7 @@ class AlarmSetActivity : AppCompatActivity() {
         // SelectBell 클릭 시
         binder.buttonBell.setOnClickListener {
             val intent = Intent(this, SelectRingActivity::class.java)
-            this.startActivity(intent)
+            this.startActivityForResult(intent, selectRingActivityBack)
         }
 
         // SelectMode 클릭 시
@@ -270,6 +276,24 @@ class AlarmSetActivity : AppCompatActivity() {
         binder.volumeSeekBar.setOnSeekBarChangeListener(seekListener)
 
         setContentView(binder.root)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // 알람음 선택에서 돌아왔을 때
+        if (requestCode == selectRingActivityBack){
+            when(app.bellIndex){
+                0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+                3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                // 한국어 알람음
+                10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+                11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+                // 값이 null일 때(아마...)
+                else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+            }
+        }
     }
 
     // seekBar에 대한 리스너 정의

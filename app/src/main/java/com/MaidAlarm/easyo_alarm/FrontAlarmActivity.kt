@@ -97,15 +97,15 @@ class FrontAlarmActivity : AppCompatActivity() {
             val data2 = dis.readInt()
             val data3 = dis.readInt()
             val data4 = dis.readInt()
-            val data5 = dis.readInt()
 
             app.wayOfAlarm = data1
             app.counter = data2
             app.notificationSwitch = data3
             app.initialStart = data4
-            app.bellIndex = data5
 
-            when(app.bellIndex){
+            val bellIndex = intent.getIntExtra("bellIndex", 0)
+
+            when(bellIndex){
                 0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
                 1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
                 2 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_happytown)
@@ -115,15 +115,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             }
 
         }catch (e: Exception){
-            // 지정한 알람음 데이터를 가져온다
-            when(app.bellIndex){
-                0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
-                1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
-                2 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_happytown)
-                3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_country)
-                10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
-                11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
-            }
+
         }
 
         Log.d("FrontAlarmActivity", "bellIndex: ${app.bellIndex}")

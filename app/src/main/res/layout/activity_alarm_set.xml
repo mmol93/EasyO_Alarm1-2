@@ -308,7 +308,8 @@
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicbold"
                     android:textSize="16dp"
-                    android:text="current Bell"/>
+                    android:textColor="@color/black"
+                    android:text="@string/alarmSet_selectBellTextTitle"/>
 
                 <TextView
                     android:id="@+id/text_currentMode"
@@ -318,7 +319,8 @@
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicbold"
                     android:textSize="16dp"
-                    android:text="current Mode"/>
+                    android:textColor="@color/black"
+                    android:text="@string/alarmSet_selectModeTextTitle"/>
             </LinearLayout>
 
             <LinearLayout

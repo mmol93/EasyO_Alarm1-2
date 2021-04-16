@@ -60,7 +60,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
         }
 
 
-        // 2. 애드몹 로드
+        // 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
 
@@ -131,6 +131,9 @@ class AlarmSetActivityModi : AppCompatActivity() {
         textWeek_initial(binder.alarmSetThur, Thu)
         textWeek_initial(binder.alarmSetFri, Fri)
         textWeek_initial(binder.alarmSetSat, Sat)
+
+        // 알람음(bell) 설정에 따른 텍스트뷰 수정해주기
+        
 
         // *** seekBar도 초기값 설정해주기
         binder.volumeSeekBar.progress = setProgress
@@ -227,9 +230,8 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 SQLHelper.close()
 
                 // 해당 requestCode로 Notification을 갱신해준다
-                val newAlarm = makeAlarm(this, setHour, setMin, binder.volumeSeekBar.progress, weekList, requestCode)
+                val newAlarm = makeAlarm(this, setHour, setMin, binder.volumeSeekBar.progress, weekList, requestCode, app.bellIndex)
                 newAlarm.addNewAlarm_normal()
-
                 finish()
             }
 

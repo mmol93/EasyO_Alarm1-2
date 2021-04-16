@@ -79,4 +79,6 @@
     <string name="update_dialogMessage">지금 업데이트를 하시겠어요?</string>
     <string name="alarmSet_selectBell">알람음</string>
     <string name="alarmSet_selectMode">알람모드</string>
+    <string name="alarmSet_selectBellTextTitle">현재 알람음</string>
+    <string name="alarmSet_selectModeTextTitle">현재 알람모드</string>
 </resources>

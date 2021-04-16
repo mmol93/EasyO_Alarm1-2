@@ -53,6 +53,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
         val requestCode = mutableListOf<Int>()
         val quick = mutableListOf<Int>()
         val switch = mutableListOf<Int>()
+        val bellIndex = mutableListOf<Int>()
 
         // 모든 컬럼, 모든 레코드의 값 가져와서 리스트 안에 넣기
         while (c1.moveToNext()){
@@ -70,6 +71,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             val index12 = c1.getColumnIndex("requestCode")
             val index13 = c1.getColumnIndex("quick")
             val index14 = c1.getColumnIndex("switch")
+            val index16 = c1.getColumnIndex("bell")
 
             idxList.add(c1.getInt(index1))
             hourList.add(c1.getInt(index2))
@@ -85,6 +87,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             requestCode.add(c1.getInt(index12))
             quick.add(c1.getInt(index13))
             switch.add(c1.getInt(index14))
+            bellIndex.add(c1.getInt(index16))
         }
 
         Log.d("RecyclerAdapter", "idxList in Bind(): $idxList")   // SQL에 있는 idx의 리스트
@@ -182,7 +185,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             // 알람 매니저에 알람 등록하기
             if (holder.row_switch.isChecked){
                 val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tue[position], Wed[position], Thu[position], Fri[position], Sat[position])
-                val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position])
+                val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position], bellIndex[position])
                 // quick인지 normal인지에 따라 알람 매니저의 다른 메서드를 호출하게 한다
                 if (quick[position] == 1){
                     // quick == 1 이면 quick 알람임
@@ -234,7 +237,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
             // 알람 매니저에 해당 알람 캔슬하기
             else{
                 val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tue[position], Wed[position], Thu[position], Fri[position], Sat[position])
-                val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position])
+                val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position], bellIndex[position])
 
                 reNewAlarm.cancelAlarm(requestCode[position])
 
@@ -288,7 +291,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     // 데이터를 삭제하기 전에 알람매니저를 먼저 취소한다.
                     // 해당 알람 캔슬하기
                     val weekList = mutableListOf<Int>(Sun[position], Mon[position], Tue[position], Wed[position], Thu[position], Fri[position], Sat[position])
-                    val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position])
+                    val reNewAlarm = makeAlarm(context, hourList[position], minList[position], progressList[position], weekList, requestCode[position], bellIndex[position])
                     reNewAlarm.cancelAlarm(requestCode[position])
 
                     // ** RecyclerView를 이루고 있는 리스트도 데이터를 삭제해야한다.
