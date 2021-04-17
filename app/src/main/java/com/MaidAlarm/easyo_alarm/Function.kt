@@ -1,8 +1,11 @@
 package com.MaidAlarm.easyo_alarm
 
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.util.Log
+import com.MaidAlarm.easyo_alarm.notification.notification
 import java.io.DataOutputStream
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -79,6 +82,166 @@ class Function {
             }
         }
     }
+
+    // notification 갱신
+    fun renewNotification(context: Context){
+        val SQLHelper = SQLHelper(context!!)
+        val sql = "select * from MaidAlarm"
+        val c1 = SQLHelper.writableDatabase.rawQuery(sql, null)
+        val size = c1.count
+
+        if (size > 0){
+            // RecentAlarm 갱신하기
+            val recentAlarm = RecentAlarm()
+            val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+            // 알림은 있지만 모든 토글이 off 일 떄
+            if (recentTimeList[0] == -1){
+                val notification = notification()
+                notification.cancelNotification(context)
+            }
+            else{
+                var textForWeek = ""     // notification에 사용하기 위한 텍스트를 정의1
+                // 시간 부분 입력
+                var recentHour = ""
+                var recentMin = ""
+                if (recentTimeList[7] < 10){
+                    recentHour = "0${recentTimeList[7]}"
+                }else{
+                    recentHour = "${recentTimeList[7]}"
+                }
+                if (recentTimeList[8] < 10){
+                    recentMin = "0${recentTimeList[8]}"
+                }else{
+                    recentMin = "${recentTimeList[8]}"
+                }
+
+                // 다음 알림의 시각
+                val recentTime = "$recentHour : $recentMin"
+
+                // 월요일에 알람 있을 때 ~ 일요일에 알람 있을 때 -> 요일 부분 입력
+                if (recentTimeList[1] == 1){
+                    textForWeek = textForWeek + context.getString(R.string.week_mon) + ", "
+                }
+                if (recentTimeList[2] == 1){
+                    textForWeek = textForWeek + context.getString(R.string.week_tue) + ", "
+                }
+                if (recentTimeList[3] == 1){
+                    textForWeek = textForWeek + context.getString(R.string.week_wed) + ", "
+                }
+                if (recentTimeList[4] == 1){
+                    textForWeek = textForWeek + context.getString(R.string.week_thur) + ", "
+                }
+                if (recentTimeList[5] == 1){
+                    textForWeek = textForWeek + context.getString(R.string.week_fri) + ", "
+                }
+                if (recentTimeList[6] == 1){
+                    textForWeek = textForWeek + context.getString(R.string.week_sat) + ", "
+                }
+                if (recentTimeList[0] == 1){
+                    textForWeek = textForWeek + context.getString(R.string.week_sun) + ", "
+                }
+                // 체크된 요일을 문자로 표시한다
+                if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
+                        || recentTimeList[5] == 1 || recentTimeList[6] == 1){
+                    // textForWeek에서 마지막 부분 콤마 제거하기
+                    if (textForWeek.length > 2){
+                        textForWeek = textForWeek.removeRange(
+                                textForWeek.length - 2,
+                                textForWeek.length - 1
+                        )
+                    }
+
+                }
+
+                val recentWeek = textForWeek    // 다음 알림의 주
+
+                // notification 갱신
+                if (recentTime.isNotEmpty()){
+                    val notification = notification()
+                    val notificationManager =context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    notification.getNotification(
+                            context!!,
+                            "chanel1",
+                            "첫 번째 채널",
+                            notificationManager
+                    )
+                    notification.makeNotification(recentTime, recentWeek, context!!, notificationManager)
+                }
+            }
+        }
+    }
+
+    // notification 및 MainTextView 갱신
+    // 토글 부분 확인함 & RecyclerView에서 사용됨
+    fun renewNotiInRecycler(context: Context, app:AppClass, SQLHelper : SQLHelper){
+        // ** notification 재설정
+        val recentAlarm = RecentAlarm()
+        val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+        // 1개라도 on인 토글이 있을 때
+        if (recentTimeList[0] != -1){
+            // 시간 부분 입력
+            var recentHour = ""
+            var recentMin = ""
+            if (recentTimeList[7] < 10){
+                recentHour = "0${recentTimeList[7]}"
+            }else{
+                recentHour = "${recentTimeList[7]}"
+            }
+            if (recentTimeList[8] < 10){
+                recentMin = "0${recentTimeList[8]}"
+            }else{
+                recentMin = "${recentTimeList[8]}"
+            }
+            app.recentTime = "$recentHour : $recentMin"
+            Log.d("RecyclerAdapter", "recentHour: $recentHour, recentMin: $recentMin")
+        }
+
+        var textForWeek = ""     // notification에 사용하기 위한 텍스트를 정의1
+
+        // 월요일에 알람 있을 때 ~ 일요일에 알람 있을 때 -> 요일 부분 입력
+        if (recentTimeList[1] == 1){
+            textForWeek = textForWeek + context.getString(R.string.week_mon) + ", "
+        }
+        if (recentTimeList[2] == 1){
+            textForWeek = textForWeek + context.getString(R.string.week_tue) + ", "
+        }
+        if (recentTimeList[3] == 1){
+            textForWeek = textForWeek + context.getString(R.string.week_wed) + ", "
+        }
+        if (recentTimeList[4] == 1){
+            textForWeek = textForWeek + context.getString(R.string.week_thur) + ", "
+        }
+        if (recentTimeList[5] == 1){
+            textForWeek = textForWeek + context.getString(R.string.week_fri) + ", "
+        }
+        if (recentTimeList[6] == 1){
+            textForWeek = textForWeek + context.getString(R.string.week_sat) + ", "
+        }
+        if (recentTimeList[0] == 1){
+            textForWeek = textForWeek + context.getString(R.string.week_sun) + ", "
+        }
+        // 체크된 요일을 문자로 표시한다
+        if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
+                || recentTimeList[5] == 1 || recentTimeList[6] == 1){
+
+            // textForWeek에서 마지막 부분 콤마 제거하기
+            if (textForWeek.length > 2){
+                textForWeek = textForWeek.removeRange(
+                        textForWeek.length - 2,
+                        textForWeek.length - 1
+                )
+            }
+            app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
+        }
+
+        // notification 갱신
+        val notification = notification()
+        val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
+        notification.makeNotification(app, context!!, notificationManager)
+    }
+
+
     // SQL의 모든 row에서 requestCode 컬럼 부분만 가져오기
     fun CheckRequestCodeSQL(context: Context, SQLHelper: SQLHelper, requestCode: MutableList<Int>): MutableList<Int> {
         val app = context.applicationContext as AppClass

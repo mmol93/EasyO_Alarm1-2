@@ -10,8 +10,6 @@ import android.os.Build
 import android.os.PowerManager
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
-import com.google.android.gms.ads.MobileAds
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -112,11 +110,14 @@ class makeAlarm(
 class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         // ** 휴대폰을 재부팅 했을 때
-        if (intent!!.action == "android.intent.action.BOOT_COMPLETED") {
+        if (intent!!.action == "android.intent.action.BOOT_COMPLETED" ||
+                intent!!.action == "android.intent.action.QUICKBOOT_POWERON") {
             Log.d("makeAlarm", "재부팅됨")
+            Toast.makeText(context, "재부팅됨", Toast.LENGTH_LONG).show()
             // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
             val function = Function()
             function.makeAlarmWithAllSQL(context!!)
+            function.renewNotification(context)
         }
         // 앱을 업데이트 했을 때
         else if(intent!!.action == "android.intent.action.MY_PACKAGE_REPLACED"){

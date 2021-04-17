@@ -200,32 +200,8 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     val arg1 = arrayOf(1, position + 1)
                     SQLHelper.writableDatabase.execSQL(sql_update, arg1)
                 }
-                // ** notification 재설정
-                val recentAlarm = RecentAlarm()
-                val recentTimeList = recentAlarm.checkSQL(SQLHelper)
-                // 1개라도 on인 토글이 있을 때
-                if (recentTimeList[0] != -1){
-                    // 시간 부분 입력
-                    var recentHour = ""
-                    var recentMin = ""
-                    if (recentTimeList[7] < 10){
-                        recentHour = "0${recentTimeList[7]}"
-                    }else{
-                        recentHour = "${recentTimeList[7]}"
-                    }
-                    if (recentTimeList[8] < 10){
-                        recentMin = "0${recentTimeList[8]}"
-                    }else{
-                        recentMin = "${recentTimeList[8]}"
-                    }
-                    app.recentTime = "$recentHour : $recentMin"
-                    Log.d("RecyclerAdapter", "recentHour: $recentHour, recentMin: $recentMin")
-                }
-                // notification 갱신
-                val notification = notification()
-                val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
-                notification.makeNotification(app, context!!, notificationManager)
+                val function = Function()
+                function.renewNotiInRecycler(context, app, SQLHelper)
 
                 // ** Fragment에 있는 textView 갱신하기
                 renewText()
@@ -254,24 +230,9 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                     // ** Fragment에 있는 textView 갱신하기
                     app.binder_alarmFragent.RecentTimeTextview.text = context.getString(R.string.alarmSetFragment_noAlarm)
                 }else{
-                    // 시간 부분 입력
-                    var recentHour = ""
-                    var recentMin = ""
-                    if (recentTimeList[7] < 10){
-                        recentHour = "0${recentTimeList[7]}"
-                    }else{
-                        recentHour = "${recentTimeList[7]}"
-                    }
-                    if (recentTimeList[8] < 10){
-                        recentMin = "0${recentTimeList[8]}"
-                    }else{
-                        recentMin = "${recentTimeList[8]}"
-                    }
-                    app.recentTime = "$recentHour : $recentMin"
-                    val notification = notification()
-                    val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-                    notification.getNotification(context!!, "chanel1", "첫 번째 채널", notificationManager)
-                    notification.makeNotification(app, context!!, notificationManager)
+                    val function = Function()
+                    function.renewNotiInRecycler(context, app, SQLHelper)
+
                     Log.d("RecyclerAdapter", "토글 off")
                     // ** Fragment에 있는 textView 갱신하기
                     renewText()
