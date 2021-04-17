@@ -119,6 +119,7 @@ class Receiver : BroadcastReceiver() {
             // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
             val function = Function()
             function.makeAlarmWithAllSQL(context!!)
+            function.renewNotification(context)
         }
         // 앱을 업데이트 했을 때
         else if(intent!!.action == "android.intent.action.MY_PACKAGE_REPLACED"){
