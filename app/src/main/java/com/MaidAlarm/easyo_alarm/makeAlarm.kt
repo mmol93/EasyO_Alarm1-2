@@ -113,7 +113,6 @@ class Receiver : BroadcastReceiver() {
         if (intent!!.action == "android.intent.action.BOOT_COMPLETED" ||
                 intent!!.action == "android.intent.action.QUICKBOOT_POWERON") {
             Log.d("makeAlarm", "재부팅됨")
-            Toast.makeText(context, "재부팅됨", Toast.LENGTH_LONG).show()
             // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
             val function = Function()
             function.makeAlarmWithAllSQL(context!!)
