@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.LinearGradient
 import android.media.AudioManager
 import android.os.Build
 import android.os.PowerManager
@@ -230,6 +231,7 @@ class Receiver : BroadcastReceiver() {
                 val SQLHelper = SQLHelper(context!!)
                 val sql = "select * from MaidAlarm"
                 val c1 = SQLHelper.writableDatabase.rawQuery(sql, null)
+                val size = c1.count
 
                 // SQL에서 해당 데이터 row를 삭제하기 -> 자동으로 RecyclerView에서도 사라질 예정임
                 // Quick의 경우 원래 1번만 울리게 설정되어 있기 때문에 굳이 알람을 Cancel할 필요는 없다
@@ -247,11 +249,28 @@ class Receiver : BroadcastReceiver() {
                         val arg1 = arrayOf(SQLKeyIndex.toString())
 
                         SQLHelper.writableDatabase.execSQL(sqlDelete, arg1)
-                        SQLHelper.close()   // 삭제를 한 이후는 필요가 없으니 SQL을
                         Log.d("makeAlarm", "Quick 알람 자동 삭제됨")
                         break
                     }
                 }
+
+                // 모든 인덱스를 고침
+                // sql2랑 c2를 한 번더 정의해주지 않으면 while 부분을 실시하지 않는다...
+                val sql2 = "select * from MaidAlarm"
+                val sql_update = "update MaidAlarm set idx = ? where idx = ? "
+                val c2 = SQLHelper.writableDatabase.rawQuery(sql2, null)
+                var i = 1
+                Log.d("makeAlarm", "SQL 데이터 삭제 후 인덱스 갱신")
+                while (c2.moveToNext()){
+                    val index1 = c2.getColumnIndex("idx")
+                    val idx = c2.getInt(index1)
+                    val arg1 = arrayOf(i, idx)
+
+                    SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+                    i += 1
+                }
+
+                SQLHelper.close()   // 삭제를 한 이후는 필요가 없으니 SQL을 닫는다
             }
             // quick 알람이 아닐 경우 -> 24시간 뒤 다시 울리게 설정한다
             else{
