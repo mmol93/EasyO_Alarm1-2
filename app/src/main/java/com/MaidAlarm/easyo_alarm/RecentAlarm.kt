@@ -67,15 +67,12 @@ class RecentAlarm {
         Log.d("RecentAlarm", "idxList: $idxList")
         Log.d("RecentAlarm", "switch: $switch")
 
-        // 인덱스에서 에러가 날 때
-        // 이상하게 인덱스 리스트가 1이 아닌 다른 숫자로 사작할 때가 있음
-        // 1부터 들어가게 다시 만들어줌
-        if (idxList[0] != 1){
-            val size = idxList.size
-            idxList.clear()
-            for (i in 1..size){
-                idxList.add(i)
-            }
+        // Quick 알람을 삭제하는 과정에서 index 에러가 발생하기 때문에
+        // 이 부분만 그냥 1부터 만큼 SQL 데이터의 size 만큼 넣기로 한다.
+        val size = idxList.size
+        idxList.clear()
+        for (i in 1..size){
+            idxList.add(i)
         }
 
         val weekList = mutableListOf<Int>()

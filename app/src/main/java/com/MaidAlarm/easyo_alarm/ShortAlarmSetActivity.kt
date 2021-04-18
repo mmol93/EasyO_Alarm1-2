@@ -22,10 +22,17 @@ class ShortAlarmSetActivity : AppCompatActivity() {
 
     var seekValue = 100
 
+    // 알람음 세팅 Activity에서 돌아오는 ResultCode
+    val selectRingActivityBack = 1
+
+    lateinit var app : AppClass
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_short_alarm_set)
         binder = ActivityShortAlarmSetBinding.inflate(layoutInflater)
+
+        app = application as AppClass
 
         // 2. 애드몹 로드
         val adRequest = AdRequest.Builder().build()
@@ -85,6 +92,13 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         binder.buttonCancel.setOnClickListener {
             finish()
         }
+
+        // SelectBell 클릭 시
+        binder.buttonBell.setOnClickListener {
+            val intent = Intent(this, SelectRingActivity::class.java)
+            this.startActivityForResult(intent, selectRingActivityBack)
+        }
+
 
         // 저장 버튼 클릭 시
         binder.buttonSave.setOnClickListener {
@@ -157,6 +171,24 @@ class ShortAlarmSetActivity : AppCompatActivity() {
         } else {
             val transMin = String.format("%02d", min)
             binder.textView8Min.text = "$transMin"
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // 알람음 선택에서 돌아왔을 때
+        if (requestCode == selectRingActivityBack){
+            when(app.bellIndex){
+                0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+                3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                // 한국어 알람음
+                10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+                11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+                // 값이 null일 때(아마...)
+                else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+            }
         }
     }
 

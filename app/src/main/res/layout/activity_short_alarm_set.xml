@@ -326,6 +326,7 @@
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicbold"
                     android:textSize="16dp"
+                    android:textColor="@color/black"
                     android:text="current Bell"/>
 
                 <TextView
@@ -336,6 +337,7 @@
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicbold"
                     android:textSize="16dp"
+                    android:textColor="@color/black"
                     android:text="current Mode"/>
             </LinearLayout>
 
