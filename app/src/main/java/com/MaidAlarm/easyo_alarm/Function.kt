@@ -246,10 +246,7 @@ class Function {
         notification.makeNotification(app, context!!, notificationManager)
     }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> ver2.0
     // SQL의 모든 row에서 requestCode 컬럼 부분만 가져오기
     fun CheckRequestCodeSQL(context: Context, SQLHelper: SQLHelper, requestCode: MutableList<Int>): MutableList<Int> {
         val app = context.applicationContext as AppClass

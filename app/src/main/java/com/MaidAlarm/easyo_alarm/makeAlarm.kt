@@ -276,10 +276,7 @@ class Receiver : BroadcastReceiver() {
                     SQLHelper.writableDatabase.execSQL(sql_update, arg1)
                     i += 1
                 }
-<<<<<<< HEAD
 
-=======
->>>>>>> ver2.0
                 SQLHelper.close()   // 삭제를 한 이후는 필요가 없으니 SQL을 닫는다
             }
             // quick 알람이 아닐 경우 -> 24시간 뒤 다시 울리게 설정한다
