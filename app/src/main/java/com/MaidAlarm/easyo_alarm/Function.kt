@@ -42,6 +42,7 @@ class Function {
                 val index13 = c1.getColumnIndex("quick")
                 val index14 = c1.getColumnIndex("switch")
                 val index16 = c1.getColumnIndex("bell")
+                val index17 = c1.getColumnIndex("mode")
 
                 // ** SQL에서 데이터를 가져와서 다시 알람 매니저로 보낸다 (아래 설명은 그 순서임)
                 // 각 항목의 값을 해당 이름의 변수에 넣는다 -> Sun ~ Sat은 weekList로 만든다 ->
@@ -62,6 +63,7 @@ class Function {
                 val quick = c1.getInt(index13)
                 val switch = c1.getInt(index14)
                 val bellIndex = c1.getInt(index16)
+                val alarmMode = c1.getInt(index17)
 
                 val weekList = mutableListOf<Int>()
                 weekList.add(Sun)
@@ -72,7 +74,7 @@ class Function {
                 weekList.add(Fri)
                 weekList.add(Sat)
 
-                val makeAlarm = makeAlarm(context, hour, min, progress, weekList, requestCode, bellIndex)
+                val makeAlarm = makeAlarm(context, hour, min, progress, weekList, requestCode, bellIndex, alarmMode)
 
                 // quick 알람일 경우
                 if (quick == 1 && switch == 1){

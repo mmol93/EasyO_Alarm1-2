@@ -81,4 +81,6 @@
     <string name="alarmSet_selectMode">알람모드</string>
     <string name="alarmSet_selectBellTextTitle">현재 알람음</string>
     <string name="alarmSet_selectModeTextTitle">현재 알람모드</string>
+    <string name="alarmSet_selectModeNormal">일반알람</string>
+    <string name="alarmSet_selectModeCAL">계산문제</string>
 </resources>

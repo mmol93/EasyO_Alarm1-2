@@ -47,6 +47,8 @@
     <string name="alarmSet_selectMode">Alarm Mode</string>
     <string name="alarmSet_selectBellTextTitle">Current Bell</string>
     <string name="alarmSet_selectModeTextTitle">Current Mode</string>
+    <string name="alarmSet_selectModeNormal">Normal</string>
+    <string name="alarmSet_selectModeCAL">Calculation</string>
 
     <string name="alarmToast_inform1">Alarm will Ring</string>
     <string name="alarmToast_inform2">days</string>

@@ -82,4 +82,6 @@
     <string name="alarmSet_selectMode">ｱﾗｰﾑﾓｰﾄﾞ</string>
     <string name="alarmSet_selectBellTextTitle">現在ｱﾗｰﾑ音</string>
     <string name="alarmSet_selectModeTextTitle">現在ｱﾗｰﾑﾓｰﾄﾞ</string>
+    <string name="alarmSet_selectModeNormal">一般ｱﾗｰﾑ</string>
+    <string name="alarmSet_selectModeCAL">計算問題</string>
 </resources>

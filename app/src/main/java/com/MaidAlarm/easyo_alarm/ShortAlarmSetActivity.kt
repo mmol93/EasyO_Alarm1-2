@@ -1,11 +1,13 @@
 package com.MaidAlarm.easyo_alarm
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.SeekBar
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.MaidAlarm.easyo_alarm.databinding.ActivityShortAlarmSetBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -99,6 +101,78 @@ class ShortAlarmSetActivity : AppCompatActivity() {
             this.startActivityForResult(intent, selectRingActivityBack)
         }
 
+        // SelectMode 클릭 시
+        binder.buttonMode.setOnClickListener {
+            Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+            // ** 항목 선택 Dialog 설정
+            val modeItem = arrayOf(getString(R.string.settingItem_alarmModeItem1), getString(R.string.settingItem_alarmModeItem2))
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(getString(R.string.settingItem_alarmMode))
+            builder.setSingleChoiceItems(modeItem, app.wayOfAlarm , null)
+            builder.setNeutralButton(getString(R.string.cancelBtn), null)
+
+            // * 아이템 선택했을 때 리스너 설정(람다식)
+            builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                val alert = dialogInterface as AlertDialog
+                val idx = alert.listView.checkedItemPosition
+                // * 선택된 아이템의 position에 따라 행동 조건 넣기
+                when(idx){
+                    // Normal 클릭 시
+                    0 -> {
+                        app.wayOfAlarm = 0  // Calculator 사용 off
+                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
+                    }
+                    // Calculate 클릭 시
+                    1 -> {
+                        app.wayOfAlarm = 1  // Calculator 사용 on
+                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        // * 반복 횟수 설정하기 => AlertDialog 띄우기
+                        val counter = arrayOf("1", "2", "3", "4", "5")
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle(getString(R.string.settingItem_calRepeat))
+                        builder.setSingleChoiceItems(counter, app.counter - 1  , null)
+                        builder.setNeutralButton(getString(R.string.cancelBtn), null)
+                        // 최종적으로 ok버튼까지 눌렀을 때
+                        builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                            val alert = dialogInterface as AlertDialog
+                            val idx = alert.listView.checkedItemPosition
+                            when(idx){
+                                0 -> {
+                                    app.wayOfAlarm = 1
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                1 -> {
+                                    app.wayOfAlarm = 2
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                2 -> {
+                                    app.wayOfAlarm = 3
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                3 -> {
+                                    app.wayOfAlarm = 4
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                4 -> {
+                                    app.wayOfAlarm = 5
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                            }
+                        }
+                        builder.show()
+                    }
+                }
+            }
+            builder.show()
+        }
+
 
         // 저장 버튼 클릭 시
         binder.buttonSave.setOnClickListener {
@@ -107,6 +181,8 @@ class ShortAlarmSetActivity : AppCompatActivity() {
             result_intent.putExtra("hour", hour)
             result_intent.putExtra("min", min)
             result_intent.putExtra("progress", seekValue)
+            result_intent.putExtra("bellIndex", app.bellIndex)
+            result_intent.putExtra("alarmMode", app.wayOfAlarm)
 
             // ** Toast로 xx일 xx분 뒤 알람 울립니다 만들어주기
             // - 현재 날짜랑 연동해서 계산할 필요가 있음
