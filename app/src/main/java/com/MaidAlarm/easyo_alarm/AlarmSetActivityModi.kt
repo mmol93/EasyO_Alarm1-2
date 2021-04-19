@@ -1,5 +1,6 @@
 package com.MaidAlarm.easyo_alarm
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.util.Log
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.MaidAlarm.easyo_alarm.databinding.ActivityAlarmSetModiBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
@@ -31,6 +33,12 @@ class AlarmSetActivityModi : AppCompatActivity() {
     // 예약한 요일을 담는 List
     var weekList = ArrayList<Int>()
 
+    // 알람음 세팅 Activity에서 돌아오는 ResultCode
+    val selectRingActivityBack = 1
+
+    var bellIndex = 0
+    var alarmMode = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_set_modi)
@@ -46,6 +54,8 @@ class AlarmSetActivityModi : AppCompatActivity() {
         val setProgress = intent.getIntExtra("setProgress", 0)
         var setQuick = intent.getIntExtra("setQuick", 0)
         weekList = intent.getIntegerArrayListExtra("setWeek")!!
+        bellIndex = intent.getIntExtra("bellIndex", 0)
+        alarmMode = intent.getIntExtra("alarmMode", 0)
         var setAMPM = 0
 
         // 제대로된 아이템의 위치를 알 수 없거나 requestCode가 이상할 경우 토스트 출력 후 액티비티 종료
@@ -60,7 +70,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
         }
 
 
-        // 2. 애드몹 로드
+        // 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
 
@@ -132,6 +142,41 @@ class AlarmSetActivityModi : AppCompatActivity() {
         textWeek_initial(binder.alarmSetFri, Fri)
         textWeek_initial(binder.alarmSetSat, Sat)
 
+        // 알람음(bell) 설정에 따른 텍스트뷰 수정해주기
+        when(bellIndex){
+            0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+            1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+            2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+            3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+            // 한국어 알람음
+            10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+            11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+            // 값이 null일 때(아마...)
+            else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+        }
+
+        // 알람모드(alarmMode) 설정에 따른 텍스트뷰 수정
+        when(alarmMode){
+            0 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
+            }
+            1 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+            }
+            2 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+            }
+            3 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+            }
+            4 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+            }
+            5 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+            }
+        }
+
         // *** seekBar도 초기값 설정해주기
         binder.volumeSeekBar.progress = setProgress
 
@@ -158,6 +203,84 @@ class AlarmSetActivityModi : AppCompatActivity() {
         // Cancel 버튼 클릭 시
         binder.buttonCancel.setOnClickListener {
             finish()
+        }
+
+        // SelectBell 클릭 시
+        binder.buttonBell.setOnClickListener {
+            val intent = Intent(this, SelectRingActivity::class.java)
+            this.startActivityForResult(intent, selectRingActivityBack)
+        }
+
+        // SelectMode 클릭 시
+        binder.buttonMode.setOnClickListener {
+            Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+            // ** 항목 선택 Dialog 설정
+            val modeItem = arrayOf(getString(R.string.settingItem_alarmModeItem1), getString(R.string.settingItem_alarmModeItem2))
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(getString(R.string.settingItem_alarmMode))
+            builder.setSingleChoiceItems(modeItem, app.wayOfAlarm , null)
+            builder.setNeutralButton(getString(R.string.cancelBtn), null)
+
+            // * 아이템 선택했을 때 리스너 설정(람다식)
+            builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                val alert = dialogInterface as AlertDialog
+                val idx = alert.listView.checkedItemPosition
+                // * 선택된 아이템의 position에 따라 행동 조건 넣기
+                when(idx){
+                    // Normal 클릭 시
+                    0 -> {
+                        app.wayOfAlarm = 0  // Calculator 사용 off
+                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
+                    }
+                    // Calculate 클릭 시
+                    1 -> {
+                        app.wayOfAlarm = 1  // Calculator 사용 on
+                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        // * 반복 횟수 설정하기 => AlertDialog 띄우기
+                        val counter = arrayOf("1", "2", "3", "4", "5")
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle(getString(R.string.settingItem_calRepeat))
+                        builder.setSingleChoiceItems(counter, app.counter - 1  , null)
+                        builder.setNeutralButton(getString(R.string.cancelBtn), null)
+                        // 최종적으로 ok버튼까지 눌렀을 때
+                        builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                            val alert = dialogInterface as AlertDialog
+                            val idx = alert.listView.checkedItemPosition
+                            when(idx){
+                                0 -> {
+                                    app.counter = 1
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                1 -> {
+                                    app.counter = 2
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                2 -> {
+                                    app.counter = 3
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                3 -> {
+                                    app.counter = 4
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                4 -> {
+                                    app.counter = 5
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                            }
+                        }
+                        builder.show()
+                    }
+                }
+            }
+            builder.show()
         }
 
         // *** save 버튼 클릭 시
@@ -227,9 +350,8 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 SQLHelper.close()
 
                 // 해당 requestCode로 Notification을 갱신해준다
-                val newAlarm = makeAlarm(this, setHour, setMin, binder.volumeSeekBar.progress, weekList, requestCode)
+                val newAlarm = makeAlarm(this, setHour, setMin, binder.volumeSeekBar.progress, weekList, requestCode, bellIndex, alarmMode)
                 newAlarm.addNewAlarm_normal()
-
                 finish()
             }
 
@@ -354,6 +476,23 @@ class AlarmSetActivityModi : AppCompatActivity() {
         binder.volumeSeekBar.setOnSeekBarChangeListener(seekListener)
 
         setContentView(binder.root)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == selectRingActivityBack){
+            when(app.bellIndex){
+                0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+                3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                // 한국어 알람음
+                10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+                11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+                // 값이 null일 때(아마...)
+                else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+            }
+        }
     }
 
     // 텍스트뷰에 색깔 넣기 - 클릭 시

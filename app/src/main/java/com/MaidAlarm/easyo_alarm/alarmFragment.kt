@@ -360,6 +360,8 @@ class alarmFragment : Fragment() {
                 val hour = data?.getIntExtra("hour", 0)
                 val min = data?.getIntExtra("min", 0)
                 val progress = data?.getIntExtra("progress", 0)
+                val bellIndex = data?.getIntExtra("bellIndex", 0)
+                val alarmMode = data?.getIntExtra("alarmMode", 0)
 
                 // 요일 계산에 사용하기 위해 현재 날짜 가져옴
                 val present_Time = Calendar.getInstance()
@@ -436,8 +438,8 @@ class alarmFragment : Fragment() {
                 val SQLHelper = SQLHelper(activity!!)
 
                 val sql_insert = """
-                insert into MaidAlarm (hourData, minData, progressData, $alarmWeek_String, requestCode, quick)
-                values(?, ?, ?, ?, ?, ?)
+                insert into MaidAlarm (hourData, minData, progressData, $alarmWeek_String, requestCode, quick, bell, mode)
+                values(?, ?, ?, ?, ?, ?, ?, ?)
                 """.trimIndent()
 
                 // requestCode는 알람을 설정한 현재의 일+시간+분+초로 이루어진다
@@ -445,7 +447,7 @@ class alarmFragment : Fragment() {
                         presentMin.toString() + presentSecond.toString()
                 Log.d("alarmFragment", "requestCode: $requestCode")
 
-                val arg1 = arrayOf(alarmHour, alarmMin, progress, 1, requestCode.toInt(), 1)
+                val arg1 = arrayOf(alarmHour, alarmMin, progress, 1, requestCode.toInt(), 1, bellIndex, alarmMode)
 
                 SQLHelper.writableDatabase.execSQL(sql_insert, arg1)
 
@@ -457,7 +459,9 @@ class alarmFragment : Fragment() {
                     alarmMin,
                     progress!!,
                     weekList,
-                    requestCode.toInt()
+                    requestCode.toInt(),
+                    app.bellIndex,
+                    app.wayOfAlarm
                 )
                 newAlarm.addNewAlarm_once()
 
@@ -522,8 +526,8 @@ class alarmFragment : Fragment() {
 
                 val sql_insert = """
                 insert into MaidAlarm (hourData, minData, progressData, "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
-                 requestCode, quick)
-                values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                 requestCode, quick, bell, mode)
+                values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """.trimIndent()
 
                 // requestCode는 알람을 설정한 현재의 일+시간+분+초로 이루어진다
@@ -542,7 +546,9 @@ class alarmFragment : Fragment() {
                     Fri,
                     Sat,
                     requestCode.toInt(),
-                    0
+                    0,
+                    app.bellIndex,
+                    app.wayOfAlarm
                 )
 
                 SQLHelper.writableDatabase.execSQL(sql_insert, arg1)
@@ -555,7 +561,9 @@ class alarmFragment : Fragment() {
                     min!!,
                     progress!!,
                     weekList,
-                    requestCode.toInt()
+                    requestCode.toInt(),
+                    app.bellIndex,
+                    app.wayOfAlarm
                 )
                 newAlarm.addNewAlarm_normal()
 

@@ -16,7 +16,8 @@ class Function {
     // SQL의 모든 데이터를 매개변수에 집어넣음
     fun makeAlarmWithAllSQL(
             context: Context,
-            ) {// ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
+            ) {
+        // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
         val SQLHelper = SQLHelper(context!!)
         val sql = "select * from MaidAlarm"
         val c1 = SQLHelper.writableDatabase.rawQuery(sql, null)
@@ -40,6 +41,8 @@ class Function {
                 val index12 = c1.getColumnIndex("requestCode")
                 val index13 = c1.getColumnIndex("quick")
                 val index14 = c1.getColumnIndex("switch")
+                val index16 = c1.getColumnIndex("bell")
+                val index17 = c1.getColumnIndex("mode")
 
                 // ** SQL에서 데이터를 가져와서 다시 알람 매니저로 보낸다 (아래 설명은 그 순서임)
                 // 각 항목의 값을 해당 이름의 변수에 넣는다 -> Sun ~ Sat은 weekList로 만든다 ->
@@ -59,6 +62,8 @@ class Function {
                 val requestCode = c1.getInt(index12)
                 val quick = c1.getInt(index13)
                 val switch = c1.getInt(index14)
+                val bellIndex = c1.getInt(index16)
+                val alarmMode = c1.getInt(index17)
 
                 val weekList = mutableListOf<Int>()
                 weekList.add(Sun)
@@ -69,7 +74,7 @@ class Function {
                 weekList.add(Fri)
                 weekList.add(Sat)
 
-                val makeAlarm = makeAlarm(context, hour, min, progress, weekList, requestCode)
+                val makeAlarm = makeAlarm(context, hour, min, progress, weekList, requestCode, bellIndex, alarmMode)
 
                 // quick 알람일 경우
                 if (quick == 1 && switch == 1){
@@ -241,7 +246,10 @@ class Function {
         notification.makeNotification(app, context!!, notificationManager)
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ver2.0
     // SQL의 모든 row에서 requestCode 컬럼 부분만 가져오기
     fun CheckRequestCodeSQL(context: Context, SQLHelper: SQLHelper, requestCode: MutableList<Int>): MutableList<Int> {
         val app = context.applicationContext as AppClass

@@ -23,6 +23,21 @@ class SelectRingActivity : AppCompatActivity() {
         binder.radioButtonE1.isGone = true
         binder.radioButtonJ1.isGone = true
 
+        // app.bellIndex에 들어있는 값을 베이스로 라디오 버튼에 불 들어오게 하기
+        when(app.bellIndex){
+            // 일반 알람음
+            0 -> binder.radioButtonN1.isChecked = true
+            1 -> binder.radioButtonN2.isChecked = true
+            2 -> binder.radioButtonN3.isChecked = true
+            3 -> binder.radioButtonN4.isChecked = true
+            // 한국어 알람음
+            10 -> binder.radioButtonK1.isChecked = true
+            11 -> binder.radioButtonK2.isChecked = true
+            // 값이 null일 때(아마...)
+            else -> binder.radioButtonN1.isChecked = true
+        }
+
+
         // 라디오 버튼 클릭 리스너
         binder.RadioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){

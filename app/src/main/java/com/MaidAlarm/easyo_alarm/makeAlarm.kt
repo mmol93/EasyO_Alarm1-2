@@ -21,6 +21,8 @@ class makeAlarm(
         val progress: Int,
         val weekList : List<Int>,
         val requestCode: Int,
+        val bellIndex : Int,
+        val alarmMode : Int
         ){
 
     private val alarmManager: AlarmManager? =
@@ -56,13 +58,16 @@ class makeAlarm(
         // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
         // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
         // 넘겨줄 항목은 다음과 같다.
-        // Sun ~ Sat, progress, quick, hour, min, requestCode => 12개의 항목을 가진 리스트
+        // Sun ~ Sat, progress, quick, hour, min, requestCode, bellIndex, alarmMode => 12개의 항목을 가진 리스트
+        // 리스트 인덱스: 0~6 : 요일, 7: progress, 8: quick, 9: hour, 10: min, 11: requestCode, 12: bellIndex, 13: alarmMode
         var ListForPendingIntent = mutableListOf<Int>()
         ListForPendingIntent.add(progress)
         ListForPendingIntent.add(quick)
         ListForPendingIntent.add(hour)
         ListForPendingIntent.add(min)
         ListForPendingIntent.add(requestCode)
+        ListForPendingIntent.add(bellIndex)
+        ListForPendingIntent.add(alarmMode)
 
         // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
         ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>
@@ -93,7 +98,7 @@ class makeAlarm(
 
     // *** 매일 울리는 새로운 알람을 알람 매니저에 등록한다
     fun addNewAlarm_normal(){
-        addNewAlarm_normal_exact(alarmManager!!, context, weekList, progress, hour, min, requestCode)
+        addNewAlarm_normal_exact(alarmManager!!, context, weekList, progress, hour, min, requestCode, bellIndex, alarmMode)
     }
 
     // *** 이미 있는 알람을 취소한다.
@@ -158,7 +163,7 @@ class Receiver : BroadcastReceiver() {
             val targetVolume = (maxVolume * factor).toInt()
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, targetVolume, AudioManager.FLAG_PLAY_SOUND)
 
-            // 다시 FrontAlarmActivity를 띄워야한다
+            // 10분 지났으니 다시 FrontAlarmActivity를 띄워야한다
             val frontAlarmActivity = Intent(context, FrontAlarmActivity::class.java)
             frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             // FrontAlarmActivity 를 띄위기 위해선 progress 데이터를 intent로 넘겨줘야한다.
@@ -189,7 +194,7 @@ class Receiver : BroadcastReceiver() {
             val arrayFromMakeAlarm = intent!!.getIntegerArrayListExtra("arrayForPendingIntent")
 
             // 순서대로 일 ~ 토, progress, quick, hour, min, requestCode = 12개 항목 들어있음
-            // index 0~6 : 일 ~ 토  /  7: progress / 8: quick / 9: hour / 10: min / 11: requestCode
+            // index 0~6 : 일 ~ 토  /  7: progress / 8: quick / 9: hour / 10: min / 11: requestCode / 12 : bellIndex
             Log.d("makeAlarm", "arrayFromMakeAlarm form onReceive(): $arrayFromMakeAlarm")
             Log.d("makeAlarm", "present_week: $present_week")
 
@@ -217,6 +222,8 @@ class Receiver : BroadcastReceiver() {
                 frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 frontAlarmActivity.putExtra("progress", arrayFromMakeAlarm[7])
                 frontAlarmActivity.putExtra("currentVolume", currentVolume)
+                frontAlarmActivity.putExtra("bellIndex", arrayFromMakeAlarm[12])
+                frontAlarmActivity.putExtra("alarmMode", arrayFromMakeAlarm[13])
                 context?.startActivity(frontAlarmActivity)
             }else{
                 Log.d("makeAlarm", "지금 울릴 알람 아님")
@@ -269,7 +276,10 @@ class Receiver : BroadcastReceiver() {
                     SQLHelper.writableDatabase.execSQL(sql_update, arg1)
                     i += 1
                 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ver2.0
                 SQLHelper.close()   // 삭제를 한 이후는 필요가 없으니 SQL을 닫는다
             }
             // quick 알람이 아닐 경우 -> 24시간 뒤 다시 울리게 설정한다
@@ -286,14 +296,30 @@ class Receiver : BroadcastReceiver() {
                 weekList.add(arrayFromMakeAlarm[5])
                 weekList.add(arrayFromMakeAlarm[6])
 
-                addNewAlarm_normal_exact(alarmManager!!, context, weekList, arrayFromMakeAlarm[7], arrayFromMakeAlarm[9], arrayFromMakeAlarm[10], arrayFromMakeAlarm[11])
+                addNewAlarm_normal_exact(alarmManager!!,
+                        context,
+                        weekList,
+                        arrayFromMakeAlarm[7],
+                        arrayFromMakeAlarm[9],
+                        arrayFromMakeAlarm[10],
+                        arrayFromMakeAlarm[11],
+                        arrayFromMakeAlarm[12],
+                        arrayFromMakeAlarm[13])
             }
         }
     }
 }
 
 // 일반 알람 만들기
-fun addNewAlarm_normal_exact(alarmManager: AlarmManager, context: Context, weekList: List<Int>, progress: Int, hour: Int, min: Int, requestCode: Int){
+fun addNewAlarm_normal_exact(alarmManager: AlarmManager,
+                             context: Context,
+                             weekList: List<Int>,
+                             progress: Int,
+                             hour: Int,
+                             min: Int,
+                             requestCode: Int,
+                             bellIndex: Int,
+                             alarmMode: Int){
     val quick = 0   // 이 메서드는 normal 이므로 반복해서 울린다.
 
     val calendar: Calendar = Calendar.getInstance().apply {
@@ -324,6 +350,8 @@ fun addNewAlarm_normal_exact(alarmManager: AlarmManager, context: Context, weekL
     ListForPendingIntent.add(hour)
     ListForPendingIntent.add(min)
     ListForPendingIntent.add(requestCode)
+    ListForPendingIntent.add(bellIndex)
+    ListForPendingIntent.add(alarmMode)
 
     // weekList 에는 alarmFragment 에서 받아온 alarmWeek에 대한 리스트 정보가 담겨있다
     ListForPendingIntent = (weekList + ListForPendingIntent) as ArrayList<Int>

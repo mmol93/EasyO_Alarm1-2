@@ -1,5 +1,7 @@
 package com.MaidAlarm.easyo_alarm
 
+import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +10,11 @@ import android.util.Log
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.MaidAlarm.easyo_alarm.databinding.ActivityAlarmSetBinding
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
 import java.util.ArrayList
 
 class AlarmSetActivity : AppCompatActivity() {
@@ -32,6 +34,12 @@ class AlarmSetActivity : AppCompatActivity() {
     var restOfHour : Int = 1
     var restOfMin : Int = 0
 
+    // 알람음 세팅 Activity에서 돌아오는 ResultCode
+    val selectRingActivityBack = 1
+
+    lateinit var app : AppClass
+
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         // weekList 초기화
         for (i in 0..6){
@@ -40,6 +48,8 @@ class AlarmSetActivity : AppCompatActivity() {
         Log.d("AlarmSetActivity", "weekList: $weekList")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm_set)
+        app = application as AppClass
+
         binder = ActivityAlarmSetBinding.inflate(layoutInflater)
         // 요일 클릭에 대한 변수 정의
         var Sun = 0
@@ -50,7 +60,7 @@ class AlarmSetActivity : AppCompatActivity() {
         var Fri = 0
         var Sat = 0
 
-        // 2. 애드몹 로드
+        // 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
 
@@ -96,6 +106,84 @@ class AlarmSetActivity : AppCompatActivity() {
         binder.numberPickerAMPM.setOnValueChangedListener { picker, oldVal, newVal ->
             // 시간 계산하여 메시지 표시
             informNextAlarm(binder.numberPickerHour.value)
+        }
+
+        // SelectBell 클릭 시
+        binder.buttonBell.setOnClickListener {
+            val intent = Intent(this, SelectRingActivity::class.java)
+            this.startActivityForResult(intent, selectRingActivityBack)
+        }
+
+        // SelectMode 클릭 시
+        binder.buttonMode.setOnClickListener {
+            Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+            // ** 항목 선택 Dialog 설정
+            val modeItem = arrayOf(getString(R.string.settingItem_alarmModeItem1), getString(R.string.settingItem_alarmModeItem2))
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(getString(R.string.settingItem_alarmMode))
+            builder.setSingleChoiceItems(modeItem, app.wayOfAlarm , null)
+            builder.setNeutralButton(getString(R.string.cancelBtn), null)
+
+            // * 아이템 선택했을 때 리스너 설정(람다식)
+            builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                val alert = dialogInterface as AlertDialog
+                val idx = alert.listView.checkedItemPosition
+                // * 선택된 아이템의 position에 따라 행동 조건 넣기
+                when(idx){
+                    // Normal 클릭 시
+                    0 -> {
+                        app.wayOfAlarm = 0  // Calculator 사용 off
+                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
+                    }
+                    // Calculate 클릭 시
+                    1 -> {
+                        app.wayOfAlarm = 1  // Calculator 사용 on
+                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        // * 반복 횟수 설정하기 => AlertDialog 띄우기
+                        val counter = arrayOf("1", "2", "3", "4", "5")
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle(getString(R.string.settingItem_calRepeat))
+                        builder.setSingleChoiceItems(counter, app.counter - 1  , null)
+                        builder.setNeutralButton(getString(R.string.cancelBtn), null)
+                        // 최종적으로 ok버튼까지 눌렀을 때
+                        builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                            val alert = dialogInterface as AlertDialog
+                            val idx = alert.listView.checkedItemPosition
+                            when(idx){
+                                0 -> {
+                                    app.wayOfAlarm = 1
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                1 -> {
+                                    app.wayOfAlarm = 2
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                2 -> {
+                                    app.wayOfAlarm = 3
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                3 -> {
+                                    app.wayOfAlarm = 4
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                                4 -> {
+                                    app.wayOfAlarm = 5
+                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                                }
+                            }
+                        }
+                        builder.show()
+                    }
+                }
+            }
+            builder.show()
         }
 
         // Cancel 버튼 클릭 시
@@ -259,6 +347,24 @@ class AlarmSetActivity : AppCompatActivity() {
         binder.volumeSeekBar.setOnSeekBarChangeListener(seekListener)
 
         setContentView(binder.root)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // 알람음 선택에서 돌아왔을 때
+            if (requestCode == selectRingActivityBack){
+                when(app.bellIndex){
+                    0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                    1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                    2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+                    3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                    // 한국어 알람음
+                    10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+                    11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+                    // 값이 null일 때(아마...)
+                    else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                }
+            }
     }
 
     // seekBar에 대한 리스너 정의

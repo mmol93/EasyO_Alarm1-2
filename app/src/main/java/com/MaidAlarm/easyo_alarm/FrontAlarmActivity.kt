@@ -18,6 +18,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import java.io.DataInputStream
 import java.util.*
+import kotlin.math.log
 import kotlin.random.Random
 
 
@@ -97,15 +98,15 @@ class FrontAlarmActivity : AppCompatActivity() {
             val data2 = dis.readInt()
             val data3 = dis.readInt()
             val data4 = dis.readInt()
-            val data5 = dis.readInt()
 
             app.wayOfAlarm = data1
             app.counter = data2
             app.notificationSwitch = data3
             app.initialStart = data4
-            app.bellIndex = data5
 
-            when(app.bellIndex){
+            val bellIndex = intent.getIntExtra("bellIndex", 0)
+
+            when(bellIndex){
                 0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
                 1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
                 2 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_happytown)
@@ -115,15 +116,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             }
 
         }catch (e: Exception){
-            // 지정한 알람음 데이터를 가져온다
-            when(app.bellIndex){
-                0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
-                1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
-                2 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_happytown)
-                3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_country)
-                10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
-                11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
-            }
+
         }
 
         Log.d("FrontAlarmActivity", "bellIndex: ${app.bellIndex}")
@@ -181,9 +174,12 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
         Log.d("FrontAlarmActivity", "progress: $progress")
 
+
         // *** 계산 문제를 표시할지 말지 결정한다
-        // AppClass 변수의 wayOfAlarm = 1 일 때만 계산 문제를 보여준다
-        if (app.wayOfAlarm == 1){
+        val alarmMode = intent.getIntExtra("alarmMode", 0)
+
+        // AppClass 변수의 wayOfAlarm이 1이상 5이하 일 때만 계산 문제를 보여준다
+        if (alarmMode in 1..5){
             // 계산 fragment를 표시한다
             val calculator = supportFragmentManager.beginTransaction()
             calculator.replace(R.id.front_container, calculateProblemFragment)
@@ -194,10 +190,11 @@ class FrontAlarmActivity : AppCompatActivity() {
 
         // ok버튼 클릭 시
         binder.buttonOk.setOnClickListener {
+            Log.d("FrontActivity", "alarmMode: $alarmMode")
             // 알람 울릴 때 계산 문제를 사용할 때
-            if (app.wayOfAlarm == 1) {
+            if (alarmMode in 1..5) {
                 // 설정에서 지정한 계산문제 풀이 횟수 보다 작을 때
-                if (counter < app.counter) {
+                if (counter < alarmMode) {
                     // 정답을 맞췄을 때
                     if (problem1 + problem2 == user_answer) {
                         counter += 1
@@ -235,7 +232,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                         }
                     }
                     // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료
-                    if (counter >= app.counter) {
+                    if (counter >= app.wayOfAlarm) {
                         if (progress == 0) {
                             vib.cancel()
                         }

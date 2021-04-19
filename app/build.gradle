@@ -14,8 +14,13 @@ android {
         applicationId "com.MaidAlarm.easyo_alarm"
         minSdkVersion 24
         targetSdkVersion 30
+<<<<<<< HEAD
         versionCode 21
         versionName "1.56"
+=======
+        versionCode 22
+        versionName "2.000"
+>>>>>>> ver2.0
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -73,4 +78,5 @@ dependencies {
     implementation 'com.github.sabujak-sabujak:RoundedButton:v0.1.1'
     implementation 'com.google.android.play:core:1.10.0'
     implementation name: 'customFloating-release', ext: 'aar'
+    implementation "com.github.nikartm:fit-button:1.2.1"
 }
