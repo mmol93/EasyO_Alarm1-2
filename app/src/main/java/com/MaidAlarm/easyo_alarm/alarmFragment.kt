@@ -461,7 +461,7 @@ class alarmFragment : Fragment() {
                     weekList,
                     requestCode.toInt(),
                     app.bellIndex,
-                    app.wayOfAlarm
+                    alarmMode!!
                 )
                 newAlarm.addNewAlarm_once()
 
@@ -481,6 +481,9 @@ class alarmFragment : Fragment() {
                 val min = data?.getIntExtra("min", 0)
                 val progress = data?.getIntExtra("progress", 0)
                 val weekList = data?.getIntegerArrayListExtra("weekList")
+                val bellIndex = data?.getIntExtra("bellIndex", 0)
+                val alarmMode = data?.getIntExtra("alarmMode", 0)
+
                 Log.d("alarmFragment", "weekList: $weekList")
 
                 // 각 요일별로 변수를 만들어서 weekList의 데이터를 반영하기

@@ -36,6 +36,12 @@ class ShortAlarmSetActivity : AppCompatActivity() {
 
         app = application as AppClass
 
+        // 새로운 알람 설정의 경우 초기값이 들어가도록 한다
+        app.bellIndex = 0
+        app.wayOfAlarm = 0
+        binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+        binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
+
         // 2. 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
@@ -141,27 +147,27 @@ class ShortAlarmSetActivity : AppCompatActivity() {
                             when(idx){
                                 0 -> {
                                     app.wayOfAlarm = 1
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                                 1 -> {
                                     app.wayOfAlarm = 2
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                                 2 -> {
                                     app.wayOfAlarm = 3
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                                 3 -> {
                                     app.wayOfAlarm = 4
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                                 4 -> {
                                     app.wayOfAlarm = 5
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                             }

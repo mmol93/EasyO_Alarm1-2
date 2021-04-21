@@ -161,19 +161,19 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
             }
             1 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
             }
             2 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
             }
             3 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
             }
             4 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
             }
             5 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
             }
         }
 
@@ -230,13 +230,13 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 when(idx){
                     // Normal 클릭 시
                     0 -> {
-                        app.wayOfAlarm = 0  // Calculator 사용 off
+                        alarmMode = 0  // Calculator 사용 off
                         Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
                         binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
                     }
                     // Calculate 클릭 시
                     1 -> {
-                        app.wayOfAlarm = 1  // Calculator 사용 on
+                        alarmMode = 1  // Calculator 사용 on
                         Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
                         // * 반복 횟수 설정하기 => AlertDialog 띄우기
                         val counter = arrayOf("1", "2", "3", "4", "5")
@@ -250,28 +250,28 @@ class AlarmSetActivityModi : AppCompatActivity() {
                             val idx = alert.listView.checkedItemPosition
                             when(idx){
                                 0 -> {
-                                    app.counter = 1
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    alarmMode = 1
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                                 1 -> {
-                                    app.counter = 2
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    alarmMode = 2
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                                 2 -> {
-                                    app.counter = 3
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    alarmMode = 3
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                                 3 -> {
-                                    app.counter = 4
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    alarmMode = 4
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                                 4 -> {
-                                    app.counter = 5
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                    alarmMode = 5
+                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
                             }
@@ -337,6 +337,16 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 setQuick = 0
                 sql_update = "update MaidAlarm set quick = ? where  idx = ?"
                 arg1 = arrayOf("$setQuick", "${position + 1}")
+                SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+
+                // 알람벨 부분 수정
+                sql_update = "update MaidAlarm set bell = ? where  idx = ?"
+                arg1 = arrayOf("$bellIndex", "${position + 1}")
+                SQLHelper.writableDatabase.execSQL(sql_update, arg1)
+
+                // 알람모드 부분 수정
+                sql_update = "update MaidAlarm set mode = ? where  idx = ?"
+                arg1 = arrayOf("$alarmMode", "${position + 1}")
                 SQLHelper.writableDatabase.execSQL(sql_update, arg1)
 
                 Log.d("AlarmSetActivityModi", "after_setHour: $setHour")
@@ -482,13 +492,31 @@ class AlarmSetActivityModi : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == selectRingActivityBack){
             when(app.bellIndex){
-                0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
-                1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
-                2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
-                3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                0 -> {
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                    bellIndex = 0
+                }
+                1 -> {
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                    bellIndex = 1
+                }
+                2 -> {
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
+                    bellIndex = 2
+                }
+                3 -> {
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                    bellIndex = 3
+                }
                 // 한국어 알람음
-                10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
-                11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+                10 -> {
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
+                    bellIndex = 10
+                }
+                11 -> {
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
+                    bellIndex = 11
+                }
                 // 값이 null일 때(아마...)
                 else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
             }
