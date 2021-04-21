@@ -3,12 +3,11 @@ package com.MaidAlarm.easyo_alarm
 import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
 import android.util.Log
 import com.MaidAlarm.easyo_alarm.notification.notification
 import java.io.DataOutputStream
+import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 
@@ -86,6 +85,28 @@ class Function {
                 }
             }
         }
+    }
+
+    // 새로은 데이터를 SQL 데이터 베이스에 등록하고 알람 매니저도 등록한다
+    fun makeSQLMakeStraightAlarm(context: Context, actionTime : Int){
+        // 현재 날따에서 몇 분 뒤를 설정하기 때문에 날짜 데이터를 가져온다
+        val calendar = Calendar.getInstance()
+        val presentTimeMilli = calendar.timeInMillis
+        var interval = 0
+
+        // 설정한 시간에 따라 Milli second를 부여한다
+        when(actionTime){
+            10 -> interval = 10 * 60 * 1000
+            30 -> interval = 30 * 60 * 1000
+            60 -> interval = 60 * 60 * 1000
+        }
+
+        val setTimeMilli = presentTimeMilli + interval
+
+        // SQL에 넣기 위해서는 setTime을 요일, 시간, 분으로 변환해줘야함
+        val setTime =  android.text.format.DateFormat.format("dd/MM/yyyy hh:mm:ss", setTimeMilli)
+
+        Log.d("Function", "설정 시간: $setTime")
     }
 
     // notification 갱신

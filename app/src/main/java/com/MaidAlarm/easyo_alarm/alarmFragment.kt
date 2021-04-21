@@ -207,13 +207,16 @@ class alarmFragment : Fragment() {
             true
         }
 
-        // 플로팅 버튼 한 번 누름: 일반 알람 설정창
+        // 일반 알람 설정 버튼 클릭
         binder.fab2.setOnClickListener {
+            val function = Function()
+            function.makeSQLMakeStraightAlarm(context!!,30)
+
             val alarmActivity = Intent(activity, AlarmSetActivity::class.java)
             // 알람 세팅을 위한 액티비티 소환
             startActivityForResult(alarmActivity, doneAlarmActivity)
         }
-        // 플로팅 버튼을 길게 눌렀을 때: 퀵알람
+        // 퀵 알람 설정 버튼 클릭
         binder.fab3.setOnClickListener {
             val shortAlarmSetActivity = Intent(activity, ShortAlarmSetActivity::class.java)
             startActivityForResult(shortAlarmSetActivity, doneShortAlarmActivity)
