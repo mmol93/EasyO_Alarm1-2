@@ -88,13 +88,21 @@ class Function {
     }
 
     // 새로은 데이터를 SQL 데이터 베이스에 등록하고 알람 매니저도 등록한다
-    fun makeSQLMakeStraightAlarm(context: Context, actionTime : Int){
+    fun makeSQLSetStraightAlarm(context: Context, actionTime : Int){
         // 현재 날따에서 몇 분 뒤를 설정하기 때문에 날짜 데이터를 가져온다
         val calendar = Calendar.getInstance()
+        val presentDay = calendar.get(Calendar.DAY_OF_YEAR)
+        val presentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val presentMin = calendar.get(Calendar.MINUTE)
+        val presentSecond = calendar.get(Calendar.SECOND)
         val presentTimeMilli = calendar.timeInMillis
         var interval = 0
 
-        // 설정한 시간에 따라 Milli second를 부여한다
+        // alarmFragment에서 사용한 방법과 동일한 방법으로 requestCode를 만든다
+        val requestCode = presentDay.toString() + presentHour.toString() +
+                presentMin.toString() + presentSecond.toString()
+
+        // 설정한 시간에 따라 interval MilliSeconds를 부여한다
         when(actionTime){
             10 -> interval = 10 * 60 * 1000
             30 -> interval = 30 * 60 * 1000
@@ -103,10 +111,35 @@ class Function {
 
         val setTimeMilli = presentTimeMilli + interval
 
-        // SQL에 넣기 위해서는 setTime을 요일, 시간, 분으로 변환해줘야함
-        val setTime =  android.text.format.DateFormat.format("dd/MM/yyyy hh:mm:ss", setTimeMilli)
+        // 여기서 인터벌 만큼의 MillisSeconds를 해당 시간의 시각, 분, 요일로 변경한다
+        calendar.timeInMillis = setTimeMilli
+        val setHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val setMin = calendar.get(Calendar.MINUTE)
+        val setWeek = calendar.get(Calendar.DAY_OF_WEEK)
+        var weekString = ""
 
-        Log.d("Function", "설정 시간: $setTime")
+        // sql 데이터 저장을 위해 해당 요일의 문자열을 판별
+        when(setWeek){
+            1 -> weekString = "Sun"
+            2 -> weekString = "Mon"
+            3 -> weekString = "Tue"
+            4 -> weekString = "Wed"
+            5 -> weekString = "Thu"
+            6 -> weekString = "Fri"
+            7 -> weekString = "Sat"
+        }
+
+        // sql 데이터 입력에 필요한 progress, bellIndex, alarmMode를 불러온다(setting에서 설정)
+
+        // sql 데이터에 넣기
+        val sqlHelper = SQLHelper(context)
+        val sql_insert = """
+                insert into MaidAlarm (hourData, minData, progressData, $weekString, requestCode, quick, bell, mode)
+                values(?, ?, ?, ?, ?, ?, ?, ?)
+                """.trimIndent()
+        val c1 = sqlHelper.writableDatabase.rawQuery(sql_insert, null)
+
+//        val arg1 = arrayOf(setHour, setMin, progress, 1, requestCode.toInt(), 1, bellIndex, alarmMode)
     }
 
     // notification 갱신

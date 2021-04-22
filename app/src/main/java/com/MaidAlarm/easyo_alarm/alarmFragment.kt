@@ -210,7 +210,7 @@ class alarmFragment : Fragment() {
         // 일반 알람 설정 버튼 클릭
         binder.fab2.setOnClickListener {
             val function = Function()
-            function.makeSQLMakeStraightAlarm(context!!,30)
+            function.makeSQLSetStraightAlarm(context!!,30)
 
             val alarmActivity = Intent(activity, AlarmSetActivity::class.java)
             // 알람 세팅을 위한 액티비티 소환
