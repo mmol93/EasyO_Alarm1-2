@@ -36,6 +36,12 @@ class ShortAlarmSetActivity : AppCompatActivity() {
 
         app = application as AppClass
 
+        // 새로운 알람 설정의 경우 초기값이 들어가도록 한다
+        app.bellIndex = 0
+        app.wayOfAlarm = 0
+        binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+        binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
+
         // 2. 애드몹 로드
         val adRequest = AdRequest.Builder().build()
         binder.adView.loadAd(adRequest)
@@ -121,13 +127,13 @@ class ShortAlarmSetActivity : AppCompatActivity() {
                     // Normal 클릭 시
                     0 -> {
                         app.wayOfAlarm = 0  // Calculator 사용 off
-                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        Log.d("shortAlarmSetActivity", "wayOfAlarm: ${app.wayOfAlarm}")
                         binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
                     }
                     // Calculate 클릭 시
                     1 -> {
                         app.wayOfAlarm = 1  // Calculator 사용 on
-                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        Log.d("shortAlarmSetActivity", "wayOfAlarm: ${app.wayOfAlarm}")
                         // * 반복 횟수 설정하기 => AlertDialog 띄우기
                         val counter = arrayOf("1", "2", "3", "4", "5")
                         val builder = AlertDialog.Builder(this)
@@ -138,32 +144,14 @@ class ShortAlarmSetActivity : AppCompatActivity() {
                         builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
                             val alert = dialogInterface as AlertDialog
                             val idx = alert.listView.checkedItemPosition
+                            Log.d("shortAlarmSetActivity", "mode: ${app.wayOfAlarm}")
+                            binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                             when(idx){
-                                0 -> {
-                                    app.wayOfAlarm = 1
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                1 -> {
-                                    app.wayOfAlarm = 2
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                2 -> {
-                                    app.wayOfAlarm = 3
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                3 -> {
-                                    app.wayOfAlarm = 4
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                4 -> {
-                                    app.wayOfAlarm = 5
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
+                                0 -> app.wayOfAlarm = 1
+                                1 -> app.wayOfAlarm = 2
+                                2 -> app.wayOfAlarm = 3
+                                3 -> app.wayOfAlarm = 4
+                                4 -> app.wayOfAlarm = 5
                             }
                         }
                         builder.show()

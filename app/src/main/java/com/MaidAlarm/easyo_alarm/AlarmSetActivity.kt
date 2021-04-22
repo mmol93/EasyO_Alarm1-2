@@ -51,6 +51,13 @@ class AlarmSetActivity : AppCompatActivity() {
         app = application as AppClass
 
         binder = ActivityAlarmSetBinding.inflate(layoutInflater)
+
+        // 새로운 알람 설정의 경우 초기값이 들어가도록 한다
+        app.bellIndex = 0
+        app.wayOfAlarm = 0
+        binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+        binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
+
         // 요일 클릭에 대한 변수 정의
         var Sun = 0
         var Mon = 0
@@ -116,8 +123,8 @@ class AlarmSetActivity : AppCompatActivity() {
 
         // SelectMode 클릭 시
         binder.buttonMode.setOnClickListener {
-            Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
-            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+            Log.d("alarmSetActivity", "wayOfAlarm: ${app.wayOfAlarm}")
+            Log.d("alarmSetActivity", "counter: ${app.counter}")
             // ** 항목 선택 Dialog 설정
             val modeItem = arrayOf(getString(R.string.settingItem_alarmModeItem1), getString(R.string.settingItem_alarmModeItem2))
             val builder = AlertDialog.Builder(this)
@@ -140,7 +147,7 @@ class AlarmSetActivity : AppCompatActivity() {
                     // Calculate 클릭 시
                     1 -> {
                         app.wayOfAlarm = 1  // Calculator 사용 on
-                        Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                        Log.d("alarmSetActivity", "wayOfAlarm: ${app.wayOfAlarm}")
                         // * 반복 횟수 설정하기 => AlertDialog 띄우기
                         val counter = arrayOf("1", "2", "3", "4", "5")
                         val builder = AlertDialog.Builder(this)
@@ -151,32 +158,14 @@ class AlarmSetActivity : AppCompatActivity() {
                         builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
                             val alert = dialogInterface as AlertDialog
                             val idx = alert.listView.checkedItemPosition
+                            Log.d("alarmSetActivity", "mode: ${app.wayOfAlarm}")
+                            binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                             when(idx){
-                                0 -> {
-                                    app.wayOfAlarm = 1
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                1 -> {
-                                    app.wayOfAlarm = 2
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                2 -> {
-                                    app.wayOfAlarm = 3
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                3 -> {
-                                    app.wayOfAlarm = 4
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                4 -> {
-                                    app.wayOfAlarm = 5
-                                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
+                                0 -> app.wayOfAlarm = 1
+                                1 -> app.wayOfAlarm = 2
+                                2 -> app.wayOfAlarm = 3
+                                3 -> app.wayOfAlarm = 4
+                                4 -> app.wayOfAlarm = 5
                             }
                         }
                         builder.show()
@@ -218,6 +207,9 @@ class AlarmSetActivity : AppCompatActivity() {
                 result_intent.putExtra("min", min)
                 result_intent.putExtra("progress", seekValue)
                 result_intent.putExtra("weekList", weekList)
+                result_intent.putExtra("bellIndex", app.bellIndex)
+                result_intent.putExtra("alarmMode", app.wayOfAlarm)
+
 
                 Log.d("AlarmSetActivity", "progress: $seekValue")
 

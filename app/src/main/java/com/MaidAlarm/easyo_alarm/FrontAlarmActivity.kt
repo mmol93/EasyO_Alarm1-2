@@ -34,6 +34,8 @@ class FrontAlarmActivity : AppCompatActivity() {
     var currentVolume : Int = 0
     lateinit var audioManager: AudioManager
     lateinit var app : AppClass
+    var bellIndex = 0
+    var alarmMode = 0
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -104,7 +106,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             app.notificationSwitch = data3
             app.initialStart = data4
 
-            val bellIndex = intent.getIntExtra("bellIndex", 0)
+            bellIndex = intent.getIntExtra("bellIndex", 0)
 
             when(bellIndex){
                 0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
@@ -176,9 +178,9 @@ class FrontAlarmActivity : AppCompatActivity() {
 
 
         // *** 계산 문제를 표시할지 말지 결정한다
-        val alarmMode = intent.getIntExtra("alarmMode", 0)
+        alarmMode = intent.getIntExtra("alarmMode", 0)
 
-        // AppClass 변수의 wayOfAlarm이 1이상 5이하 일 때만 계산 문제를 보여준다
+        // alarmMode가 1~5일 때만 계산문제를 표기한다
         if (alarmMode in 1..5){
             // 계산 fragment를 표시한다
             val calculator = supportFragmentManager.beginTransaction()
@@ -263,6 +265,14 @@ class FrontAlarmActivity : AppCompatActivity() {
                 }
                 // 남아있는 알람이 있다면 notification 갱신
                 else {
+                    // 휴식 상태인 휴대폰 깨우기
+                    val wakeLock: PowerManager.WakeLock =
+                        (this.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag")
+                        }
+
+                    // 70초만 지속되게 하기
+                    wakeLock.acquire(70*1000L )
                     // 현재 시간(시간 + 분)과 울린 알람의 시간(시간 + 분)이 동일함
                         // -> notification을 갱신하더라도 지금 울린 알람이 제일 가까운 알람으로 인식됨
                     val thread = object : Thread(){
@@ -363,6 +373,8 @@ class FrontAlarmActivity : AppCompatActivity() {
             // 다음 알람에도 progress 데이터는 필요하기 때문에 넘겨준다
             // 즉, FrontAlarmActivity를 호출하기 위해서 필요한 필수 데이터는 progress뿐
             intent.putExtra("progress", progress)
+            intent.putExtra("bellIndex", bellIndex)
+            intent.putExtra("alarmMode", alarmMode)
 
             // 10분뒤 알람이므로 현재 시간에 + 10분(10 * 60 * 1000)을 해준다
             val intervalTen = 10 * 60 * 1000
