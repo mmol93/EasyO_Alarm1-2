@@ -234,7 +234,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                         }
                     }
                     // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료
-                    if (counter >= app.wayOfAlarm) {
+                    if (counter >= alarmMode) {
                         if (progress == 0) {
                             vib.cancel()
                         }

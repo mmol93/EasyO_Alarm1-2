@@ -463,8 +463,8 @@ class alarmFragment : Fragment() {
                     progress!!,
                     weekList,
                     requestCode.toInt(),
-                    app.bellIndex,
-                    app.wayOfAlarm
+                    bellIndex!!,
+                    alarmMode!!
                 )
                 newAlarm.addNewAlarm_once()
 

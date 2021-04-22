@@ -145,7 +145,6 @@ class ShortAlarmSetActivity : AppCompatActivity() {
                             val alert = dialogInterface as AlertDialog
                             val idx = alert.listView.checkedItemPosition
                             Log.d("shortAlarmSetActivity", "mode: ${app.wayOfAlarm}")
-                            binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                             when(idx){
                                 0 -> app.wayOfAlarm = 1
                                 1 -> app.wayOfAlarm = 2
@@ -153,6 +152,7 @@ class ShortAlarmSetActivity : AppCompatActivity() {
                                 3 -> app.wayOfAlarm = 4
                                 4 -> app.wayOfAlarm = 5
                             }
+                            binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                         }
                         builder.show()
                     }

@@ -249,7 +249,6 @@ class AlarmSetActivityModi : AppCompatActivity() {
                             val alert = dialogInterface as AlertDialog
                             val idx = alert.listView.checkedItemPosition
                             Log.d("alarmSetActivityModi", "mode: $alarmMode")
-                            binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
                             when(idx){
                                 0 -> alarmMode = 1
                                 1 -> alarmMode = 2
@@ -257,6 +256,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
                                 3 -> alarmMode = 4
                                 4 -> alarmMode = 5
                             }
+                            binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
                         }
                         builder.show()
                     }
@@ -338,6 +338,8 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 Log.d("AlarmSetActivityModi", "after_position: $position")
                 Log.d("AlarmSetActivityModi", "after_quick: $setQuick")
                 Log.d("AlarmSetActivityModi", "after_weekList: $weekList")
+                Log.d("AlarmSetActivityModi", "after_bellIndex: $bellIndex")
+                Log.d("AlarmSetActivityModi", "after_alarmMode: $alarmMode")
 
                 SQLHelper.close()
 

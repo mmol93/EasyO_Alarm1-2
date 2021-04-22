@@ -148,6 +148,8 @@ class Receiver : BroadcastReceiver() {
 
             // 넘어온 intent에서 progress 데이터를 가져온다
             val progress = intent.getIntExtra("progress", -1)
+            val bellIndex = intent.getIntExtra("bellIndex",0)
+            val alarmMode = intent.getIntExtra("alarmMode", 0)
             Log.d("makeAlarm", "progress: $progress")
 
             // 지금 울린 알람 기록
@@ -168,6 +170,8 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             // FrontAlarmActivity 를 띄위기 위해선 progress 데이터를 intent로 넘겨줘야한다.
             frontAlarmActivity.putExtra("progress", progress)
+            frontAlarmActivity.putExtra("bellIndex", bellIndex)
+            frontAlarmActivity.putExtra("alarmMode", alarmMode)
             context?.startActivity(frontAlarmActivity)
         }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
