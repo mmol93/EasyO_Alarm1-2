@@ -57,8 +57,8 @@
 
     <string name="backButtonDoubleClick">Tap back button in order to exit</string>
 
-    <string name="settingItem_selectAlarm">Select Bell</string>
-    <string name="settingItem_alarmMode">Set Alarm Mode</string>
+    <string name="settingItem_selectAlarm">Select Bell for Straight Alarm</string>
+    <string name="settingItem_alarmMode">Set Alarm Mode for Straight alarm</string>
     <string name="settingItem_sub_alarmMode1">Normal Alarm</string>
     <string name="settingItem_sub_alarmMode2">Calculate Game</string>
     <string name="settingItem_sub_alarmMode2_2">times repeat</string>

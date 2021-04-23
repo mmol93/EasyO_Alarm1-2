@@ -19,6 +19,7 @@ import androidx.core.animation.*
 import androidx.recyclerview.widget.RecyclerView
 import com.MaidAlarm.easyo_alarm.databinding.SettingRowBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
+import java.io.DataOutputStream
 
 class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<SettingViewHolder>() {
     lateinit var app : AppClass
@@ -27,28 +28,51 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     }
 
     override fun getItemCount(): Int {
-        return 2
+        return 4
     }
 
     override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
         app = context.applicationContext as AppClass
         // *** RecyclerView의 각 item 설정하기
         // ** item 중 텍스트뷰 설정하기
-        val item1 = context.getString(R.string.settingItem_notification)
-        val item2 = context.getString(R.string.settingItem_info)
-        val items = arrayOf(item1, item2)
+        val item1 = context.getString(R.string.settingItem_selectAlarm)
+        val item2 = context.getString(R.string.settingItem_alarmMode)
+        val item3 = context.getString(R.string.settingItem_notification)
+        val item4 = context.getString(R.string.settingItem_info)
+        val items = arrayOf(item1, item2, item3, item4)
         holder.row_mainText.text = items[position]
 
         // ** item중 Sub 텍스트뷰 설정하기
-        val subItem1 = context.getString(R.string.settingItem_sub_notification)
-        val subItem2 = context.getString(R.string.settingItem_sub_info)
-        val subItems = arrayOf(subItem1, subItem2)
+        var subItem1 = "아직 미정"
+        when(app.bellIndex){
+            0 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Bar)
+            1 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Guitar)
+            2 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Happy)
+            3 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Country)
+            10 -> subItem1 = context.getString(R.string.typeOfBell_Korean_Jeongyeon)
+            11 -> subItem1 = context.getString(R.string.typeOfBell_Korean_MinJjeong)
+        }
+
+        var subItem2 = ""
+
+        if (app.wayOfAlarm == 0){
+            subItem2 = context.getString(R.string.settingItem_sub_alarmMode1)
+        }else{
+            subItem2 = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
+                    app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
+        }
+        val subItem3 = context.getString(R.string.settingItem_sub_notification)
+        val subItem4 = context.getString(R.string.settingItem_sub_info)
+        val subItems = arrayOf(subItem1, subItem2, subItem3, subItem4)
         holder.row_SubText.text = subItems[position]
+
 
         // ** item 중 이미지뷰 설정하기
         when(position){
-            0 -> {holder.row_image.setImageResource(R.drawable.setting_notification)}
-            1 -> {holder.row_image.setImageResource(R.drawable.setting_info)}
+            0 -> {holder.row_image.setImageResource(R.drawable.setting_select_alarm)}
+            1 -> {holder.row_image.setImageResource(R.drawable.calculator)}
+            2 -> {holder.row_image.setImageResource(R.drawable.setting_notification)}
+            3 -> {holder.row_image.setImageResource(R.drawable.setting_info)}
         }
 
         // 각 itemView 클릭 시
@@ -62,6 +86,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     @SuppressLint("SetTextI18n")
     fun changeTextColorAndListener(textView: TextView, subTextView: TextView, fromColor: Int, toColor: Int,
                                    direction: Int = View.LAYOUT_DIRECTION_LTR, duration:Long = 200, position : Int) {
+        val ori_text = textView.text
         var startValue = 0
         var endValue = 0
         // 텍스트뷰의 텍스트의 왼쪽에서 오른쪽으로 색 변환
@@ -90,8 +115,87 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         valueAnimator.doOnEnd {
             // ** 각 텍스뷰에 대한 행동 정의
             when(position){
-                // Set On/Off Notification 클릭 시
+                // Select Bell 클릭 시
                 0 -> {
+                    textView.text = context.getString(R.string.settingItem_selectAlarm) // 색 변환 애니메이션 실시 후 원래 색으로 돌리는 역할
+                    // SelectRingActivity 띄우기
+                    val intent = Intent(context, SelectRingActivity::class.java)
+                    context.startActivity(intent)
+                }
+                // Set Alarm Mode 클릭 시
+                1 -> {
+                    Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                    textView.text = context.getString(R.string.settingItem_alarmMode)
+                    // ** 항목 선택 Dialog 설정
+                    val modeItem = arrayOf(context.getString(R.string.settingItem_alarmModeItem1), context.getString(R.string.settingItem_alarmModeItem2))
+                    val builder = AlertDialog.Builder(context)
+                    builder.setTitle(context.getString(R.string.settingItem_alarmMode))
+                    builder.setSingleChoiceItems(modeItem, app.wayOfAlarm , null)
+                    builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
+
+                    // * 아이템 선택했을 때 리스너 설정(람다식)
+                    builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                        val alert = dialogInterface as AlertDialog
+                        val idx = alert.listView.checkedItemPosition
+                        // * 선택된 아이템의 position에 따라 행동 조건 넣기
+                        when(idx){
+                            // Normal 클릭 시
+                            0 -> {
+                                app.wayOfAlarm = 0  // Calculator 사용 off
+                                Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                                subTextView.text = context.getString(R.string.settingItem_sub_alarmMode1)
+                            }
+                            // Calculate 클릭 시
+                            1 -> {
+                                app.wayOfAlarm = 1  // Calculator 사용 on
+                                Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                                // * 반복 횟수 설정하기 => AlertDialog 띄우기
+                                val counter = arrayOf("1", "2", "3", "4", "5")
+                                val builder = AlertDialog.Builder(context)
+                                builder.setTitle(context.getString(R.string.settingItem_calRepeat))
+                                builder.setSingleChoiceItems(counter, app.counter - 1  , null)
+                                builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
+                                builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
+                                    val alert = dialogInterface as AlertDialog
+                                    val idx = alert.listView.checkedItemPosition
+                                    when(idx){
+                                        0 -> {
+                                            app.counter = 1
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                        1 -> {
+                                            app.counter = 2
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                        2 -> {
+                                            app.counter = 3
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                        3 -> {
+                                            app.counter = 4
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                        4 -> {
+                                            app.counter = 5
+                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
+                                        }
+                                    }
+                                    subTextView.text = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
+                                            app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
+                                }
+                                builder.show()
+                                // 선택한 값을 SettingRecyclerAdapter의 subTextView에 반영해야함
+                                subTextView.text = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
+                                        app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
+
+                            }
+                        }
+                    }
+                    builder.show()
+                }
+                // Set On/Off Notification 클릭 시
+                2 -> {
                     textView.text = context.getString(R.string.settingItem_notification)
                     // * AlertDialog 만들기
                     val modeItem = arrayOf(context.getString(R.string.settingItem_notificationOff), context.getString(R.string.settingItem_notificationOn))
@@ -116,7 +220,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     builder.show()
                 }
                 // AppInfo 클릭 시
-                1 -> {
+                3 -> {
                     textView.text = context.getString(R.string.settingItem_info)
                     val intent = Intent(context, InfoActivity::class.java)
                     context.startActivity(intent)

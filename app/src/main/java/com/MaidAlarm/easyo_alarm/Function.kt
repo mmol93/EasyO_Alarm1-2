@@ -130,6 +130,7 @@ class Function {
         }
 
         // sql 데이터 입력에 필요한 progress, bellIndex, alarmMode를 불러온다(setting에서 설정)
+        
 
         // sql 데이터에 넣기
         val sqlHelper = SQLHelper(context)
