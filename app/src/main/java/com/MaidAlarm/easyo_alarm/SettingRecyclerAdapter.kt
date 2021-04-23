@@ -19,7 +19,9 @@ import androidx.core.animation.*
 import androidx.recyclerview.widget.RecyclerView
 import com.MaidAlarm.easyo_alarm.databinding.SettingRowBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
+import java.io.DataInputStream
 import java.io.DataOutputStream
+import java.lang.Exception
 
 class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<SettingViewHolder>() {
     lateinit var app : AppClass
@@ -66,7 +68,6 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         val subItems = arrayOf(subItem1, subItem2, subItem3, subItem4)
         holder.row_SubText.text = subItems[position]
 
-
         // ** item 중 이미지뷰 설정하기
         when(position){
             0 -> {holder.row_image.setImageResource(R.drawable.setting_select_alarm)}
@@ -86,7 +87,6 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     @SuppressLint("SetTextI18n")
     fun changeTextColorAndListener(textView: TextView, subTextView: TextView, fromColor: Int, toColor: Int,
                                    direction: Int = View.LAYOUT_DIRECTION_LTR, duration:Long = 200, position : Int) {
-        val ori_text = textView.text
         var startValue = 0
         var endValue = 0
         // 텍스트뷰의 텍스트의 왼쪽에서 오른쪽으로 색 변환
@@ -113,6 +113,17 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         valueAnimator.duration = duration
         valueAnimator.start()
         valueAnimator.doOnEnd {
+            // alarmMode에 대한 파일 읽어오기(열기)
+            try {
+                val fis = context.openFileInput("alarmMode.bat")
+                val dis = DataInputStream(fis)
+
+                val data1 = dis.readInt()
+
+                app.wayOfAlarm = data1
+            }catch (e:Exception){
+
+            }
             // ** 각 텍스뷰에 대한 행동 정의
             when(position){
                 // Select Bell 클릭 시
@@ -120,12 +131,12 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     textView.text = context.getString(R.string.settingItem_selectAlarm) // 색 변환 애니메이션 실시 후 원래 색으로 돌리는 역할
                     // SelectRingActivity 띄우기
                     val intent = Intent(context, SelectRingActivity::class.java)
+                    intent.putExtra("fromSettingAdapter", 1)
                     context.startActivity(intent)
                 }
                 // Set Alarm Mode 클릭 시
                 1 -> {
                     Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
-                    Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
                     textView.text = context.getString(R.string.settingItem_alarmMode)
                     // ** 항목 선택 Dialog 설정
                     val modeItem = arrayOf(context.getString(R.string.settingItem_alarmModeItem1), context.getString(R.string.settingItem_alarmModeItem2))
@@ -154,33 +165,29 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                                 val counter = arrayOf("1", "2", "3", "4", "5")
                                 val builder = AlertDialog.Builder(context)
                                 builder.setTitle(context.getString(R.string.settingItem_calRepeat))
-                                builder.setSingleChoiceItems(counter, app.counter - 1  , null)
+                                builder.setSingleChoiceItems(counter, app.wayOfAlarm - 1  , null)
                                 builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
                                 builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
                                     val alert = dialogInterface as AlertDialog
                                     val idx = alert.listView.checkedItemPosition
                                     when(idx){
-                                        0 -> {
-                                            app.counter = 1
-                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                        }
-                                        1 -> {
-                                            app.counter = 2
-                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                        }
-                                        2 -> {
-                                            app.counter = 3
-                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                        }
-                                        3 -> {
-                                            app.counter = 4
-                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                        }
-                                        4 -> {
-                                            app.counter = 5
-                                            Log.d("SettingRecyclerAdapter", "counter: ${app.counter}")
-                                        }
+                                        0 -> app.wayOfAlarm = 1
+                                        1 -> app.wayOfAlarm = 2
+                                        2 -> app.wayOfAlarm = 3
+                                        3 -> app.wayOfAlarm = 4
+                                        4 -> app.wayOfAlarm = 5
                                     }
+                                    Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+
+                                    // alarmMode를 파일로 저장한다
+                                    val fos = context.openFileOutput("alarmMode.bat", Context.MODE_PRIVATE)
+
+                                    val dos = DataOutputStream(fos)
+                                    dos.writeInt(app.wayOfAlarm)
+
+                                    dos.flush()
+                                    dos.close()
+
                                     subTextView.text = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
                                             app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
                                 }

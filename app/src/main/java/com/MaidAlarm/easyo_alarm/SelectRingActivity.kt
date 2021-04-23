@@ -1,11 +1,13 @@
 package com.MaidAlarm.easyo_alarm
 
+import android.content.Context
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.core.view.isGone
 import com.MaidAlarm.easyo_alarm.databinding.ActivitySelectRingBinding
+import java.io.DataOutputStream
 import java.lang.Exception
 
 class SelectRingActivity : AppCompatActivity() {
@@ -60,6 +62,14 @@ class SelectRingActivity : AppCompatActivity() {
             }catch (e:Exception){
 
             }
+            // bellIndex 파일로 저장한다
+            val fos = openFileOutput("bellIndex.bat", Context.MODE_PRIVATE)
+
+            val dos = DataOutputStream(fos)
+            dos.writeInt(app.bellIndex)
+
+            dos.flush()
+            dos.close()
             finish()
         }
 

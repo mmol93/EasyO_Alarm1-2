@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.util.Log
 import com.MaidAlarm.easyo_alarm.notification.notification
+import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -130,7 +131,14 @@ class Function {
         }
 
         // sql 데이터 입력에 필요한 progress, bellIndex, alarmMode를 불러온다(setting에서 설정)
-        
+        val fis1 = context.openFileInput("alarmMode.bat")
+        val dis1 = DataInputStream(fis1)
+        val alarmMode = dis1.readInt()
+
+        val fis2 = context.openFileInput("bellIndex.bat")
+        val dis2 = DataInputStream(fis2)
+        val bellIndex = dis2.readInt()
+
 
         // sql 데이터에 넣기
         val sqlHelper = SQLHelper(context)
