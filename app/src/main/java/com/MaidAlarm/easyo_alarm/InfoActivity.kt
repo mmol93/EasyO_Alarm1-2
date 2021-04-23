@@ -1,5 +1,6 @@
 package com.MaidAlarm.easyo_alarm
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,6 +15,7 @@ class InfoActivity : AppCompatActivity() {
         binder.infoRecyclerView.adapter = InfoAdapter(this)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
@@ -21,7 +23,7 @@ class InfoActivity : AppCompatActivity() {
 
         val function = Function()
         // 현재 버전 이름을 텍스트뷰에 넣기
-        binder.infoTextView2.text = function.checkAppVersion(this)
+        binder.infoTextView2.text = "ver" + function.checkAppVersion(this)
 
         // 그림 길게 누를 시 개발자 화면 띄우기
         binder.infoImageView1.setOnLongClickListener{
