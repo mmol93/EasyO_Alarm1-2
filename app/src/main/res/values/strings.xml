@@ -57,8 +57,8 @@
 
     <string name="backButtonDoubleClick">Tap back button in order to exit</string>
 
-    <string name="settingItem_selectAlarm">Select Bell for Straight Alarm</string>
-    <string name="settingItem_alarmMode">Set Alarm Mode for Straight alarm</string>
+    <string name="settingItem_selectAlarm">Simple Alarm Bell</string>
+    <string name="settingItem_alarmMode">Simple alarm Mode</string>
     <string name="settingItem_sub_alarmMode1">Normal Alarm</string>
     <string name="settingItem_sub_alarmMode2">Calculate Game</string>
     <string name="settingItem_sub_alarmMode2_2">times repeat</string>
@@ -119,6 +119,24 @@
 
     <string name="update_dialogTitle">Update</string>
     <string name="update_dialogMessage">Will you update now?</string>
+
+    <!-- preference Screen에 관한 설정-->
+    <string-array name="title_list">
+        <item>항목1</item>
+        <item>항목2</item>
+        <item>항목3</item>
+    </string-array>
+
+    <string-array name="value_list">
+        <item>value1</item>
+        <item>value2</item>
+        <item>value3</item>
+    </string-array>
+
+    <string-array name="default_list">
+        <item>value1</item>
+        <item>value2</item>
+    </string-array>
 
 
 

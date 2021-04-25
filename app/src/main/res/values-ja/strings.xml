@@ -34,8 +34,8 @@
     <string name="alarmToast_inform3">時間</string>
     <string name="alarmToast_inform4">分後鳴ります</string>
     <string name="backButtonDoubleClick">2回ﾀﾌﾞで終了！</string>
-    <string name="settingItem_selectAlarm">ｱﾗｰﾑ音設定</string>
-    <string name="settingItem_alarmMode">ｱﾗｰﾑﾓｰﾄﾞ変更</string>
+    <string name="settingItem_selectAlarm">簡単ｱﾗｰﾑ音</string>
+    <string name="settingItem_alarmMode">簡単ｱﾗｰﾑﾓｰﾄﾞ</string>
     <string name="settingItem_sub_alarmMode1">一般ｱﾗｰﾑ</string>
     <string name="settingItem_sub_alarmMode2">計算問題ｱﾗｰﾑ</string>
     <string name="settingItem_sub_alarmMode2_2">繰り返し回数</string>
