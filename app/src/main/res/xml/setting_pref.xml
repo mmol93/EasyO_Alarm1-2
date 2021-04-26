@@ -4,41 +4,53 @@
     <PreferenceCategory android:title="Simple Alarm Setting">
         <SwitchPreference
             android:defaultValue="true"
-            android:key="alarmset"
-            android:title="Switch preference" />
+            android:key="alarm_set"
+            android:title="@string/settingItem_title" />
 
         <Preference
-            android:key="bellset"
-            android:summary="현재 벨소리"
-            android:title="벨소리 설정"
+            android:key="bell_set"
+            android:summary=""
+            android:title="@string/settingItem_selectAlarm"
             app:icon="@android:drawable/ic_popup_reminder"
             app:allowDividerAbove="true"
             app:allowDividerBelow="true"
-            android:dependency="alarmset"
+            android:dependency="alarm_set"
             >
 
             <intent
                 android:action="android.intent.action.VIEW"
-                android:targetClass="com.example.sample_preferencesscreen.settingActivity"
-                android:targetPackage="com.example.sample_preferencesscreen" />
+                android:targetClass="com.MaidAlarm.easyo_alarm.SelectRingActivity"
+                android:targetPackage="com.MaidAlarm.easyo_alarm" />
         </Preference>
 
         <ListPreference
             android:defaultValue="value2"
             android:entries="@array/title_list"
             android:entryValues="@array/value_list"
-            android:key="modeset"
-            android:title="간단 알람 모드"
+            android:key="mode_set"
+            android:title="@string/settingItem_alarmMode"
             android:summary="현재 모드"
             app:allowDividerAbove="true"
             app:allowDividerBelow="true"
-            android:dependency="alarmset"
+            android:dependency="alarm_set"
+            />
+
+        <ListPreference
+            android:defaultValue="value2"
+            android:entries="@array/title_list"
+            android:entryValues="@array/value_list"
+            android:key="mode_repeat"
+            android:title="@string/settingItem_alarmRepeat"
+            android:summary="현재 모드 반복 횟수"
+            app:allowDividerAbove="true"
+            app:allowDividerBelow="true"
+            android:dependency="alarm_set"
             />
 
         <SeekBarPreference
             android:key="alarm_volume"
             android:title="간단 알람 볼륨"
-
+            android:dependency="alarm_set"
             />
     </PreferenceCategory>
 

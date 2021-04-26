@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
     // 세팅 화면 프래그먼트
     val settingFragment = com.MaidAlarm.easyo_alarm.settingFragment()
 
+    val testFragment = test()
+
     // AppClass 변수 선언
     lateinit var app : AppClass
 

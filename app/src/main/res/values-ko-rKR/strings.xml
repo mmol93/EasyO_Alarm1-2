@@ -83,4 +83,7 @@
     <string name="alarmSet_selectModeTextTitle">현재 알람모드</string>
     <string name="alarmSet_selectModeNormal">일반알람</string>
     <string name="alarmSet_selectModeCAL">계산문제</string>
+    <string name="settingItem_title">간단 알람 세팅</string>
+    <string name="settingItem_alarmVolume">간단 알람 볼륨</string>
+    <string name="settingItem_alarmRepeat">모드 반복 횟수</string>
 </resources>
