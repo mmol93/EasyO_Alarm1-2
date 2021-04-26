@@ -130,7 +130,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 0 -> {
                     textView.text = context.getString(R.string.settingItem_selectAlarm) // 색 변환 애니메이션 실시 후 원래 색으로 돌리는 역할
                     // SelectRingActivity 띄우기
-                    val intent = Intent(context, SelectRingActivity::class.java)
+                    val intent = Intent(context, SelectSimpleRingActivity::class.java)
                     intent.putExtra("fromSettingAdapter", 1)
                     context.startActivity(intent)
                 }
