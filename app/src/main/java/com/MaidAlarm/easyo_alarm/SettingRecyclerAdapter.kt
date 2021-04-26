@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
@@ -25,6 +26,13 @@ import java.lang.Exception
 
 class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<SettingViewHolder>() {
     lateinit var app : AppClass
+    private var alarmSwitch  = 0
+    private var bellIndex = 0
+    private var volume = 0
+    private var alarmMode = 0
+    private var alarmCounter = 0
+    lateinit var pref : SharedPreferences
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SettingViewHolder {
         return SettingViewHolder(LayoutInflater.from(context).inflate(R.layout.setting_row, parent, false))
     }
@@ -34,6 +42,13 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     }
 
     override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
+        pref = context.getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
+        alarmSwitch = pref.getInt("alarmSwitch", 1)
+        bellIndex = pref.getInt("bellIndex", 0)
+        volume = pref.getInt("volume", 0)
+        alarmMode = pref.getInt("alarmMode", 0)
+        alarmCounter = pref.getInt("alarmCounter", 1)
+
         app = context.applicationContext as AppClass
         // *** RecyclerView의 각 item 설정하기
         // ** item 중 텍스트뷰 설정하기
@@ -46,7 +61,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
 
         // ** item중 Sub 텍스트뷰 설정하기
         var subItem1 = "아직 미정"
-        when(app.bellIndex){
+        when(bellIndex){
             0 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Bar)
             1 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Guitar)
             2 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Happy)
@@ -57,11 +72,11 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
 
         var subItem2 = ""
 
-        if (app.wayOfAlarm == 0){
+        if (alarmMode == 0){
             subItem2 = context.getString(R.string.settingItem_sub_alarmMode1)
         }else{
             subItem2 = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
-                    app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
+                    alarmCounter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
         }
         val subItem3 = context.getString(R.string.settingItem_sub_notification)
         val subItem4 = context.getString(R.string.settingItem_sub_info)
@@ -113,17 +128,6 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         valueAnimator.duration = duration
         valueAnimator.start()
         valueAnimator.doOnEnd {
-            // alarmMode에 대한 파일 읽어오기(열기)
-            try {
-                val fis = context.openFileInput("alarmMode.bat")
-                val dis = DataInputStream(fis)
-
-                val data1 = dis.readInt()
-
-                app.wayOfAlarm = data1
-            }catch (e:Exception){
-
-            }
             // ** 각 텍스뷰에 대한 행동 정의
             when(position){
                 // Select Bell 클릭 시
@@ -135,14 +139,14 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     context.startActivity(intent)
                 }
                 // Set Alarm Mode 클릭 시
-                1 -> {
-                    Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                1 -> {val prefEdit = pref.edit()
+                    Log.d("SettingRecyclerAdapter", "alarmMode: $alarmMode")
                     textView.text = context.getString(R.string.settingItem_alarmMode)
                     // ** 항목 선택 Dialog 설정
                     val modeItem = arrayOf(context.getString(R.string.settingItem_alarmModeItem1), context.getString(R.string.settingItem_alarmModeItem2))
                     val builder = AlertDialog.Builder(context)
                     builder.setTitle(context.getString(R.string.settingItem_alarmMode))
-                    builder.setSingleChoiceItems(modeItem, app.wayOfAlarm , null)
+                    builder.setSingleChoiceItems(modeItem, alarmMode , null)
                     builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
 
                     // * 아이템 선택했을 때 리스너 설정(람다식)
@@ -153,41 +157,28 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                         when(idx){
                             // Normal 클릭 시
                             0 -> {
-                                app.wayOfAlarm = 0  // Calculator 사용 off
-                                Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                                prefEdit.putInt("alarmMode", 0)  // Calculator 사용 off
                                 subTextView.text = context.getString(R.string.settingItem_sub_alarmMode1)
                             }
                             // Calculate 클릭 시
                             1 -> {
-                                app.wayOfAlarm = 1  // Calculator 사용 on
-                                Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
+                                prefEdit.putInt("alarmMode", 1)  // Calculator 사용 on
                                 // * 반복 횟수 설정하기 => AlertDialog 띄우기
                                 val counter = arrayOf("1", "2", "3", "4", "5")
                                 val builder = AlertDialog.Builder(context)
                                 builder.setTitle(context.getString(R.string.settingItem_calRepeat))
-                                builder.setSingleChoiceItems(counter, app.wayOfAlarm - 1  , null)
+                                builder.setSingleChoiceItems(counter, alarmCounter - 1, null)
                                 builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
                                 builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
                                     val alert = dialogInterface as AlertDialog
                                     val idx = alert.listView.checkedItemPosition
                                     when(idx){
-                                        0 -> app.wayOfAlarm = 1
-                                        1 -> app.wayOfAlarm = 2
-                                        2 -> app.wayOfAlarm = 3
-                                        3 -> app.wayOfAlarm = 4
-                                        4 -> app.wayOfAlarm = 5
+                                        0 -> prefEdit.putInt("alarmCounter", 1)
+                                        1 -> prefEdit.putInt("alarmCounter", 2)
+                                        2 -> prefEdit.putInt("alarmCounter", 3)
+                                        3 -> prefEdit.putInt("alarmCounter", 4)
+                                        4 -> prefEdit.putInt("alarmCounter", 5)
                                     }
-                                    Log.d("SettingRecyclerAdapter", "wayOfAlarm: ${app.wayOfAlarm}")
-
-                                    // alarmMode를 파일로 저장한다
-                                    val fos = context.openFileOutput("alarmMode.bat", Context.MODE_PRIVATE)
-
-                                    val dos = DataOutputStream(fos)
-                                    dos.writeInt(app.wayOfAlarm)
-
-                                    dos.flush()
-                                    dos.close()
-
                                     subTextView.text = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
                                             app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
                                 }
@@ -197,7 +188,10 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                                         app.counter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
 
                             }
+
                         }
+                        Log.d("SettingRecyclerAdapter", "alarmMode: $alarmMode")
+                        prefEdit.apply()
                     }
                     builder.show()
                 }
@@ -208,20 +202,27 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     val modeItem = arrayOf(context.getString(R.string.settingItem_notificationOff), context.getString(R.string.settingItem_notificationOn))
                     val builder = AlertDialog.Builder(context)
                     builder.setTitle(context.getString(R.string.settingItem_notification))
-                    builder.setSingleChoiceItems(modeItem, app.notificationSwitch , null)
+                    builder.setSingleChoiceItems(modeItem, alarmSwitch , null)
                     builder.setNeutralButton(context.getString(R.string.cancelBtn), null)
 
                     builder.setPositiveButton(context.getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
                         val alert = dialogInterface as AlertDialog
                         val idx = alert.listView.checkedItemPosition
+                        val prefEdit = pref.edit()
 
                         when(idx){
-                            0 -> { app.notificationSwitch = 0}
-                            1 -> { app.notificationSwitch = 1}
+                            0 -> prefEdit.putInt("alarmSwitch", 0).apply()
+                            1 -> prefEdit.putInt("alarmSwitch", 1).apply()
                         }
-                        if (app.notificationSwitch == 0){
+
+                        alarmSwitch = pref.getInt("alarmSwitch", 0)
+
+                        if (alarmSwitch == 0){
                             val notification = notification()
                             notification.cancelNotification(context)
+                        }else{
+                            val function = Function()
+                            function.renewNotification(context)
                         }
                     }
                     builder.show()

@@ -131,14 +131,10 @@ class Function {
         }
 
         // sql 데이터 입력에 필요한 progress, bellIndex, alarmMode를 불러온다(setting에서 설정)
-        val fis1 = context.openFileInput("alarmMode.bat")
-        val dis1 = DataInputStream(fis1)
-        val alarmMode = dis1.readInt()
-
-        val fis2 = context.openFileInput("bellIndex.bat")
-        val dis2 = DataInputStream(fis2)
-        val bellIndex = dis2.readInt()
-
+        // preference 생성
+        val pref = context.getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
+        val bellIndex = pref.getInt("bellIndex", 0)
+        var volume = pref.getInt("volume", 0)
 
         // sql 데이터에 넣기
         val sqlHelper = SQLHelper(context)
@@ -148,7 +144,7 @@ class Function {
                 """.trimIndent()
         val c1 = sqlHelper.writableDatabase.rawQuery(sql_insert, null)
 
-//        val arg1 = arrayOf(setHour, setMin, progress, 1, requestCode.toInt(), 1, bellIndex, alarmMode)
+//        val arg1 = arrayOf(setHour, setMin, volume, 1, requestCode.toInt(), 1, bellIndex, alarmMode)
     }
 
     // notification 갱신

@@ -4,6 +4,7 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.*
@@ -37,6 +38,12 @@ class FrontAlarmActivity : AppCompatActivity() {
     var bellIndex = 0
     var alarmMode = 0
 
+    lateinit var pref : SharedPreferences
+    private var alarmSwitch  = 0
+    private var volume = 0
+    private var alarmCounter = 0
+
+
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
 
@@ -45,6 +52,9 @@ class FrontAlarmActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_alarm)
+
+        pref = getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
+        alarmSwitch = pref.getInt("alarmSwitch", 1)
 
         // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄우기
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -285,7 +295,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                             // 설정에서 notification이 "사용 상태"로 되어 있을 때
                             // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
                             // 여기서는 notification에 대한 갱신만 해주면 된다
-                            if (app.notificationSwitch == 1) {
+                            if (alarmSwitch == 1) {
                                 // * 가장 가까운 알람의 시간 알아내기
                                 recentAlarm = RecentAlarm()
                                 recentTimeList = recentAlarm.checkSQL(SQLHelper)

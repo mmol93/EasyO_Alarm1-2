@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -14,7 +15,17 @@ import com.MaidAlarm.easyo_alarm.MainActivity
 import com.MaidAlarm.easyo_alarm.R
 
 class notification {
+    lateinit var pref : SharedPreferences
+    private var alarmSwitch  = 0
+    private var bellIndex = 0
+    private var volume = 0
+    private var alarmMode = 0
+    private var alarmCounter = 0
+
     fun makeNotification(app : AppClass, context : Context, notificationManager : NotificationManager){
+        pref = context.getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
+        alarmSwitch = pref.getInt("alarmSwitch", 1)
+
         // 8. notification 함수 호출
         // 채널 id와 이름 지정
         val builder1 = getNotification(context, "chanel1", "첫 번째 채널", notificationManager)
@@ -23,7 +34,7 @@ class notification {
         builder1.setSmallIcon(R.drawable.notification_icon)
 
         // notification on/off 설정에 따라 구별하여 notification 만들기
-        if (app.notificationSwitch == 1){
+        if (alarmSwitch == 1){
             // 알람이 계속 뜬 상채로 있게하기
             builder1.setOngoing(true)
 

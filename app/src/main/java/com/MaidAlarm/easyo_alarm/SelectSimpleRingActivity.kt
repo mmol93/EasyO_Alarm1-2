@@ -115,14 +115,6 @@ class SelectSimpleRingActivity : AppCompatActivity() {
             }catch (e: Exception){
 
             }
-            // bellIndex 파일로 저장한다
-            val fos = openFileOutput("bellIndex.bat", Context.MODE_PRIVATE)
-
-            val dos = DataOutputStream(fos)
-            dos.writeInt(app.bellIndex)
-
-            dos.flush()
-            dos.close()
             finish()
         }
 
