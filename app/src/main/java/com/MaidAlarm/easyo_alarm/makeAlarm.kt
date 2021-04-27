@@ -174,6 +174,16 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.putExtra("alarmMode", alarmMode)
             context?.startActivity(frontAlarmActivity)
         }
+        // 액션 버튼 클릭했을 때 행동 구현
+        else if(intent!!.action == "ActionButton"){
+            Log.d("makeAlarm","ActionButton 클릭됨")
+            val action = intent!!.getStringExtra("action")
+            if (action == "action1") {
+                Toast.makeText(context, "토스트1 나옴", Toast.LENGTH_SHORT).show()
+            } else if (action == "action2") {
+                Toast.makeText(context, "토스트2 나옴", Toast.LENGTH_SHORT).show()
+            }
+        }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{
             // 휴식 상태인 휴대폰 깨우기

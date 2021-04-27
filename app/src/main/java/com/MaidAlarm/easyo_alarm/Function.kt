@@ -89,7 +89,7 @@ class Function {
     }
 
     // 새로은 데이터를 SQL 데이터 베이스에 등록하고 알람 매니저도 등록한다
-    fun makeSQLSetStraightAlarm(context: Context, actionTime : Int){
+    fun makeSQLSetSimpleAlarm(context: Context, actionTime : Int){
         // 현재 날따에서 몇 분 뒤를 설정하기 때문에 날짜 데이터를 가져온다
         val calendar = Calendar.getInstance()
         val presentDay = calendar.get(Calendar.DAY_OF_YEAR)
@@ -135,6 +135,7 @@ class Function {
         val pref = context.getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
         val bellIndex = pref.getInt("bellIndex", 0)
         var volume = pref.getInt("volume", 0)
+        val alarmMode = pref.getInt("alarmMode", 0)
 
         // sql 데이터에 넣기
         val sqlHelper = SQLHelper(context)
@@ -142,9 +143,10 @@ class Function {
                 insert into MaidAlarm (hourData, minData, progressData, $weekString, requestCode, quick, bell, mode)
                 values(?, ?, ?, ?, ?, ?, ?, ?)
                 """.trimIndent()
-        val c1 = sqlHelper.writableDatabase.rawQuery(sql_insert, null)
+//        val c1 = sqlHelper.writableDatabase.rawQuery(sql_insert, null)
 
-//        val arg1 = arrayOf(setHour, setMin, volume, 1, requestCode.toInt(), 1, bellIndex, alarmMode)
+        val arg1 = arrayOf(setHour, setMin, volume, 1, requestCode.toInt(), 1, bellIndex, alarmMode)
+        sqlHelper.writableDatabase.execSQL(sql_insert, arg1)
     }
 
     // notification 갱신
@@ -214,7 +216,6 @@ class Function {
                                 textForWeek.length - 1
                         )
                     }
-
                 }
 
                 val recentWeek = textForWeek    // 다음 알림의 주

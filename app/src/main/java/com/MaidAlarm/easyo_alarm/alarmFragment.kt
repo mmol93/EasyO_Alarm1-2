@@ -221,7 +221,6 @@ class alarmFragment : Fragment() {
         // 일반 알람 설정 버튼 클릭
         binder.fab2.setOnClickListener {
             val function = Function()
-            function.makeSQLSetStraightAlarm(context!!,30)
 
             val alarmActivity = Intent(activity, AlarmSetActivity::class.java)
             // 알람 세팅을 위한 액티비티 소환
@@ -450,7 +449,7 @@ class alarmFragment : Fragment() {
                 Log.d("alarmFragment", "weekList: $weekList")
 
                 // *** 먼저 SQL에 위 데이터를 넣는다 ***
-                val SQLHelper = SQLHelper(activity!!)
+                val SQLHelper = SQLHelper(requireActivity())
 
                 val sql_insert = """
                 insert into MaidAlarm (hourData, minData, progressData, $alarmWeek_String, requestCode, quick, bell, mode)
