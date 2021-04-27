@@ -114,16 +114,38 @@ class Function {
         val setMin = calendar.get(Calendar.MINUTE)
         val setWeek = calendar.get(Calendar.DAY_OF_WEEK)
         var weekString = ""
+        val weekList = mutableListOf<Int>(0, 0, 0, 0, 0, 0, 0)
 
         // sql 데이터 저장을 위해 해당 요일의 문자열을 판별
         when(setWeek){
-            1 -> weekString = "Sun"
-            2 -> weekString = "Mon"
-            3 -> weekString = "Tue"
-            4 -> weekString = "Wed"
-            5 -> weekString = "Thu"
-            6 -> weekString = "Fri"
-            7 -> weekString = "Sat"
+            1 -> {
+                weekString = "Sun"
+                weekList[0] = 1
+            }
+            2 -> {
+                weekString = "Mon"
+                weekList[1] = 1
+            }
+            3 -> {
+                weekString = "Tue"
+                weekList[2] = 1
+            }
+            4 -> {
+                weekString = "Wed"
+                weekList[3] = 1
+            }
+            5 -> {
+                weekString = "Thu"
+                weekList[4] = 1
+            }
+            6 -> {
+                weekString = "Fri"
+                weekList[5] = 1
+            }
+            7 -> {
+                weekString = "Sat"
+                weekList[6] = 1
+            }
         }
 
         // sql 데이터 입력에 필요한 progress, bellIndex, alarmMode를 불러온다(setting에서 설정)
@@ -143,6 +165,9 @@ class Function {
 
         val arg1 = arrayOf(setHour, setMin, volume, 1, requestCode.toInt(), 1, bellIndex, alarmMode)
         sqlHelper.writableDatabase.execSQL(sql_insert, arg1)
+
+        val makeAlarm = makeAlarm(context, setHour, setMin, volume, weekList, requestCode.toInt(), bellIndex, alarmMode)
+        makeAlarm.addNewAlarm_once()
     }
 
     // notification 갱신
