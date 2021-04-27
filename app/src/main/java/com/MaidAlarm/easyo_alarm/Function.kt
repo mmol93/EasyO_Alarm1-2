@@ -104,11 +104,7 @@ class Function {
                 presentMin.toString() + presentSecond.toString()
 
         // 설정한 시간에 따라 interval MilliSeconds를 부여한다
-        when(actionTime){
-            10 -> interval = 10 * 60 * 1000
-            30 -> interval = 30 * 60 * 1000
-            60 -> interval = 60 * 60 * 1000
-        }
+        interval = actionTime * 60 * 1000
 
         val setTimeMilli = presentTimeMilli + interval
 
