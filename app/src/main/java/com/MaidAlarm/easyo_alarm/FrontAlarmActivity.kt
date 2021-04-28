@@ -186,7 +186,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
         Log.d("FrontAlarmActivity", "progress: $progress")
 
-
         // *** 계산 문제를 표시할지 말지 결정한다
         alarmMode = intent.getIntExtra("alarmMode", 0)
 
@@ -380,8 +379,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             val calendar = Calendar.getInstance()
             val intent = Intent("POSTPHONETIME")
 
-            // 다음 알람에도 progress 데이터는 필요하기 때문에 넘겨준다
-            // 즉, FrontAlarmActivity를 호출하기 위해서 필요한 필수 데이터는 progress뿐
+            // 10분뒤에 울릴 알람도 똑같은 조건으로 울려야하기 때문에 같이 넘겨준다
             intent.putExtra("progress", progress)
             intent.putExtra("bellIndex", bellIndex)
             intent.putExtra("alarmMode", alarmMode)
