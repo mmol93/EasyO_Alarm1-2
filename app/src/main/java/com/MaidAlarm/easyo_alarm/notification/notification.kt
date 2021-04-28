@@ -24,6 +24,7 @@ class notification {
     private var alarmMode = 0
     private var alarmCounter = 0
 
+    // 일반적인 notification 생성에서 사용됨
     fun makeNotification(app : AppClass, context : Context, notificationManager : NotificationManager){
         pref = context.getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
         alarmSwitch = pref.getInt("alarmSwitch", 1)
@@ -71,10 +72,6 @@ class notification {
 
         // 14. notification 을 제어할 수 있는 getSystemService 객체 생성
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val receiver = Receiver()
-        val filter = IntentFilter("ActionButton")
-        context.registerReceiver(receiver, filter)
 
         // Action1 설정 - 10분 뒤
         val intent2 = Intent("ActionButton")
@@ -148,28 +145,32 @@ class notification {
         // 14. notification 을 제어할 수 있는 getSystemService 객체 생성
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val receiver = Receiver()
-        val filter = IntentFilter("actionButton")
-
-        context.registerReceiver(receiver, filter)
-
-        // Action1 설정
-        val intent2 = Intent("actionButton")
+        // Action1 설정 - 10분 뒤
+        val intent2 = Intent("ActionButton")
         intent2.putExtra("action", "action1")
-        val pending2 = PendingIntent.getBroadcast(context, 110, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
-        val builder2 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Action1", pending2)
+        val pending2 = PendingIntent.getBroadcast(context, 110, intent2, PendingIntent.FLAG_ONE_SHOT)
+        val builder2 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+10min", pending2)
         val action2 = builder2.build()
 
         builder1.addAction(action2)
 
-        // Action2 설정
-        val intent3 = Intent("actionButton")
-        intent2.putExtra("action", "action2")
-        val pending3 = PendingIntent.getBroadcast(context, 120, intent3, PendingIntent.FLAG_UPDATE_CURRENT)
-        val builder3 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Action2", pending3)
+        // Action2 설정 - 15분 뒤
+        val intent3 = Intent("ActionButton")
+        intent3.putExtra("action", "action2")
+        val pending3 = PendingIntent.getBroadcast(context, 120, intent3, PendingIntent.FLAG_ONE_SHOT)
+        val builder3 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+15min", pending3)
         val action3 = builder3.build()
 
         builder1.addAction(action3)
+
+        // Action3 설정 - 30분 뒤
+        val intent4 = Intent("ActionButton")
+        intent4.putExtra("action", "action3")
+        val pending4 = PendingIntent.getBroadcast(context, 130, intent4, PendingIntent.FLAG_ONE_SHOT)
+        val builder4 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+30min", pending4)
+        val action4 = builder4.build()
+
+        builder1.addAction(action4)
 
         // 13. getNotification.build(): 주어진 정보(옵션)를 종합하여 새로운 Notification 객체 반환
         val notification = builder1.build()

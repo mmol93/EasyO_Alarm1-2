@@ -312,8 +312,13 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
                         app.binder_alarmFragent.RecentTimeTextview.text = context.getString(R.string.alarmSetFragment_noAlarm)
                     }
                     else{
+                        // recyclerView의 항목들을 재정렬 해준다
                         val alarmFragment = alarmFragment()
                         alarmFragment.renewDisplay(SQLHelper, app.binder_alarmFragent, app)
+
+                        // notification을 재정의 한다
+                        val function = Function()
+                        function.renewNotiInRecycler(context, app, SQLHelper)
                     }
                 }
             }

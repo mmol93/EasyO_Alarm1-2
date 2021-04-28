@@ -175,12 +175,9 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.putExtra("alarmMode", alarmMode)
             context.startActivity(frontAlarmActivity)
 
-            // 등록을 해제해줘야한다(이거 안하면 여러 번 뜸)
-            context.unregisterReceiver(this)
         }
         // 액션 버튼 클릭했을 때 행동 구현
         else if(intent!!.action == "ActionButton"){
-            Log.d("makeAlarm","ActionButton 클릭됨")
             val action = intent!!.getStringExtra("action")
             val function = Function()
             if (action == "action1") {
@@ -193,7 +190,7 @@ class Receiver : BroadcastReceiver() {
                 Toast.makeText(context, context!!.getString(R.string.alarmToast_Action3), Toast.LENGTH_LONG).show()
                 function.makeSQLSetSimpleAlarm(context, 30)
             }
-            context!!.unregisterReceiver(this)
+            Log.d("makeAlarm","ActionButton 클릭됨")
         }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{

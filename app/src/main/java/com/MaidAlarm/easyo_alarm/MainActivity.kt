@@ -5,6 +5,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -125,6 +126,11 @@ class MainActivity : AppCompatActivity() {
         }catch (e:Exception){
 
         }
+
+        // 리시버 등록
+        val receiver = Receiver()
+        val filter = IntentFilter("ActionButton")
+        registerReceiver(receiver, filter)
 
         // AppUpdateManager 업데이트 초기화
         appUpdateManager?.let {
