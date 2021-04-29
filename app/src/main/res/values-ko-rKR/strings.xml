@@ -89,4 +89,7 @@
     <string name="alarmToast_Action1">알람이 10분 뒤 울립니다</string>
     <string name="alarmToast_Action2">알람이 15분 뒤 울립니다</string>
     <string name="alarmToast_Action3">알람이 30분 뒤 울립니다</string>
+    <string name="actionButton1">+10분</string>
+    <string name="actionButton2">+15분</string>
+    <string name="actionButton3">+30분</string>
 </resources>

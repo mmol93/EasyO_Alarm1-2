@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:id="@+id/row_GroupView"
     android:padding="10dp"
-
     android:background="@drawable/under_edge"
     android:layout_height="wrap_content">
 
@@ -15,7 +15,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:checked="true"
-        />
+        android:track="@drawable/switch_track_selector"
+        android:thumb="@drawable/switch_thumb_selector"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,19 +31,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fontFamily="@font/nanumgothicbold"
-            android:textSize="25sp"
+            android:textSize="27dp"
             android:textColor="@color/black"
             android:text="TextView" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="3dp"
+            android:padding="1dp"
             android:orientation="horizontal">
 
             <TextView

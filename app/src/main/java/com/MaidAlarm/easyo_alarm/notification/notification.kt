@@ -77,7 +77,7 @@ class notification {
         val intent2 = Intent("ActionButton")
         intent2.putExtra("action", "action1")
         val pending2 = PendingIntent.getBroadcast(context, 110, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
-        val builder2 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+10min", pending2)
+        val builder2 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, context.getString(R.string.actionButton1), pending2)
         val action2 = builder2.build()
 
         builder1.addAction(action2)
@@ -86,7 +86,7 @@ class notification {
         val intent3 = Intent("ActionButton")
         intent3.putExtra("action", "action2")
         val pending3 = PendingIntent.getBroadcast(context, 120, intent3, PendingIntent.FLAG_UPDATE_CURRENT)
-        val builder3 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+15min", pending3)
+        val builder3 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, context.getText(R.string.actionButton2), pending3)
         val action3 = builder3.build()
 
         builder1.addAction(action3)
@@ -95,7 +95,7 @@ class notification {
         val intent4 = Intent("ActionButton")
         intent4.putExtra("action", "action3")
         val pending4 = PendingIntent.getBroadcast(context, 130, intent4, PendingIntent.FLAG_UPDATE_CURRENT)
-        val builder4 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+30min", pending4)
+        val builder4 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, context.getText(R.string.actionButton3), pending4)
         val action4 = builder4.build()
 
         builder1.addAction(action4)

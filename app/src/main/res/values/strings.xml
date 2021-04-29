@@ -59,7 +59,11 @@
     <string name="alarmToast_Action2">Alarm will Ring 15 minutes later</string>
     <string name="alarmToast_Action3">Alarm will Ring 30 minutes later</string>
 
-    <string name="backButtonDoubleClick">Tap back button in order to exit</string>
+    <string name="actionButton1">+10Min</string>
+    <string name="actionButton2">+15Min</string>
+    <string name="actionButton3">+30Min</string>
+
+    <string name="backButtonDoubleClick">Double tap back button in order to exit</string>
 
     <string name="settingItem_title">Simple Alarm Set</string>
     <string name="settingItem_selectAlarm">Simple Alarm Bell</string>

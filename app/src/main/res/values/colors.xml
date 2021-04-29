@@ -16,4 +16,5 @@
     <color name="Red">#FF0000</color>
     <color name="Orange">#FFC000</color>
     <color name="Space_Purple">#CEABFA</color>
+    <color name="raw_color">#173B0B</color>
 </resources>

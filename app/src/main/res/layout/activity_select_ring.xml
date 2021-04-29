@@ -17,21 +17,43 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Button
+
+            <life.sabujak.roundedbutton.RoundedButton
                 android:id="@+id/button_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:gravity="center"
+                android:padding="12dp"
                 android:layout_margin="10dp"
-                android:text="@string/test_play" />
+                android:text="@string/test_play"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                app:buttonCornerRadius="20dp"
+                app:buttonGradientEndColor="@color/purple_500"
+                app:buttonGradientStartColor="@color/teal_200" />
 
-            <Button
+            <life.sabujak.roundedbutton.RoundedButton
                 android:id="@+id/button_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:fontFamily="@font/nanumgothicextrabold"
+                android:gravity="center"
+                android:padding="12dp"
                 android:layout_margin="10dp"
-                android:text="@string/front_ok" />
+                android:text="@string/front_ok"
+                android:textColor="#ffffff"
+                android:textSize="20dp"
+                app:buttonCornerRadius="20dp"
+                app:buttonGradientEndColor="@color/purple_500"
+                app:buttonGradientStartColor="@color/teal_200" />
+
         </LinearLayout>
 
         <TextView
