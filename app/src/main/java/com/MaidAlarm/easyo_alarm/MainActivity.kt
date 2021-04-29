@@ -112,11 +112,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            // 리시버 등록
-            val receiver = Receiver()
-            val filter = IntentFilter("ActionButton")
-            registerReceiver(receiver, filter)
-
             // 업데이트 주기 확인을 위해 데이터 가져오기
             try{
                 val fis = openFileInput("data3.bat")

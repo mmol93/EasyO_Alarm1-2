@@ -168,6 +168,7 @@ class Function {
 
         val makeAlarm = makeAlarm(context, setHour, setMin, volume, weekList, requestCode.toInt(), bellIndex, alarmMode)
         makeAlarm.addNewAlarm_once()
+        renewNotification(context)
     }
 
     // notification 갱신

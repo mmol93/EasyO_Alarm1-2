@@ -371,16 +371,15 @@ class FrontAlarmActivity : AppCompatActivity() {
         binder.button10Min.setOnClickListener {
             val alarmManager: AlarmManager? =
                     this.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
-            val receiver = Receiver()
-            val filter = IntentFilter("POSTPHONETIME")
 
+            val intent = Intent(this, Receiver::class.java)
             val calendar = Calendar.getInstance()
-            val intent = Intent("POSTPHONETIME")
 
             // 10분뒤에 울릴 알람도 똑같은 조건으로 울려야하기 때문에 같이 넘겨준다
             intent.putExtra("progress", progress)
             intent.putExtra("bellIndex", bellIndex)
             intent.putExtra("alarmMode", alarmMode)
+            intent.putExtra("action", "POSTPHONETIME")
 
             // 10분뒤 알람이므로 현재 시간에 + 10분(10 * 60 * 1000)을 해준다
             val intervalTen = 10 * 60 * 1000
