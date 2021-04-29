@@ -3,6 +3,7 @@ package com.MaidAlarm.easyo_alarm
 import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,6 +25,13 @@ class alarmFragment : Fragment() {
     lateinit var binder: FragmentAlarmBinding   // 데이터 바인더용 변수
     lateinit var app : AppClass
 
+    lateinit var pref : SharedPreferences
+    private var alarmSwitch  = 0
+    private var bellIndex = 0
+    private var volume = 0
+    private var alarmMode = 0
+    private var alarmCounter = 0
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,17 +39,20 @@ class alarmFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_alarm, null)
         binder = FragmentAlarmBinding.bind(view)
+        pref = requireContext().getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
+        alarmSwitch = pref.getInt("alarmSwitch", 1)
         return view
     }
 
     // alarmFragment에 있는 모든 View 정보를 갱신한다(textView, notification, recyclerView)
     // RecyclerView에서 갱신될 때 사용된다
     fun renewDisplay(SQLHelper2: SQLHelper, binder: FragmentAlarmBinding, app: AppClass){
+
         // 어댑터에 SQL 객체 정보와 레코드의 size를 보낸다
         val context = app.context_alarmFragent
         var SQLHelper : SQLHelper
         try {
-            SQLHelper = SQLHelper(activity!!)
+            SQLHelper = SQLHelper(requireActivity())
         }catch (e: Exception){
             SQLHelper = SQLHelper2
         }
@@ -135,7 +146,7 @@ class alarmFragment : Fragment() {
                     app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
                 }
                 // notification 갱신
-                if (app.recentTime.length > 0 && app.recentWeek.length > 0 && app.notificationSwitch == 1 && size > 0){
+                if (app.recentTime.length > 0 && app.recentWeek.length > 0 && alarmSwitch == 1 && size > 0){
                     val notification = notification()
                     val notificationManager =context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                     notification.getNotification(
@@ -207,29 +218,32 @@ class alarmFragment : Fragment() {
             true
         }
 
-        // 플로팅 버튼 한 번 누름: 일반 알람 설정창
+        // 일반 알람 설정 버튼 클릭
         binder.fab2.setOnClickListener {
+            val function = Function()
+
             val alarmActivity = Intent(activity, AlarmSetActivity::class.java)
             // 알람 세팅을 위한 액티비티 소환
             startActivityForResult(alarmActivity, doneAlarmActivity)
         }
-        // 플로팅 버튼을 길게 눌렀을 때: 퀵알람
+        // 퀵 알람 설정 버튼 클릭
         binder.fab3.setOnClickListener {
             val shortAlarmSetActivity = Intent(activity, ShortAlarmSetActivity::class.java)
             startActivityForResult(shortAlarmSetActivity, doneShortAlarmActivity)
         }
-        app = context!!.applicationContext as AppClass
+        app = requireContext().applicationContext as AppClass
         app.binder_alarmFragent = binder
-        app.context_alarmFragent = context!!
+        app.context_alarmFragent = requireContext()
 
     }
     // alarmFragment에 있는 모든 View 정보를 갱신한다(textView, notification, recyclerView)
     // onResume()에서 갱신될 때 사용된다
     fun renewDisplay(SQLHelper2: SQLHelper){
+        Log.d("alarmFragment", "alarmSwitch: $alarmSwitch")
         // 어댑터에 SQL 객체 정보와 레코드의 size를 보낸다
         var SQLHelper : SQLHelper
         try {
-            SQLHelper = SQLHelper(activity!!)
+            SQLHelper = SQLHelper(requireActivity())
         }catch (e: Exception){
             SQLHelper = SQLHelper2
         }
@@ -255,7 +269,7 @@ class alarmFragment : Fragment() {
             if (recentTimeList[0] == -1){
                 binder.RecentTimeTextview.text = getString(R.string.alarmSetFragment_noAlarm)
                 val notification = notification()
-                notification.cancelNotification(context!!)
+                notification.cancelNotification(requireContext())
             }
             else{
                 var textForWeek = ""     // notification에 사용하기 위한 텍스트를 정의1
@@ -321,16 +335,16 @@ class alarmFragment : Fragment() {
                     }
                     app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
                 }
-                if (app.recentTime.length > 0 && app.recentWeek.length > 0 && app.notificationSwitch == 1 && size > 0){
+                if (app.recentTime.length > 0 && app.recentWeek.length > 0 && alarmSwitch == 1 && size > 0){
                     val notification = notification()
-                    val notificationManager =context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                    val notificationManager =requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                     notification.getNotification(
-                        context!!,
+                        requireContext(),
                         "chanel1",
                         "첫 번째 채널",
                         notificationManager
                     )
-                    notification.makeNotification(app, context!!, notificationManager)
+                    notification.makeNotification(app, requireContext(), notificationManager)
                 }
             }
         }
@@ -345,7 +359,7 @@ class alarmFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         // alarmFragment에 있는 모든 정보를 갱신한다(textView, notification, recyclerView)
-        val SQLHelper = SQLHelper(activity!!)
+        val SQLHelper = SQLHelper(requireActivity())
         renewDisplay(SQLHelper)
     }
 
@@ -435,7 +449,7 @@ class alarmFragment : Fragment() {
                 Log.d("alarmFragment", "weekList: $weekList")
 
                 // *** 먼저 SQL에 위 데이터를 넣는다 ***
-                val SQLHelper = SQLHelper(activity!!)
+                val SQLHelper = SQLHelper(requireActivity())
 
                 val sql_insert = """
                 insert into MaidAlarm (hourData, minData, progressData, $alarmWeek_String, requestCode, quick, bell, mode)
@@ -460,7 +474,11 @@ class alarmFragment : Fragment() {
                     progress!!,
                     weekList,
                     requestCode.toInt(),
+<<<<<<< HEAD
                     app.bellIndex,
+=======
+                    bellIndex!!,
+>>>>>>> ver2.1
                     alarmMode!!
                 )
                 newAlarm.addNewAlarm_once()

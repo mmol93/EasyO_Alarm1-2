@@ -5,6 +5,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.BitmapFactory
 import android.os.Build
@@ -12,9 +14,21 @@ import androidx.core.app.NotificationCompat
 import com.MaidAlarm.easyo_alarm.AppClass
 import com.MaidAlarm.easyo_alarm.MainActivity
 import com.MaidAlarm.easyo_alarm.R
+import com.MaidAlarm.easyo_alarm.Receiver
 
 class notification {
+    lateinit var pref : SharedPreferences
+    private var alarmSwitch  = 0
+    private var bellIndex = 0
+    private var volume = 0
+    private var alarmMode = 0
+    private var alarmCounter = 0
+
+    // 일반적인 notification 생성에서 사용됨
     fun makeNotification(app : AppClass, context : Context, notificationManager : NotificationManager){
+        pref = context.getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
+        alarmSwitch = pref.getInt("alarmSwitch", 1)
+
         // 8. notification 함수 호출
         // 채널 id와 이름 지정
         val builder1 = getNotification(context, "chanel1", "첫 번째 채널", notificationManager)
@@ -23,7 +37,7 @@ class notification {
         builder1.setSmallIcon(R.drawable.notification_icon)
 
         // notification on/off 설정에 따라 구별하여 notification 만들기
-        if (app.notificationSwitch == 1){
+        if (alarmSwitch == 1){
             // 알람이 계속 뜬 상채로 있게하기
             builder1.setOngoing(true)
 
@@ -56,11 +70,38 @@ class notification {
         // 클릭시 해당 intent를 연다
         builder1.setContentIntent(pending)
 
-        // 13. getNotification.build(): 주어진 정보(옵션)를 종합하여 새로운 Notification 객체 반환
-        val notification = builder1.build()
-
         // 14. notification 을 제어할 수 있는 getSystemService 객체 생성
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Action1 설정 - 10분 뒤
+        val intent2 = Intent("ActionButton")
+        intent2.putExtra("action", "action1")
+        val pending2 = PendingIntent.getBroadcast(context, 110, intent2, PendingIntent.FLAG_UPDATE_CURRENT)
+        val builder2 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, context.getString(R.string.actionButton1), pending2)
+        val action2 = builder2.build()
+
+        builder1.addAction(action2)
+
+        // Action2 설정 - 15분 뒤
+        val intent3 = Intent("ActionButton")
+        intent3.putExtra("action", "action2")
+        val pending3 = PendingIntent.getBroadcast(context, 120, intent3, PendingIntent.FLAG_UPDATE_CURRENT)
+        val builder3 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, context.getText(R.string.actionButton2), pending3)
+        val action3 = builder3.build()
+
+        builder1.addAction(action3)
+
+        // Action3 설정 - 30분 뒤
+        val intent4 = Intent("ActionButton")
+        intent4.putExtra("action", "action3")
+        val pending4 = PendingIntent.getBroadcast(context, 130, intent4, PendingIntent.FLAG_UPDATE_CURRENT)
+        val builder4 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, context.getText(R.string.actionButton3), pending4)
+        val action4 = builder4.build()
+
+        builder1.addAction(action4)
+
+        // 13. getNotification.build(): 주어진 정보(옵션)를 종합하여 새로운 Notification 객체 반환
+        val notification = builder1.build()
 
         // 15. notification 생성
         // id: 채널 id를 의미함
@@ -101,11 +142,38 @@ class notification {
         // 클릭시 해당 intent를 연다
         builder1.setContentIntent(pending)
 
-        // 13. getNotification.build(): 주어진 정보(옵션)를 종합하여 새로운 Notification 객체 반환
-        val notification = builder1.build()
-
         // 14. notification 을 제어할 수 있는 getSystemService 객체 생성
         val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Action1 설정 - 10분 뒤
+        val intent2 = Intent("ActionButton")
+        intent2.putExtra("action", "action1")
+        val pending2 = PendingIntent.getBroadcast(context, 110, intent2, PendingIntent.FLAG_ONE_SHOT)
+        val builder2 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+10min", pending2)
+        val action2 = builder2.build()
+
+        builder1.addAction(action2)
+
+        // Action2 설정 - 15분 뒤
+        val intent3 = Intent("ActionButton")
+        intent3.putExtra("action", "action2")
+        val pending3 = PendingIntent.getBroadcast(context, 120, intent3, PendingIntent.FLAG_ONE_SHOT)
+        val builder3 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+15min", pending3)
+        val action3 = builder3.build()
+
+        builder1.addAction(action3)
+
+        // Action3 설정 - 30분 뒤
+        val intent4 = Intent("ActionButton")
+        intent4.putExtra("action", "action3")
+        val pending4 = PendingIntent.getBroadcast(context, 130, intent4, PendingIntent.FLAG_ONE_SHOT)
+        val builder4 = NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "+30min", pending4)
+        val action4 = builder4.build()
+
+        builder1.addAction(action4)
+
+        // 13. getNotification.build(): 주어진 정보(옵션)를 종합하여 새로운 Notification 객체 반환
+        val notification = builder1.build()
 
         // 15. notification 생성
         // id: 채널 id를 의미함

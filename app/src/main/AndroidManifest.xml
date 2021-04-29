@@ -4,7 +4,7 @@
     package="com.MaidAlarm.easyo_alarm">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -18,8 +18,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon_maidalarm_round"
         android:supportsRtl="true"
-        tools:replace="android:theme" android:theme="@style/Theme.EasyO_Alarm">
-        <activity android:name=".Developer"></activity>
+        android:theme="@style/Theme.EasyO_Alarm"
+        tools:replace="android:theme">
+        <activity android:name=".SelectSimpleRingActivity"></activity>
+        <activity android:name=".Developer" />
         <activity android:name=".AlarmSetActivityModi" />
         <activity android:name=".SelectRingActivity" />
         <activity android:name=".LicenseActivity" />
@@ -50,13 +52,13 @@
             android:directBootAware="true"
             android:enabled="true"
             android:exported="true"
-            tools:targetApi="n"
-            >
+            tools:targetApi="n">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="POSTPHONETIME" />
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="ActionButton" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
     </application>

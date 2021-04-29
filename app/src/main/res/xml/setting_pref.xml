@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title="Simple Alarm Setting">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="alarm_set"
+            android:title="@string/settingItem_title" />
+
+        <Preference
+            android:key="bell_set"
+            android:summary=""
+            android:title="@string/settingItem_selectAlarm"
+            app:icon="@android:drawable/ic_popup_reminder"
+            app:allowDividerAbove="true"
+            app:allowDividerBelow="true"
+            android:dependency="alarm_set"
+            >
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.MaidAlarm.easyo_alarm.SelectRingActivity"
+                android:targetPackage="com.MaidAlarm.easyo_alarm" />
+        </Preference>
+
+        <ListPreference
+            android:defaultValue="value2"
+            android:entries="@array/title_list"
+            android:entryValues="@array/value_list"
+            android:key="mode_set"
+            android:title="@string/settingItem_alarmMode"
+            android:summary="현재 모드"
+            app:allowDividerAbove="true"
+            app:allowDividerBelow="true"
+            android:dependency="alarm_set"
+            />
+
+        <ListPreference
+            android:defaultValue="value2"
+            android:entries="@array/title_list"
+            android:entryValues="@array/value_list"
+            android:key="mode_repeat"
+            android:title="@string/settingItem_alarmRepeat"
+            android:summary="현재 모드 반복 횟수"
+            app:allowDividerAbove="true"
+            app:allowDividerBelow="true"
+            android:dependency="alarm_set"
+            />
+
+        <SeekBarPreference
+            android:key="alarm_volume"
+            android:title="간단 알람 볼륨"
+            android:dependency="alarm_set"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="정보">
+        <Preference
+            android:key="info"
+            android:summary="앱 정보"
+            android:title="버전, 오픈소스, 이메일 등"
+            app:allowDividerAbove="true"
+            app:allowDividerBelow="true">
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetClass="com.example.sample_preferencesscreen.settingActivity"
+                android:targetPackage="com.example.sample_preferencesscreen" />
+
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>

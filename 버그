@@ -145,3 +145,11 @@
 
 40. (04.18) Quick 알람이 울리고난 뒤 SQL 인덱스가 1부터 다시 갱신되지 않음 - C
 -> makeAlarm의 quick 알람이 울리니는 부분에 아얘 SQL 인덱스를 갱신하는 코드가 없었음...
+
+41. (04.28) actionButton을 클릭하면 여러 개의 broadCast가 호출됨 - C
+- BroadCast 인텐트 필터 생성을 notification을 renew할 때 마다 실시하게 했었음
+-> MainActivity의 onCreate()에서 broadCast를 register 하도록 변경
+
+42. (04.29) 앱을 재실행 하고 actionButton을 누르니 다시 브로드 캐스트가 여러 번 호출됨
+- unregisterReceiver를 안하니까 onCreate()에서 실행된 인텐트 필터 생성이 그대로 남아있음
+- onDestroy() 및 service에 unregisterReceiver를 추가

@@ -11,4 +11,5 @@
             <solid android:color="@color/itemColor"/>
         </shape>
     </item>
+
 </layer-list>

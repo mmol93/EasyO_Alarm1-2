@@ -34,8 +34,8 @@
     <string name="alarmToast_inform3">시간</string>
     <string name="alarmToast_inform4">분 뒤에 울립니다</string>
     <string name="backButtonDoubleClick">두번 탭하면 종료되요!</string>
-    <string name="settingItem_selectAlarm">알람음 설정</string>
-    <string name="settingItem_alarmMode">알람 모드 설정</string>
+    <string name="settingItem_selectAlarm">간단 알람음</string>
+    <string name="settingItem_alarmMode">간단 알람 모드</string>
     <string name="settingItem_sub_alarmMode1">일반 알람</string>
     <string name="settingItem_sub_alarmMode2">계산 문제 알람</string>
     <string name="settingItem_sub_alarmMode2_2">반복 횟수</string>
@@ -83,4 +83,13 @@
     <string name="alarmSet_selectModeTextTitle">현재 알람모드</string>
     <string name="alarmSet_selectModeNormal">일반알람</string>
     <string name="alarmSet_selectModeCAL">계산문제</string>
+    <string name="settingItem_title">간단 알람 세팅</string>
+    <string name="settingItem_alarmVolume">간단 알람 볼륨</string>
+    <string name="settingItem_alarmRepeat">모드 반복 횟수</string>
+    <string name="alarmToast_Action1">알람이 10분 뒤 울립니다</string>
+    <string name="alarmToast_Action2">알람이 15분 뒤 울립니다</string>
+    <string name="alarmToast_Action3">알람이 30분 뒤 울립니다</string>
+    <string name="actionButton1">+10분</string>
+    <string name="actionButton2">+15분</string>
+    <string name="actionButton3">+30분</string>
 </resources>

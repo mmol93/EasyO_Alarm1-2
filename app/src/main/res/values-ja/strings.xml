@@ -33,9 +33,9 @@
     <string name="alarmToast_inform2">日</string>
     <string name="alarmToast_inform3">時間</string>
     <string name="alarmToast_inform4">分後鳴ります</string>
-    <string name="backButtonDoubleClick">2回ﾀﾌﾞで終了！</string>
-    <string name="settingItem_selectAlarm">ｱﾗｰﾑ音設定</string>
-    <string name="settingItem_alarmMode">ｱﾗｰﾑﾓｰﾄﾞ変更</string>
+    <string name="backButtonDoubleClick">2回ﾀﾌﾞで終了可能です。</string>
+    <string name="settingItem_selectAlarm">簡単ｱﾗｰﾑ音</string>
+    <string name="settingItem_alarmMode">簡単ｱﾗｰﾑﾓｰﾄﾞ</string>
     <string name="settingItem_sub_alarmMode1">一般ｱﾗｰﾑ</string>
     <string name="settingItem_sub_alarmMode2">計算問題ｱﾗｰﾑ</string>
     <string name="settingItem_sub_alarmMode2_2">繰り返し回数</string>
@@ -84,4 +84,13 @@
     <string name="alarmSet_selectModeTextTitle">現在ｱﾗｰﾑﾓｰﾄﾞ</string>
     <string name="alarmSet_selectModeNormal">一般ｱﾗｰﾑ</string>
     <string name="alarmSet_selectModeCAL">計算問題</string>
+    <string name="settingItem_title">簡単ｱﾗｰﾑｾｯﾄ</string>
+    <string name="settingItem_alarmVolume">簡単ｱﾗｰﾑ音量</string>
+    <string name="settingItem_alarmRepeat">ﾓｰﾄﾞ繰り返し回数</string>
+    <string name="alarmToast_Action1">ｱﾗｰﾑが10分後鳴ります</string>
+    <string name="alarmToast_Action2">ｱﾗｰﾑが15分後鳴ります</string>
+    <string name="alarmToast_Action3">ｱﾗｰﾑが30分後鳴ります</string>
+    <string name="actionButton1">+10分</string>
+    <string name="actionButton2">+15分</string>
+    <string name="actionButton3">+30分</string>
 </resources>

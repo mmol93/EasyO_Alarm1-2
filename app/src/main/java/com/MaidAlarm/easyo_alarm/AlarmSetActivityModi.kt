@@ -161,6 +161,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
             }
             1 -> {
+<<<<<<< HEAD
                 binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
             }
             2 -> {
@@ -174,6 +175,21 @@ class AlarmSetActivityModi : AppCompatActivity() {
             }
             5 -> {
                 binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
+=======
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
+            }
+            2 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
+            }
+            3 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
+            }
+            4 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
+            }
+            5 -> {
+                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
+>>>>>>> ver2.1
             }
         }
 
@@ -248,7 +264,9 @@ class AlarmSetActivityModi : AppCompatActivity() {
                         builder.setPositiveButton(getString(R.string.front_ok)){ dialogInterface: DialogInterface, i: Int ->
                             val alert = dialogInterface as AlertDialog
                             val idx = alert.listView.checkedItemPosition
+                            Log.d("alarmSetActivityModi", "mode: $alarmMode")
                             when(idx){
+<<<<<<< HEAD
                                 0 -> {
                                     alarmMode = 1
                                     Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
@@ -274,7 +292,15 @@ class AlarmSetActivityModi : AppCompatActivity() {
                                     Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
                                     binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                                 }
+=======
+                                0 -> alarmMode = 1
+                                1 -> alarmMode = 2
+                                2 -> alarmMode = 3
+                                3 -> alarmMode = 4
+                                4 -> alarmMode = 5
+>>>>>>> ver2.1
                             }
+                            binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
                         }
                         builder.show()
                     }
@@ -356,6 +382,8 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 Log.d("AlarmSetActivityModi", "after_position: $position")
                 Log.d("AlarmSetActivityModi", "after_quick: $setQuick")
                 Log.d("AlarmSetActivityModi", "after_weekList: $weekList")
+                Log.d("AlarmSetActivityModi", "after_bellIndex: $bellIndex")
+                Log.d("AlarmSetActivityModi", "after_alarmMode: $alarmMode")
 
                 SQLHelper.close()
 

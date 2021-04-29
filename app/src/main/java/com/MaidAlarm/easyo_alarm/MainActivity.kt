@@ -5,6 +5,7 @@ import android.app.ActivityManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -54,6 +55,8 @@ class MainActivity : AppCompatActivity() {
     val alarmFragment = com.MaidAlarm.easyo_alarm.alarmFragment()
     // 세팅 화면 프래그먼트
     val settingFragment = com.MaidAlarm.easyo_alarm.settingFragment()
+
+    val testFragment = test()
 
     // AppClass 변수 선언
     lateinit var app : AppClass
@@ -123,6 +126,11 @@ class MainActivity : AppCompatActivity() {
         }catch (e:Exception){
 
         }
+
+        // 리시버 등록
+        val receiver = Receiver()
+        val filter = IntentFilter("ActionButton")
+        registerReceiver(receiver, filter)
 
         // AppUpdateManager 업데이트 초기화
         appUpdateManager?.let {
@@ -236,6 +244,13 @@ class MainActivity : AppCompatActivity() {
             }
         })
         setContentView(mainBinder.root)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // 브로드캐스트에 등록했던 리시버도 종료해야한다(안하면 2개씩 나옴) - 종료 서비스에도 있음
+        val receiver = Receiver()
+        unregisterReceiver(receiver)
     }
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int) {

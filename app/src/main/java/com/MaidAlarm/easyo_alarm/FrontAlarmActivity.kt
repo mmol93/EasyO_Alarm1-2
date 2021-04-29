@@ -4,6 +4,7 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.*
@@ -36,6 +37,15 @@ class FrontAlarmActivity : AppCompatActivity() {
     lateinit var app : AppClass
     var bellIndex = 0
     var alarmMode = 0
+<<<<<<< HEAD
+=======
+
+    lateinit var pref : SharedPreferences
+    private var alarmSwitch  = 0
+    private var volume = 0
+    private var alarmCounter = 0
+
+>>>>>>> ver2.1
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -45,6 +55,9 @@ class FrontAlarmActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_front_alarm)
+
+        pref = getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
+        alarmSwitch = pref.getInt("alarmSwitch", 1)
 
         // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄우기
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -176,7 +189,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
         Log.d("FrontAlarmActivity", "progress: $progress")
 
-
         // *** 계산 문제를 표시할지 말지 결정한다
         alarmMode = intent.getIntExtra("alarmMode", 0)
 
@@ -234,7 +246,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                         }
                     }
                     // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료
-                    if (counter >= app.wayOfAlarm) {
+                    if (counter >= alarmMode) {
                         if (progress == 0) {
                             vib.cancel()
                         }
@@ -267,6 +279,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                 else {
                     // 휴식 상태인 휴대폰 깨우기
                     val wakeLock: PowerManager.WakeLock =
+<<<<<<< HEAD
                             (this.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                                 newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
                                     acquire()
@@ -276,6 +289,14 @@ class FrontAlarmActivity : AppCompatActivity() {
                     // 60초만 지속되게 하기
                     wakeLock.acquire(70*1000L )
 
+=======
+                        (this.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag")
+                        }
+
+                    // 70초만 지속되게 하기
+                    wakeLock.acquire(70*1000L )
+>>>>>>> ver2.1
                     // 현재 시간(시간 + 분)과 울린 알람의 시간(시간 + 분)이 동일함
                         // -> notification을 갱신하더라도 지금 울린 알람이 제일 가까운 알람으로 인식됨
                     val thread = object : Thread(){
@@ -288,7 +309,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                             // 설정에서 notification이 "사용 상태"로 되어 있을 때
                             // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
                             // 여기서는 notification에 대한 갱신만 해주면 된다
-                            if (app.notificationSwitch == 1) {
+                            if (alarmSwitch == 1) {
                                 // * 가장 가까운 알람의 시간 알아내기
                                 recentAlarm = RecentAlarm()
                                 recentTimeList = recentAlarm.checkSQL(SQLHelper)
@@ -368,12 +389,15 @@ class FrontAlarmActivity : AppCompatActivity() {
                     this.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
             val receiver = Receiver()
             val filter = IntentFilter("POSTPHONETIME")
-            registerReceiver(receiver, filter)
 
             val calendar = Calendar.getInstance()
             val intent = Intent("POSTPHONETIME")
 
+<<<<<<< HEAD
             // 다음 알람에도 progress 데이터는 필요하기 때문에 넘겨준다
+=======
+            // 10분뒤에 울릴 알람도 똑같은 조건으로 울려야하기 때문에 같이 넘겨준다
+>>>>>>> ver2.1
             intent.putExtra("progress", progress)
             intent.putExtra("bellIndex", bellIndex)
             intent.putExtra("alarmMode", alarmMode)
