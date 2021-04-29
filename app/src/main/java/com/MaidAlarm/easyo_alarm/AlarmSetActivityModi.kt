@@ -161,7 +161,6 @@ class AlarmSetActivityModi : AppCompatActivity() {
                 binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
             }
             1 -> {
-<<<<<<< HEAD
                 binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
             }
             2 -> {
@@ -175,21 +174,6 @@ class AlarmSetActivityModi : AppCompatActivity() {
             }
             5 -> {
                 binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${alarmMode}"
-=======
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
-            }
-            2 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
-            }
-            3 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
-            }
-            4 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
-            }
-            5 -> {
-                binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
->>>>>>> ver2.1
             }
         }
 
@@ -266,39 +250,11 @@ class AlarmSetActivityModi : AppCompatActivity() {
                             val idx = alert.listView.checkedItemPosition
                             Log.d("alarmSetActivityModi", "mode: $alarmMode")
                             when(idx){
-<<<<<<< HEAD
-                                0 -> {
-                                    alarmMode = 1
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                1 -> {
-                                    alarmMode = 2
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                2 -> {
-                                    alarmMode = 3
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                3 -> {
-                                    alarmMode = 4
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                4 -> {
-                                    alarmMode = 5
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-=======
                                 0 -> alarmMode = 1
                                 1 -> alarmMode = 2
                                 2 -> alarmMode = 3
                                 3 -> alarmMode = 4
                                 4 -> alarmMode = 5
->>>>>>> ver2.1
                             }
                             binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " $alarmMode"
                         }

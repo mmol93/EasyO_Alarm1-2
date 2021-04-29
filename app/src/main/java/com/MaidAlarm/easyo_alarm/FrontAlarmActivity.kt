@@ -37,15 +37,11 @@ class FrontAlarmActivity : AppCompatActivity() {
     lateinit var app : AppClass
     var bellIndex = 0
     var alarmMode = 0
-<<<<<<< HEAD
-=======
 
     lateinit var pref : SharedPreferences
     private var alarmSwitch  = 0
     private var volume = 0
     private var alarmCounter = 0
-
->>>>>>> ver2.1
 
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     override fun onBackPressed() {
@@ -279,24 +275,12 @@ class FrontAlarmActivity : AppCompatActivity() {
                 else {
                     // 휴식 상태인 휴대폰 깨우기
                     val wakeLock: PowerManager.WakeLock =
-<<<<<<< HEAD
-                            (this.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                                    acquire()
-                                }
-                            }
-
-                    // 60초만 지속되게 하기
-                    wakeLock.acquire(70*1000L )
-
-=======
                         (this.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                             newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag")
                         }
 
                     // 70초만 지속되게 하기
                     wakeLock.acquire(70*1000L )
->>>>>>> ver2.1
                     // 현재 시간(시간 + 분)과 울린 알람의 시간(시간 + 분)이 동일함
                         // -> notification을 갱신하더라도 지금 울린 알람이 제일 가까운 알람으로 인식됨
                     val thread = object : Thread(){
@@ -393,11 +377,7 @@ class FrontAlarmActivity : AppCompatActivity() {
             val calendar = Calendar.getInstance()
             val intent = Intent("POSTPHONETIME")
 
-<<<<<<< HEAD
-            // 다음 알람에도 progress 데이터는 필요하기 때문에 넘겨준다
-=======
             // 10분뒤에 울릴 알람도 똑같은 조건으로 울려야하기 때문에 같이 넘겨준다
->>>>>>> ver2.1
             intent.putExtra("progress", progress)
             intent.putExtra("bellIndex", bellIndex)
             intent.putExtra("alarmMode", alarmMode)

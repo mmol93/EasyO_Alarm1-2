@@ -149,11 +149,7 @@ class Receiver : BroadcastReceiver() {
 
             // 넘어온 intent에서 progress 데이터를 가져온다
             val progress = intent.getIntExtra("progress", -1)
-<<<<<<< HEAD
-            val bellIndex = intent.getIntExtra("bellIndex", 0)
-=======
             val bellIndex = intent.getIntExtra("bellIndex",0)
->>>>>>> ver2.1
             val alarmMode = intent.getIntExtra("alarmMode", 0)
             Log.d("makeAlarm", "progress: $progress")
 
@@ -177,11 +173,7 @@ class Receiver : BroadcastReceiver() {
             frontAlarmActivity.putExtra("progress", progress)
             frontAlarmActivity.putExtra("bellIndex", bellIndex)
             frontAlarmActivity.putExtra("alarmMode", alarmMode)
-<<<<<<< HEAD
-            context?.startActivity(frontAlarmActivity)
-=======
             context.startActivity(frontAlarmActivity)
-
         }
         // 액션 버튼 클릭했을 때 행동 구현
         else if(intent!!.action == "ActionButton"){
@@ -198,7 +190,7 @@ class Receiver : BroadcastReceiver() {
                 function.makeSQLSetSimpleAlarm(context, 30)
             }
             Log.d("makeAlarm","ActionButton 클릭됨")
->>>>>>> ver2.1
+
         }
         // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{

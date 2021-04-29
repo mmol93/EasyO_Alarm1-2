@@ -146,39 +146,11 @@ class ShortAlarmSetActivity : AppCompatActivity() {
                             val idx = alert.listView.checkedItemPosition
                             Log.d("shortAlarmSetActivity", "mode: ${app.wayOfAlarm}")
                             when(idx){
-<<<<<<< HEAD
-                                0 -> {
-                                    app.wayOfAlarm = 1
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                1 -> {
-                                    app.wayOfAlarm = 2
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                2 -> {
-                                    app.wayOfAlarm = 3
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                3 -> {
-                                    app.wayOfAlarm = 4
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-                                4 -> {
-                                    app.wayOfAlarm = 5
-                                    Log.d("alarmSetActivityModi", "mode: ${app.wayOfAlarm}")
-                                    binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
-                                }
-=======
                                 0 -> app.wayOfAlarm = 1
                                 1 -> app.wayOfAlarm = 2
                                 2 -> app.wayOfAlarm = 3
                                 3 -> app.wayOfAlarm = 4
                                 4 -> app.wayOfAlarm = 5
->>>>>>> ver2.1
                             }
                             binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeCAL) + " ${app.wayOfAlarm}"
                         }
