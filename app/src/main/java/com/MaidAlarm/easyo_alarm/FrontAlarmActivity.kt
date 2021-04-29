@@ -374,7 +374,6 @@ class FrontAlarmActivity : AppCompatActivity() {
                     this.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
             val receiver = Receiver()
             val filter = IntentFilter("POSTPHONETIME")
-            registerReceiver(receiver, filter)
 
             val calendar = Calendar.getInstance()
             val intent = Intent("POSTPHONETIME")

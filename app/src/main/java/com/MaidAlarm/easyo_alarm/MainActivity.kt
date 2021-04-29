@@ -246,6 +246,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(mainBinder.root)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // 브로드캐스트에 등록했던 리시버도 종료해야한다(안하면 2개씩 나옴) - 종료 서비스에도 있음
+        val receiver = Receiver()
+        unregisterReceiver(receiver)
+    }
+
     override fun startActivityForResult(intent: Intent?, requestCode: Int) {
         super.startActivityForResult(intent, requestCode)
 
