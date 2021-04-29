@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
                 // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
                 // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
                 if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE) && currentTime - lastUpdate >= updateInterval) {
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
                     // 있을 경우 업데이트 실시
                     appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE,this, REQUEST_CODE_UPDATE)
                 }
@@ -250,7 +250,12 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         // 브로드캐스트에 등록했던 리시버도 종료해야한다(안하면 2개씩 나옴) - 종료 서비스에도 있음
         val receiver = Receiver()
-        unregisterReceiver(receiver)
+        try{
+            unregisterReceiver(receiver)
+        }catch (e:Exception){
+
+        }
+
     }
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int) {
@@ -321,7 +326,6 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE_UPDATE) {
             // 업데이트를 거부했을 경우 -> 거부한 시간을 파일 데이터로써 집어넣는다
             if (resultCode != RESULT_OK) {
-                function.saveFileWithCurrentTime("data3.bat", this)
             }
             // 업데이트를 수락했을 경우
             else{
