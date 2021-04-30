@@ -120,6 +120,16 @@ class Receiver : BroadcastReceiver() {
         if (intent!!.action == "android.intent.action.BOOT_COMPLETED" ||
                 intent!!.action == "android.intent.action.QUICKBOOT_POWERON") {
             Log.d("makeAlarm", "재부팅됨")
+            // 휴식 상태인 휴대폰 깨우기
+            val wakeLock: PowerManager.WakeLock =
+                (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                    newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
+                        acquire()
+                    }
+                }
+            // 60초만 지속되게 하기
+            wakeLock.acquire(60*1000L )
+
             // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
             val function = Function()
             function.makeAlarmWithAllSQL(context!!)
@@ -392,7 +402,7 @@ fun addNewAlarm_normal_exact(alarmManager: AlarmManager,
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
     )
-    Log.d("makeAlarm", "알람 등록한 시간: " + Date().toString())
+    Log.d("makeAlarm", "알람 등록한 시간: " + Date().toString() + " / " +curCalendar.timeInMillis)
     Log.d("makeAlarm", "설정된 시간: ${hour}시 ${min}분")
     Log.d("makeAlarm", "requestCode: $requestCode")
 

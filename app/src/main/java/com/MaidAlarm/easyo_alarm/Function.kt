@@ -13,7 +13,7 @@ import java.util.*
 
 
 class Function {
-    // SQL의 모든 데이터를 매개변수에 집어넣음
+    // SQL의 모든 데이터를 참조하여 switch가 on인 알람을 다시 등록한다
     fun makeAlarmWithAllSQL(
             context: Context,
             ) {

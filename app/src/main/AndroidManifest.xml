@@ -53,7 +53,7 @@
             android:enabled="true"
             android:exported="true"
             tools:targetApi="n">
-            <intent-filter>
+            <intent-filter android:priority="999">
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
                 <action android:name="POSTPHONETIME" />
