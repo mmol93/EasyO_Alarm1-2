@@ -19,14 +19,6 @@ class Service : Service() {
         Log.d("Exit", "Task 종료됨")
         val app : AppClass = application as AppClass
 
-        // 브로드캐스트에 등록했던 리시버도 종료해야한다(안하면 2개씩 나옴)
-        try {
-            val receiver = Receiver()
-            unregisterReceiver(receiver)
-        }catch (e:Exception){
-
-        }
-
         // AppClass에 저장되어 있는 변수들을 파일에 저장한다
         val fos = openFileOutput("data1.bat", Context.MODE_PRIVATE)
 

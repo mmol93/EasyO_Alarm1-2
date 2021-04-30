@@ -90,6 +90,7 @@ class MainActivity : AppCompatActivity() {
 
         // 일부 휴대폰에서 onCreate()가 여러번 호출되기 때문에 여기에 권한 확인을 넣음
         if (savedInstanceState == null){
+            Log.d("mainActivity", "savedInstanceState: $savedInstanceState")
             // 오버레이 권한 확인
             if (!Settings.canDrawOverlays(this)) {
                 // ask for setting
@@ -98,6 +99,7 @@ class MainActivity : AppCompatActivity() {
                     Uri.parse("package:$packageName")
                 )
                 startActivityForResult(intent, permissionCode)
+                Log.d("mainActivity", "오버레이 intent 호출")
             }
 
             // 다른 권한 확인
@@ -142,14 +144,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             appUpdateManager.registerListener(updateListener)
+
+            // *** Task 종료에 대한 서비스를 실시한다
+            startService(Intent(this, Service::class.java))
         }
 
 
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
         app = application as AppClass
-
-        // *** Task 종료에 대한 서비스를 실시한다
-        startService(Intent(this, Service::class.java))
 
         // 내부저장소에서 데이터를 읽어온다
         try {
@@ -235,18 +237,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
         setContentView(mainBinder.root)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // 브로드캐스트에 등록했던 리시버도 종료해야한다(안하면 2개씩 나옴) - 종료 서비스에도 있음
-        val receiver = Receiver()
-        try{
-            unregisterReceiver(receiver)
-        }catch (e:Exception){
-
-        }
-
     }
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int) {
