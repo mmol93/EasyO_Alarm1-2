@@ -17,4 +17,6 @@
     <color name="Orange">#FFC000</color>
     <color name="Space_Purple">#CEABFA</color>
     <color name="raw_color">#173B0B</color>
+    <color name="new_alarmItem_background">#393550</color>
+    <color name="new_alarm_background">#070417</color>
 </resources>
