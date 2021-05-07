@@ -113,25 +113,25 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
 
         // ** 각 요일별로 텍스트에 배경색을 넣어 구분을 하게 한다. **
         if (Sun[position].toString() == "1"){
-            holder.row_sun.setBackgroundColor(Color.parseColor("#1ABC9C"))
+            holder.row_sun.setBackgroundColor(Color.parseColor("#FE697E"))
         }
         if (Mon[position].toString() == "1"){
-            holder.row_mon.setBackgroundColor(Color.parseColor("#1ABC9C"))
+            holder.row_mon.setBackgroundColor(Color.parseColor("#FE697E"))
         }
         if (Tue[position].toString() == "1"){
-            holder.row_tues.setBackgroundColor(Color.parseColor("#1ABC9C"))
+            holder.row_tues.setBackgroundColor(Color.parseColor("#FE697E"))
         }
         if (Wed[position].toString() == "1"){
-            holder.row_wed.setBackgroundColor(Color.parseColor("#1ABC9C"))
+            holder.row_wed.setBackgroundColor(Color.parseColor("#FE697E"))
         }
         if (Thu[position].toString() == "1"){
-            holder.row_thur.setBackgroundColor(Color.parseColor("#1ABC9C"))
+            holder.row_thur.setBackgroundColor(Color.parseColor("#FE697E"))
         }
         if (Fri[position].toString() == "1"){
-            holder.row_fri.setBackgroundColor(Color.parseColor("#1ABC9C"))
+            holder.row_fri.setBackgroundColor(Color.parseColor("#FE697E"))
         }
         if (Sat[position].toString() == "1"){
-            holder.row_sat.setBackgroundColor(Color.parseColor("#1ABC9C"))
+            holder.row_sat.setBackgroundColor(Color.parseColor("#FE697E"))
         }
 
         // *** progress 값에 따라 음량 그림을 달리 표시한다
