@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/itemBackground"
+    android:background="@color/new_alarm_background"
     tools:context=".ShortAlarmSetActivity">
 
     <com.google.android.gms.ads.AdView
@@ -33,6 +33,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:layout_marginTop="40dp"
+                android:textColor="@color/white"
                 android:text="@string/quick_title"
                 android:fontFamily="@font/nanumgothicextrabold"
                 android:textSize="@dimen/activity_short_main_textSize"
@@ -49,7 +50,7 @@
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
                     android:fontFamily="@font/nanumgothicextrabold"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:layout_height="wrap_content"
                     android:textSize="60sp"
                     android:text="+" />
@@ -60,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanumgothicextrabold"
                     android:text="00"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="60sp" />
 
                 <TextView
@@ -69,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanumgothicextrabold"
                     android:text=":"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="60sp" />
 
                 <TextView
@@ -78,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nanumgothicextrabold"
                     android:text="00"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="60sp" />
             </LinearLayout>
 
@@ -223,6 +224,7 @@
                     android:max="100"
                     android:min="0"
                     android:progress="100"
+                    android:theme="@style/seekbarTheme"
                     android:thumb="?android:attr/textSelectHandle" />
             </LinearLayout>
             <LinearLayout

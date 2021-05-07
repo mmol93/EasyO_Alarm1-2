@@ -15,10 +15,13 @@
         <!-- Dark 모드 사용안함-->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
 
-        <!--타이틀 바 삭제. -->
+        <!--타이틀 바 삭제-->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
+        <!--작업표시줄 투명화-->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
 
 
     </style>
@@ -31,9 +34,16 @@
         <item name="fontFamily">
             @font/nanumgothicextrabold
         </item>
-        <item name="editTextColor">
-            @color/black
+        <item name="android:editTextColor">
+            @color/white
         </item>
+    </style>
+
+    <!-- seekbar style -->
+    <style name="seekbarTheme" parent="Theme.AppCompat.Light">
+        <item name="android:progressBackgroundTint">@color/white</item>
+        <item name="android:progressTint">@color/Space_Purple</item>
+        <item name="android:colorControlActivated">@color/Orange</item>
     </style>
 
 </resources>
