@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/itemBackground"
+    android:background="@color/new_alarm_background"
     tools:context=".FrontAlarmActivity">
 
     <!--com.google.android.gms.ads.AdView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="00"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="75sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
             android:text=":"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="75sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="00"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="75sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

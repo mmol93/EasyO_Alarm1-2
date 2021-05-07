@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/itemBackground"
+    android:background="@color/new_alarm_background"
     tools:context=".MainActivity" >
 
     <Space
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="00"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="35sp"
             />
 
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
             android:text=" + "
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="35sp"
             />
 
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="00"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="35sp"
             />
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
             android:text=" = "
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="35sp"
             />
 
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nanumgothicextrabold"
             android:text="?"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="35sp"
             />
     </LinearLayout>
@@ -84,6 +84,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="1" />
 
         <Button
@@ -92,6 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="2" />
 
         <Button
@@ -100,6 +104,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="3" />
     </LinearLayout>
 
@@ -115,6 +121,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="4" />
 
         <Button
@@ -123,6 +131,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="5" />
 
         <Button
@@ -131,6 +141,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="6" />
 
     </LinearLayout>
@@ -148,6 +160,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="7" />
 
         <Button
@@ -156,6 +170,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="8" />
 
         <Button
@@ -164,6 +180,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="9" />
 
     </LinearLayout>
@@ -180,6 +198,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="C" />
 
         <Button
@@ -188,6 +208,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="0" />
 
         <Button
@@ -196,6 +218,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:textSize="25sp"
+            app:backgroundTint="@null"
+            android:background="@drawable/cal_button_design"
             android:text="AC" />
 
     </LinearLayout>
