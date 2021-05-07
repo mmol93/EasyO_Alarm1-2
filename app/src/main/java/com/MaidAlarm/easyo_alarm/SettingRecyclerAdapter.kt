@@ -85,10 +85,10 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
 
         // ** item 중 이미지뷰 설정하기
         when(position){
-            0 -> {holder.row_image.setImageResource(R.drawable.setting_select_alarm)}
-            1 -> {holder.row_image.setImageResource(R.drawable.calculator)}
-            2 -> {holder.row_image.setImageResource(R.drawable.setting_notification)}
-            3 -> {holder.row_image.setImageResource(R.drawable.setting_info)}
+            0 -> {holder.row_image.setImageResource(R.drawable.alarm_bell_icon_new)}
+            1 -> {holder.row_image.setImageResource(R.drawable.alarm_mode_icon_new)}
+            2 -> {holder.row_image.setImageResource(R.drawable.noti_icon_new)}
+            3 -> {holder.row_image.setImageResource(R.drawable.info_icon_new)}
         }
 
         // 각 itemView 클릭 시
@@ -133,6 +133,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 // Select Bell 클릭 시
                 0 -> {
                     textView.text = context.getString(R.string.settingItem_selectAlarm) // 색 변환 애니메이션 실시 후 원래 색으로 돌리는 역할
+                    textView.setTextColor(Color.WHITE)
                     // SelectRingActivity 띄우기
                     val intent = Intent(context, SelectSimpleRingActivity::class.java)
                     intent.putExtra("fromSettingAdapter", 1)
@@ -142,6 +143,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 1 -> {val prefEdit = pref.edit()
                     Log.d("SettingRecyclerAdapter", "alarmMode: $alarmMode")
                     textView.text = context.getString(R.string.settingItem_alarmMode)
+                    textView.setTextColor(Color.WHITE)
                     // ** 항목 선택 Dialog 설정
                     val modeItem = arrayOf(context.getString(R.string.settingItem_alarmModeItem1), context.getString(R.string.settingItem_alarmModeItem2))
                     val builder = AlertDialog.Builder(context)
@@ -198,6 +200,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 // Set On/Off Notification 클릭 시
                 2 -> {
                     textView.text = context.getString(R.string.settingItem_notification)
+                    textView.setTextColor(Color.WHITE)
                     // * AlertDialog 만들기
                     val modeItem = arrayOf(context.getString(R.string.settingItem_notificationOff), context.getString(R.string.settingItem_notificationOn))
                     val builder = AlertDialog.Builder(context)
@@ -230,6 +233,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 // AppInfo 클릭 시
                 3 -> {
                     textView.text = context.getString(R.string.settingItem_info)
+                    textView.setTextColor(Color.WHITE)
                     val intent = Intent(context, InfoActivity::class.java)
                     context.startActivity(intent)
                 }

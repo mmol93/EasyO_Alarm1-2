@@ -10,13 +10,13 @@
 
     <ImageView
         android:id="@+id/infoImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/calculator" />
+        app:srcCompat="@drawable/alarm_mode_icon_new" />
 
     <TextView
         android:id="@+id/infoText"

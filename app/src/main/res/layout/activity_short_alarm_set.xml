@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/new_alarm_background"
+    android:fitsSystemWindows="true"
     tools:context=".ShortAlarmSetActivity">
 
     <com.google.android.gms.ads.AdView
@@ -210,8 +211,8 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/volume_icon" />
 

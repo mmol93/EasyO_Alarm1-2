@@ -136,11 +136,11 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
 
         // *** progress 값에 따라 음량 그림을 달리 표시한다
         when (progressList[position]){
-            0 -> holder.row_volume.setImageResource(R.drawable.volume0)
-            in 1..25 -> holder.row_volume.setImageResource(R.drawable.volume01)
-            in 26..50 -> holder.row_volume.setImageResource(R.drawable.volume2)
-            in 51..75 -> holder.row_volume.setImageResource(R.drawable.volume3)
-            in 76..100 -> holder.row_volume.setImageResource(R.drawable.volume4)
+            0 -> holder.row_volume.setImageResource(R.drawable.vol0)
+            in 1..25 -> holder.row_volume.setImageResource(R.drawable.vol1)
+            in 26..50 -> holder.row_volume.setImageResource(R.drawable.vol2)
+            in 51..75 -> holder.row_volume.setImageResource(R.drawable.vol3)
+            in 76..100 -> holder.row_volume.setImageResource(R.drawable.vol4)
         }
 
         // *** switch를 SQL에 저장한 switch 값을 적용한다

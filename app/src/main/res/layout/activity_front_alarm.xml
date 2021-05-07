@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/new_alarm_background"
+    android:fitsSystemWindows="true"
     tools:context=".FrontAlarmActivity">
 
     <!--com.google.android.gms.ads.AdView
