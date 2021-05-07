@@ -33,7 +33,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -179,8 +179,8 @@
 
                 <ImageView
                     android:id="@+id/image_volume"
-                    android:layout_width="40dp"
-                    android:layout_height="60dp"
+                    android:layout_width="35dp"
+                    android:layout_height="55dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/volume_icon" />
 
@@ -283,6 +283,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textColor="@color/new_subTextColor"
                     android:fontFamily="@font/nanumgothicextrabold"
                     android:text="@string/alarmSet_selectBellTextTitle" />
 
@@ -291,6 +292,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textColor="@color/new_subTextColor"
                     android:fontFamily="@font/nanumgothicextrabold"
                     android:text="@string/alarmSet_selectModeTextTitle" />
             </LinearLayout>
@@ -310,7 +312,7 @@
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicbold"
                     android:textSize="16dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:text="@string/alarmSet_selectBellTextTitle"/>
 
                 <TextView
@@ -321,7 +323,7 @@
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicbold"
                     android:textSize="16dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:text="@string/alarmSet_selectModeTextTitle"/>
             </LinearLayout>
 

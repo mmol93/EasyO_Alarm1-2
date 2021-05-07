@@ -4,9 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/under_edge"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp"
+    android:background="@drawable/new_recent_alarm_text_background"
     android:id="@+id/row_itemView"
-    android:padding="14dp" >
+    android:layout_marginBottom="14dp"
+    >
 
     <ImageView
         android:id="@+id/infoImage"
@@ -24,8 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:text="TextView"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="26dp"
+        android:fontFamily="@font/nanumgothicbold"
         app:layout_constraintBottom_toBottomOf="@+id/infoImage"
         app:layout_constraintStart_toEndOf="@+id/infoImage"
         app:layout_constraintTop_toTopOf="@+id/infoImage"
@@ -36,8 +42,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
-        android:textColor="@color/subTextColor"
+        android:textColor="@color/new_subTextColor"
         android:textSize="16dp"
+        android:fontFamily="@font/nanumgothicbold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/infoText"
         app:layout_constraintTop_toBottomOf="@+id/infoText"

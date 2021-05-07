@@ -31,20 +31,19 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:layout_marginTop="40dp"
-                android:textColor="@color/white"
-                android:text="@string/quick_title"
                 android:fontFamily="@font/nanumgothicextrabold"
-                android:textSize="@dimen/activity_short_main_textSize"
-                />
+                android:gravity="center"
+                android:text="@string/quick_title"
+                android:textColor="@color/white"
+                android:textSize="@dimen/activity_short_main_textSize" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="25dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -211,8 +210,8 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="40dp"
-                    android:layout_height="60dp"
+                    android:layout_width="35dp"
+                    android:layout_height="55dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/volume_icon" />
 
@@ -303,6 +302,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicextrabold"
+                    android:textColor="@color/new_subTextColor"
                     android:text="@string/alarmSet_selectBellTextTitle" />
 
                 <TextView
@@ -311,6 +311,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicextrabold"
+                    android:textColor="@color/new_subTextColor"
                     android:text="@string/alarmSet_selectModeTextTitle" />
             </LinearLayout>
 
@@ -329,7 +330,7 @@
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicbold"
                     android:textSize="16dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:text="current Bell"/>
 
                 <TextView
@@ -340,7 +341,7 @@
                     android:gravity="center"
                     android:fontFamily="@font/nanumgothicbold"
                     android:textSize="16dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:text="current Mode"/>
             </LinearLayout>
 

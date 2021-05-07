@@ -24,7 +24,7 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
         when(position){
             // * 0 : 문의탭
             0 ->{
-                holder.binder.infoImage.setImageResource(R.drawable.info_emal)
+                holder.binder.infoImage.setImageResource(R.drawable.info_mail_new)
                 holder.binder.infoText.text = context.getString(R.string.infoItem_contact)
                 holder.binder.infoSubText.text = context.getString(R.string.infoItem_subContact)
                 holder.binder.rowItemView.setOnClickListener {
@@ -45,7 +45,8 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
                 holder.binder.rowItemView.setOnClickListener {
                     // 오픈소스 항목 입력
                     val listItem = arrayOf("Apache2.0", "GNU General Public License v3.0", "com.github.iammert:ReadableBottomBar:0.2",
-                            "com.github.imtuann:FloatingActionButtonExpandable:1.1.2", "com.github.sabujak-sabujak:RoundedButton:v0.1.1")
+                            "com.github.imtuann:FloatingActionButtonExpandable:1.1.2", "com.github.sabujak-sabujak:RoundedButton:v0.1.1",
+                            "www.figma.com/file/iLXKaLTgTFNR5b7khLaDQ4/Glyphs-(Community)?node-id=0%3A1")
                     // 리스트 다이얼로그 만들기
                     val dialogBuilder = AlertDialog.Builder(context)
                     dialogBuilder.setTitle(context.getString(R.string.infoItem_openSource))
@@ -75,6 +76,10 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
                                 // NormalButton
                                 4 -> {
                                     intent.putExtra("content", context.getString(R.string.license_NormalButton))
+                                }
+                                // about icons from figma
+                                5 -> {
+                                    intent.putExtra("content", context.getString(R.string.license_icons))
                                 }
                             }
                             context.startActivity(intent)

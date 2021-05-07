@@ -217,6 +217,8 @@ Everyone is permitted to copy and distribute verbatim copies of this license doc
 
     <string name="license_NormalButton" translatable="false">com.github.sabujak-sabujak:RoundedButton:v0.1.1</string>
 
+    <string name="license_icons" translatable="false">https://www.figma.com/community/file/899031264835768805</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>

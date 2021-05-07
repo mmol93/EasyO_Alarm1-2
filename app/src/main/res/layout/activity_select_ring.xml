@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/itemBackground"
+    android:background="@color/new_alarm_background"
     android:fitsSystemWindows="true"
     tools:context=".SelectRingActivity">
     <LinearLayout
@@ -78,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicbold"
                 android:textSize="17dp"
+                android:textColor="@color/white"
                 android:text="@string/typeOfBell_Normal_Bar" />
 
             <RadioButton
@@ -86,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
+                android:textColor="@color/white"
                 android:text="@string/typeOfBell_Normal_Guitar" />
 
             <RadioButton
@@ -94,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
+                android:textColor="@color/white"
                 android:text="@string/typeOfBell_Normal_Happy" />
 
             <RadioButton
@@ -102,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
+                android:textColor="@color/white"
                 android:text="@string/typeOfBell_Normal_Country" />
 
             <TextView
@@ -121,6 +125,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
+                android:textColor="@color/white"
                 android:text="@string/typeOfBell_Korean_Jeongyeon" />
 
             <RadioButton
@@ -129,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
+                android:textColor="@color/white"
                 android:text="@string/typeOfBell_Korean_MinJjeong" />
 
             <TextView
@@ -148,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
+                android:textColor="@color/white"
                 android:text="@string/typeOfBell_Korean_MinJjeong" />
 
             <TextView
@@ -167,6 +174,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
+                android:textColor="@color/white"
                 android:text="@string/typeOfBell_Korean_Jeongyeon" />
         </RadioGroup>
     </LinearLayout>
