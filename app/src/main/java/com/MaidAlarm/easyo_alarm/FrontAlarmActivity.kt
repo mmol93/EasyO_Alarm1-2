@@ -196,73 +196,10 @@ class FrontAlarmActivity : AppCompatActivity() {
             calculator.commit()
         }
 
-        var counter = 0 // 계산 문제 출제 횟수 카운터
+        var recentAlarm = RecentAlarm()
+        var recentTimeList = recentAlarm.checkSQL(SQLHelper)
 
-        // ok버튼 클릭 시
-        binder.buttonOk.setOnClickListener {
-            Log.d("FrontActivity", "alarmMode: $alarmMode")
-            // 알람 울릴 때 계산 문제를 사용할 때
-            if (alarmMode in 1..5) {
-                // 설정에서 지정한 계산문제 풀이 횟수 보다 작을 때
-                if (counter < alarmMode) {
-                    // 정답을 맞췄을 때
-                    if (problem1 + problem2 == user_answer) {
-                        counter += 1
-                        // 계산문제 다시 출제
-                        problem1 = Random.nextInt(1, 100)
-                        problem2 = Random.nextInt(1, 10)
-                        // 문제를 CalculateProblemFragment의 TextView에 반영한다
-                        val calculateProblemFragment = supportFragmentManager.findFragmentById(R.id.front_container) as CalculateProblemFragment
-                        calculateProblemFragment.setProblem()
-                        calculateProblemFragment.binder.answerText.text = ""
-
-                        Log.d("FrontAlarmActivity", "Right")
-                        Log.d("FrontAlarmActivity", "problem1: $problem1")
-                        Log.d("FrontAlarmActivity", "problem2: $problem2")
-                        Log.d("FrontAlarmActivity", "user_answer: $user_answer")
-                    }
-                    // 답 틀릴 시 answer 텍스트뷰 초기화 하고 진동하게 하기
-                    else {
-                        Log.d("FrontAlarmActivity", "Wrong")
-                        Log.d("FrontAlarmActivity", "problem1: $problem1")
-                        Log.d("FrontAlarmActivity", "problem2: $problem2")
-                        Log.d("FrontAlarmActivity", "user_answer: $user_answer")
-                        calculateProblemFragment.binder.answerText.text = ""
-
-                        // 틀릴 시 진동하게 하기 - 살짝만 진동
-                        val arrayTime = longArrayOf(0, 500, 0, 0)
-                        val arrayAmplitudes = intArrayOf(0, 150, 0, 0)
-                        vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                        app.vibrate = vib
-
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                            vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, -1))
-                        } else {
-                            vib.vibrate(arrayTime, -1)
-                        }
-                    }
-                    // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료
-                    if (counter >= alarmMode) {
-                        if (progress == 0) {
-                            vib.cancel()
-                        }
-                        finishAndRemoveTask()
-                        // 1분뒤 소리 울리는거 취소 - 트리거 취소
-                        app.threadTrigger = 0
-                    }
-                }
-            }
-            // 계산문제를 설정하지 않았을 때
-            else {
-                if (progress == 0) {
-                    vib.cancel()
-                }
-                finishAndRemoveTask()
-            }
-
-            var recentAlarm = RecentAlarm()
-            var recentTimeList = recentAlarm.checkSQL(SQLHelper)
-
+        fun startThread(){
             // 그 다음으로 울릴 알람이 없다면 notification 삭제하기
             if (size > 0) {
                 // 알림은 있지만 모든 토글이 off 일 때 -> notification 삭제
@@ -275,14 +212,14 @@ class FrontAlarmActivity : AppCompatActivity() {
                 else {
                     // 휴식 상태인 휴대폰 깨우기
                     val wakeLock: PowerManager.WakeLock =
-                        (this.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag")
-                        }
+                            (this.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag")
+                            }
 
                     // 70초만 지속되게 하기
                     wakeLock.acquire(70*1000L )
                     // 현재 시간(시간 + 분)과 울린 알람의 시간(시간 + 분)이 동일함
-                        // -> notification을 갱신하더라도 지금 울린 알람이 제일 가까운 알람으로 인식됨
+                    // -> notification을 갱신하더라도 지금 울린 알람이 제일 가까운 알람으로 인식됨
                     val thread = object : Thread(){
                         override fun run() {
                             super.run()
@@ -364,6 +301,73 @@ class FrontAlarmActivity : AppCompatActivity() {
             else{
                 val notification = notification()
                 notification.cancelNotification(this)
+            }
+        }
+
+        var counter = 0 // 계산 문제 출제 횟수 카운터
+
+        // ok버튼 클릭 시
+        binder.buttonOk.setOnClickListener {
+            Log.d("FrontActivity", "alarmMode: $alarmMode")
+            // 알람 울릴 때 계산 문제를 사용할 때
+            if (alarmMode in 1..5) {
+                // 설정에서 지정한 계산문제 풀이 횟수 보다 작을 때
+                if (counter < alarmMode) {
+                    // 정답을 맞췄을 때
+                    if (problem1 + problem2 == user_answer) {
+                        counter += 1
+                        // 계산문제 다시 출제
+                        problem1 = Random.nextInt(1, 100)
+                        problem2 = Random.nextInt(1, 10)
+                        // 문제를 CalculateProblemFragment의 TextView에 반영한다
+                        val calculateProblemFragment = supportFragmentManager.findFragmentById(R.id.front_container) as CalculateProblemFragment
+                        calculateProblemFragment.setProblem()
+                        calculateProblemFragment.binder.answerText.text = ""
+
+                        Log.d("FrontAlarmActivity", "Right")
+                        Log.d("FrontAlarmActivity", "problem1: $problem1")
+                        Log.d("FrontAlarmActivity", "problem2: $problem2")
+                        Log.d("FrontAlarmActivity", "user_answer: $user_answer")
+                    }
+                    // 답 틀릴 시 answer 텍스트뷰 초기화 하고 진동하게 하기
+                    else {
+                        Log.d("FrontAlarmActivity", "Wrong")
+                        Log.d("FrontAlarmActivity", "problem1: $problem1")
+                        Log.d("FrontAlarmActivity", "problem2: $problem2")
+                        Log.d("FrontAlarmActivity", "user_answer: $user_answer")
+                        calculateProblemFragment.binder.answerText.text = ""
+
+                        // 틀릴 시 진동하게 하기 - 살짝만 진동
+                        val arrayTime = longArrayOf(0, 500, 0, 0)
+                        val arrayAmplitudes = intArrayOf(0, 150, 0, 0)
+                        vib = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+                        app.vibrate = vib
+
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                            vib.vibrate(VibrationEffect.createWaveform(arrayTime, arrayAmplitudes, -1))
+                        } else {
+                            vib.vibrate(arrayTime, -1)
+                        }
+                    }
+                    // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료
+                    if (counter >= alarmMode) {
+                        if (progress == 0) {
+                            vib.cancel()
+                        }
+                        startThread()
+                        finishAndRemoveTask()
+                        // 1분뒤 소리 울리는거 취소 - 트리거 취소
+                        app.threadTrigger = 0
+                    }
+                }
+            }
+            // 계산문제를 설정하지 않았을 때
+            else {
+                if (progress == 0) {
+                    vib.cancel()
+                }
+                startThread()
+                finishAndRemoveTask()
             }
         }
 
