@@ -97,7 +97,7 @@
                 android:textColor="@color/white"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:textSize="15.3dp"
+                android:textSize="14dp"
                 android:text="@string/week_fri" />
 
             <TextView
