@@ -4,20 +4,19 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.SystemClock
+import android.os.*
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MaidAlarm.easyo_alarm.databinding.FragmentAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
 import java.util.*
+import kotlin.concurrent.thread
 
 class alarmFragment : Fragment() {
     val doneAlarmActivity = 100         // 알람 액티비티
@@ -200,21 +199,20 @@ class alarmFragment : Fragment() {
 
         // 길게 클릭 시 2초간 사라짐
         binder.fab1.setOnLongClickListener {
-            binder.fab1.isInvisible = true
+            binder.fab1.isGone = true
 
-            val handler = Handler(Looper.myLooper()!!)
-
-            val thread = object : Thread(){
-                override fun run() {
-                    super.run()
-                    // 1초간 슬립
-                    SystemClock.sleep(1 * 1000)
-                    binder.fab1.isInvisible = false
-
+            val handler = object : Handler(Looper.myLooper()!!){
+                override fun handleMessage(msg: Message) {
+                    super.handleMessage(msg)
+                    binder.fab1.isGone = false
                 }
             }
-            handler.post(thread)
-
+            thread{
+                // 1.5초간 슬립
+                SystemClock.sleep(1 * 1500)
+                val msg = Message()
+                handler.sendMessage(msg)
+            }
             true
         }
 
