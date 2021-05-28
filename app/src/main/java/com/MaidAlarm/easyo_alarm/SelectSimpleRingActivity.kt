@@ -125,7 +125,7 @@ class SelectSimpleRingActivity : AppCompatActivity() {
             }catch (e: Exception){
 
             }
-            selectMusic(app.bellIndex)
+            selectMusic(bellIndex)
             app.mediaPlayer.setVolume(1f, 1f)
             app.mediaPlayer.isLooping = true
             app.mediaPlayer.start()
