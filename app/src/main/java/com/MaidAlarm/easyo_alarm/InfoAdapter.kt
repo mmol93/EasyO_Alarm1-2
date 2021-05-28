@@ -46,7 +46,7 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
                     // 오픈소스 항목 입력
                     val listItem = arrayOf("Apache2.0", "GNU General Public License v3.0", "com.github.iammert:ReadableBottomBar:0.2",
                             "com.github.imtuann:FloatingActionButtonExpandable:1.1.2", "com.github.sabujak-sabujak:RoundedButton:v0.1.1",
-                            "www.figma.com/file/iLXKaLTgTFNR5b7khLaDQ4/Glyphs-(Community)?node-id=0%3A1")
+                            "www.figma.com/file/iLXKaLTgTFNR5b7khLaDQ4/Glyphs-(Community)?node-id=0%3A1", "BGM")
                     // 리스트 다이얼로그 만들기
                     val dialogBuilder = AlertDialog.Builder(context)
                     dialogBuilder.setTitle(context.getString(R.string.infoItem_openSource))
@@ -80,6 +80,9 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
                                 // about icons from figma
                                 5 -> {
                                     intent.putExtra("content", context.getString(R.string.license_icons))
+                                }
+                                6 -> {
+                                    intent.putExtra("content", context.getString(R.string.license_BGM))
                                 }
                             }
                             context.startActivity(intent)

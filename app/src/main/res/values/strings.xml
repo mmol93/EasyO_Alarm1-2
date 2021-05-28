@@ -219,6 +219,8 @@ Everyone is permitted to copy and distribute verbatim copies of this license doc
 
     <string name="license_icons" translatable="false">https://www.figma.com/community/file/899031264835768805</string>
 
+    <string name="license_BGM" translatable="false">tongtong,이혜린,공유마당,CC BY\non the hill organ,권민호,공유마당,CC BY</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>

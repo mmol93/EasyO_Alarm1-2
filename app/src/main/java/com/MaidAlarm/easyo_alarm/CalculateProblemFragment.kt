@@ -155,7 +155,8 @@ class CalculateProblemFragment : Fragment() {
                 val thread = object : Thread(){
                     override fun run() {
                         super.run()
-                        SystemClock.sleep(10 * 1000)
+                        // 80초간 음악 멈추기
+                        SystemClock.sleep(80 * 1000)
                         // 도중에 "10분 뒤" 버튼이나 "ok"버튼을 눌렀을 경우 트리거는 0이되어 다시 소리가 나지 않게 한다
                         if (app.threadTrigger == 1){
                             // 음악파일 재생
