@@ -104,7 +104,7 @@
                 android:fontFamily="@font/nanumgothicbold"
                 android:textSize="17dp"
                 android:textColor="@color/white"
-                android:text="@string/typeOfBell_Normal_Bar" />
+                android:text="@string/typeOfBell_Normal_Walking" />
 
             <RadioButton
                 android:id="@+id/radioButton_N2"
@@ -113,7 +113,7 @@
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:textColor="@color/white"
-                android:text="@string/typeOfBell_Normal_Guitar" />
+                android:text="@string/typeOfBell_Normal_PianoMan" />
 
             <RadioButton
                 android:id="@+id/radioButton_N3"
@@ -131,7 +131,7 @@
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:textColor="@color/white"
-                android:text="@string/typeOfBell_Normal_Country" />
+                android:text="@string/typeOfBell_Normal_Lonely" />
 
             <TextView
                 android:id="@+id/type_korean"

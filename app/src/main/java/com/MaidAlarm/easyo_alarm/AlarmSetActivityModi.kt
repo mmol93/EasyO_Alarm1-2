@@ -144,15 +144,15 @@ class AlarmSetActivityModi : AppCompatActivity() {
 
         // 알람음(bell) 설정에 따른 텍스트뷰 수정해주기
         when(bellIndex){
-            0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
-            1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+            0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Walking)
+            1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_PianoMan)
             2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
-            3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+            3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Lonely)
             // 한국어 알람음
             10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
             11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
             // 값이 null일 때(아마...)
-            else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+            else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Walking)
         }
 
         // 알람모드(alarmMode) 설정에 따른 텍스트뷰 수정
@@ -477,11 +477,11 @@ class AlarmSetActivityModi : AppCompatActivity() {
         if (requestCode == selectRingActivityBack){
             when(app.bellIndex){
                 0 -> {
-                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Walking)
                     bellIndex = 0
                 }
                 1 -> {
-                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_PianoMan)
                     bellIndex = 1
                 }
                 2 -> {
@@ -489,7 +489,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
                     bellIndex = 2
                 }
                 3 -> {
-                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                    binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Lonely)
                     bellIndex = 3
                 }
                 // 한국어 알람음
@@ -502,7 +502,7 @@ class AlarmSetActivityModi : AppCompatActivity() {
                     bellIndex = 11
                 }
                 // 값이 null일 때(아마...)
-                else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Walking)
             }
         }
     }

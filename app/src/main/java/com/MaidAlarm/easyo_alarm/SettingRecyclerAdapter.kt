@@ -62,10 +62,10 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         // ** item중 Sub 텍스트뷰 설정하기
         var subItem1 = "아직 미정"
         when(bellIndex){
-            0 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Bar)
-            1 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Guitar)
+            0 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Walking)
+            1 -> subItem1 = context.getString(R.string.typeOfBell_Normal_PianoMan)
             2 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Happy)
-            3 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Country)
+            3 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Lonely)
             10 -> subItem1 = context.getString(R.string.typeOfBell_Korean_Jeongyeon)
             11 -> subItem1 = context.getString(R.string.typeOfBell_Korean_MinJjeong)
         }

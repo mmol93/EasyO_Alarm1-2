@@ -55,7 +55,7 @@ class AlarmSetActivity : AppCompatActivity() {
         // 새로운 알람 설정의 경우 초기값이 들어가도록 한다
         app.bellIndex = 0
         app.wayOfAlarm = 0
-        binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+        binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Walking)
         binder.textCurrentMode.text = getString(R.string.alarmSet_selectModeNormal)
 
         // 요일 클릭에 대한 변수 정의
@@ -346,15 +346,15 @@ class AlarmSetActivity : AppCompatActivity() {
         // 알람음 선택에서 돌아왔을 때
             if (requestCode == selectRingActivityBack){
                 when(app.bellIndex){
-                    0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
-                    1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Guitar)
+                    0 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Walking)
+                    1 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_PianoMan)
                     2 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Happy)
-                    3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Country)
+                    3 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Lonely)
                     // 한국어 알람음
                     10 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_Jeongyeon)
                     11 -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Korean_MinJjeong)
                     // 값이 null일 때(아마...)
-                    else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Bar)
+                    else -> binder.textCurrentBell.text = getString(R.string.typeOfBell_Normal_Walking)
                 }
             }
     }

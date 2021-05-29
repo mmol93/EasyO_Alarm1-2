@@ -29,7 +29,7 @@ class SelectSimpleRingActivity : AppCompatActivity() {
         binder.radioButtonJ1.isGone = true
 
         // preference 생성
-        val bellIndex = pref.getInt("bellIndex", 0)
+        var bellIndex = pref.getInt("bellIndex", 0)
         var volume = pref.getInt("volume", 0)
 
         // 액티비티를 열었을 때 설정되어 있는 불륨 반영하기
@@ -125,6 +125,8 @@ class SelectSimpleRingActivity : AppCompatActivity() {
             }catch (e: Exception){
 
             }
+            // 여기서 bellIndex를 한 번 더 가져와야 라디오 버튼 리스너에서 설정된 값이 적용됨
+            bellIndex = pref.getInt("bellIndex", 0)
             selectMusic(bellIndex)
             app.mediaPlayer.setVolume(1f, 1f)
             app.mediaPlayer.isLooping = true
@@ -149,10 +151,10 @@ class SelectSimpleRingActivity : AppCompatActivity() {
 
     fun selectMusic(index : Int){
         when(index){
-            0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
-            1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
+            0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_walking)
+            1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_pianoman)
             2 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_happytown)
-            3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_country)
+            3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_loney)
             10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
             11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
         }

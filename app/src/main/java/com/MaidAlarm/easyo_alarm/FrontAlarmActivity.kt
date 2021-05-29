@@ -118,10 +118,10 @@ class FrontAlarmActivity : AppCompatActivity() {
             bellIndex = intent.getIntExtra("bellIndex", 0)
 
             when(bellIndex){
-                0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_jazzbar)
-                1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_guitar)
+                0 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_walking)
+                1 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_pianoman)
                 2 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_happytown)
-                3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_country)
+                3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_loney)
                 10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
                 11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
             }
