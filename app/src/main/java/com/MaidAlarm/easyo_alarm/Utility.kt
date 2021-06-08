@@ -3,7 +3,7 @@ package com.MaidAlarm.easyo_alarm
 import java.util.Calendar
 
 // 오늘부터 일주일치의 요일을 가져오는 기능
-object Calendar {
+object Week {
     val calendar = Calendar.getInstance()
     val weekList = ArrayList<String>()
 
