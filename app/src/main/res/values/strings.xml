@@ -4,6 +4,7 @@
     <!-- 여기 밑은 activity_short_alarm에서 사용-->
     <string name="Alarm">Alarm</string>
     <string name="Setting">Setting</string>
+    <string name="Weather">Weather</string>
     <string name="quick_title">Quick Alarm</string>
 
     <string name="MainBannerID" translatable="false">ca-app-pub-9481402975436770/4351498697</string>

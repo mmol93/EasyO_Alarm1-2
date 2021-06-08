@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tabs>
     <tab
-        drawable = "@drawable/tab_alarm"
+        drawable = "@drawable/ic_alram_watch"
         fontFamily = "@font/nanumgothicextrabold"
         text="@string/Alarm" />
 
     <tab
-        drawable="@drawable/tab_setting"
+        drawable="@drawable/ic_halfclouds"
+        fontFamily = "@font/nanumgothicextrabold"
+        text="@string/Weather" />
+
+    <tab
+        drawable="@drawable/ic_gear"
         fontFamily = "@font/nanumgothicextrabold"
         text="@string/Setting" />
 </tabs>

@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity() {
                         tran.commit()
                     }
 
-                    1 -> {
+                    2 -> {
                         val tran = supportFragmentManager.beginTransaction()
                         tran.replace(R.id.container, settingFragment)
                         tran.commit()

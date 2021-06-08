@@ -20,4 +20,5 @@
     <color name="raw_color">#173B0B</color>
     <color name="new_alarmItem_background">#393550</color>
     <color name="new_alarm_background">#070417</color>
+    <color name="tint_blue">#2E80ED</color>
 </resources>
