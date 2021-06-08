@@ -1,5 +1,6 @@
 package com.MaidAlarm.easyo_alarm
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.media.MediaPlayer
@@ -7,6 +8,21 @@ import android.os.Vibrator
 import com.MaidAlarm.easyo_alarm.databinding.FragmentAlarmBinding
 
 class AppClass : Application() {
+
+    // 싱글턴으로 사용
+    companion object{
+        @SuppressLint("StaticFieldLeak")
+        lateinit var context : AppClass
+        var provider = ""
+        var countryCode = ""
+        var stateCode = ""
+        var stateName = ""
+        var cityName = ""
+        var lat = 0.0
+        var lon = 0.0
+        val hour = ArrayList<String>()
+        val min = ArrayList<String>()
+    }
 
     // 처음 사용 설명서 표시 유무
     var initialStart = 0
@@ -49,4 +65,10 @@ class AppClass : Application() {
 
     // 버튼 클릭 시 음악 정지를 위해 설정
     lateinit var mediaPlayer: MediaPlayer
+
+    // 항상 어떤 Activity가 실행되면 해당 Activity의 context 가져오게 하기
+    override fun onCreate() {
+        super.onCreate()
+        context = this
+    }
 }

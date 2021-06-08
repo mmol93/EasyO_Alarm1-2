@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
     val alarmFragment = com.MaidAlarm.easyo_alarm.alarmFragment()
     // 세팅 화면 프래그먼트
     val settingFragment = com.MaidAlarm.easyo_alarm.settingFragment()
+    // 날씨 화면 프래그먼트
+    val weatherFragment = WeatherFragment()
 
     // AppClass 변수 선언
     lateinit var app : AppClass
@@ -223,6 +225,12 @@ class MainActivity : AppCompatActivity() {
                     0 -> {
                         val tran = supportFragmentManager.beginTransaction()
                         tran.replace(R.id.container, alarmFragment)
+                        tran.commit()
+                    }
+
+                    1 -> {
+                        val tran = supportFragmentManager.beginTransaction()
+                        tran.replace(R.id.container, weatherFragment)
                         tran.commit()
                     }
 
