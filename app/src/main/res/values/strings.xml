@@ -166,6 +166,7 @@
     <string name="feels_like">Feels</string>
 
     <string name="weather_progress">Getting Location and Weather Data\nPlease wait for a while</string>
+    <string name="weathere_error">Error to get location data\nPlease try again</string>
 
 
     <!-- 여기 아래는 전부 라이센스 관련 String-->

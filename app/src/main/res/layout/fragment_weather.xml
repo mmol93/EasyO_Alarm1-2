@@ -28,6 +28,16 @@
         android:textColor="@color/white"
         android:text="@string/weather_progress" />
 
+    <TextView
+        android:id="@+id/loading_error_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/weathere_error"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:visibility="gone" />
+
     <ScrollView
         android:id="@+id/weather_container"
         android:layout_width="match_parent"

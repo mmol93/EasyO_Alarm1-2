@@ -58,8 +58,10 @@ class WeatherFragment : Fragment() {
 
         // GPS가 제일 정확하기 때문에 먼저 발동되게 한다
         if (gpsLocation != null){
+            Log.d("location", "gpsLocation: $gpsLocation")
             showInfo(gpsLocation)
         }else if (networkLocation != null){
+            Log.d("location", "networkLocation: $networkLocation")
             showInfo(networkLocation)
         }else{
             Toast.makeText(AppClass.context, "GPS 연결 실패", Toast.LENGTH_SHORT).show()
@@ -128,7 +130,6 @@ class WeatherFragment : Fragment() {
         RetrofitManager.instance.getCurrentWeatherData(locationInfo, API.ID,
             completion = {
                 // 결과 값 출력하기
-                Toast.makeText(AppClass.context, "통신완료", Toast.LENGTH_SHORT).show()
                 Log.d("retrofit", "locationInfo: $locationInfo")
                 Log.d("retrofit", "cityName: ${AppClass.cityName}")
                 Log.d("retrofit", "stateCode: ${AppClass.stateCode}")
@@ -176,16 +177,24 @@ class WeatherFragment : Fragment() {
                 Log.d("retrofit2", "from UI level, hourlyUvi: $hourlyUvi")
                 Log.d("retrofit2", "from UI level, hourlyMain: $hourlyMain")
 
-                // 시간별 데이터를 리사이클러 어댑터에 보내기
-                val hourlyAdapter = HourlyWeatherAdapter(requireContext(),hourlyTemp, hourlyPop, hourlyMain)
-                binder.hourlyRecycler.layoutManager =
-                    GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
-                binder.hourlyRecycler.adapter = hourlyAdapter
+                try{
+                    // 시간별 데이터를 리사이클러 어댑터에 보내기
+                    val hourlyAdapter = HourlyWeatherAdapter(requireContext(),hourlyTemp, hourlyPop, hourlyMain)
+                    binder.hourlyRecycler.layoutManager =
+                        GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+                    binder.hourlyRecycler.adapter = hourlyAdapter
 
-                // 날짜별 데이터를 리사이클러 어댑터로 보내기
-                val dailyAdapter = DailyWeatherAdapter(requireContext(), dailyPop, dailyMain, dailyMinTemp, dailyMaxTemp)
-                binder.dailyRecycler.layoutManager= LinearLayoutManager(requireContext())
-                binder.dailyRecycler.adapter = dailyAdapter
+                    // 날짜별 데이터를 리사이클러 어댑터로 보내기
+                    val dailyAdapter = DailyWeatherAdapter(requireContext(), dailyPop, dailyMain, dailyMinTemp, dailyMaxTemp)
+                    binder.dailyRecycler.layoutManager= LinearLayoutManager(requireContext())
+                    binder.dailyRecycler.adapter = dailyAdapter
+                }catch (e:Exception){
+                    binder.loadingErrorTextView.isGone = false
+                    binder.loadingProgress.isGone = true
+                    binder.loadingTextView.isGone = true
+                    binder.weatherContainer.isGone = true
+                }
+
 
                 // OneCall API에서 얻어서 뷰에 넣는 경우 여기에 정의한다
                 binder.rainPercentTextView.text = Weather.rainPercent.toString() + "%"
@@ -199,6 +208,7 @@ class WeatherFragment : Fragment() {
                 }
                 binder.loadingProgress.isGone = true
                 binder.loadingTextView.isGone = true
+                binder.loadingErrorTextView.isGone = true
                 binder.weatherContainer.isGone = false
             })
     }
