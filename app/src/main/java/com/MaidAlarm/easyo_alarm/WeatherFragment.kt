@@ -197,6 +197,9 @@ class WeatherFragment : Fragment() {
                 if (Weather.rainPercent in 40..50){
                     binder.weatherImageView.setImageResource(R.drawable.ic_little_rain)
                 }
+                binder.loadingProgress.isGone = true
+                binder.loadingTextView.isGone = true
+                binder.weatherContainer.isGone = false
             })
     }
 }

@@ -34,7 +34,8 @@ class DailyWeatherAdapter(val context: Context,
             "Drizzle" -> holder.row_weatherImage.setImageResource(R.drawable.ic_little_rain)
             "Rain" -> {
                 holder.row_weatherImage.setImageResource(R.drawable.ic_rain)
-                if (rainPercentList[position] in 40..50){
+                // rain 상태인데 비올 확률이 40% 이하라면 Drizzle 아이콘으로 바꾸기
+                if (rainPercentList[position] in 1..40 ){
                     holder.row_weatherImage.setImageResource(R.drawable.ic_little_rain)
                 }
             }

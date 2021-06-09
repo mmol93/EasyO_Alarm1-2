@@ -165,6 +165,8 @@
     <string name="humidity">Humidity</string>
     <string name="feels_like">Feels</string>
 
+    <string name="weather_progress">Getting Location and Weather Data\nPlease wait for a while</string>
+
 
     <!-- 여기 아래는 전부 라이센스 관련 String-->
     <string name="license_Apache" translatable="false">Apache License
