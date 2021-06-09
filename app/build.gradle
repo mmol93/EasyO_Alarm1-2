@@ -75,4 +75,14 @@ dependencies {
     implementation name: 'customFloating-release', ext: 'aar'
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation "com.github.nikartm:fit-button:1.2.1"
+
+    // Retrofit용 implementation
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.6'
+    // Retrofit2
+    implementation 'com.squareup.retrofit2:retrofit:2.8.2'
+    // Retrofit2-Gson converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    // logging 인터셉터 - 통신시 로그를 확인하는 기능(데이터 입출력 등)
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 }
