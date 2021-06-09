@@ -150,6 +150,21 @@
         <item>value2</item>
     </string-array>
 
+    <string name="clouds">Clouds</string>
+    <string name="Thunderstorm">Thunderstorm</string>
+    <string name="drizzle">Drizzle</string>
+    <string name="rain">Rain</string>
+    <string name="snow">Snow</string>
+    <string name="clear">Clear</string>
+    <string name="mist">Mist</string>
+    <string name="tornado">Tornado</string>
+
+    <string name="uv">UV</string>
+    <string name="wind_speed">Wind</string>
+    <string name="precipitation">Precipitation</string>
+    <string name="humidity">Humidity</string>
+    <string name="feels_like">Feels</string>
+
 
     <!-- 여기 아래는 전부 라이센스 관련 String-->
     <string name="license_Apache" translatable="false">Apache License

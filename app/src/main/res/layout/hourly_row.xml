@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="70dp"
+    android:layout_height="110dp"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:padding="3dp">
+
+    <TextView
+        android:id="@+id/time_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:text="09:00" />
+
+    <ImageView
+        android:id="@+id/weather_imageView"
+        android:layout_width="40dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_drop"
+        />
+
+    <TextView
+        android:id="@+id/temp_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="19℃" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_drop"
+             />
+
+        <TextView
+            android:id="@+id/rainPercent_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="15dp"
+            android:gravity="start"
+            android:textColor="@color/white"
+            android:text="50%" />
+    </LinearLayout>
+</LinearLayout>

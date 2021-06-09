@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="33dp"
+    android:paddingStart="20dp"
+
+    android:paddingEnd="20dp">
+
+    <TextView
+        android:id="@+id/date_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="월요일"
+        android:textSize="17dp"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageView
+        android:id="@+id/rainPercent_imageView"
+        android:layout_width="16dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/date_week"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/date_week"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/ic_drop"
+        />
+
+    <TextView
+        android:id="@+id/rainPercent_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="20%"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/rainPercent_imageView"
+        app:layout_constraintTop_toTopOf="@id/rainPercent_imageView"
+        app:layout_constraintBottom_toBottomOf="@id/rainPercent_imageView"
+        />
+
+    <ImageView
+        android:id="@+id/weather_imageView"
+        android:layout_width="20dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="80dp"
+        app:layout_constraintStart_toEndOf="@id/rainPercent_imageView"
+        app:layout_constraintTop_toTopOf="@id/rainPercent_imageView"
+        app:layout_constraintBottom_toBottomOf="@id/rainPercent_imageView"
+        app:srcCompat="@drawable/ic_drop"
+         />
+
+    <TextView
+        android:id="@+id/minMax_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="20℃/24℃"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toTopOf="@id/rainPercent_imageView"
+        app:layout_constraintBottom_toBottomOf="@id/rainPercent_imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

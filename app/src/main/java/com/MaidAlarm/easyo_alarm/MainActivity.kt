@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
@@ -76,6 +77,8 @@ class MainActivity : AppCompatActivity() {
         Manifest.permission.VIBRATE,
         Manifest.permission.WAKE_LOCK,
         Manifest.permission.RECEIVE_BOOT_COMPLETED,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -243,6 +246,22 @@ class MainActivity : AppCompatActivity() {
             }
         })
         setContentView(mainBinder.root)
+    }
+
+    // 날씨에 대한 권한에 대해 그 이후 결과 확인용
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        for (permission in grantResults){
+            if (permission == PackageManager.PERMISSION_DENIED){
+                Toast.makeText(this, "권한을 얻지않으면 GPS 사용불가", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
     }
 
     override fun startActivityForResult(intent: Intent?, requestCode: Int) {
