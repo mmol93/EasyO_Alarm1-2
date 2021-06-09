@@ -2,10 +2,15 @@ package com.MaidAlarm.easyo_alarm.retrofit
 
 import android.util.Log
 import com.MaidAlarm.easyo_alarm.API
+import com.MaidAlarm.easyo_alarm.AppClass
+import com.MaidAlarm.easyo_alarm.R
 import com.MaidAlarm.easyo_alarm.Weather
 import com.google.gson.JsonElement
 import retrofit2.Call
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.roundToLong
 
 class RetrofitManager {
@@ -64,11 +69,15 @@ class RetrofitManager {
                             // 시스템에 관한 값 가져오기
                             val sys = body.getAsJsonObject("sys").asJsonObject
                             // 해뜨는 시간
-                            Weather.sunRise = sys.get("sunrise").asLong
+                            val sunRise_ori = sys.get("sunrise").asLong
+                            Weather.sunRise = SimpleDateFormat("HH:mm ", Locale.getDefault()).format(Date(sunRise_ori * 1000))
                             // 해 지는 시간
-                            Weather.sunSet = sys.get("sunset").asLong
+                            val sunSet_ori = sys.get("sunset").asLong
+                            Weather.sunSet = SimpleDateFormat("HH:mm ", Locale.getDefault()).format(Date(sunSet_ori * 1000))
                             // 국가
                             Weather.country = sys.get("country").asString
+                            Log.d("retrofit1", "sunRise: ${Weather.sunRise}")
+                            Log.d("retrofit1", "sunSet: ${Weather.sunSet}")
 
                         }
                         completion()
@@ -118,11 +127,11 @@ class RetrofitManager {
                                     Weather.feels = (feelLike - 273.15).roundToLong()
                                     val uvi = forecastBody.get("uvi").asDouble
                                     if (uvi > 2){
-                                        Weather.uvi = "높음"
+                                        Weather.uvi = AppClass.context.getString(R.string.high)
                                     }else if(uvi > 1){
-                                        Weather.uvi = "보통"
+                                        Weather.uvi = AppClass.context.getString(R.string.normal)
                                     }else{
-                                        Weather.uvi = "낮음"
+                                        Weather.uvi = AppClass.context.getString(R.string.low)
                                     }
 
                                     val temp = forecastBody.get("temp").asLong

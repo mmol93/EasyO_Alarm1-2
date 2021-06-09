@@ -9,8 +9,8 @@ object Weather{
     var feels = 0L
     var humility = 0L
     var wind = 0
-    var sunSet = 0L
-    var sunRise = 0L
+    var sunSet = ""
+    var sunRise = ""
     var country = ""
     var rainPercent = 0
     var uvi = ""

@@ -164,6 +164,10 @@
     <string name="precipitation">Precipitation</string>
     <string name="humidity">Humidity</string>
     <string name="feels_like">Feels</string>
+    
+    <string name="high">High</string>
+    <string name="normal">Normal</string>
+    <string name="low">Low</string>
 
     <string name="weather_progress">Getting Location and Weather Data\nPlease wait for a while</string>
     <string name="weathere_error">Error to get location data\nPlease try again</string>
@@ -243,4 +247,5 @@ Everyone is permitted to copy and distribute verbatim copies of this license doc
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="main_updateFailed">Please re-start this app again.</string>
 </resources>

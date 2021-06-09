@@ -93,4 +93,23 @@
     <string name="actionButton1">+10分</string>
     <string name="actionButton2">+15分</string>
     <string name="actionButton3">+30分</string>
+    <string name="Weather">天気</string>
+    <string name="clouds">曇</string>
+    <string name="Thunderstorm">雷</string>
+    <string name="rain">雨</string>
+    <string name="drizzle">弱い雨</string>
+    <string name="snow">雪</string>
+    <string name="tornado">台風</string>
+    <string name="uv">UV</string>
+    <string name="wind_speed">風</string>
+    <string name="precipitation">降水確率</string>
+    <string name="humidity">湿気</string>
+    <string name="weather_progress">天気情報を受けています。</string>
+    <string name="weathere_error">ｴﾗｰが発生しました。\nもう一度実行してください。</string>
+    <string name="feels_like">体感温度</string>
+    <string name="clear">晴れ</string>
+    <string name="mist">霧</string>
+    <string name="high">高い</string>
+    <string name="normal">普通</string>
+    <string name="low">低い</string>
 </resources>

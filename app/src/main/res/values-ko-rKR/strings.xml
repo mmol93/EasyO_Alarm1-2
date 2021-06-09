@@ -92,4 +92,24 @@
     <string name="actionButton1">+10분</string>
     <string name="actionButton2">+15분</string>
     <string name="actionButton3">+30분</string>
+    <string name="Weather">날씨</string>
+    <string name="clouds">흐림</string>
+    <string name="Thunderstorm">번개</string>
+    <string name="drizzle">이슬비</string>
+    <string name="rain">비</string>
+    <string name="snow">눈</string>
+    <string name="clear">맑음</string>
+    <string name="mist">안개</string>
+    <string name="tornado">태풍</string>
+    <string name="uv">자외선지수</string>
+    <string name="wind_speed">바람세기</string>
+    <string name="precipitation">강수확률</string>
+    <string name="humidity">습도</string>
+    <string name="feels_like">체감온도</string>
+    <string name="weather_progress">날씨 정보를 가져오는 중입니다</string>
+    <string name="weathere_error">에러가 발생했습니다. \n다시 실행해주세요</string>
+    <string name="main_updateFailed">업데이트에 실패했습니다. \n어플을 다시 실행해주세요</string>
+    <string name="high">높음</string>
+    <string name="normal">보통</string>
+    <string name="low">낮음</string>
 </resources>

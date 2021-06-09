@@ -199,7 +199,7 @@ class WeatherFragment : Fragment() {
                 // OneCall API에서 얻어서 뷰에 넣는 경우 여기에 정의한다
                 binder.rainPercentTextView.text = Weather.rainPercent.toString() + "%"
                 binder.windPercentTextView.text = "${Weather.wind}m/s"
-                binder.feelTextView.text = "체감온도: " + Weather.feels.toString() + "℃"
+                binder.feelTextView.append(" ${Weather.feels}℃")
                 binder.UVpercentTextView.text = Weather.uvi
                 binder.progressBar.isGone = true
                 binder.refreshImageView.isGone = false
