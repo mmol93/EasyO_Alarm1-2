@@ -43,7 +43,19 @@ class HourlyWeatherAdapter(val context : Context,
                     Log.d("test", "sunRise: ${Weather.sunRise}")
                 }
             }
-            "Clouds" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_clouds)
+            "Clouds" -> {
+                holderHourly.row_weatherImage.setImageResource(R.drawable.ic_clouds)
+                // 리스트에 있는 시간이 해가 진 시간보다 더 늦은 시간일 때
+                if (AppClass.hour[position].toInt() > Weather.sunSet.toInt()){
+                    holderHourly.row_weatherImage.setImageResource(R.drawable.ic_moon)
+                    Log.d("test", "hour: ${AppClass.hour[position]}")
+                    Log.d("test", "sunSet: ${Weather.sunSet}")
+                }else if (Weather.sunRise.toInt() > AppClass.hour[position].toInt()){
+                    holderHourly.row_weatherImage.setImageResource(R.drawable.ic_moon)
+                    Log.d("test", "hour: ${AppClass.hour[position]}")
+                    Log.d("test", "sunRise: ${Weather.sunRise}")
+                }
+            }
             "Mist", "Dust", "Fog", "Haze", "Sand", "Ash" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_fog)
             "Tornado", "Squall" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_tornado)
         }
