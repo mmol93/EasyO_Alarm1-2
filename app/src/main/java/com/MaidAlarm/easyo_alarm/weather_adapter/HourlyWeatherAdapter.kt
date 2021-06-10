@@ -2,12 +2,14 @@ package com.MaidAlarm.easyo_alarm.weather_adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.MaidAlarm.easyo_alarm.AppClass
 import com.MaidAlarm.easyo_alarm.R
+import com.MaidAlarm.easyo_alarm.Weather
 import com.MaidAlarm.easyo_alarm.databinding.HourlyRowBinding
 
 class HourlyWeatherAdapter(val context : Context,
@@ -28,7 +30,19 @@ class HourlyWeatherAdapter(val context : Context,
             "Drizzle" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_little_rain)
             "Rain" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_rain)
             "Snow" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_snow)
-            "Clear" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_sunny)
+            "Clear" -> {
+                holderHourly.row_weatherImage.setImageResource(R.drawable.ic_sunny)
+                // 리스트에 있는 시간이 해가 진 시간보다 더 늦은 시간일 때
+                if (AppClass.hour[position].toInt() > Weather.sunSet.toInt()){
+                    holderHourly.row_weatherImage.setImageResource(R.drawable.ic_moon)
+                    Log.d("test", "hour: ${AppClass.hour[position]}")
+                    Log.d("test", "sunSet: ${Weather.sunSet}")
+                }else if (Weather.sunRise.toInt() > AppClass.hour[position].toInt()){
+                    holderHourly.row_weatherImage.setImageResource(R.drawable.ic_moon)
+                    Log.d("test", "hour: ${AppClass.hour[position]}")
+                    Log.d("test", "sunRise: ${Weather.sunRise}")
+                }
+            }
             "Clouds" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_clouds)
             "Mist", "Dust", "Fog", "Haze", "Sand", "Ash" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_fog)
             "Tornado", "Squall" -> holderHourly.row_weatherImage.setImageResource(R.drawable.ic_tornado)

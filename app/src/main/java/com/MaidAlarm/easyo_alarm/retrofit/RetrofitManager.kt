@@ -70,10 +70,10 @@ class RetrofitManager {
                             val sys = body.getAsJsonObject("sys").asJsonObject
                             // 해뜨는 시간
                             val sunRise_ori = sys.get("sunrise").asLong
-                            Weather.sunRise = SimpleDateFormat("HH:mm ", Locale.getDefault()).format(Date(sunRise_ori * 1000))
+                            Weather.sunRise = SimpleDateFormat("HH", Locale.getDefault()).format(Date(sunRise_ori * 1000))
                             // 해 지는 시간
                             val sunSet_ori = sys.get("sunset").asLong
-                            Weather.sunSet = SimpleDateFormat("HH:mm ", Locale.getDefault()).format(Date(sunSet_ori * 1000))
+                            Weather.sunSet = SimpleDateFormat("HH", Locale.getDefault()).format(Date(sunSet_ori * 1000))
                             // 국가
                             Weather.country = sys.get("country").asString
                             Log.d("retrofit1", "sunRise: ${Weather.sunRise}")
