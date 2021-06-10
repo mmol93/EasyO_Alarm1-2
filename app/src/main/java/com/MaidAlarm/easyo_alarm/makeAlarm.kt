@@ -37,13 +37,9 @@ class makeAlarm(
         val wakeLock: PowerManager.WakeLock =
                 (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                     newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                        acquire()
+                        acquire(120*1000L)
                     }
                 }
-
-        // 60초만 지속되게 하기
-        wakeLock.acquire(60*1000L )
-
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
             // 정확한 시간 설정
@@ -124,11 +120,9 @@ class Receiver : BroadcastReceiver() {
             val wakeLock: PowerManager.WakeLock =
                 (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                     newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                        acquire()
+                        acquire(120*1000L)
                     }
                 }
-            // 60초만 지속되게 하기
-            wakeLock.acquire(60*1000L )
 
             // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
             val function = Function()
@@ -213,12 +207,9 @@ class Receiver : BroadcastReceiver() {
                     val wakeLock: PowerManager.WakeLock =
                         (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                             newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                                acquire()
+                                acquire(120*1000L)
                             }
                         }
-
-                    // 10초만 지속되게 하기
-                    wakeLock.acquire(10*1000L )
 
                     Log.d("makeAlarm", "onReceive() 호출 - else부분")
                     // 오늘이 알람에서 설정한 요일과 맞는지 확인하기 위해 오늘 날짜의 요일을 가져온다
@@ -237,6 +228,9 @@ class Receiver : BroadcastReceiver() {
 
                     // 알람에서 설정한 요일일 때만 액티비티 띄워서 알람 울리게 설정
                     // 설정 알람 시간이랑 동일할 때만 울리게 한다.
+                    // arrayFromMakeAlarm!![present_week]: 설정한 알람의 요일
+                    // arrayFromMakeAlarm[9]: 설정한 알람의 시각
+                    // arrayFromMakeAlarm[10]: 설정한 알람의 분
                     if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
                         Log.d("makeAlarm", "지금 울릴 알람 맞음")
 

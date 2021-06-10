@@ -79,13 +79,16 @@ class Function {
                 // quick 알람일 경우
                 if (quick == 1 && switch == 1){
                     makeAlarm.addNewAlarm_once()
+                    Log.d("test", "퀵알람 갱신")
                 }
                 // normal 알람일 경우
                 else if (quick == 0 && switch == 1){
                     makeAlarm.addNewAlarm_normal()
+                    Log.d("test", "일반 알람 갱신")
                 }
             }
         }
+        Log.d("test", "모든 알람 갱신 완료")
     }
 
     // 새로은 데이터를 SQL 데이터 베이스에 등록하고 알람 매니저도 등록한다
