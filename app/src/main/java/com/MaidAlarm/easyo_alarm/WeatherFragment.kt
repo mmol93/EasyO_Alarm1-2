@@ -1,6 +1,8 @@
 package com.MaidAlarm.easyo_alarm
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Application
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -93,22 +95,24 @@ class WeatherFragment : Fragment() {
                 AppClass.lon = location.longitude
                 AppClass.lat = location.latitude
 
-                // 경도와 위도를 이용하여 주소 이름 알아내기
-                AppClass.provider = location.provider
-                AppClass.countryCode = addresses[0].countryCode
-                AppClass.stateCode = addresses[0].postalCode
-                AppClass.stateName = addresses[0].adminArea
-                AppClass.cityName = addresses[0].locality
                 Log.d("location", "provider: ${location.provider}")
                 Log.d("location", "countryName: ${addresses[0].countryName}")
                 Log.d("location", "countryCode: ${addresses[0].countryCode}")
                 Log.d("location", "stateCode: ${addresses[0].postalCode}")
                 Log.d("location", "stateName: ${addresses[0].adminArea}")
                 Log.d("location", "cityName: ${addresses[0].locality}")
+
+                // 경도와 위도를 이용하여 주소 이름 알아내기
+                AppClass.provider = location.provider
+                AppClass.countryCode = addresses[0].countryCode
+                AppClass.stateCode = addresses[0].postalCode
+                AppClass.stateName = addresses[0].adminArea
+                AppClass.cityName = addresses[0].locality
             }
         }
     }
 
+    @SuppressLint("SetTextI18n")
     fun refreshWeather(){
         // 현재 날짜 및 시간 가져오기
         val sdf = SimpleDateFormat("yyyy-MM-dd, HH:mm", Locale.getDefault())
@@ -148,7 +152,12 @@ class WeatherFragment : Fragment() {
                 Log.d("retrofit", "country: ${Weather.country}")
 
                 // 결과를 뷰에 적용하기
-                binder.dataTextView.text = "${AppClass.cityName}   "
+                // 지역에 따라 도시 이름이 나오지 않는 곳이 있다.
+                if (AppClass.cityName == null){
+                    binder.dataTextView.text = "${AppClass.stateName}   "
+                }else{
+                    binder.dataTextView.text = "${AppClass.cityName}   "
+                }
                 binder.dataTextView.append(now)
                 binder.mainTextView.text = Weather.main
                 when(Weather.main){
@@ -199,7 +208,7 @@ class WeatherFragment : Fragment() {
                 // OneCall API에서 얻어서 뷰에 넣는 경우 여기에 정의한다
                 binder.rainPercentTextView.text = Weather.rainPercent.toString() + "%"
                 binder.windPercentTextView.text = "${Weather.wind}m/s"
-                binder.feelTextView.append(" ${Weather.feels}℃")
+                binder.feelTextView.text = AppClass.context.getString(R.string.feels_like) + (" ${Weather.feels}℃")
                 binder.UVpercentTextView.text = Weather.uvi
                 binder.progressBar.isGone = true
                 binder.refreshImageView.isGone = false

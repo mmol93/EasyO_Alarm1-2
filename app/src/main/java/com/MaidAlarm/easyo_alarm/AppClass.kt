@@ -15,9 +15,9 @@ class AppClass : Application() {
         lateinit var context : AppClass
         var provider = ""
         var countryCode = ""
-        var stateCode = ""
-        var stateName = ""
-        var cityName = ""
+        var stateCode : String? = ""
+        var stateName : String? = ""
+        var cityName : String? = ""
         var lat = 0.0
         var lon = 0.0
         val hour = ArrayList<String>()

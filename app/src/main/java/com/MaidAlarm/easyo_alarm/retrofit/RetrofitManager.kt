@@ -23,9 +23,11 @@ class RetrofitManager {
     // 날씨 데이터를 가져오는 API 호출
     fun getCurrentWeatherData(locationInfo : String, AppId : String,
                               completion:() -> Unit){
-        val call = iRetrofit?.getWeatherData(locationInfo, AppId) ?: return
+        //
+//        val call = iRetrofit?.getWeatherData(locationInfo, AppId) ?: return
+        val call2 = iRetrofit?.getCurrentWeatherData(AppClass.lat.toString(), AppClass.lon.toString(), AppId) ?: return
 
-        call.enqueue(object : retrofit2.Callback<JsonElement>{
+        call2.enqueue(object : retrofit2.Callback<JsonElement>{
             override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
                 Log.d("retrofit", "접속 성공\n, response: ${response.body()}, code: ${response.code()}")
                 when(response.code()){
