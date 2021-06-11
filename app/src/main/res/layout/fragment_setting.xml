@@ -10,10 +10,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/new_recent_alarm_text_background">
         <Switch
-            android:id="@+id/row_switch"
+            android:id="@+id/row_forecast_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -27,9 +29,10 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/row_clcok"
+                android:id="@+id/row_forecast_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nanumgothicbold"
@@ -38,7 +41,7 @@
                 android:text="@string/morning_weather_alarm" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/row_forecast_Sub_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
