@@ -66,9 +66,8 @@ class WeatherFragment : Fragment() {
             Log.d("location", "networkLocation: $networkLocation")
             showInfo(networkLocation)
         }else{
-            Toast.makeText(AppClass.context, "GPS 연결 실패", Toast.LENGTH_SHORT).show()
+            Toast.makeText(AppClass.context, requireContext().getString(R.string.location_permmision), Toast.LENGTH_LONG).show()
         }
-
         refreshWeather()
     }
 

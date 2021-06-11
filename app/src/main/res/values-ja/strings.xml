@@ -112,4 +112,7 @@
     <string name="high">高い</string>
     <string name="normal">普通</string>
     <string name="low">低い</string>
+    <string name="location_permmision">天気を確認するためにはGPS権限が必要です。</string>
+    <string name="morning_weather_alarm">朝に天気チェック</string>
+    <string name="sub_morning_weather_alarm">朝時間ならｱﾗｰﾑ後自動に天気画面に転換</string>
 </resources>
