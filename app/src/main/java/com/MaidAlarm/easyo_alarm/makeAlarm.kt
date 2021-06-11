@@ -231,7 +231,7 @@ class Receiver : BroadcastReceiver() {
                     // arrayFromMakeAlarm!![present_week]: 설정한 알람의 요일
                     // arrayFromMakeAlarm[9]: 설정한 알람의 시각
                     // arrayFromMakeAlarm[10]: 설정한 알람의 분
-                    if (arrayFromMakeAlarm!![present_week] == 1 && presentHour == arrayFromMakeAlarm[9] && presentMin == arrayFromMakeAlarm[10]){
+                    if (arrayFromMakeAlarm!![present_week] == 1){
                         Log.d("makeAlarm", "지금 울릴 알람 맞음")
 
                         // 지금 울린 알람 기록
