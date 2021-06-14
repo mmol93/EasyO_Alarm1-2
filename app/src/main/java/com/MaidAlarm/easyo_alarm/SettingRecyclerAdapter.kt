@@ -18,6 +18,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.animation.*
 import androidx.recyclerview.widget.RecyclerView
+import com.MaidAlarm.easyo_alarm.customDialog.WeatherSetting
 import com.MaidAlarm.easyo_alarm.databinding.SettingRowBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
 import java.io.DataInputStream
@@ -200,6 +201,12 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     }
                     builder.show()
                 }
+                // Weather Setting 버튼 클릭 시
+                2 -> {
+                    val weatherDialog = WeatherSetting(context)
+                    weatherDialog.show()
+                }
+
                 // Set On/Off Notification 클릭 시
                 3 -> {
                     textView.text = context.getString(R.string.settingItem_notification)
