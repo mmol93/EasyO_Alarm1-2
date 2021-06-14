@@ -38,7 +38,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return 5
     }
 
     override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
@@ -54,9 +54,10 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         // ** item 중 텍스트뷰 설정하기
         val item1 = context.getString(R.string.settingItem_selectAlarm)
         val item2 = context.getString(R.string.settingItem_alarmMode)
-        val item3 = context.getString(R.string.settingItem_notification)
-        val item4 = context.getString(R.string.settingItem_info)
-        val items = arrayOf(item1, item2, item3, item4)
+        val item3 = context.getString(R.string.morning_weather_alarm)
+        val item4 = context.getString(R.string.settingItem_notification)
+        val item5 = context.getString(R.string.settingItem_info)
+        val items = arrayOf(item1, item2, item3, item4, item5)
         holder.row_mainText.text = items[position]
 
         // ** item중 Sub 텍스트뷰 설정하기
@@ -78,17 +79,19 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
             subItem2 = context.getString(R.string.settingItem_sub_alarmMode2) + " " +
                     alarmCounter.toString() + context.getString(R.string.settingItem_sub_alarmMode2_2)
         }
-        val subItem3 = context.getString(R.string.settingItem_sub_notification)
-        val subItem4 = context.getString(R.string.settingItem_sub_info)
-        val subItems = arrayOf(subItem1, subItem2, subItem3, subItem4)
+        val subItem3 = context.getString(R.string.sub_morning_weather_alarm)
+        val subItem4 = context.getString(R.string.settingItem_sub_notification)
+        val subItem5 = context.getString(R.string.settingItem_sub_info)
+        val subItems = arrayOf(subItem1, subItem2, subItem3, subItem4, subItem5)
         holder.row_SubText.text = subItems[position]
 
         // ** item 중 이미지뷰 설정하기
         when(position){
             0 -> {holder.row_image.setImageResource(R.drawable.alarm_bell_icon_new)}
             1 -> {holder.row_image.setImageResource(R.drawable.alarm_mode_icon_new)}
-            2 -> {holder.row_image.setImageResource(R.drawable.noti_icon_new)}
-            3 -> {holder.row_image.setImageResource(R.drawable.info_icon_new)}
+            2 -> {holder.row_image.setImageResource(R.drawable.ic_halfclouds)}
+            3 -> {holder.row_image.setImageResource(R.drawable.noti_icon_new)}
+            4 -> {holder.row_image.setImageResource(R.drawable.info_icon_new)}
         }
 
         // 각 itemView 클릭 시
@@ -198,7 +201,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     builder.show()
                 }
                 // Set On/Off Notification 클릭 시
-                2 -> {
+                3 -> {
                     textView.text = context.getString(R.string.settingItem_notification)
                     textView.setTextColor(Color.WHITE)
                     // * AlertDialog 만들기
@@ -231,7 +234,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                     builder.show()
                 }
                 // AppInfo 클릭 시
-                3 -> {
+                4 -> {
                     textView.text = context.getString(R.string.settingItem_info)
                     textView.setTextColor(Color.WHITE)
                     val intent = Intent(context, InfoActivity::class.java)
