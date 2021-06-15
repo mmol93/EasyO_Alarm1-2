@@ -113,6 +113,9 @@
     <string name="normal">普通</string>
     <string name="low">低い</string>
     <string name="location_permmision">天気を確認するためにはGPS権限が必要です。</string>
-    <string name="morning_weather_alarm">天気設定</string>
+    <string name="morning_weather_check">朝天気確認</string>
     <string name="sub_morning_weather_alarm">朝天気と天気予報設定</string>
+    <string name="everyday">毎日</string>
+    <string name="tomorrow_weather">明日天気ｱﾗｰﾑ</string>
+    <string name="weather_setting">天気設定</string>
 </resources>

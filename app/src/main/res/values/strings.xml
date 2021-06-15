@@ -172,8 +172,11 @@
     <string name="weather_progress">Getting Location and Weather Data\nPlease wait for a while</string>
     <string name="weathere_error">Error to get location data\nPlease try again</string>
     <string name="location_permmision">If you want to see weather, need location check permission</string>
-    <string name="morning_weather_alarm">Weather Setting</string>
+    <string name="morning_weather_check">Morning Weather Check</string>
     <string name="sub_morning_weather_alarm">Setting about the weather forecast</string>
+    <string name="everyday">Everyday</string>
+    <string name="tomorrow_weather">Tomorrow Weather</string>
+    <string name="weather_setting">Weather Setting</string>
 
 
     <!-- 여기 아래는 전부 라이센스 관련 String-->

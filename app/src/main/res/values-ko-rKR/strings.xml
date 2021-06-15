@@ -113,6 +113,9 @@
     <string name="normal">보통</string>
     <string name="low">낮음</string>
     <string name="location_permmision">날씨를 확인하기 위해서는 GPS 권한이 필요합니다 ㅠㅠ</string>
-    <string name="morning_weather_alarm">날씨설정</string>
+    <string name="morning_weather_check">아침 날씨 확인</string>
     <string name="sub_morning_weather_alarm">아침 날씨 확인 및 예보 설정</string>
+    <string name="everyday">매일</string>
+    <string name="tomorrow_weather">내일 날씨 알람</string>
+    <string name="weather_setting">날씨 설정</string>
 </resources>

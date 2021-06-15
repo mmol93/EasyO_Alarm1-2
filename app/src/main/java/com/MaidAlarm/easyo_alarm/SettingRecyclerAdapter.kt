@@ -21,9 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.MaidAlarm.easyo_alarm.customDialog.WeatherSetting
 import com.MaidAlarm.easyo_alarm.databinding.SettingRowBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
-import java.io.DataInputStream
-import java.io.DataOutputStream
-import java.lang.Exception
 
 class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<SettingViewHolder>() {
     lateinit var app : AppClass
@@ -55,7 +52,7 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
         // ** item 중 텍스트뷰 설정하기
         val item1 = context.getString(R.string.settingItem_selectAlarm)
         val item2 = context.getString(R.string.settingItem_alarmMode)
-        val item3 = context.getString(R.string.morning_weather_alarm)
+        val item3 = context.getString(R.string.weather_setting)
         val item4 = context.getString(R.string.settingItem_notification)
         val item5 = context.getString(R.string.settingItem_info)
         val items = arrayOf(item1, item2, item3, item4, item5)

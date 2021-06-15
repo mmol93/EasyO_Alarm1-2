@@ -16,6 +16,5 @@ class WeatherSetting(context : Context) : Dialog(context){
         setContentView(binder.root)
         // 배경 투명하게 만들기
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
     }
 }
