@@ -25,6 +25,11 @@ class WeatherSetting(context : Context) : Dialog(context){
 
         setContentView(binder.root)
 
+        // 데이터 가져오기
+        val morningWeatherData = context.getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
+        val weatherAlarmData = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
+
+
         // 배경 투명하게 만들기
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -37,8 +42,29 @@ class WeatherSetting(context : Context) : Dialog(context){
             Toast.makeText(AppClass.context, AppClass.context.getString(R.string.tomorror_weather_toast), Toast.LENGTH_LONG).show()
         }
 
+        // 아침 날씨 스위치 리스너
         binder.morningWeatherSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            val prefEdit = morningWeatherData.edit()
+            // On 상태
+            if (isChecked){
+                prefEdit.putBoolean("switch", true)
+            }
+            // Off 상태
+            else{
+                prefEdit.putBoolean("switch", false)
+            }
+        }
+        // 날씨 알림 설정 스위치 리스너
+        binder.weatherAlarmSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            val prefEdit = weatherAlarmData.edit()
+            // On 상태
+            if (isChecked){
+                prefEdit.putBoolean("switch", true)
+            }
+            // Off 상태
+            else{
+                prefEdit.putBoolean("switch", false)
+            }
         }
 
     }
