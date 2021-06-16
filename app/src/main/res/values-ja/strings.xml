@@ -118,4 +118,6 @@
     <string name="everyday">毎日</string>
     <string name="tomorrow_weather">明日天気ｱﾗｰﾑ</string>
     <string name="weather_setting">天気設定</string>
+    <string name="morning_weather_toast">5時から9時の間に設定されたｱﾗｰﾑが鳴った後天気予報を表示します。</string>
+    <string name="tomorror_weather_toast">設定した時間に明日の天気をお知らせます。</string>
 </resources>

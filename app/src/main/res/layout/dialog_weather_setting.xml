@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
 
     <LinearLayout
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="center"
         android:background="@drawable/rounded_corner_orange"
+        android:orientation="vertical"
         android:padding="40dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/weather_setting"
-            android:layout_marginVertical="20dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_gravity="center"
-            android:textColor="#000" />
+            android:layout_marginVertical="20dp"
+            android:text="@string/weather_setting"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
             <Switch
                 android:id="@+id/morning_weather_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:checked="true"
-                android:track="@drawable/switch_track_selector"
                 android:thumb="@drawable/switch_thumb_selector"
+                android:track="@drawable/switch_track_selector"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <TextView
@@ -42,31 +44,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textSize="15dp"
                 android:gravity="center"
+                android:text="아침 날씨 확인"
                 android:textColor="@color/black"
-                android:text="아침 날씨 확인" />
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/morning_weather_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_info_24" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
+
                 <Switch
                     android:id="@+id/weather_alarm_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:checked="true"
-                    android:track="@drawable/switch_track_selector"
                     android:thumb="@drawable/switch_thumb_selector"
+                    android:track="@drawable/switch_track_selector"
                     tools:ignore="UseSwitchCompatOrMaterialXml" />
 
                 <TextView
@@ -74,31 +83,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textSize="15dp"
                     android:gravity="center"
+                    android:text="@string/tomorrow_weather"
                     android:textColor="@color/black"
-                    android:text="@string/tomorrow_weather" />
+                    android:textSize="15dp" />
+
+                <ImageView
+                    android:id="@+id/weather_alarm_imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_baseline_info_24" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
                 <TextView
                     android:id="@+id/weather_alarm_subTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:textSize="15dp"
                     android:gravity="center"
+                    android:text="@string/everyday"
                     android:textColor="@color/black"
-                    android:text="@string/everyday" />
+                    android:textSize="15dp" />
 
                 <Spinner
                     android:id="@+id/weather_alarm_spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     />
             </LinearLayout>
         </LinearLayout>

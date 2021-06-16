@@ -200,6 +200,9 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
                 }
                 // Weather Setting 버튼 클릭 시
                 2 -> {
+                    textView.text = context.getString(R.string.weather_setting)
+                    textView.setTextColor(Color.WHITE)
+
                     val weatherDialog = WeatherSetting(context)
                     weatherDialog.show()
                 }
