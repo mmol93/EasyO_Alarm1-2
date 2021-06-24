@@ -6,6 +6,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.MaidAlarm.easyo_alarm.AppClass
@@ -29,7 +31,6 @@ class WeatherSetting(context : Context) : Dialog(context){
         val morningWeatherData = context.getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
         val weatherAlarmData = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
 
-
         // 배경 투명하게 만들기
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -41,31 +42,66 @@ class WeatherSetting(context : Context) : Dialog(context){
         binder.weatherAlarmImageView.setOnClickListener {
             Toast.makeText(AppClass.context, AppClass.context.getString(R.string.tomorror_weather_toast), Toast.LENGTH_LONG).show()
         }
+        // 내일 날씨 오버레이 알람에 대한 ? 이미지뷰를 클릭했을 때
+        binder.weatherFrontAlarmImageView.setOnClickListener {
+            Toast.makeText(AppClass.context, AppClass.context.getString(R.string.tomorror_weather_front_toast), Toast.LENGTH_LONG).show()
+        }
 
         // 아침 날씨 스위치 리스너
         binder.morningWeatherSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             val prefEdit = morningWeatherData.edit()
             // On 상태
             if (isChecked){
-                prefEdit.putBoolean("switch", true)
+                prefEdit.putBoolean("morningSwitch", true)
             }
             // Off 상태
             else{
-                prefEdit.putBoolean("switch", false)
+                prefEdit.putBoolean("morningSwitch", false)
             }
+            prefEdit.apply()
         }
         // 날씨 알림 설정 스위치 리스너
         binder.weatherAlarmSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             val prefEdit = weatherAlarmData.edit()
             // On 상태
             if (isChecked){
-                prefEdit.putBoolean("switch", true)
+                prefEdit.putBoolean("weatherSwitch", true)
             }
             // Off 상태
             else{
-                prefEdit.putBoolean("switch", false)
+                prefEdit.putBoolean("weatherSwitch", false)
             }
+            prefEdit.apply()
         }
+        binder.weatherFrontAlarmSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            val prefEdit = weatherAlarmData.edit()
+            // On
+            if (isChecked){
+                prefEdit.putBoolean("weatherFrontSwich", true)
+            }
+            // Off
+            else{
+                prefEdit.putBoolean("weatherFrontSwich", false)
+            }
+            prefEdit.apply()
+        }
+        // 스피너(콤보박스)에 대한 아이템 선택 리스너 설정
+        binder.weatherAlarmSpinner.onItemSelectedListener = spinnerListener
 
+
+    }
+    // 스피너(콤보박스)에 대한 아이템 선택 리스너 정의
+    private val spinnerListener = object : AdapterView.OnItemSelectedListener{
+        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            val weatherAlarmData = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
+            val prefEdit = weatherAlarmData.edit()
+            // 23:00 같은 텍스트가 들어간다
+            prefEdit.putString("weatherAlarmTime", spinnerArray[position])
+            prefEdit.apply()
+            Log.d("test", "스피너 선택됨: ${spinnerArray[position]}")
+        }
+        override fun onNothingSelected(parent: AdapterView<*>?) {
+
+        }
     }
 }

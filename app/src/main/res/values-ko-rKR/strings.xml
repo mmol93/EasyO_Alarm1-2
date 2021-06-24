@@ -120,4 +120,6 @@
     <string name="weather_setting">날씨 설정</string>
     <string name="morning_weather_toast">오전5~9시 사이에 설정된 알람이 울린 뒤 일기 예보를 보여줍니다.</string>
     <string name="tomorror_weather_toast">설정한 시간에 내일 날씨를 알려줍니다.</string>
+    <string name="tomorrow_weather_front">전체화면으로 알림</string>
+    <string name="tomorror_weather_front_toast">On: 전체화면 알람 \nOff: 팝업 알람</string>
 </resources>

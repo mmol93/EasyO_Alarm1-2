@@ -176,9 +176,11 @@
     <string name="sub_morning_weather_alarm">Setting about the weather forecast</string>
     <string name="everyday">Everyday</string>
     <string name="tomorrow_weather">Tomorrow Weather</string>
+    <string name="tomorrow_weather_front">Overlay Alarm</string>
     <string name="weather_setting">Weather Setting</string>
     <string name="morning_weather_toast">Show weather forecast after go off the alarm in 5AM to 9AM</string>
     <string name="tomorror_weather_toast">Notify tomorrow weather in set time</string>
+    <string name="tomorror_weather_front_toast">On: Overlay Alarm \nOff: Notification Alarm</string>
 
     <!-- 여기 아래는 전부 라이센스 관련 String-->
     <string name="license_Apache" translatable="false">Apache License
