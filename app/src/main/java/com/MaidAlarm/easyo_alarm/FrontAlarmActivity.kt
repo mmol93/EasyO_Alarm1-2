@@ -136,6 +136,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         val calendar = Calendar.getInstance()
         val present_hour = calendar.get(Calendar.HOUR_OF_DAY)
         val present_min = calendar.get(Calendar.MINUTE)
+        var present_hourText = ""
 
         Log.d("FrontAlarmActivity", "problem1: $problem1")
         Log.d("FrontAlarmActivity", "problem2: $problem2")
@@ -143,10 +144,12 @@ class FrontAlarmActivity : AppCompatActivity() {
         // *** 시간은 항상 두 자리로 표시해야하기 때문에 조건을 설정해준다
         if (present_hour < 10){
             binder.FrontHour.text = "0$present_hour"
+            present_hourText = "0$present_hour"
         }else{
             binder.FrontHour.text = "$present_hour"
+            present_hourText = "$present_hour"
         }
-        // 시간은 항상 두 자리로 표시해야하기 때문에 조건을 설정해준다
+        // 분은 항상 두 자리로 표시해야하기 때문에 조건을 설정해준다
         if (present_min < 10){
             binder.FrontMin.text = "0$present_min"
         }else{
@@ -358,6 +361,14 @@ class FrontAlarmActivity : AppCompatActivity() {
                         finishAndRemoveTask()
                         // 1분뒤 소리 울리는거 취소 - 트리거 취소
                         app.threadTrigger = 0
+
+                        // 아침 날씨 확인 스위치가 on인지 확인
+                        val pref = getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
+                        val morningWeatherSwitch = pref.getBoolean("morningSwitch", false)
+                        // 알람이 울린 시간이 5 ~ 9시 사이 & 아침 날씨 스위치가 on 이라면 ok 후 날씨 화면을 보여준다
+                        if (present_hour in 5..8 && morningWeatherSwitch){
+                            Log.d("test", "아침 날씨 알람")
+                        }
                     }
                 }
             }

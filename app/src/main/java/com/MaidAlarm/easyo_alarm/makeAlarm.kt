@@ -158,6 +158,11 @@ class Receiver : BroadcastReceiver() {
                     Toast.makeText(context, context!!.getString(R.string.alarmToast_Action3), Toast.LENGTH_LONG).show()
                     function.makeSQLSetSimpleAlarm(context!!, 30)
                 }
+                // 내일 날씨 알려주기 알람이 울렸을 때
+                "weather" -> {
+
+                }
+
                 // 10분 연장 버튼을 클릭했을 때
                 "POSTPHONETIME" -> {
                     Log.d("makeAlarm", "알람 연장됨")

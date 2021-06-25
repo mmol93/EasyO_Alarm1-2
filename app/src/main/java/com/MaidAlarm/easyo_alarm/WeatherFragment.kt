@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -67,6 +68,17 @@ class WeatherFragment : Fragment() {
             showInfo(networkLocation)
         }else{
             Toast.makeText(AppClass.context, requireContext().getString(R.string.location_permmision), Toast.LENGTH_LONG).show()
+
+            // 확인할 권한 리스트
+            val permissionList = arrayOf(
+                Manifest.permission.VIBRATE,
+                Manifest.permission.WAKE_LOCK,
+                Manifest.permission.RECEIVE_BOOT_COMPLETED,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            requestPermissions(permissionList, 0)
+            return
         }
         refreshWeather()
     }

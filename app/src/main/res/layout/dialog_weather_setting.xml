@@ -135,7 +135,7 @@
                 android:id="@+id/weather_alarm_timeSet_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="30dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal">

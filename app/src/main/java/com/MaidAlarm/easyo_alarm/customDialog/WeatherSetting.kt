@@ -88,7 +88,6 @@ class WeatherSetting(context : Context) : Dialog(context){
         // 스피너(콤보박스)에 대한 아이템 선택 리스너 설정
         binder.weatherAlarmSpinner.onItemSelectedListener = spinnerListener
 
-
     }
     // 스피너(콤보박스)에 대한 아이템 선택 리스너 정의
     private val spinnerListener = object : AdapterView.OnItemSelectedListener{
@@ -98,7 +97,7 @@ class WeatherSetting(context : Context) : Dialog(context){
             // 23:00 같은 텍스트가 들어간다
             prefEdit.putString("weatherAlarmTime", spinnerArray[position])
             prefEdit.apply()
-            Log.d("test", "스피너 선택됨: ${spinnerArray[position]}")
+            Log.d("WeatherSetting", "스피너 선택됨: ${spinnerArray[position]}")
         }
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
