@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.isGone
 import com.MaidAlarm.easyo_alarm.AppClass
 import com.MaidAlarm.easyo_alarm.R
 import com.MaidAlarm.easyo_alarm.databinding.DialogWeatherSettingBinding
@@ -30,6 +31,20 @@ class WeatherSetting(context : Context) : Dialog(context){
         // 데이터 가져오기
         val morningWeatherData = context.getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
         val weatherAlarmData = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
+
+        // 데이터에 대한 스위치 on/off 설정
+        binder.morningWeatherSwitch.isChecked = morningWeatherData.getBoolean("morningSwitch", true)
+        binder.weatherAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherSwitch", false)
+        binder.weatherFrontAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherFrontSwitch", false)
+
+        // 스위치 on/off에 대한 isGone 설정
+        if (binder.weatherAlarmSwitch.isChecked){
+            binder.weatherAlarmFrontDisplayLayout.isGone = false
+            binder.weatherAlarmTimeSetLayout.isGone = false
+        }else{
+            binder.weatherAlarmFrontDisplayLayout.isGone = true
+            binder.weatherAlarmTimeSetLayout.isGone = true
+        }
 
         // 배경 투명하게 만들기
         window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -66,13 +81,19 @@ class WeatherSetting(context : Context) : Dialog(context){
             // On 상태
             if (isChecked){
                 prefEdit.putBoolean("weatherSwitch", true)
+                // 오버레이 설정에 대해 isGone을 구현해준다
+                binder.weatherAlarmFrontDisplayLayout.isGone = false
+                binder.weatherAlarmTimeSetLayout.isGone = false
             }
             // Off 상태
             else{
                 prefEdit.putBoolean("weatherSwitch", false)
+                binder.weatherAlarmFrontDisplayLayout.isGone = true
+                binder.weatherAlarmTimeSetLayout.isGone = true
             }
             prefEdit.apply()
         }
+        // 날씨 알림 오버레이 스위치 리스너
         binder.weatherFrontAlarmSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             val prefEdit = weatherAlarmData.edit()
             // On

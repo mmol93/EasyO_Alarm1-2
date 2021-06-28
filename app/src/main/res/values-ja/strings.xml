@@ -121,5 +121,5 @@
     <string name="morning_weather_toast">5時から9時の間に設定されたｱﾗｰﾑが鳴った後天気予報を表示します。</string>
     <string name="tomorror_weather_toast">設定した時間に明日の天気をお知らせます。</string>
     <string name="tomorrow_weather_front">前面表示でｱﾗｰﾑ</string>
-    <string name="tomorror_weather_front_toast">On: 前面表示ｱﾗｰﾑ \nOff: PopUpｱﾗｰﾑ</string>
+    <string name="tomorror_weather_front_toast">On: 前面表示で明日の天気予報 \nOff: PopUpで明日の天気予報</string>
 </resources>
