@@ -77,11 +77,11 @@ class WeatherSetting(context : Context) : Dialog(context){
             val prefEdit = weatherAlarmData.edit()
             // On
             if (isChecked){
-                prefEdit.putBoolean("weatherFrontSwich", true)
+                prefEdit.putBoolean("weatherFrontSwitch", true)
             }
             // Off
             else{
-                prefEdit.putBoolean("weatherFrontSwich", false)
+                prefEdit.putBoolean("weatherFrontSwitch", false)
             }
             prefEdit.apply()
         }

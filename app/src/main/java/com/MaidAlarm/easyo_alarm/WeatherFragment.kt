@@ -46,27 +46,10 @@ class WeatherFragment : Fragment() {
         val locationManager = requireContext().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
         // 제일 최근 위치 정보값을 가져온다
         // 권한을 얻었는지 확인(getLastKnownLocation을 사용하기 위해서 반드시 필요한 사전 확인임)
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        val gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        val networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        if (ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION) !=
+            PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
 
-        // GPS가 제일 정확하기 때문에 먼저 발동되게 한다
-        if (gpsLocation != null){
-            Log.d("location", "gpsLocation: $gpsLocation")
-            showInfo(gpsLocation)
-        }else if (networkLocation != null){
-            Log.d("location", "networkLocation: $networkLocation")
-            showInfo(networkLocation)
-        }else{
             Toast.makeText(AppClass.context, requireContext().getString(R.string.location_permmision), Toast.LENGTH_LONG).show()
 
             // 확인할 권한 리스트
@@ -77,8 +60,21 @@ class WeatherFragment : Fragment() {
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             )
-            requestPermissions(permissionList, 0)
+            requestPermissions(permissionList, 1)
+
             return
+        }
+        val gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        val networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+
+        // GPS가 제일 정확하기 때문에 먼저 발동되게 한다
+        if (gpsLocation != null){
+            Log.d("location", "gpsLocation: $gpsLocation")
+            showInfo(gpsLocation)
+
+        }else if (networkLocation != null){
+            Log.d("location", "networkLocation: $networkLocation")
+            showInfo(networkLocation)
         }
         refreshWeather()
     }

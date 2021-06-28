@@ -225,18 +225,19 @@ class MainActivity : AppCompatActivity() {
         mainBinder.BottomBar.setOnItemSelectListener(object : ReadableBottomBar.ItemSelectListener {
             override fun onItemSelected(index: Int) {
                 when (index) {
+                    // 메인 화면 프래그먼트
                     0 -> {
                         val tran = supportFragmentManager.beginTransaction()
                         tran.replace(R.id.container, alarmFragment)
                         tran.commit()
                     }
-
+                    // 날씨 화면 프래그먼트
                     1 -> {
                         val tran = supportFragmentManager.beginTransaction()
                         tran.replace(R.id.container, weatherFragment)
                         tran.commit()
                     }
-
+                    // 설정 화면 프래그먼트
                     2 -> {
                         val tran = supportFragmentManager.beginTransaction()
                         tran.replace(R.id.container, settingFragment)
@@ -245,6 +246,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+
+        // 아침 날씨 확인에 대한 인텐트 결과 처리
+        val morningSwitch = intent.getBooleanExtra("morningWeather", false)
+        // 바로 날씨 화면을 보여준다
+        if (morningSwitch){
+            val tran = supportFragmentManager.beginTransaction()
+            tran.replace(R.id.container, weatherFragment)
+            tran.commit()
+        }
         setContentView(mainBinder.root)
     }
 

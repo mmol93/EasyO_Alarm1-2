@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.MaidAlarm.easyo_alarm.AppClass.Companion.context
 import com.MaidAlarm.easyo_alarm.databinding.ActivityFrontAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
 import com.google.android.gms.ads.AdListener
@@ -368,6 +369,9 @@ class FrontAlarmActivity : AppCompatActivity() {
                         // 알람이 울린 시간이 5 ~ 9시 사이 & 아침 날씨 스위치가 on 이라면 ok 후 날씨 화면을 보여준다
                         if (present_hour in 5..8 && morningWeatherSwitch){
                             Log.d("test", "아침 날씨 알람")
+                            val intent = Intent(context, MainActivity::class.java)
+                            intent.putExtra("morningWeather", true)
+                            startActivity(intent)
                         }
                     }
                 }
@@ -379,6 +383,17 @@ class FrontAlarmActivity : AppCompatActivity() {
                 }
                 startThread()
                 finishAndRemoveTask()
+
+                // 아침 날씨 확인 스위치가 on인지 확인
+                val pref = getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
+                val morningWeatherSwitch = pref.getBoolean("morningSwitch", false)
+                // 알람이 울린 시간이 5 ~ 9시 사이 & 아침 날씨 스위치가 on 이라면 ok 후 날씨 화면을 보여준다
+                if (present_hour in 5..8 && morningWeatherSwitch){
+                    Log.d("test", "아침 날씨 알람")
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.putExtra("morningWeather", true)
+                    startActivity(intent)
+                }
             }
         }
 
