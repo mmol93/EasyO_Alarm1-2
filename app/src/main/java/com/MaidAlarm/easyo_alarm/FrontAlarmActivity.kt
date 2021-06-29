@@ -359,9 +359,6 @@ class FrontAlarmActivity : AppCompatActivity() {
                             vib.cancel()
                         }
                         startThread()
-                        finishAndRemoveTask()
-                        // 1분뒤 소리 울리는거 취소 - 트리거 취소
-                        app.threadTrigger = 0
 
                         // 아침 날씨 확인 스위치가 on인지 확인
                         val pref = getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
@@ -370,9 +367,16 @@ class FrontAlarmActivity : AppCompatActivity() {
                         if (present_hour in 5..8 && morningWeatherSwitch){
                             Log.d("test", "아침 날씨 알람")
                             val intent = Intent(context, MainActivity::class.java)
+                            // 다른 액티비티를 모두 제거하고 액티비티를 띄운다
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             intent.putExtra("morningWeather", true)
                             startActivity(intent)
+                        }else{
+                            finishAndRemoveTask()
                         }
+                        // 1분뒤 소리 울리는거 취소 - 트리거 취소
+                        app.threadTrigger = 0
                     }
                 }
             }
@@ -382,7 +386,6 @@ class FrontAlarmActivity : AppCompatActivity() {
                     vib.cancel()
                 }
                 startThread()
-                finishAndRemoveTask()
 
                 // 아침 날씨 확인 스위치가 on인지 확인
                 val pref = getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
@@ -391,8 +394,12 @@ class FrontAlarmActivity : AppCompatActivity() {
                 if (present_hour in 5..8 && morningWeatherSwitch){
                     Log.d("test", "아침 날씨 알람")
                     val intent = Intent(context, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.putExtra("morningWeather", true)
                     startActivity(intent)
+                }else{
+                    finishAndRemoveTask()
                 }
             }
         }

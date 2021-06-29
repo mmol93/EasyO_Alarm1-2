@@ -84,6 +84,9 @@ class WeatherSetting(context : Context) : Dialog(context){
                 // 오버레이 설정에 대해 isGone을 구현해준다
                 binder.weatherAlarmFrontDisplayLayout.isGone = false
                 binder.weatherAlarmTimeSetLayout.isGone = false
+
+                // 브로드캐스트 만들기
+
             }
             // Off 상태
             else{
