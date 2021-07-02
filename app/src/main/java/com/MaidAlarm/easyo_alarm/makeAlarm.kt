@@ -160,6 +160,7 @@ class Receiver : BroadcastReceiver() {
                 }
                 // 내일 날씨 알려주기 알람이 울렸을 때
                 "weather" -> {
+                    // 내일 날씨 알람은 매일 울리기 때문에 요일 확인을 할 필요가 없음
 
                 }
 

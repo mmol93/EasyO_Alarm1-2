@@ -35,14 +35,14 @@ class WeatherSetting(context : Context) : Dialog(context){
         // 데이터에 대한 스위치 on/off 설정
         binder.morningWeatherSwitch.isChecked = morningWeatherData.getBoolean("morningSwitch", true)
         binder.weatherAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherSwitch", false)
-        binder.weatherFrontAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherFrontSwitch", false)
+//        binder.weatherFrontAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherFrontSwitch", false) - 미사용
 
         // 스위치 on/off에 대한 isGone 설정
         if (binder.weatherAlarmSwitch.isChecked){
-            binder.weatherAlarmFrontDisplayLayout.isGone = false
+//            binder.weatherAlarmFrontDisplayLayout.isGone = false - 미사용
             binder.weatherAlarmTimeSetLayout.isGone = false
         }else{
-            binder.weatherAlarmFrontDisplayLayout.isGone = true
+//            binder.weatherAlarmFrontDisplayLayout.isGone = true - 미사용
             binder.weatherAlarmTimeSetLayout.isGone = true
         }
 
@@ -57,10 +57,10 @@ class WeatherSetting(context : Context) : Dialog(context){
         binder.weatherAlarmImageView.setOnClickListener {
             Toast.makeText(AppClass.context, AppClass.context.getString(R.string.tomorror_weather_toast), Toast.LENGTH_LONG).show()
         }
-        // 내일 날씨 오버레이 알람에 대한 ? 이미지뷰를 클릭했을 때
-        binder.weatherFrontAlarmImageView.setOnClickListener {
-            Toast.makeText(AppClass.context, AppClass.context.getString(R.string.tomorror_weather_front_toast), Toast.LENGTH_LONG).show()
-        }
+        // 내일 날씨 오버레이 알람에 대한 ? 이미지뷰를 클릭했을 때 - 미사용
+//        binder.weatherFrontAlarmImageView.setOnClickListener {
+//            Toast.makeText(AppClass.context, AppClass.context.getString(R.string.tomorror_weather_front_toast), Toast.LENGTH_LONG).show()
+//        }
 
         // 아침 날씨 스위치 리스너
         binder.morningWeatherSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -82,7 +82,7 @@ class WeatherSetting(context : Context) : Dialog(context){
             if (isChecked){
                 prefEdit.putBoolean("weatherSwitch", true)
                 // 오버레이 설정에 대해 isGone을 구현해준다
-                binder.weatherAlarmFrontDisplayLayout.isGone = false
+//                binder.weatherAlarmFrontDisplayLayout.isGone = false - 미사용
                 binder.weatherAlarmTimeSetLayout.isGone = false
 
                 // 브로드캐스트 만들기
@@ -91,24 +91,24 @@ class WeatherSetting(context : Context) : Dialog(context){
             // Off 상태
             else{
                 prefEdit.putBoolean("weatherSwitch", false)
-                binder.weatherAlarmFrontDisplayLayout.isGone = true
+//                binder.weatherAlarmFrontDisplayLayout.isGone = true - 미사용
                 binder.weatherAlarmTimeSetLayout.isGone = true
             }
             prefEdit.apply()
         }
-        // 날씨 알림 오버레이 스위치 리스너
-        binder.weatherFrontAlarmSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            val prefEdit = weatherAlarmData.edit()
-            // On
-            if (isChecked){
-                prefEdit.putBoolean("weatherFrontSwitch", true)
-            }
-            // Off
-            else{
-                prefEdit.putBoolean("weatherFrontSwitch", false)
-            }
-            prefEdit.apply()
-        }
+        // 날씨 알림 오버레이 스위치 리스너 - 미사용
+//        binder.weatherFrontAlarmSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+//            val prefEdit = weatherAlarmData.edit()
+//            // On
+//            if (isChecked){
+//                prefEdit.putBoolean("weatherFrontSwitch", true)
+//            }
+//            // Off
+//            else{
+//                prefEdit.putBoolean("weatherFrontSwitch", false)
+//            }
+//            prefEdit.apply()
+//        }
         // 스피너(콤보박스)에 대한 아이템 선택 리스너 설정
         binder.weatherAlarmSpinner.onItemSelectedListener = spinnerListener
 
