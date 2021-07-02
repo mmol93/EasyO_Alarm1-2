@@ -53,9 +53,9 @@ class MainActivity : AppCompatActivity() {
     private val permissionCode = 100
 
     // 알람 화면 프래그먼트
-    val alarmFragment = com.MaidAlarm.easyo_alarm.alarmFragment()
+    val alarmFragment = alarmFragment()
     // 세팅 화면 프래그먼트
-    val settingFragment = com.MaidAlarm.easyo_alarm.settingFragment()
+    val settingFragment = settingFragment()
     // 날씨 화면 프래그먼트
     val weatherFragment = WeatherFragment()
 
@@ -133,9 +133,9 @@ class MainActivity : AppCompatActivity() {
                     // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
                     // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
                     if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                        && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                        && appUpdateInfo.isUpdateTypeAllowed(FLEXIBLE)) {
                         // 있을 경우 업데이트 실시
-                        appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.FLEXIBLE,this, REQUEST_CODE_UPDATE)
+                        appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, FLEXIBLE,this, REQUEST_CODE_UPDATE)
                     }
                 }
             }
@@ -179,7 +179,7 @@ class MainActivity : AppCompatActivity() {
 
         }catch (e: Exception){
             // 어플을 처음 사용하는 거라서 데이터가 없는 경우에는 기본 값으로 만들어 준다
-            val fos = openFileOutput("data1.bat", Context.MODE_PRIVATE)
+            val fos = openFileOutput("data1.bat", MODE_PRIVATE)
 
             val dos = DataOutputStream(fos)
             dos.writeInt(app.wayOfAlarm)
@@ -251,6 +251,9 @@ class MainActivity : AppCompatActivity() {
         val morningSwitch = intent.getBooleanExtra("morningWeather", false)
         // 바로 날씨 화면을 보여준다
         if (morningSwitch){
+            // 바텀버튼의 스위치가 1번을 누르게 설정하고
+            mainBinder.BottomBar.selectItem(1)
+            // 날씨 화면으로 전환한다
             val tran = supportFragmentManager.beginTransaction()
             tran.replace(R.id.container, weatherFragment)
             tran.commit()
@@ -358,7 +361,7 @@ class MainActivity : AppCompatActivity() {
         val app : AppClass = application as AppClass
 
         // AppClass에 저장되어 있는 변수들을 파일에 저장한다
-        val fos = openFileOutput("data1.bat", Context.MODE_PRIVATE)
+        val fos = openFileOutput("data1.bat", MODE_PRIVATE)
 
         val dos = DataOutputStream(fos)
         dos.writeInt(app.wayOfAlarm)
