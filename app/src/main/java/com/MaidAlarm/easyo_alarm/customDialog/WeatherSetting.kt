@@ -14,6 +14,8 @@ import androidx.core.view.isGone
 import com.MaidAlarm.easyo_alarm.AppClass
 import com.MaidAlarm.easyo_alarm.R
 import com.MaidAlarm.easyo_alarm.databinding.DialogWeatherSettingBinding
+import com.MaidAlarm.easyo_alarm.weatherFunction.WeatherAlarm
+import java.lang.Exception
 
 class WeatherSetting(context : Context) : Dialog(context){
     lateinit var binder : DialogWeatherSettingBinding
@@ -36,6 +38,16 @@ class WeatherSetting(context : Context) : Dialog(context){
         binder.morningWeatherSwitch.isChecked = morningWeatherData.getBoolean("morningSwitch", true)
         binder.weatherAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherSwitch", false)
 //        binder.weatherFrontAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherFrontSwitch", false) - 미사용
+
+        // 데이터에 대해 스피너(콤보박스)의 값 설정해주기
+        val spinnerData = weatherAlarmData.getString("weatherAlarmTime", "01:00")
+        val targetSpinnerIndex = findDataInArray(spinnerData!!)
+        if (targetSpinnerIndex == -1){
+            Toast.makeText(context, context.getString(R.string.error_restart_toast), Toast.LENGTH_SHORT).show()
+            return
+        }
+        // 이전에 스피너에 값을 지정했다면 그 지정한 값으로 스피너 맞춰주기
+        binder.weatherAlarmSpinner.setSelection(targetSpinnerIndex)
 
         // 스위치 on/off에 대한 isGone 설정
         if (binder.weatherAlarmSwitch.isChecked){
@@ -78,6 +90,11 @@ class WeatherSetting(context : Context) : Dialog(context){
         // 날씨 알림 설정 스위치 리스너
         binder.weatherAlarmSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
             val prefEdit = weatherAlarmData.edit()
+            val weatherAlarmData = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
+
+            // 브로드캐스트 만들기
+            val weatherAlarm = WeatherAlarm(context)
+
             // On 상태
             if (isChecked){
                 prefEdit.putBoolean("weatherSwitch", true)
@@ -85,14 +102,26 @@ class WeatherSetting(context : Context) : Dialog(context){
 //                binder.weatherAlarmFrontDisplayLayout.isGone = false - 미사용
                 binder.weatherAlarmTimeSetLayout.isGone = false
 
-                // 브로드캐스트 만들기
-
+                // 내일 날씨 알람 설정한 시간 가져오기
+                val setHourData = weatherAlarmData.getString("weatherAlarmTime", "01:00")
+                Log.d("weatherAlarm - WeatherSetting.kt", "설정한 시간: $setHourData")
+                if (setHourData != null) {
+                    // 해당 시간에 알림 오게 브로드캐스트 설정
+                    weatherAlarm.setTomorrowWeatherAlarm(setHourData)
+                }
             }
             // Off 상태
             else{
                 prefEdit.putBoolean("weatherSwitch", false)
 //                binder.weatherAlarmFrontDisplayLayout.isGone = true - 미사용
                 binder.weatherAlarmTimeSetLayout.isGone = true
+                // 브로드캐스트 끄기
+                try{
+                    weatherAlarm.cancelTomorrowWeatherAlarm()
+                }catch (e:Exception){
+
+                }
+
             }
             prefEdit.apply()
         }
@@ -119,12 +148,30 @@ class WeatherSetting(context : Context) : Dialog(context){
             val weatherAlarmData = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
             val prefEdit = weatherAlarmData.edit()
             // 23:00 같은 텍스트가 들어간다
-            prefEdit.putString("weatherAlarmTime", spinnerArray[position])
+            val settledData = spinnerArray[position]
+
+            // 해당 시간에 알림 오게 브로드캐스트 설정
+            val weatherAlarm = WeatherAlarm(context)
+            weatherAlarm.setTomorrowWeatherAlarm(settledData)
+
+            prefEdit.putString("weatherAlarmTime", settledData)
             prefEdit.apply()
-            Log.d("WeatherSetting", "스피너 선택됨: ${spinnerArray[position]}")
+            Log.d("WeatherAlarm - WeatherSetting", "스피너 선택됨: $settledData")
         }
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
         }
+    }
+
+    private fun findDataInArray(data : String) : Int{
+        var i = 0
+        for (target in spinnerArray){
+            if (data == target){
+                return i
+            }else{
+                i++
+            }
+        }
+        return -1
     }
 }

@@ -122,4 +122,6 @@
     <string name="tomorror_weather_toast">설정한 시간에 내일 날씨를 알려줍니다.</string>
     <string name="tomorrow_weather_front">전체화면으로 알림</string>
     <string name="tomorror_weather_front_toast">On: 전체화면으로 내일 날씨 알림 \nOff: 팝업으로 내일 날씨 알림</string>
+    <string name="tomorrowWeather">내일 날씨</string>
+    <string name="error_restart_toast">에러가 발생했습니다! 앱을 다시 실행해주세요</string>
 </resources>

@@ -122,4 +122,6 @@
     <string name="tomorror_weather_toast">設定した時間に明日の天気をお知らせます。</string>
     <string name="tomorrow_weather_front">前面表示でｱﾗｰﾑ</string>
     <string name="tomorror_weather_front_toast">On: 前面表示で明日の天気予報 \nOff: PopUpで明日の天気予報</string>
+    <string name="tomorrowWeather">明日の天気</string>
+    <string name="error_restart_toast">ｴﾗｰが発生しました。アプリを再起動してください。</string>
 </resources>

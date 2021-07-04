@@ -21,7 +21,7 @@ class notification {
     private var alarmMode = 0
     private var alarmCounter = 0
 
-    // 일반적인 notification 생성에서 사용됨
+    // 일반적인 notification 생성에서 사용됨(다음 알람 표시용)
     fun makeNotification(app : AppClass, context : Context, notificationManager : NotificationManager){
         pref = context.getSharedPreferences("simpleAlarmData", Context.MODE_PRIVATE)
         alarmSwitch = pref.getInt("alarmSwitch", 1)
@@ -38,13 +38,13 @@ class notification {
             // 알람이 계속 뜬 상채로 있게하기
             builder1.setOngoing(true)
 
-            // 전체 알락 삭제를 눌러도 삭제 안되게 하기
+            // 전체 알림 삭제를 눌러도 삭제 안되게 하기
             builder1.setAutoCancel(false)
         }else{
             // 알람 개별 삭제 가능
             builder1.setOngoing(false)
 
-            // 전체 알락 삭제를 눌러도 삭제 가능하게 하기
+            // 전체 알림 삭제를 눌러도 삭제 가능하게 하기
             builder1.setAutoCancel(true)
         }
 
@@ -125,13 +125,13 @@ class notification {
             // 알람이 계속 뜬 상채로 있게하기
             builder1.setOngoing(true)
 
-            // 전체 알락 삭제를 눌러도 삭제 안되게 하기
+            // 전체 알림 삭제를 눌러도 삭제 안되게 하기
             builder1.setAutoCancel(false)
         }else{
             // 알람 개별 삭제 가능
             builder1.setOngoing(false)
 
-            // 전체 알락 삭제를 눌러도 삭제 가능하게 하기
+            // 전체 알림 삭제를 눌러도 삭제 가능하게 하기
             builder1.setAutoCancel(true)
         }
 

@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import com.MaidAlarm.easyo_alarm.AppClass.Companion.context
 import com.MaidAlarm.easyo_alarm.Receiver
 import java.util.*
@@ -14,7 +15,8 @@ class WeatherAlarm(context:Context) {
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
 
     fun setTomorrowWeatherAlarm(time:String){
-        val hour = time.substring(0,1).toInt()
+        val hour = time.substring(0, 2).toInt()
+        Log.d("WeatherAlarm - WeatherAlarm.kt", "Calendar에 들어갈 (설정된)시간: $hour")
 
         // 브로드캐스트에 등록할 날짜를 지정
         val calendar: Calendar = Calendar.getInstance().apply {
@@ -24,6 +26,13 @@ class WeatherAlarm(context:Context) {
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
         }
+        var calendarTimeMillis = calendar.timeInMillis
+        if (calendarTimeMillis <= System.currentTimeMillis()){
+            val intervalTime = (24 * 60 * 60 * 1000) // 24시간
+            calendarTimeMillis += intervalTime
+        }
+        Log.d("WeatherAlarm - WeatherAlar.kt", "설정된 브로드캐스트 시간: ${calendarTimeMillis}")
+        Log.d("WeatherAlarm - WeatherAlar.kt", "현재 시간: ${System.currentTimeMillis()}")
 
         // 브로드캐스트 등록하기
         val intent = Intent(context, Receiver::class.java)
@@ -37,13 +46,8 @@ class WeatherAlarm(context:Context) {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        // 위에서 설정한 시간(Calendar.getInstance)에 알람이 울리게 한다
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            // API23 이상에서는 setExactAndAllowWhileIdle을 사용해야한다.
-            alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        }else{
-            alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        }
+        // 날씨 알람은 매일 울리기 때문에 setRepeat로 지정한다
+        alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendarTimeMillis, 24*60*60*1000L, pendingIntent)
     }
 
     fun cancelTomorrowWeatherAlarm(){
