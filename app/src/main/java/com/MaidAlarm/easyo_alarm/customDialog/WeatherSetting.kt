@@ -19,8 +19,9 @@ import java.lang.Exception
 
 class WeatherSetting(context : Context) : Dialog(context){
     lateinit var binder : DialogWeatherSettingBinding
+    // 인덱스: 0 ~ 23
     val spinnerArray = arrayOf("01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00",
-        "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00")
+        "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binder = DialogWeatherSettingBinding.inflate(layoutInflater)
@@ -148,7 +149,12 @@ class WeatherSetting(context : Context) : Dialog(context){
             val weatherAlarmData = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
             val prefEdit = weatherAlarmData.edit()
             // 23:00 같은 텍스트가 들어간다
-            val settledData = spinnerArray[position]
+            var settledData = spinnerArray[position]
+            if (settledData == ""){
+                settledData = "23:00"
+                // 스피너도 "23:00"을 가리키도록 한다
+                binder.weatherAlarmSpinner.setSelection(22)
+            }
 
             // 해당 시간에 알림 오게 브로드캐스트 설정
             val weatherAlarm = WeatherAlarm(context)
