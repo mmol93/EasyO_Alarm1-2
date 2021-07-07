@@ -2,6 +2,7 @@ package com.MaidAlarm.easyo_alarm
 
 import android.Manifest
 import android.app.ActivityManager
+import android.app.KeyguardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -9,11 +10,13 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -86,73 +89,101 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
 
-        // *** 앱 업데이트 있는지 검사하는 객체 가져오기
-        appUpdateManager = AppUpdateManagerFactory.create(this)
+        // 아침 날씨 확인에 대한 인텐트 결과 처리
+        val morningSwitch = intent.getBooleanExtra("morningWeather", false)
+        // 바로 날씨 화면을 보여준다
+        if (morningSwitch){
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
-        // 일부 휴대폰에서 onCreate()가 여러번 호출되기 때문에 여기에 권한 확인을 넣음
-        if (savedInstanceState == null){
-            Log.d("mainActivity", "savedInstanceState: $savedInstanceState")
-            // 오버레이 권한 확인
-            if (!Settings.canDrawOverlays(this)) {
-                // ask for setting
-                val intent = Intent(
-                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:$packageName")
-                )
-                startActivityForResult(intent, permissionCode)
-                Log.d("mainActivity", "오버레이 intent 호출")
+            // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄울 수 있게 하기
+            // 아침 날씨 보여주기 기능에서 사용된다
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1){
+                setShowWhenLocked(true)
+                setTurnScreenOn(true)
+                val keyguardManager = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+                keyguardManager.requestDismissKeyguard(this, null)
+            }else{
+                this.window.addFlags(
+                    WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
+                            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                            WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
             }
 
-            // 다른 권한 확인
-            for (permission in permissionList){
-                val check = checkCallingOrSelfPermission(permission)
-                if (check == PackageManager.PERMISSION_GRANTED){
-                    Log.d("MainActivity", "${permission} 승인됨")
+            // 바텀버튼의 스위치가 1번을 누르게 설정하고
+            mainBinder.BottomBar.selectItem(1)
+            // 날씨 화면으로 전환한다
+            val tran = supportFragmentManager.beginTransaction()
+            tran.replace(R.id.container, weatherFragment)
+            tran.commit()
+        }
+        // 날씨 확인용으로 MainActivity를 띄울 때는 업데이트 및 권한 확인 필요없음
+        else{
+            // *** 앱 업데이트 있는지 검사하는 객체 가져오기
+            appUpdateManager = AppUpdateManagerFactory.create(this)
+
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+            // 일부 휴대폰에서 onCreate()가 여러번 호출되기 때문에 여기에 권한 확인을 넣음
+            if (savedInstanceState == null){
+                Log.d("mainActivity", "savedInstanceState: $savedInstanceState")
+                // 오버레이 권한 확인
+                if (!Settings.canDrawOverlays(this)) {
+                    // ask for setting
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:$packageName")
+                    )
+                    startActivityForResult(intent, permissionCode)
+                    Log.d("mainActivity", "오버레이 intent 호출")
                 }
-                else{
-                    Log.d("MainActivity", "${permission} 거부됨")
-                    requestPermissions(permissionList, 0)
-                }
-            }
 
-            // 업데이트 주기 확인을 위해 데이터 가져오기
-            try{
-                val fis = openFileInput("data3.bat")
-                val dis = DataInputStream(fis)
-
-                lastUpdate = dis.readLong()
-            }catch (e:Exception){
-
-            }
-
-            // AppUpdateManager 업데이트 초기화
-            appUpdateManager?.let {
-                it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                    // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
-                    // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
-                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                        && appUpdateInfo.isUpdateTypeAllowed(FLEXIBLE)) {
-                        // 있을 경우 업데이트 실시
-                        appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, FLEXIBLE,this, REQUEST_CODE_UPDATE)
+                // 다른 권한 확인
+                for (permission in permissionList){
+                    val check = checkCallingOrSelfPermission(permission)
+                    if (check == PackageManager.PERMISSION_GRANTED){
+                        Log.d("MainActivity", "${permission} 승인됨")
+                    }
+                    else{
+                        Log.d("MainActivity", "${permission} 거부됨")
+                        requestPermissions(permissionList, 0)
                     }
                 }
-            }
 
-            // 인앱 업데이트 상태 리스너
-            val updateListener = InstallStateUpdatedListener { state ->
-                if (state.installStatus() == InstallStatus.DOWNLOADED){
-                    Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
+                // 업데이트 주기 확인을 위해 데이터 가져오기
+                try{
+                    val fis = openFileInput("data3.bat")
+                    val dis = DataInputStream(fis)
+
+                    lastUpdate = dis.readLong()
+                }catch (e:Exception){
+
                 }
+
+                // AppUpdateManager 업데이트 초기화
+                appUpdateManager?.let {
+                    it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                        // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
+                        // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
+                        if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                            && appUpdateInfo.isUpdateTypeAllowed(FLEXIBLE)) {
+                            // 있을 경우 업데이트 실시
+                            appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, FLEXIBLE,this, REQUEST_CODE_UPDATE)
+                        }
+                    }
+                }
+
+                // 인앱 업데이트 상태 리스너
+                val updateListener = InstallStateUpdatedListener { state ->
+                    if (state.installStatus() == InstallStatus.DOWNLOADED){
+                        Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
+                    }
+                }
+                appUpdateManager.registerListener(updateListener)
+
+                // *** Task 종료에 대한 서비스를 실시한다
+                startService(Intent(this, Service::class.java))
             }
-            appUpdateManager.registerListener(updateListener)
-
-            // *** Task 종료에 대한 서비스를 실시한다
-            startService(Intent(this, Service::class.java))
         }
-
-
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
         app = application as AppClass
 
@@ -247,17 +278,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        // 아침 날씨 확인에 대한 인텐트 결과 처리
-        val morningSwitch = intent.getBooleanExtra("morningWeather", false)
-        // 바로 날씨 화면을 보여준다
-        if (morningSwitch){
-            // 바텀버튼의 스위치가 1번을 누르게 설정하고
-            mainBinder.BottomBar.selectItem(1)
-            // 날씨 화면으로 전환한다
-            val tran = supportFragmentManager.beginTransaction()
-            tran.replace(R.id.container, weatherFragment)
-            tran.commit()
-        }
         setContentView(mainBinder.root)
     }
 

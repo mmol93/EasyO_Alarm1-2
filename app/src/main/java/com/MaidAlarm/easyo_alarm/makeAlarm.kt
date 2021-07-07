@@ -264,8 +264,8 @@ class Receiver : BroadcastReceiver() {
                             val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
                             // Notification 생성
-                            // 인덱스1이 내일 날씨를 의미
-                            weatherNotification.makeWeatherNotification(dailyMain[1], dailyMaxTemp[1], dailyMinTemp[1], dailyPop[1], notificationManager)
+                            // 인덱스0이 내일 날씨를 의미(인덱스 1이 내일 날씨인 것은 이미 RetrofitManager.kt에서 거름)
+                            weatherNotification.makeWeatherNotification(dailyMain[0], dailyMaxTemp[0], dailyMinTemp[0], dailyPop[0], notificationManager)
                         }
                     )
                 }

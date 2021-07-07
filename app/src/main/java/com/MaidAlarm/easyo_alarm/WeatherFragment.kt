@@ -166,16 +166,39 @@ class WeatherFragment : Fragment() {
                     binder.dataTextView.text = "${AppClass.cityName}   "
                 }
                 binder.dataTextView.append(now)
-                binder.mainTextView.text = Weather.main
                 when(Weather.main){
-                    "Thunderstorm" -> binder.weatherImageView.setImageResource(R.drawable.ic_thunder)
-                    "Drizzle" -> binder.weatherImageView.setImageResource(R.drawable.ic_little_rain)
-                    "Rain" -> binder.weatherImageView.setImageResource(R.drawable.ic_rain)
-                    "Snow" -> binder.weatherImageView.setImageResource(R.drawable.ic_snow)
-                    "Clear" -> binder.weatherImageView.setImageResource(R.drawable.ic_sunny)
-                    "Clouds" -> binder.weatherImageView.setImageResource(R.drawable.ic_clouds)
-                    "Mist", "Dust", "Fog", "Haze", "Sand", "Ash" -> binder.weatherImageView.setImageResource(R.drawable.ic_fog)
-                    "Tornado", "Squall" -> binder.weatherImageView.setImageResource(R.drawable.ic_tornado)
+                    "Thunderstorm" -> {
+                        binder.weatherImageView.setImageResource(R.drawable.ic_thunder)
+                        binder.mainTextView.text = getString(R.string.Thunderstorm)
+                    }
+                    "Drizzle" -> {
+                        binder.weatherImageView.setImageResource(R.drawable.ic_little_rain)
+                        binder.mainTextView.text = getString(R.string.drizzle)
+                    }
+                    "Rain" -> {
+                        binder.weatherImageView.setImageResource(R.drawable.ic_rain)
+                        binder.mainTextView.text = getString(R.string.rain)
+                    }
+                    "Snow" -> {
+                        binder.weatherImageView.setImageResource(R.drawable.ic_snow)
+                        binder.mainTextView.text = getString(R.string.snow)
+                    }
+                    "Clear" -> {
+                        binder.weatherImageView.setImageResource(R.drawable.ic_sunny)
+                        binder.mainTextView.text = getString(R.string.clear)
+                    }
+                    "Clouds" -> {
+                        binder.weatherImageView.setImageResource(R.drawable.ic_clouds)
+                        binder.mainTextView.text = getString(R.string.clouds)
+                    }
+                    "Mist", "Dust", "Fog", "Haze", "Sand", "Ash" -> {
+                        binder.weatherImageView.setImageResource(R.drawable.ic_fog)
+                        binder.mainTextView.text = getString(R.string.mist)
+                    }
+                    "Tornado", "Squall" -> {
+                        binder.weatherImageView.setImageResource(R.drawable.ic_tornado)
+                        binder.mainTextView.text = getString(R.string.tornado)
+                    }
                 }
                 binder.tempTextView.text = Weather.temp.toString() + "℃"
                 binder.minMaxTextView.text = Weather.min_temp.toString() + "℃ / "
@@ -219,9 +242,6 @@ class WeatherFragment : Fragment() {
                 binder.UVpercentTextView.text = Weather.uvi
                 binder.progressBar.isGone = true
                 binder.refreshImageView.isGone = false
-                if (Weather.rainPercent in 40..50){
-                    binder.weatherImageView.setImageResource(R.drawable.ic_little_rain)
-                }
                 binder.loadingProgress.isGone = true
                 binder.loadingTextView.isGone = true
                 binder.loadingErrorTextView.isGone = true

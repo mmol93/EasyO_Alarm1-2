@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:checked="true"
+                android:checked="false"
                 android:thumb="@drawable/switch_thumb_selector"
                 android:track="@drawable/switch_track_selector"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -148,7 +148,7 @@
                     android:gravity="center"
                     android:text="@string/everyday"
                     android:textColor="@color/black"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:textSize="15dp" />
 
                 <Spinner

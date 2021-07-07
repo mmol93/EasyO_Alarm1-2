@@ -50,6 +50,11 @@ class SelectSimpleRingActivity : AppCompatActivity() {
             // 한국어 알람음
             10 -> binder.radioButtonK1.isChecked = true
             11 -> binder.radioButtonK2.isChecked = true
+            // 고주파 알람음
+            40 -> binder.radioButtonSonic1.isChecked = true
+            41 -> binder.radioButtonSonic2.isChecked = true
+            42 -> binder.radioButtonSonic3.isChecked = true
+            43 -> binder.radioButtonSonic4.isChecked = true
             // 값이 null일 때(아마...)
             else -> binder.radioButtonN1.isChecked = true
         }
@@ -103,6 +108,11 @@ class SelectSimpleRingActivity : AppCompatActivity() {
                 // 한국어 알람음
                 R.id.radioButton_K1 -> prefEdit.putInt("bellIndex", 10)
                 R.id.radioButton_K2 -> prefEdit.putInt("bellIndex", 11)
+                // 고주파 알람음
+                R.id.radioButton_Sonic1 -> prefEdit.putInt("bellIndex", 40)
+                R.id.radioButton_Sonic2 -> prefEdit.putInt("bellIndex", 41)
+                R.id.radioButton_Sonic3 -> prefEdit.putInt("bellIndex", 42)
+                R.id.radioButton_Sonic4 -> prefEdit.putInt("bellIndex", 43)
             }
             prefEdit.commit()
         }
@@ -157,6 +167,10 @@ class SelectSimpleRingActivity : AppCompatActivity() {
             3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_loney)
             10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
             11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
+            40 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.sonic_16746)
+            41 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.sonic_15805)
+            42 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.sonic_14918)
+            43 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.sonic_14080)
         }
     }
 }

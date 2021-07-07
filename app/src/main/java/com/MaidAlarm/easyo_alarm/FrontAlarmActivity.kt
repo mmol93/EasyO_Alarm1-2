@@ -125,6 +125,10 @@ class FrontAlarmActivity : AppCompatActivity() {
                 3 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.normal_loney)
                 10 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.voice_k_juyoeng)
                 11 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.vocie_k_minjeong)
+                40 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.sonic_16746)
+                41 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.sonic_15805)
+                42 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.sonic_14918)
+                43 -> app.mediaPlayer = MediaPlayer.create(this, R.raw.sonic_14080)
             }
 
         }catch (e: Exception){
@@ -355,9 +359,18 @@ class FrontAlarmActivity : AppCompatActivity() {
                     }
                     // 계산 문제를 카운터 만큼 실시 했을 때 -> 진동, 음악 멈추고 액티비티 종료
                     if (counter >= alarmMode) {
-                        if (progress == 0) {
-                            vib.cancel()
+                        try{
+                            if (progress == 0) {
+                                vib.cancel()
+                            }else{
+                                mediaPlayer.release()
+                                // 볼륨 원래대로 되돌리기
+                                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
+                            }
+                        }catch (e:Exception){
+
                         }
+
                         startThread()
 
                         // 아침 날씨 확인 스위치가 on인지 확인
@@ -382,9 +395,20 @@ class FrontAlarmActivity : AppCompatActivity() {
             }
             // 계산문제를 설정하지 않았을 때
             else {
-                if (progress == 0) {
-                    vib.cancel()
+                try{
+                    // 설정 볼륨이 0일 때는 진동만 끄게 한다
+                    if (progress == 0) {
+                        vib.cancel()
+                    }// 볼륨이 0을 넘으면 소리를 끄게 한다
+                    else{
+                        mediaPlayer.release()
+                        // 볼륨 원래대로 되돌리기
+                        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
+                    }
+                }catch (e:Exception){
+
                 }
+
                 startThread()
 
                 // 아침 날씨 확인 스위치가 on인지 확인
@@ -449,7 +473,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         super.onDestroy()
 
         try{
-            // 음악 끄기
+            // 음악(소리) 끄기
             mediaPlayer.release()
             // 볼륨 원래대로 되돌리기
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)

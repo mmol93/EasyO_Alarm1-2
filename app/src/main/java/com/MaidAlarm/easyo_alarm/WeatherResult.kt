@@ -11,7 +11,7 @@ object Weather{
     var wind = 0
     var sunSet = ""
     var sunRise = ""
-    var country = ""
+    var country : String? = ""
     var rainPercent = 0
     var uvi = ""
 }

@@ -120,6 +120,12 @@
     <string name="typeOfBell_Japanese">Japanese-Voice(coming soon)</string>
     <string name="typeOfBell_English">English-Voice(coming soon)</string>
 
+    <string name="typeOfBell_UltraSonic">Ultra Sonic</string>
+    <string name="typeOfBell_UltraSonic_16.7kHz">16.7kHz(for 10ages)</string>
+    <string name="typeOfBell_UltraSonic_15.8kHz">15.8kHz(for 20ages)</string>
+    <string name="typeOfBell_UltraSonic_14.9kHz">14.9kHz(for 30ages)</string>
+    <string name="typeOfBell_UltraSonic_14.1kHz">14.1kHz(for 40ages)</string>
+
     <string name="permission_dialogTitle">Permission</string>
     <string name="permission_dialogGotIt">I did it</string>
     <string name="permission_dialogMessage">
