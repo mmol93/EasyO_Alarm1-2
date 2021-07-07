@@ -124,4 +124,9 @@
     <string name="tomorror_weather_front_toast">On: 前面表示で明日の天気予報 \nOff: PopUpで明日の天気予報</string>
     <string name="tomorrowWeather">明日の天気</string>
     <string name="error_restart_toast">ｴﾗｰが発生しました。アプリを再起動してください。</string>
+    <string name="typeOfBell_UltraSonic">高周波ｱﾗｰﾑ</string>
+    <string name="typeOfBell_UltraSonic_16.7kHz">16.7kHz(10代)</string>
+    <string name="typeOfBell_UltraSonic_15.8kHz">15.8kHz(20代)</string>
+    <string name="typeOfBell_UltraSonic_14.9kHz">14.9kHz(30代)</string>
+    <string name="typeOfBell_UltraSonic_14.1kHz">14.1kHz(40代)</string>
 </resources>

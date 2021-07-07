@@ -124,4 +124,9 @@
     <string name="tomorror_weather_front_toast">On: 전체화면으로 내일 날씨 알림 \nOff: 팝업으로 내일 날씨 알림</string>
     <string name="tomorrowWeather">내일 날씨</string>
     <string name="error_restart_toast">에러가 발생했습니다! 앱을 다시 실행해주세요</string>
+    <string name="typeOfBell_UltraSonic">고주파 알람음</string>
+    <string name="typeOfBell_UltraSonic_16.7kHz">16.7kHz(10대)</string>
+    <string name="typeOfBell_UltraSonic_15.8kHz">15.8kHz(20대)</string>
+    <string name="typeOfBell_UltraSonic_14.9kHz">14.9kHz(30대)</string>
+    <string name="typeOfBell_UltraSonic_14.1kHz">14.1kHz(40대)</string>
 </resources>

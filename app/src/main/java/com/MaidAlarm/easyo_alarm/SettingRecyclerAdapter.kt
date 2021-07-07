@@ -67,6 +67,10 @@ class SettingRecyclerAdapter(val context : Context) : RecyclerView.Adapter<Setti
             3 -> subItem1 = context.getString(R.string.typeOfBell_Normal_Lonely)
             10 -> subItem1 = context.getString(R.string.typeOfBell_Korean_Jeongyeon)
             11 -> subItem1 = context.getString(R.string.typeOfBell_Korean_MinJjeong)
+            40 -> subItem1 = context.getString(R.string.typeOfBell_UltraSonic_16_7kHz)
+            41 -> subItem1 = context.getString(R.string.typeOfBell_UltraSonic_15_8kHz)
+            42 -> subItem1 = context.getString(R.string.typeOfBell_UltraSonic_14_9kHz)
+            43 -> subItem1 = context.getString(R.string.typeOfBell_UltraSonic_14_1kHz)
         }
 
         var subItem2 = ""
