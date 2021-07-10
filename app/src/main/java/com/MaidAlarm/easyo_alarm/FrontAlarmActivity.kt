@@ -381,8 +381,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                             Log.d("test", "아침 날씨 알람")
                             val intent = Intent(context, MainActivity::class.java)
                             // 다른 액티비티를 모두 제거하고 액티비티를 띄운다
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                             intent.putExtra("morningWeather", true)
                             startActivity(intent)
                         }else{

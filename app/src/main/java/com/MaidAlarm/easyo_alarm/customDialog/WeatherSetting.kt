@@ -36,7 +36,7 @@ class WeatherSetting(context : Context) : Dialog(context){
         val weatherAlarmData = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
 
         // 데이터에 대한 스위치 on/off 설정
-        binder.morningWeatherSwitch.isChecked = morningWeatherData.getBoolean("morningSwitch", true)
+        binder.morningWeatherSwitch.isChecked = morningWeatherData.getBoolean("morningSwitch", false)
         binder.weatherAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherSwitch", false)
 //        binder.weatherFrontAlarmSwitch.isChecked = weatherAlarmData.getBoolean("weatherFrontSwitch", false) - 미사용
 

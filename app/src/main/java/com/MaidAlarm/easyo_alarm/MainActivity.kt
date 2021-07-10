@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         val morningSwitch = intent.getBooleanExtra("morningWeather", false)
         // 바로 날씨 화면을 보여준다
         if (morningSwitch){
-
+            Log.d("WeatherAlarm - MainActivity.kt", "MainActivity에서 아침날씨 발동")
             // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄울 수 있게 하기
             // 아침 날씨 보여주기 기능에서 사용된다
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -117,73 +117,84 @@ class MainActivity : AppCompatActivity() {
             tran.commit()
         }
         // 날씨 확인용으로 MainActivity를 띄울 때는 업데이트 및 권한 확인 필요없음
-        else{
-            // *** 앱 업데이트 있는지 검사하는 객체 가져오기
-            appUpdateManager = AppUpdateManagerFactory.create(this)
 
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        // *** 앱 업데이트 있는지 검사하는 객체 가져오기
+        appUpdateManager = AppUpdateManagerFactory.create(this)
 
-            // 일부 휴대폰에서 onCreate()가 여러번 호출되기 때문에 여기에 권한 확인을 넣음
-            if (savedInstanceState == null){
-                Log.d("mainActivity", "savedInstanceState: $savedInstanceState")
-                // 오버레이 권한 확인
-                if (!Settings.canDrawOverlays(this)) {
-                    // ask for setting
-                    val intent = Intent(
-                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:$packageName")
-                    )
-                    startActivityForResult(intent, permissionCode)
-                    Log.d("mainActivity", "오버레이 intent 호출")
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        // 일부 휴대폰에서 onCreate()가 여러번 호출되기 때문에 여기에 권한 확인을 넣음
+        if (savedInstanceState == null){
+            Log.d("mainActivity", "savedInstanceState: $savedInstanceState")
+            // 오버레이 권한 확인
+            if (!Settings.canDrawOverlays(this)) {
+                // ask for setting
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:$packageName")
+                )
+                startActivityForResult(intent, permissionCode)
+                Log.d("mainActivity", "오버레이 intent 호출")
+            }
+
+            // 다른 권한 확인
+            for (permission in permissionList){
+                val check = checkCallingOrSelfPermission(permission)
+                if (check == PackageManager.PERMISSION_GRANTED){
+                    Log.d("MainActivity", "${permission} 승인됨")
                 }
+                else{
+                    Log.d("MainActivity", "${permission} 거부됨")
+                    requestPermissions(permissionList, 0)
+                }
+            }
 
-                // 다른 권한 확인
-                for (permission in permissionList){
-                    val check = checkCallingOrSelfPermission(permission)
-                    if (check == PackageManager.PERMISSION_GRANTED){
-                        Log.d("MainActivity", "${permission} 승인됨")
-                    }
-                    else{
-                        Log.d("MainActivity", "${permission} 거부됨")
-                        requestPermissions(permissionList, 0)
+            // 업데이트 주기 확인을 위해 데이터 가져오기
+            try{
+                val fis = openFileInput("data3.bat")
+                val dis = DataInputStream(fis)
+
+                lastUpdate = dis.readLong()
+            }catch (e:Exception){
+
+            }
+
+            // AppUpdateManager 업데이트 초기화
+            appUpdateManager?.let {
+                it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                    // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
+                    // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                        && appUpdateInfo.isUpdateTypeAllowed(FLEXIBLE)) {
+                        // 있을 경우 업데이트 실시
+                        appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, FLEXIBLE,this, REQUEST_CODE_UPDATE)
                     }
                 }
+            }
 
-                // 업데이트 주기 확인을 위해 데이터 가져오기
+            // 인앱 업데이트 상태 리스너
+            val updateListener = InstallStateUpdatedListener { state ->
+                if (state.installStatus() == InstallStatus.DOWNLOADED){
+                    Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
+                }
+            }
+            appUpdateManager.registerListener(updateListener)
+
+            // *** Task 종료에 대한 서비스를 실시한다
+            // 잠금화면 상태에서는 실행하지 않게 한다
+            val checkLockScreen = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+            if (checkLockScreen.isKeyguardLocked){
+
+            }else{
                 try{
-                    val fis = openFileInput("data3.bat")
-                    val dis = DataInputStream(fis)
-
-                    lastUpdate = dis.readLong()
+                    startService(Intent(this, Service::class.java))
                 }catch (e:Exception){
 
                 }
 
-                // AppUpdateManager 업데이트 초기화
-                appUpdateManager?.let {
-                    it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                        // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
-                        // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
-                        if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                            && appUpdateInfo.isUpdateTypeAllowed(FLEXIBLE)) {
-                            // 있을 경우 업데이트 실시
-                            appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, FLEXIBLE,this, REQUEST_CODE_UPDATE)
-                        }
-                    }
-                }
-
-                // 인앱 업데이트 상태 리스너
-                val updateListener = InstallStateUpdatedListener { state ->
-                    if (state.installStatus() == InstallStatus.DOWNLOADED){
-                        Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
-                    }
-                }
-                appUpdateManager.registerListener(updateListener)
-
-                // *** Task 종료에 대한 서비스를 실시한다
-                startService(Intent(this, Service::class.java))
             }
         }
+
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
         app = application as AppClass
 

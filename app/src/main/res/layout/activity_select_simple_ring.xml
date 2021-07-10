@@ -210,6 +210,7 @@
                 android:text="@string/typeOfBell_UltraSonic"
                 android:textColor="@color/teal_700"
                 android:paddingStart="10dp"
+                android:visibility="gone"
                 android:textSize="23sp" />
             <RadioButton
                 android:id="@+id/radioButton_Sonic1"
@@ -218,6 +219,7 @@
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:text="@string/typeOfBell_UltraSonic_16.7kHz" />
             <RadioButton
                 android:id="@+id/radioButton_Sonic2"
@@ -226,6 +228,7 @@
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:text="@string/typeOfBell_UltraSonic_15.8kHz"/>
             <RadioButton
                 android:id="@+id/radioButton_Sonic3"
@@ -234,6 +237,7 @@
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:text="@string/typeOfBell_UltraSonic_14.9kHz"/>
             <RadioButton
                 android:id="@+id/radioButton_Sonic4"
@@ -242,6 +246,7 @@
                 android:textSize="17dp"
                 android:fontFamily="@font/nanumgothicbold"
                 android:textColor="@color/white"
+                android:visibility="gone"
                 android:text="@string/typeOfBell_UltraSonic_14.1kHz"/>
         </RadioGroup>
     </LinearLayout>

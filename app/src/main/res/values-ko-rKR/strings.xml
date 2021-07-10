@@ -101,7 +101,7 @@
     <string name="clear">맑음</string>
     <string name="mist">안개</string>
     <string name="tornado">태풍</string>
-    <string name="uv">자외선지수</string>
+    <string name="uv">자외선</string>
     <string name="wind_speed">바람세기</string>
     <string name="precipitation">강수확률</string>
     <string name="humidity">습도</string>

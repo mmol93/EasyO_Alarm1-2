@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyO_Alarm"
         tools:replace="android:theme">
-        <activity android:name=".SelectSimpleRingActivity"></activity>
+        <activity android:name=".SelectSimpleRingActivity" />
         <activity android:name=".Developer" />
         <activity android:name=".AlarmSetActivityModi" />
         <activity android:name=".SelectRingActivity" />
@@ -41,7 +41,8 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-9481402975436770~6533361405" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:showOnLockScreen="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
