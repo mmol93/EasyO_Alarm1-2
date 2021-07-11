@@ -90,6 +90,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
 
+        // *** 애드몹 초기화
+        MobileAds.initialize(this) {}
+        // ** 애드몹 로드
+        val adRequest = AdRequest.Builder().build()
+        mainBinder.adView.loadAd(adRequest)
+
+        mainBinder.adView.adListener = object : AdListener(){
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                super.onAdFailedToLoad(p0)
+                Log.d("adMob", "메인광고 로드 실패")
+            }
+
+            override fun onAdLoaded() {
+                super.onAdOpened()
+                Log.d("adMob", "메인광고 열림 성공")
+            }
+        }
+
         // 아침 날씨 확인에 대한 인텐트 결과 처리
         morningSwitch = intent.getBooleanExtra("morningWeather", false)
         // 바로 날씨 화면을 보여준다
@@ -119,85 +137,81 @@ class MainActivity : AppCompatActivity() {
         }
         // 앱 실행으로 MainActivity를 띄웠을 때만 업데이트 실행하게 하기
         else{
-
-        }
-        // *** 앱 업데이트 있는지 검사하는 객체 가져오기
-
-        appUpdateManager = AppUpdateManagerFactory.create(this)
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
-        // 일부 휴대폰에서 onCreate()가 여러번 호출되기 때문에 여기에 권한 확인을 넣음
-        if (savedInstanceState == null){
-            Log.d("mainActivity", "savedInstanceState: $savedInstanceState")
-            // 오버레이 권한 확인
-            if (!Settings.canDrawOverlays(this)) {
-                // ask for setting
-                val intent = Intent(
-                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:$packageName")
-                )
-                startActivityForResult(intent, permissionCode)
-                Log.d("mainActivity", "오버레이 intent 호출")
-            }
-
-            // 다른 권한 확인
-            for (permission in permissionList){
-                val check = checkCallingOrSelfPermission(permission)
-                if (check == PackageManager.PERMISSION_GRANTED){
-                    Log.d("MainActivity", "${permission} 승인됨")
+            // *** 앱 업데이트 있는지 검사하는 객체 가져오기
+            appUpdateManager = AppUpdateManagerFactory.create(this)
+            // 일부 휴대폰에서 onCreate()가 여러번 호출되기 때문에 여기에 권한 확인을 넣음
+            if (savedInstanceState == null){
+                Log.d("mainActivity", "savedInstanceState: $savedInstanceState")
+                // 오버레이 권한 확인
+                if (!Settings.canDrawOverlays(this)) {
+                    // ask for setting
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:$packageName")
+                    )
+                    startActivityForResult(intent, permissionCode)
+                    Log.d("mainActivity", "오버레이 intent 호출")
                 }
-                else{
-                    Log.d("MainActivity", "${permission} 거부됨")
-                    requestPermissions(permissionList, 0)
-                }
-            }
 
-            // 업데이트 주기 확인을 위해 데이터 가져오기
-            try{
-                val fis = openFileInput("data3.bat")
-                val dis = DataInputStream(fis)
-
-                lastUpdate = dis.readLong()
-            }catch (e:Exception){
-
-            }
-
-            // AppUpdateManager 업데이트 초기화
-            appUpdateManager?.let {
-                it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
-                    // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
-                    // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
-                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                        && appUpdateInfo.isUpdateTypeAllowed(FLEXIBLE)) {
-                        // 있을 경우 업데이트 실시
-                        appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, FLEXIBLE,this, REQUEST_CODE_UPDATE)
+                // 다른 권한 확인
+                for (permission in permissionList){
+                    val check = checkCallingOrSelfPermission(permission)
+                    if (check == PackageManager.PERMISSION_GRANTED){
+                        Log.d("MainActivity", "${permission} 승인됨")
+                    }
+                    else{
+                        Log.d("MainActivity", "${permission} 거부됨")
+                        requestPermissions(permissionList, 0)
                     }
                 }
-            }
 
-            // 인앱 업데이트 상태 리스너
-            val updateListener = InstallStateUpdatedListener { state ->
-                if (state.installStatus() == InstallStatus.DOWNLOADED){
-                    Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
-                }
-            }
-            appUpdateManager.registerListener(updateListener)
-
-            // *** Task 종료에 대한 서비스를 실시한다
-            // 잠금화면 상태에서는 실행하지 않게 한다
-            val checkLockScreen = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-            if (checkLockScreen.isKeyguardLocked){
-
-            }else{
+                // 업데이트 주기 확인을 위해 데이터 가져오기
                 try{
-                    startService(Intent(this, Service::class.java))
+                    val fis = openFileInput("data3.bat")
+                    val dis = DataInputStream(fis)
+
+                    lastUpdate = dis.readLong()
                 }catch (e:Exception){
 
                 }
 
+                // AppUpdateManager 업데이트 초기화
+                appUpdateManager?.let {
+                    it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                        // 이용가능한 업데이트가 있는지 확인 - 한 번 취소 했을 경우 일주일 이상 경과했을 때만 뜨게 하기
+                        // 마지막 업데이트 확인 or 거부 후 일주일 이상 지났을 때
+                        if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                            && appUpdateInfo.isUpdateTypeAllowed(FLEXIBLE)) {
+                            // 있을 경우 업데이트 실시
+                            appUpdateManager?.startUpdateFlowForResult(appUpdateInfo, FLEXIBLE,this, REQUEST_CODE_UPDATE)
+                        }
+                    }
+                }
+
+                // 인앱 업데이트 상태 리스너
+                val updateListener = InstallStateUpdatedListener { state ->
+                    if (state.installStatus() == InstallStatus.DOWNLOADED){
+                        Toast.makeText(this, getString(R.string.main_updateDownloadDone), Toast.LENGTH_LONG).show()
+                    }
+                }
+                appUpdateManager.registerListener(updateListener)
+
+                // *** Task 종료에 대한 서비스를 실시한다
+                // 잠금화면 상태에서는 실행하지 않게 한다
+                val checkLockScreen = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
+                if (checkLockScreen.isKeyguardLocked){
+
+                }else{
+                    try{
+                        startService(Intent(this, Service::class.java))
+                    }catch (e:Exception){
+
+                    }
+
+                }
             }
         }
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         // *** 내부 저장소에서 AppClass에 넣을 데이터 가져오기
         app = application as AppClass
@@ -239,33 +253,17 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "처음 앱을 기동했습니다.")
         }
 
-        // *** 애드몹 초기화
-        MobileAds.initialize(this) {}
-        // ** 애드몹 로드
-        val adRequest = AdRequest.Builder().build()
-        mainBinder.adView.loadAd(adRequest)
-
-        mainBinder.adView.adListener = object : AdListener(){
-            override fun onAdFailedToLoad(p0: LoadAdError) {
-                super.onAdFailedToLoad(p0)
-                Log.d("adMob", "메인광고 로드 실패")
-            }
-
-            override fun onAdLoaded() {
-                super.onAdOpened()
-                Log.d("adMob", "메인광고 열림 성공")
-            }
-        }
-
         // ** 앱 실행 시 모든 알람 다시 예약하기(갱신)
         val function = Function()
         function.makeAlarmWithAllSQL(this)
 
         // ** 최초 화면은 알람탭의 화면을 보여주게 한다
-        val tran = supportFragmentManager.beginTransaction()
-        tran.replace(R.id.container, alarmFragment)
+        if (!morningSwitch){
+            val tran = supportFragmentManager.beginTransaction()
+            tran.replace(R.id.container, alarmFragment)
 
-        tran.commit()
+            tran.commit()
+        }
 
         // 탭 클릭에 따른 리스너 설정
         mainBinder.BottomBar.setOnItemSelectListener(object : ReadableBottomBar.ItemSelectListener {
@@ -352,28 +350,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        if (!morningSwitch){
+            // 업데이트가 끝났을 경우
+            appUpdateManager
+                .appUpdateInfo
+                .addOnSuccessListener { appUpdateInfo ->
+                    // 업뎃 다운이 끝났을 경우 설치를 해라고 알려줘야함
+                    if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
+                        val dialogBuilder = AlertDialog.Builder(this)
 
-        // 업데이트가 끝났을 경우
-        appUpdateManager
-            .appUpdateInfo
-            .addOnSuccessListener { appUpdateInfo ->
-                // 업뎃 다운이 끝났을 경우 설치를 해라고 알려줘야함
-                if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-                    val dialogBuilder = AlertDialog.Builder(this)
+                        dialogBuilder.setTitle(getString(R.string.update_dialogTitle))
+                        dialogBuilder.setMessage(getString(R.string.update_dialogMessage))
+                        dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
 
-                    dialogBuilder.setTitle(getString(R.string.update_dialogTitle))
-                    dialogBuilder.setMessage(getString(R.string.update_dialogMessage))
-                    dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
+                        // YES 부분 버튼 설정
+                        dialogBuilder.setNegativeButton(getString(R.string.list_dialog_Yes)){ dialogInterface: DialogInterface, i: Int ->
+                            appUpdateManager.completeUpdate()
+                        }
 
-                    // YES 부분 버튼 설정
-                    dialogBuilder.setNegativeButton(getString(R.string.list_dialog_Yes)){ dialogInterface: DialogInterface, i: Int ->
-                        appUpdateManager.completeUpdate()
+                        dialogBuilder.show()
                     }
-
-                    dialogBuilder.show()
                 }
-            }
-
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -387,8 +385,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.main_updateDownloading), Toast.LENGTH_LONG).show()
             }
         }
-
-
     }
 
     override fun onStop() {
