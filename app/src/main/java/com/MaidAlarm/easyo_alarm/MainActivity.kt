@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
     private var lastUpdate = 0L
     private var currentTime = System.currentTimeMillis()
     private val updateInterval : Long = 7 * 24 * 60 * 60 * 1000 // 7일 뒤
+    private var morningSwitch = false
 
     // 확인할 권한 리스트
     val permissionList = arrayOf(
@@ -90,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         mainBinder = ActivityMainBinding.inflate(layoutInflater)
 
         // 아침 날씨 확인에 대한 인텐트 결과 처리
-        val morningSwitch = intent.getBooleanExtra("morningWeather", false)
+        morningSwitch = intent.getBooleanExtra("morningWeather", false)
         // 바로 날씨 화면을 보여준다
         if (morningSwitch){
             Log.d("WeatherAlarm - MainActivity.kt", "MainActivity에서 아침날씨 발동")
@@ -116,9 +117,12 @@ class MainActivity : AppCompatActivity() {
             tran.replace(R.id.container, weatherFragment)
             tran.commit()
         }
-        // 날씨 확인용으로 MainActivity를 띄울 때는 업데이트 및 권한 확인 필요없음
+        // 앱 실행으로 MainActivity를 띄웠을 때만 업데이트 실행하게 하기
+        else{
 
+        }
         // *** 앱 업데이트 있는지 검사하는 객체 가져오기
+
         appUpdateManager = AppUpdateManagerFactory.create(this)
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -369,6 +373,7 @@ class MainActivity : AppCompatActivity() {
                     dialogBuilder.show()
                 }
             }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

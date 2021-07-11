@@ -138,7 +138,7 @@ class WeatherFragment : Fragment() {
 
         // current weather API 호출
         val locationInfo = "${AppClass.cityName}, ${AppClass.stateCode}, ${AppClass.countryCode}"
-        RetrofitManager.instance.getCurrentWeatherData(locationInfo, API.ID,
+        RetrofitManager.instance.getCurrentWeatherData(locationInfo, API.getID(),
             completion = {
                 // 결과 값 출력하기
                 Log.d("retrofit", "locationInfo: $locationInfo")
@@ -207,7 +207,7 @@ class WeatherFragment : Fragment() {
             })
 
         // weather forecast API 데이터 호출
-        RetrofitManager.instance.getForecast("${AppClass.lat}", "${AppClass.lon}", "hourly.temp,daily.temp", API.ID,
+        RetrofitManager.instance.getForecast("${AppClass.lat}", "${AppClass.lon}", "hourly.temp,daily.temp", API.getID(),
             completion = { hourlyTemp, hourlyPop, hourlyWind, hourlyUvi, hourlyMain, dailyMinTemp, dailyMaxTemp, dailyPop, dailyMain ->
                 // 결과 값 로그 출력
                 Log.d("retrofit2", "from UI level, hourlyTemp: $hourlyTemp")

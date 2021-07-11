@@ -258,7 +258,7 @@ class Receiver : BroadcastReceiver() {
                             AppClass.cityName = addresses[0].locality
                         }
                     }
-                    RetrofitManager.instance.getForecast("${AppClass.lat}", "${AppClass.lon}", "hourly.temp,daily.temp", API.ID,
+                    RetrofitManager.instance.getForecast("${AppClass.lat}", "${AppClass.lon}", "hourly.temp,daily.temp", API.getID(),
                         completion = { hourlyTemp, hourlyPop, hourlyWind, hourlyUvi, hourlyMain, dailyMinTemp, dailyMaxTemp, dailyPop, dailyMain ->
                             val weatherNotification = WeatherNotification(context)
                             val notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
