@@ -110,9 +110,11 @@ class MainActivity : AppCompatActivity() {
 
         // 아침 날씨 확인에 대한 인텐트 결과 처리
         morningSwitch = intent.getBooleanExtra("morningWeather", false)
+        Log.d("WeatherAlarm - MainActivity.kt", "morningSwitch: $morningSwitch")
+
         // 바로 날씨 화면을 보여준다
         if (morningSwitch){
-            Log.d("WeatherAlarm - MainActivity.kt", "MainActivity에서 아침날씨 발동")
+            Log.d("WeatherAlarm - MainActivity.kt", "MainActivity에서 날씨탭 발동")
             // 현재 화면이 자동으로 꺼지지 않게 유지 & 잠금화면에 액티비티 띄울 수 있게 하기
             // 아침 날씨 보여주기 기능에서 사용된다
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -207,7 +209,6 @@ class MainActivity : AppCompatActivity() {
                     }catch (e:Exception){
 
                     }
-
                 }
             }
         }

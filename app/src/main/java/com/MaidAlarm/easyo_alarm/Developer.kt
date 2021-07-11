@@ -43,6 +43,16 @@ class Developer : AppCompatActivity() {
                     binder.textView.append("알람 없음\n")
                 }
             }
+            val tomorrowAlarmCheck = PendingIntent.getBroadcast(
+                this, 1000,
+                intent,
+                PendingIntent.FLAG_NO_CREATE
+            ) != null
+            if (tomorrowAlarmCheck) {
+                binder.textView.append("내일 알람 설정 완료\n")
+            } else {
+                binder.textView.append("내일 알람 없음\n")
+            }
         }
         // 여태 울린 알람의 이력을 가져온다
         binder.button1CheckHistoy.setOnClickListener {

@@ -33,6 +33,7 @@ class WeatherAlarm(context:Context) {
         }
         Log.d("WeatherAlarm - WeatherAlar.kt", "설정된 브로드캐스트 시간: ${calendarTimeMillis}")
         Log.d("WeatherAlarm - WeatherAlar.kt", "현재 시간: ${System.currentTimeMillis()}")
+        Log.d("WeatherAlarm - WeatherAlar.kt", "발동까지 남은 분: ${(calendarTimeMillis - System.currentTimeMillis())/(1000*60)}")
 
         // 브로드캐스트 등록하기
         val intent = Intent(context, Receiver::class.java)
