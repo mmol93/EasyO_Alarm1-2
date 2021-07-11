@@ -63,6 +63,7 @@ class notification {
 
         // ** notification 클릭 시 MainActivity를 실행한다
         val intent = Intent(context, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         val pending = PendingIntent.getActivity(context, 10, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         // 클릭시 해당 intent를 연다
         builder1.setContentIntent(pending)

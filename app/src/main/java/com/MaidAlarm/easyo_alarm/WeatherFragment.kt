@@ -26,6 +26,8 @@ import com.MaidAlarm.easyo_alarm.databinding.FragmentWeatherBinding
 import com.MaidAlarm.easyo_alarm.retrofit.RetrofitManager
 import com.MaidAlarm.easyo_alarm.weather_adapter.DailyWeatherAdapter
 import com.MaidAlarm.easyo_alarm.weather_adapter.HourlyWeatherAdapter
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -77,6 +79,12 @@ class WeatherFragment : Fragment() {
             showInfo(networkLocation)
         }
         refreshWeather()
+
+        // *** 애드몹 초기화
+//        MobileAds.initialize(context) {}
+//        // ** 애드몹 로드
+//        val adRequest = AdRequest.Builder().build()
+//        binder.adView.loadAd(adRequest)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

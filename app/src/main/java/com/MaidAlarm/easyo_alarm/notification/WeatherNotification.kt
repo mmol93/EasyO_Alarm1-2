@@ -78,6 +78,7 @@ class WeatherNotification(val context: Context) {
         val intent = Intent(context, MainActivity::class.java)
         // morningWeather이랑 동일하게 MainActivity를 열고 날씨 탭을 보여줘야하기 때문에 똑같이 morningWeather를 사용한다
         intent.putExtra("morningWeather", true)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         val pending = PendingIntent.getActivity(context, 10, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         // 클릭시 해당 intent를 연다
         builder1.setContentIntent(pending)
