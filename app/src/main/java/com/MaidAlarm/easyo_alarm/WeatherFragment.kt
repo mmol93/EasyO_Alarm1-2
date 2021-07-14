@@ -2,24 +2,24 @@ package com.MaidAlarm.easyo_alarm
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Application
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.PermissionChecker.checkCallingOrSelfPermission
 import androidx.core.view.isGone
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.MaidAlarm.easyo_alarm.databinding.FragmentWeatherBinding
@@ -46,6 +46,14 @@ class WeatherFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val locationManager = requireContext().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+
+        // 제일 먼저 인터넷 연결 확인
+        val isOnline = isOnline(requireContext())
+        if (!isOnline){
+            Toast.makeText(context, requireContext().getString(R.string.internetCheck), Toast.LENGTH_LONG).show()
+            return
+        }
+
         // 제일 최근 위치 정보값을 가져온다
         // 권한을 얻었는지 확인(getLastKnownLocation을 사용하기 위해서 반드시 필요한 사전 확인임)
         if (ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -94,6 +102,19 @@ class WeatherFragment : Fragment() {
             binder.refreshImageView.isGone = true
             refreshWeather()
             Log.d("test", "새로고침")
+        }
+
+        // FrontActivity에서 온건지 확인한다
+        val bundleData = this.arguments
+        val title = bundleData?.getBoolean("adsTrigger")
+        if (title == true){
+            // *** 애드몹 초기화
+            MobileAds.initialize(context) {}
+            // ** 애드몹 로드
+            val adRequest = AdRequest.Builder().build()
+            binder.adView.loadAd(adRequest)
+            // 광고 보여주기 및 다른 기타 필요 없는 요소들 삭제하기
+            binder.adView.isGone = false
         }
     }
 
@@ -164,7 +185,7 @@ class WeatherFragment : Fragment() {
                 Log.d("retrofit", "wind: ${Weather.wind}")
                 Log.d("retrofit", "sunRise: ${Weather.sunRise}")
                 Log.d("retrofit", "sunSet: ${Weather.sunSet}")
-                Log.d("retrofit", "country: ${Weather.country}")
+//                Log.d("retrofit", "country: ${Weather.country}")
 
                 // 결과를 뷰에 적용하기
                 // 지역에 따라 도시 이름이 나오지 않는 곳이 있다.
@@ -255,5 +276,28 @@ class WeatherFragment : Fragment() {
                 binder.loadingErrorTextView.isGone = true
                 binder.weatherContainer.isGone = false
             })
+    }
+
+    // 인터넷 연결 확인
+    fun isOnline(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (connectivityManager != null) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_CELLULAR")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_WIFI")
+                    return true
+                } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                    Log.i("Internet", "NetworkCapabilities.TRANSPORT_ETHERNET")
+                    return true
+                }
+            }
+        }
+        return false
     }
 }

@@ -76,8 +76,8 @@ class RetrofitManager {
                             // 해 지는 시간
                             val sunSet_ori = sys.get("sunset").asLong
                             Weather.sunSet = SimpleDateFormat("HH", Locale.getDefault()).format(Date(sunSet_ori * 1000))
-                            // 국가
-                            Weather.country = sys.get("country").asString
+                            // 국가 - 이 부분에서 에러 나와서 일단 비활성화
+//                            Weather.country = sys.get("country").asString
                             Log.d("retrofit1", "sunRise: ${Weather.sunRise}")
                             Log.d("retrofit1", "sunSet: ${Weather.sunSet}")
 

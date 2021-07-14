@@ -129,4 +129,5 @@
     <string name="typeOfBell_UltraSonic_15.8kHz">15.8kHz(20代)</string>
     <string name="typeOfBell_UltraSonic_14.9kHz">14.9kHz(30代)</string>
     <string name="typeOfBell_UltraSonic_14.1kHz">14.1kHz(40代)</string>
+    <string name="internetCheck">ネットを確認してください。</string>
 </resources>

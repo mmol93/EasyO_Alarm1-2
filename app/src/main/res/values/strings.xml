@@ -191,6 +191,8 @@
 
     <string name="error_restart_toast">Got error!! please restart the app</string>
 
+    <string name="internetCheck">Please check your internet connection</string>
+
     <!-- 여기 아래는 전부 라이센스 관련 String-->
     <string name="license_Apache" translatable="false">Apache License
 

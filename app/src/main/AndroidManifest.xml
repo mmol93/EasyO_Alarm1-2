@@ -28,7 +28,7 @@
         <activity android:name=".SelectRingActivity" />
         <activity android:name=".LicenseActivity" />
         <activity android:name=".InfoActivity" />
-        <activity android:name=".FrontAlarmActivity" />
+        <activity android:name=".FrontAlarmActivity"/>
 
         <service
             android:name=".Service"
@@ -42,7 +42,8 @@
             android:value="ca-app-pub-9481402975436770~6533361405" />
 
         <activity android:name=".MainActivity"
-            android:showOnLockScreen="true">
+            android:showOnLockScreen="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

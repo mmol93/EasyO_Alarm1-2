@@ -7,11 +7,14 @@ import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.*
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import com.MaidAlarm.easyo_alarm.AppClass.Companion.context
 import com.MaidAlarm.easyo_alarm.databinding.ActivityFrontAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
@@ -44,9 +47,16 @@ class FrontAlarmActivity : AppCompatActivity() {
     private var volume = 0
     private var alarmCounter = 0
 
-    // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
-    override fun onBackPressed() {
+    val weatherFragment = WeatherFragment()
 
+    var backButtonCounter = 0
+
+    // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
+    // 날씨 fragment를 띄우고 있을 때는 뒤로가기로 현재 액티비티 종료 가능
+    override fun onBackPressed() {
+        if (backButtonCounter == 1){
+            finishAndRemoveTask()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -169,7 +179,8 @@ class FrontAlarmActivity : AppCompatActivity() {
         app.lastProgress = progress
 
         // *** 음악 파일 실행
-        if (progress > 0){
+        // (21.07.13) !binder.buttonContainer.isGone 추가 -> 즉, 날씨 fragment를 보여주고 있다면 음악재생을 하지 않는다
+        if (progress > 0 && !binder.buttonContainer.isGone){
             mediaPlayer = app.mediaPlayer
             mediaPlayer.setVolume(1f, 1f)
             mediaPlayer.isLooping = true
@@ -373,20 +384,9 @@ class FrontAlarmActivity : AppCompatActivity() {
 
                         startThread()
 
-                        // 아침 날씨 확인 스위치가 on인지 확인
-                        val pref = getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
-                        val morningWeatherSwitch = pref.getBoolean("morningSwitch", false)
-                        // 알람이 울린 시간이 5 ~ 9시 사이 & 아침 날씨 스위치가 on 이라면 ok 후 날씨 화면을 보여준다
-                        if (present_hour in 5..8 && morningWeatherSwitch){
-                            Log.d("test", "아침 날씨 알람")
-                            val intent = Intent(context, MainActivity::class.java)
-                            // 다른 액티비티를 모두 제거하고 액티비티를 띄운다
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                            intent.putExtra("morningWeather", true)
-                            startActivity(intent)
-                        }else{
-                            finishAndRemoveTask()
-                        }
+                        // 아침 날씨확인 및 관련 기능 실행
+                        okButtonClicked(present_hour)
+
                         // 1분뒤 소리 울리는거 취소 - 트리거 취소
                         app.threadTrigger = 0
                     }
@@ -410,20 +410,8 @@ class FrontAlarmActivity : AppCompatActivity() {
 
                 startThread()
 
-                // 아침 날씨 확인 스위치가 on인지 확인
-                val pref = getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
-                val morningWeatherSwitch = pref.getBoolean("morningSwitch", false)
-                // 알람이 울린 시간이 5 ~ 9시 사이 & 아침 날씨 스위치가 on 이라면 ok 후 날씨 화면을 보여준다
-                if (present_hour in 5..8 && morningWeatherSwitch){
-                    Log.d("test", "아침 날씨 알람")
-                    val intent = Intent(context, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.putExtra("morningWeather", true)
-                    startActivity(intent)
-                }else{
-                    finishAndRemoveTask()
-                }
+                // 아침 날씨확인 및 관련 기능 실행
+                okButtonClicked(present_hour)
             }
         }
 
@@ -467,6 +455,34 @@ class FrontAlarmActivity : AppCompatActivity() {
         }
         setContentView(binder.root)
     }
+    fun okButtonClicked(present_hour : Int){
+        // 아침 날씨 확인 스위치가 on인지 확인
+        val pref = getSharedPreferences("morningWeatherData", Context.MODE_PRIVATE)
+        val morningWeatherSwitch = pref.getBoolean("morningSwitch", false)
+        // 알람이 울린 시간이 5 ~ 9시 사이 & 아침 날씨 스위치가 on 이라면 ok 후 날씨 화면을 보여준다
+        if (present_hour in 5..8 && morningWeatherSwitch){
+            Log.d("test", "아침 날씨 알람")
+
+            val bundle = Bundle()
+            bundle.putBoolean("adsTrigger", true)
+            weatherFragment.arguments = bundle
+
+            // 프래그먼트 전환
+            val tran = supportFragmentManager.beginTransaction()
+            tran.replace(R.id.front_container, weatherFragment)
+            tran.commit()
+
+            // 전환과 동시에 불필요한 뷰들은 안보이게 처리
+            binder.buttonContainer.isGone = true
+            binder.timerContainer.isGone = true
+
+            // 뒤로가기로 FrontActivity를 종료 가능하게 설정
+            backButtonCounter = 1
+
+        }else{
+            finishAndRemoveTask()
+        }
+    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -486,8 +502,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         }catch (e:Exception){
 
         }
-
-
         Log.d("FrontActivity", "onDestroy()")
     }
 }
