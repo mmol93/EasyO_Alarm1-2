@@ -95,22 +95,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         // *** 애드몹 초기화
         MobileAds.initialize(this) {}
 
-        // ** 애드몹 로드
-        // receiver로 띄운 액티비티에 바로 광고를 로드하면 정책위반임
-        // -> 즉, 먼저 더미 액티비티(시간 확인등)를 띄우고 다음에 계산 문제 액티비티에 광고를 띄우는 것이 알맞음
-//        val adRequest = AdRequest.Builder().build()
-//        binder.adView.loadAd(adRequest)
-//        binder.adView.adListener = object : AdListener(){
-//            override fun onAdFailedToLoad(p0: Int) {
-//                super.onAdFailedToLoad(p0)
-//                Log.d("FrontActivity", "front 광고 로드 실패")
-//            }
-//            override fun onAdLoaded() {
-//                super.onAdOpened()
-//                Log.d("adMob", "front 광고 열림 성공")
-//            }
-//        }
-
         try {
             // 파일 읽어오기
             val fis = openFileInput("data1.bat")
@@ -384,11 +368,11 @@ class FrontAlarmActivity : AppCompatActivity() {
 
                         startThread()
 
-                        // 아침 날씨확인 및 관련 기능 실행
-                        okButtonClicked(present_hour)
-
                         // 1분뒤 소리 울리는거 취소 - 트리거 취소
                         app.threadTrigger = 0
+
+                        // 아침 날씨확인 및 관련 기능 실행
+                        okButtonClicked(present_hour)
                     }
                 }
             }
@@ -407,7 +391,6 @@ class FrontAlarmActivity : AppCompatActivity() {
                 }catch (e:Exception){
 
                 }
-
                 startThread()
 
                 // 아침 날씨확인 및 관련 기능 실행
@@ -463,21 +446,12 @@ class FrontAlarmActivity : AppCompatActivity() {
         if (present_hour in 5..8 && morningWeatherSwitch){
             Log.d("test", "아침 날씨 알람")
 
-            val bundle = Bundle()
-            bundle.putBoolean("adsTrigger", true)
-            weatherFragment.arguments = bundle
+            val intent = Intent(context, MainActivity::class.java)
 
-            // 프래그먼트 전환
-            val tran = supportFragmentManager.beginTransaction()
-            tran.replace(R.id.front_container, weatherFragment)
-            tran.commit()
-
-            // 전환과 동시에 불필요한 뷰들은 안보이게 처리
-            binder.buttonContainer.isGone = true
-            binder.timerContainer.isGone = true
-
-            // 뒤로가기로 FrontActivity를 종료 가능하게 설정
-            backButtonCounter = 1
+            // 다른 액티비티를 모두 제거하고 액티비티를 띄운다
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra("morningWeather", true)
+            startActivity(intent)
 
         }else{
             finishAndRemoveTask()
@@ -486,21 +460,18 @@ class FrontAlarmActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         try{
             // 음악(소리) 끄기
             mediaPlayer.release()
             // 볼륨 원래대로 되돌리기
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, currentVolume, AudioManager.FLAG_PLAY_SOUND)
         }catch (e:Exception){
-
         }
 
         try {
             // 진동 끄기
             vib.cancel()
         }catch (e:Exception){
-
         }
         Log.d("FrontActivity", "onDestroy()")
     }

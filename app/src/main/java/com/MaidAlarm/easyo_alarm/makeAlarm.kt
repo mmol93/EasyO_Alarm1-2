@@ -142,7 +142,7 @@ class Receiver : BroadcastReceiver() {
             function.makeAlarmWithAllSQL(context!!)
             function.renewNotification(context)
 
-            // 날씨 데이터의 경우에도 스위치가 on이라면 재설항하게 해준다
+            // 날씨 데이터의 경우에도 스위치가 on이라면 재설정하게 해준다
             val pref = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
             val tomorrowWeatherSwitch = pref.getBoolean("weatherSwitch", false)
 

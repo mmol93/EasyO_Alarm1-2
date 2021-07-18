@@ -87,12 +87,6 @@ class WeatherFragment : Fragment() {
             showInfo(networkLocation)
         }
         refreshWeather()
-
-        // *** 애드몹 초기화
-//        MobileAds.initialize(context) {}
-//        // ** 애드몹 로드
-//        val adRequest = AdRequest.Builder().build()
-//        binder.adView.loadAd(adRequest)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -102,19 +96,6 @@ class WeatherFragment : Fragment() {
             binder.refreshImageView.isGone = true
             refreshWeather()
             Log.d("test", "새로고침")
-        }
-
-        // FrontActivity에서 온건지 확인한다
-        val bundleData = this.arguments
-        val title = bundleData?.getBoolean("adsTrigger")
-        if (title == true){
-            // *** 애드몹 초기화
-            MobileAds.initialize(context) {}
-            // ** 애드몹 로드
-            val adRequest = AdRequest.Builder().build()
-            binder.adView.loadAd(adRequest)
-            // 광고 보여주기 및 다른 기타 필요 없는 요소들 삭제하기
-            binder.adView.isGone = false
         }
     }
 
