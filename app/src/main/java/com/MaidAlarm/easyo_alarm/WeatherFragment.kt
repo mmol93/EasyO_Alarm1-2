@@ -86,11 +86,11 @@ class WeatherFragment : Fragment() {
             Log.d("location", "networkLocation: $networkLocation")
             showInfo(networkLocation)
         }
-        refreshWeather()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        refreshWeather()
         binder.refreshImageView.setOnClickListener {
             binder.progressBar.isGone = false
             binder.refreshImageView.isGone = true
