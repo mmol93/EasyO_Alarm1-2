@@ -91,6 +91,7 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshWeather()
+
         binder.refreshImageView.setOnClickListener {
             binder.progressBar.isGone = false
             binder.refreshImageView.isGone = true
@@ -179,35 +180,35 @@ class WeatherFragment : Fragment() {
                 when(Weather.main){
                     "Thunderstorm" -> {
                         binder.weatherImageView.setImageResource(R.drawable.ic_thunder)
-                        binder.mainTextView.text = getString(R.string.Thunderstorm)
+                        binder.mainTextView.text = AppClass.context.getString(R.string.Thunderstorm)
                     }
                     "Drizzle" -> {
                         binder.weatherImageView.setImageResource(R.drawable.ic_little_rain)
-                        binder.mainTextView.text = getString(R.string.drizzle)
+                        binder.mainTextView.text = AppClass.context.getString(R.string.drizzle)
                     }
                     "Rain" -> {
                         binder.weatherImageView.setImageResource(R.drawable.ic_rain)
-                        binder.mainTextView.text = getString(R.string.rain)
+                        binder.mainTextView.text = AppClass.context.getString(R.string.rain)
                     }
                     "Snow" -> {
                         binder.weatherImageView.setImageResource(R.drawable.ic_snow)
-                        binder.mainTextView.text = getString(R.string.snow)
+                        binder.mainTextView.text = AppClass.context.getString(R.string.snow)
                     }
                     "Clear" -> {
                         binder.weatherImageView.setImageResource(R.drawable.ic_sunny)
-                        binder.mainTextView.text = getString(R.string.clear)
+                        binder.mainTextView.text = AppClass.context.getString(R.string.clear)
                     }
                     "Clouds" -> {
                         binder.weatherImageView.setImageResource(R.drawable.ic_clouds)
-                        binder.mainTextView.text = getString(R.string.clouds)
+                        binder.mainTextView.text = AppClass.context.getString(R.string.clouds)
                     }
                     "Mist", "Dust", "Fog", "Haze", "Sand", "Ash" -> {
                         binder.weatherImageView.setImageResource(R.drawable.ic_fog)
-                        binder.mainTextView.text = getString(R.string.mist)
+                        binder.mainTextView.text = AppClass.context.getString(R.string.mist)
                     }
                     "Tornado", "Squall" -> {
                         binder.weatherImageView.setImageResource(R.drawable.ic_tornado)
-                        binder.mainTextView.text = getString(R.string.tornado)
+                        binder.mainTextView.text = AppClass.context.getString(R.string.tornado)
                     }
                 }
                 binder.tempTextView.text = Weather.temp.toString() + "℃"
