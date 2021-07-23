@@ -2,13 +2,19 @@ package com.MaidAlarm.easyo_alarm
 
 import android.app.NotificationManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.*
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
@@ -17,12 +23,16 @@ import com.MaidAlarm.easyo_alarm.databinding.FragmentAlarmBinding
 import com.MaidAlarm.easyo_alarm.notification.notification
 import java.util.*
 import kotlin.concurrent.thread
+import kotlin.system.exitProcess
 
 class alarmFragment : Fragment() {
     val doneAlarmActivity = 100         // 알람 액티비티
     val doneShortAlarmActivity = 200    // 퀵 알람 액티비티 반환값용 변수
     lateinit var binder: FragmentAlarmBinding   // 데이터 바인더용 변수
     lateinit var app : AppClass
+
+    // 권한 확인용 액티비티 콜백 코드
+    private val permissionCode = 300
 
     lateinit var pref : SharedPreferences
     private var alarmSwitch  = 0
@@ -218,17 +228,38 @@ class alarmFragment : Fragment() {
 
         // 일반 알람 설정 버튼 클릭
         binder.fab2.setOnClickListener {
-            val function = Function()
-
-            val alarmActivity = Intent(activity, AlarmSetActivity::class.java)
-            // 알람 세팅을 위한 액티비티 소환
-            startActivityForResult(alarmActivity, doneAlarmActivity)
+            // 오버레이 권한 확인
+            if (!Settings.canDrawOverlays(requireContext())) {
+                // ask for setting
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:${requireContext().packageName}")
+                )
+                startActivityForResult(intent, permissionCode)
+                Log.d("mainActivity", "오버레이 intent 호출")
+            }else{
+                val alarmActivity = Intent(activity, AlarmSetActivity::class.java)
+                // 알람 세팅을 위한 액티비티 소환
+                startActivityForResult(alarmActivity, doneAlarmActivity)
+            }
         }
         // 퀵 알람 설정 버튼 클릭
         binder.fab3.setOnClickListener {
-            val shortAlarmSetActivity = Intent(activity, ShortAlarmSetActivity::class.java)
-            startActivityForResult(shortAlarmSetActivity, doneShortAlarmActivity)
+            // 오버레이 권한 확인
+            if (!Settings.canDrawOverlays(requireContext())) {
+                // ask for setting
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:${requireContext().packageName}")
+                )
+                startActivityForResult(intent, permissionCode)
+                Log.d("mainActivity", "오버레이 intent 호출")
+            }else{
+                val shortAlarmSetActivity = Intent(activity, ShortAlarmSetActivity::class.java)
+                startActivityForResult(shortAlarmSetActivity, doneShortAlarmActivity)
+            }
         }
+
         app = requireContext().applicationContext as AppClass
         app.binder_alarmFragent = binder
         app.context_alarmFragent = requireContext()
@@ -364,6 +395,36 @@ class alarmFragment : Fragment() {
     // *** 액티비티에서 돌아왔을 때 - SQL 데이터에 설정한 알람의 값을 갱신 + 알람 매니저에 보내기만 하면된다 ***
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        // 오버레이 설정 화면에서 돌아왔을 때
+        if (requestCode == permissionCode){
+            // 거부된 권한이 있을 경우 실행이 불가능 하다는 메시지를 남기기 위해 다이얼로그 생성
+            val dialogBuilder = AlertDialog.Builder(requireContext())
+
+            dialogBuilder.setTitle(getString(R.string.permission_dialogTitle))
+            dialogBuilder.setMessage(getString(R.string.permission_dialogMessage))
+            dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
+
+            // overlay 권한을 허용 했는지 dialog로 확인
+            // 이상하게 Activity 단게에서 확인하면 에러가 발생함...
+            // 이용자가 버튼을 클릭 후 확인하는 방식으로 변경
+            dialogBuilder.setNegativeButton(getString(R.string.permission_dialogGotIt)){ dialogInterface: DialogInterface, i: Int ->
+                if (Settings.canDrawOverlays(requireContext())){
+
+                }
+                else{
+                    Toast.makeText(requireContext(), AppClass.context.getString(R.string.permission_dialogMessage), Toast.LENGTH_LONG).show()
+                }
+            }
+            dialogBuilder.setOnCancelListener {
+                if (Settings.canDrawOverlays(requireContext())){
+
+                }
+                else{
+                    Toast.makeText(requireContext(), AppClass.context.getString(R.string.permission_dialogMessage), Toast.LENGTH_LONG).show()
+                }
+            }
+            dialogBuilder.show()
+        }
         // 퀵 알람에서 돌아왔을 때
         if (requestCode == doneShortAlarmActivity){
             // 정상적으로 save 버튼을 클릭하여 돌아왔을 때
