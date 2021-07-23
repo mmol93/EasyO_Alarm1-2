@@ -130,4 +130,6 @@
     <string name="typeOfBell_UltraSonic_14.9kHz">14.9kHz(30代)</string>
     <string name="typeOfBell_UltraSonic_14.1kHz">14.1kHz(40代)</string>
     <string name="internetCheck">ネットを確認してください。</string>
+    <string name="permission_overlay_toast">このｱﾌﾟﾘを使うためには\"他のｱﾌﾟﾘの上に表示可能\"許可が必要です。</string>
+    <string name="permission_dialog_No">まだ....</string>
 </resources>

@@ -415,12 +415,19 @@ class alarmFragment : Fragment() {
                     Toast.makeText(requireContext(), AppClass.context.getString(R.string.permission_dialogMessage), Toast.LENGTH_LONG).show()
                 }
             }
+            dialogBuilder.setNeutralButton(getString(R.string.permission_dialog_No)){ dialogInterface: DialogInterface, i: Int ->
+                // ask for setting
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:${requireContext().packageName}")
+                )
+                startActivityForResult(intent, permissionCode)
+            }
             dialogBuilder.setOnCancelListener {
                 if (Settings.canDrawOverlays(requireContext())){
 
                 }
                 else{
-                    Toast.makeText(requireContext(), AppClass.context.getString(R.string.permission_dialogMessage), Toast.LENGTH_LONG).show()
                 }
             }
             dialogBuilder.show()

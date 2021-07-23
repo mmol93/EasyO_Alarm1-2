@@ -55,25 +55,6 @@ class WeatherFragment : Fragment() {
         }
 
         // 제일 최근 위치 정보값을 가져온다
-        // 권한을 얻었는지 확인(getLastKnownLocation을 사용하기 위해서 반드시 필요한 사전 확인임)
-        if (ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_FINE_LOCATION) !=
-            PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-
-            Toast.makeText(AppClass.context, requireContext().getString(R.string.location_permmision), Toast.LENGTH_LONG).show()
-
-            // 확인할 권한 리스트
-            val permissionList = arrayOf(
-                Manifest.permission.VIBRATE,
-                Manifest.permission.WAKE_LOCK,
-                Manifest.permission.RECEIVE_BOOT_COMPLETED,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-            requestPermissions(permissionList, 1)
-
-            return
-        }
         val gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
         val networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
 

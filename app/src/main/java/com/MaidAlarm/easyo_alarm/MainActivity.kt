@@ -1,22 +1,15 @@
 package com.MaidAlarm.easyo_alarm
 
 import android.Manifest
-import android.app.ActivityManager
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.location.LocationManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.SystemClock
 import android.provider.Settings
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,21 +20,16 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallStateUpdatedListener
-import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.AppUpdateType.FLEXIBLE
-import com.google.android.play.core.install.model.AppUpdateType.IMMEDIATE
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
 import com.iammert.library.readablebottombar.ReadableBottomBar
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.util.*
-import kotlin.system.exitProcess
-
 
 class MainActivity : AppCompatActivity() {
     // 메인 바인딩
@@ -264,9 +252,31 @@ class MainActivity : AppCompatActivity() {
                     }
                     // 날씨 화면 프래그먼트
                     1 -> {
-                        val tran = supportFragmentManager.beginTransaction()
-                        tran.replace(R.id.container, weatherFragment)
-                        tran.commit()
+                        // 권한을 얻었는지 확인(getLastKnownLocation을 사용하기 위해서 반드시 필요한 사전 확인임)
+                        if (ActivityCompat.checkSelfPermission(this@MainActivity, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                            PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this@MainActivity,Manifest.permission.ACCESS_COARSE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                            Toast.makeText(AppClass.context, getString(R.string.location_permmision), Toast.LENGTH_LONG).show()
+
+                            // 확인할 권한 리스트
+                            val permissionList = arrayOf(
+                                Manifest.permission.VIBRATE,
+                                Manifest.permission.WAKE_LOCK,
+                                Manifest.permission.RECEIVE_BOOT_COMPLETED,
+                                Manifest.permission.ACCESS_FINE_LOCATION,
+                                Manifest.permission.ACCESS_COARSE_LOCATION
+                            )
+                            requestPermissions(permissionList, 1)
+                            mainBinder.BottomBar.selectItem(0)
+                            Toast.makeText(this@MainActivity, getString(R.string.permission_overlay_toast), Toast.LENGTH_LONG).show()
+                        }
+                        // 날씨 권한을 다 얻었을 경우 날씨 fragment를 열게 한다
+                        else{
+                            val tran = supportFragmentManager.beginTransaction()
+                            tran.replace(R.id.container, weatherFragment)
+                            tran.commit()
+                        }
                     }
                     // 설정 화면 프래그먼트
                     2 -> {
@@ -302,35 +312,41 @@ class MainActivity : AppCompatActivity() {
 
         // 모든 권한을 다 얻었는지 한번 더 체크
         if (requestCode == permissionCode){
-            // 거부된 권한이 있을 경우 실행이 불가능 하다는 메시지를 남긴다
-            val dialogBuilder = AlertDialog.Builder(this)
+            if (!Settings.canDrawOverlays(this)) {
+                // 거부된 권한이 있을 경우 실행이 불가능 하다는 메시지를 남긴다
+                val dialogBuilder = AlertDialog.Builder(this)
 
-            dialogBuilder.setTitle(getString(R.string.permission_dialogTitle))
-            dialogBuilder.setMessage(getString(R.string.permission_dialogMessage))
-            dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
+                dialogBuilder.setTitle(getString(R.string.permission_dialogTitle))
+                dialogBuilder.setMessage(getString(R.string.permission_dialogMessage))
+                dialogBuilder.setIcon(R.mipmap.icon_maidalarm)
 
-            // overlay 권한을 허용 했는지 dialog로 확인
-            // 이상하게 Activity 단게에서 확인하면 에러가 발생함...
-            // 이용자가 버튼을 클릭 후 확인하는 방식으로 변경
-            dialogBuilder.setNegativeButton(getString(R.string.permission_dialogGotIt)){ dialogInterface: DialogInterface, i: Int ->
-                if (Settings.canDrawOverlays(this)){
+                // overlay 권한을 허용 했는지 dialog로 확인
+                // 이상하게 Activity 단게에서 확인하면 에러가 발생함...
+                // 이용자가 버튼을 클릭 후 확인하는 방식으로 변경
+                dialogBuilder.setNegativeButton(getString(R.string.permission_dialogGotIt)) { dialogInterface: DialogInterface, i: Int ->
+                    if (Settings.canDrawOverlays(this)) {
 
+                    } else {
+
+                    }
                 }
-                else{
-                    ActivityCompat.finishAffinity(this)
-                    exitProcess(0)
+                dialogBuilder.setNeutralButton(getString(R.string.permission_dialog_No)) { dialogInterface: DialogInterface, i: Int ->
+                    // ask for setting
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:$packageName")
+                    )
+                    startActivityForResult(intent, permissionCode)
                 }
+                dialogBuilder.setOnCancelListener {
+                    if (Settings.canDrawOverlays(this)) {
+
+                    } else {
+
+                    }
+                }
+                dialogBuilder.show()
             }
-            dialogBuilder.setOnCancelListener {
-                if (Settings.canDrawOverlays(this)){
-
-                }
-                else{
-                    ActivityCompat.finishAffinity(this)
-                    exitProcess(0)
-                }
-            }
-            dialogBuilder.show()
         }
 
     }
@@ -376,7 +392,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-//        Toast.makeText(this, "onStop 호출됨", Toast.LENGTH_SHORT).show()
         val app : AppClass = application as AppClass
 
         // AppClass에 저장되어 있는 변수들을 파일에 저장한다

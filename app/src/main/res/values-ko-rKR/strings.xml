@@ -130,4 +130,6 @@
     <string name="typeOfBell_UltraSonic_14.9kHz">14.9kHz(30대)</string>
     <string name="typeOfBell_UltraSonic_14.1kHz">14.1kHz(40대)</string>
     <string name="internetCheck">인터넷 연결을 확인해주세요</string>
+    <string name="permission_overlay_toast">이  앱을 사용하기 위해서는 \"다른 앱 위에 표시가능\" 권한이 필요해요 ㅠㅠ</string>
+    <string name="permission_dialog_No">아직...</string>
 </resources>

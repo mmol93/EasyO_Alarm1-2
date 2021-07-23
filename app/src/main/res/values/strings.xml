@@ -128,8 +128,10 @@
 
     <string name="permission_dialogTitle">Permission</string>
     <string name="permission_dialogGotIt">I did it</string>
+    <string name="permission_dialog_No">I didn\'t</string>
     <string name="permission_dialogMessage">
         it is used to show alarm pop-up in the background \nplease allow that</string>
+    <string name="permission_overlay_toast">Need overlay permission to use this app</string>
 
     <string name="main_updateDownloading">Updating now. Please don\'t shut down the app or phone</string>
     <string name="main_updateDownloadDone">Update is over. The update will be applied after restart the app</string>
