@@ -21,4 +21,4 @@
 * ##### You can set morning weatehr alarm and weather forecast alarm
 
 
-![google-play-badge](https://user-images.githubusercontent.com/69494230/127309520-e0ec735f-7bee-4c11-8580-15f073a9b750.png)
+<a href='https://play.google.com/store/apps/details?id=com.MaidAlarm.easyo_alarm&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
