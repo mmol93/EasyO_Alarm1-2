@@ -82,7 +82,7 @@ class alarmFragment : Fragment() {
         if (size > 0){
             // RecentAlarm 갱신하기
             val recentAlarm = RecentAlarm()
-            val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+            val recentTimeList = recentAlarm.checkSQLGetSecond(SQLHelper)
             // 알림은 있지만 모든 토글이 off 일 떄
             if (recentTimeList[0] == -1){
                 binder.RecentTimeTextview.text = context.getString(R.string.alarmSetFragment_noAlarm)
@@ -139,7 +139,7 @@ class alarmFragment : Fragment() {
                 }
                 // 체크된 요일을 문자로 표시한다
                 if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
-                        || recentTimeList[5] == 1 || recentTimeList[6] == 1){
+                    || recentTimeList[5] == 1 || recentTimeList[6] == 1){
                     var text = binder.RecentTimeTextview.text
                     // 텍스트의 제일 마지막 문자(콤마)를 삭제
                     text = text.removeRange(text.length - 2, text.length - 1)
@@ -293,7 +293,7 @@ class alarmFragment : Fragment() {
         if (size > 0){
             // RecentAlarm 갱신하기
             val recentAlarm = RecentAlarm()
-            val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+            val recentTimeList = recentAlarm.checkSQLGetSecond(SQLHelper)
             // 알림은 있지만 모든 토글이 off 일 떄
             if (recentTimeList[0] == -1){
                 binder.RecentTimeTextview.text = getString(R.string.alarmSetFragment_noAlarm)
@@ -349,7 +349,7 @@ class alarmFragment : Fragment() {
                     textForWeek = textForWeek + getString(R.string.week_sun) + ", "
                 }
                 if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
-                        || recentTimeList[5] == 1 || recentTimeList[6] == 1){
+                    || recentTimeList[5] == 1 || recentTimeList[6] == 1){
                     var text = binder.RecentTimeTextview.text
                     // 텍스트의 제일 마지막 문자(콤마)를 삭제
                     text = text.removeRange(text.length - 2, text.length - 1)

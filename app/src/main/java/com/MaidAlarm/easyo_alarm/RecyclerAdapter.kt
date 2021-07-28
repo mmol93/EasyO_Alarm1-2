@@ -229,7 +229,7 @@ class RecyclerAdapter(val context : Context, val SQLHelper : SQLHelper, var size
 
                 // notification 재설정
                 val recentAlarm = RecentAlarm()
-                val recentTimeList = recentAlarm.checkSQL(SQLHelper)
+                val recentTimeList = recentAlarm.checkSQLGetSecond(SQLHelper)
                 // 모든 토글이 off 일 때 = notification cancel
                 if (recentTimeList[0] == -1){
                     val notification = notification()

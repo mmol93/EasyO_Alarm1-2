@@ -5,9 +5,7 @@ import android.content.Context
 import android.content.pm.PackageInfo
 import android.util.Log
 import com.MaidAlarm.easyo_alarm.notification.notification
-import java.io.DataInputStream
 import java.io.DataOutputStream
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -15,8 +13,8 @@ import java.util.*
 class Function {
     // SQL의 모든 데이터를 참조하여 switch가 on인 알람을 다시 등록한다
     fun makeAlarmWithAllSQL(
-            context: Context,
-            ) {
+        context: Context,
+    ) {
         // ** SQL에서 모든 데이터를 들고와서 다시 알람 매니저에 등록해준다
         val SQLHelper = SQLHelper(context!!)
         val sql = "select * from MaidAlarm"
@@ -233,12 +231,12 @@ class Function {
                 }
                 // 체크된 요일을 문자로 표시한다
                 if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
-                        || recentTimeList[5] == 1 || recentTimeList[6] == 1){
+                    || recentTimeList[5] == 1 || recentTimeList[6] == 1){
                     // textForWeek에서 마지막 부분 콤마 제거하기
                     if (textForWeek.length > 2){
                         textForWeek = textForWeek.removeRange(
-                                textForWeek.length - 2,
-                                textForWeek.length - 1
+                            textForWeek.length - 2,
+                            textForWeek.length - 1
                         )
                     }
                 }
@@ -250,10 +248,10 @@ class Function {
                     val notification = notification()
                     val notificationManager =context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                     notification.getNotification(
-                            context!!,
-                            "chanel1",
-                            "첫 번째 채널",
-                            notificationManager
+                        context!!,
+                        "chanel1",
+                        "첫 번째 채널",
+                        notificationManager
                     )
                     notification.makeNotification(recentTime, recentWeek, context!!, notificationManager)
                 }
@@ -312,13 +310,13 @@ class Function {
             }
             // 체크된 요일을 문자로 표시한다
             if (recentTimeList[0] == 1 || recentTimeList[1] == 1 || recentTimeList[2] == 1 || recentTimeList[3] == 1 || recentTimeList[4] == 1
-                    || recentTimeList[5] == 1 || recentTimeList[6] == 1) {
+                || recentTimeList[5] == 1 || recentTimeList[6] == 1) {
 
                 // textForWeek에서 마지막 부분 콤마 제거하기
                 if (textForWeek.length > 2) {
                     textForWeek = textForWeek.removeRange(
-                            textForWeek.length - 2,
-                            textForWeek.length - 1
+                        textForWeek.length - 2,
+                        textForWeek.length - 1
                     )
                 }
                 app.recentWeek = textForWeek    // notification에 사용하기 위한 텍스트 정의2
@@ -376,5 +374,18 @@ class Function {
 
         dos.flush()
         dos.close()
+    }
+
+    // 리스트 안에서 두 번째로 작은 숫자 찾아내기
+    // 파라미터로 해당 리스트에서 가장 작은 숫자가 필요함
+    fun secondSmall(intList : MutableList<Int>, smallest : Int) : Int{
+        var target = 999999999
+        val smallest = 0
+        intList.forEach {
+            if (smallest < it && it < target){
+                target = it
+            }
+        }
+        return target
     }
 }
