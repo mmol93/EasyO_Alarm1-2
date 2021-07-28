@@ -19,3 +19,6 @@
 3. Setting
 * ##### You can set bell and sound about simeple alarm
 * ##### You can set morning weatehr alarm and weather forecast alarm
+
+
+![google-play-badge](https://user-images.githubusercontent.com/69494230/127309520-e0ec735f-7bee-4c11-8580-15f073a9b750.png)
