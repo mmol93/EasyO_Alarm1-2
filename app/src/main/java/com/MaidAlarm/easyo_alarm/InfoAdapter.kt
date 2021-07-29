@@ -28,7 +28,7 @@ class InfoAdapter(val context : Context) : RecyclerView.Adapter<InfoViewHolder>(
                 holder.binder.infoText.text = context.getString(R.string.infoItem_contact)
                 holder.binder.infoSubText.text = context.getString(R.string.infoItem_subContact)
                 holder.binder.rowItemView.setOnClickListener {
-                    val emailAddress = "ljws93@naver.com"
+                    val emailAddress = arrayOf<String>("ljws93@naver.com")
                     val intent = Intent(Intent.ACTION_SEND)
                     intent.data = Uri.parse("mailto:")
                     intent.type = "text/plain"

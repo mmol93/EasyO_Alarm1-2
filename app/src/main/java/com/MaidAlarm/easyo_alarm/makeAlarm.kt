@@ -29,15 +29,15 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class makeAlarm(
-        val context: Context,
-        val hour: Int,
-        val min: Int,
-        val progress: Int,
-        val weekList : List<Int>,
-        val requestCode: Int,
-        val bellIndex : Int,
-        val alarmMode : Int
-        ){
+    val context: Context,
+    val hour: Int,
+    val min: Int,
+    val progress: Int,
+    val weekList : List<Int>,
+    val requestCode: Int,
+    val bellIndex : Int,
+    val alarmMode : Int
+){
 
     private val alarmManager: AlarmManager? =
         context.getSystemService(Context.ALARM_SERVICE) as AlarmManager?
@@ -48,11 +48,11 @@ class makeAlarm(
 
         // 휴식 상태인 휴대폰 깨우기
         val wakeLock: PowerManager.WakeLock =
-                (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                    newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                        acquire(120*1000L)
-                    }
+            (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+                newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
+                    acquire(120*1000L)
                 }
+            }
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
             // 정확한 시간 설정
@@ -127,7 +127,7 @@ class Receiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         // ** 휴대폰을 재부팅 했을 때
         if (intent!!.action == "android.intent.action.BOOT_COMPLETED" ||
-                intent!!.action == "android.intent.action.QUICKBOOT_POWERON") {
+            intent!!.action == "android.intent.action.QUICKBOOT_POWERON") {
             Log.d("makeAlarm", "재부팅됨")
             // 휴식 상태인 휴대폰 깨우기
             val wakeLock: PowerManager.WakeLock =
@@ -161,7 +161,7 @@ class Receiver : BroadcastReceiver() {
             function.makeAlarmWithAllSQL(context!!)
         }
 
-        // ** 그 이외의 모든 알람에 대한 Receiver() 호출에 대한 행동
+        // ** 그 이외(기타)의 모든 알람에 대한 Receiver() 호출에 대한 행동
         else{
             // 액션 버튼 클릭했을 때 행동 구현
             val actionCommand = intent.getStringExtra("action")
@@ -346,10 +346,6 @@ class Receiver : BroadcastReceiver() {
                     if (arrayFromMakeAlarm!![present_week] == 1){
                         Log.d("makeAlarm", "지금 울릴 알람 맞음")
 
-                        // 지금 울린 알람 기록
-                        val function = Function()
-                        function.saveFileAsString("data2.bat", context)
-
                         // 볼륨 강제 설정(10분뒤 울리는 알람이랑 설정 방법 조금 다름)
                         val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
                         val currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
@@ -503,10 +499,10 @@ fun addNewAlarm_normal_exact(alarmManager: AlarmManager,
     intent.putExtra("arrayForPendingIntent", ListForPendingIntent)
 
     val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            requestCode,
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+        context,
+        requestCode,
+        intent,
+        PendingIntent.FLAG_UPDATE_CURRENT
     )
     Log.d("makeAlarm", "알람 등록한 시간: " + Date().toString() + " / " +curCalendar.timeInMillis)
     Log.d("makeAlarm", "설정된 시간: ${hour}시 ${min}분")

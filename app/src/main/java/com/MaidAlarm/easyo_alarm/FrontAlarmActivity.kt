@@ -327,6 +327,9 @@ class FrontAlarmActivity : AppCompatActivity() {
                         }catch (e:Exception){
 
                         }
+                        // 지금 울린 알람 기록
+                        val function = Function()
+                        function.saveFileAsString("data2.bat", context)
 
                         checkNextAlarm()
 
@@ -353,6 +356,10 @@ class FrontAlarmActivity : AppCompatActivity() {
                 }catch (e:Exception){
 
                 }
+                // 지금 울린 알람 기록
+                val function = Function()
+                function.saveFileAsString("data2.bat", context)
+
                 checkNextAlarm()
 
                 // 아침 날씨확인 및 관련 기능 실행
