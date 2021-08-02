@@ -18,6 +18,7 @@
 * Retrofit for weather forecast
 * BottomBar
 * CustomDialog
+* SQLite
 
 
 ## Usage
