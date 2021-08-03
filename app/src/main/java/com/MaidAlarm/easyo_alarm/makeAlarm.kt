@@ -444,6 +444,8 @@ class Receiver : BroadcastReceiver() {
                     }
                 }
             }
+            // 지금 울린 알람 기록
+            function.saveFileAsString("history.bat", AppClass.context)
         }
     }
 }

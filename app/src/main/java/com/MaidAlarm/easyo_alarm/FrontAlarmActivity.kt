@@ -47,16 +47,10 @@ class FrontAlarmActivity : AppCompatActivity() {
     private var volume = 0
     private var alarmCounter = 0
 
-    val weatherFragment = WeatherFragment()
-
-    var backButtonCounter = 0
-
     // *** FrontAlarmActivity가 열려있을 때는 backButton으로 액티비티를 닫지 못하게 한다 -> 그냥 이 메서드 비워두면됨
     // 날씨 fragment를 띄우고 있을 때는 뒤로가기로 현재 액티비티 종료 가능
     override fun onBackPressed() {
-        if (backButtonCounter == 1){
-            finishAndRemoveTask()
-        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,10 +84,6 @@ class FrontAlarmActivity : AppCompatActivity() {
         val sql = "select * from MaidAlarm"
         val c1 = SQLHelper.writableDatabase.rawQuery(sql, null)
         val size = c1.count
-
-        // 광고 초기화
-        // *** 애드몹 초기화
-        MobileAds.initialize(this) {}
 
         try {
             // 파일 읽어오기

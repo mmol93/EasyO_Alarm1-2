@@ -59,12 +59,20 @@ class Developer : AppCompatActivity() {
             try {
                 // 먼저 데이터를 가져온다
                 // 파일 읽어오기
-                val fis = openFileInput("data2.bat")
-                val dis = DataInputStream(fis)
+                var fis = openFileInput("history.bat")
+                var dis = DataInputStream(fis)
 
-                val lastAlarmHistory = dis.readLine()
+                var lastAlarmHistory = dis.readLine()
 
                 binder.textView.text = lastAlarmHistory
+
+                fis = openFileInput("data2.bat")
+                dis = DataInputStream(fis)
+
+                lastAlarmHistory = dis.readLine()
+
+                binder.textView.append(lastAlarmHistory)
+
             }catch (e:Exception){
                 binder.textView.text = "최근 울린 알람 없음"
             }
