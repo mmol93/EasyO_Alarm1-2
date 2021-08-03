@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">メードアラーム</string>
+    <string name="app_name">メード</string>
     <string name="quick_title">簡単ｱﾗｰﾑ</string>
     <string name="cancelBtn">キャンセル</string>
     <string name="saveBtn">保存</string>
