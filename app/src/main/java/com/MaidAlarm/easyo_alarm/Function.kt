@@ -364,6 +364,19 @@ class Function {
         dos.close()
     }
 
+    // 파일 데이터 저장(makeAlarm에서 data2.bat 사용중 - 최근 울린 알람 기록용)
+    fun saveFileAsString(fileName : String, context: Context, text : String){
+        val currentDateTime = Calendar.getInstance().time
+        var dateFormat = SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.KOREA).format(currentDateTime)
+
+        val fos = context.openFileOutput(fileName, Context.MODE_PRIVATE)
+        val dos = DataOutputStream(fos)
+        dos.writeChars("$text : $dateFormat")
+
+        dos.flush()
+        dos.close()
+    }
+
     // 업데이트 거부 시 해당 날짜 데이터 저장하게 하기
     fun saveFileWithCurrentTime(fileName : String, context: Context){
         val currentTimeMilli = System.currentTimeMillis()

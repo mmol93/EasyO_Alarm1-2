@@ -192,6 +192,7 @@ class FrontAlarmActivity : AppCompatActivity() {
         var recentAlarm = RecentAlarm()
         var recentTimeList = recentAlarm.checkSQLGetSecond(SQLHelper)
 
+        // FrontAcvity에서 알람 끝난 후 ok 버튼 누를 시 발동됨
         fun checkNextAlarm(){
             // 설정에서 notification이 "사용 상태"로 되어 있을 때
             // alarmFragment에 있는 view에 대한 갱신은 alarmFragment의 onResume에서 실시하기 때문에
@@ -200,6 +201,10 @@ class FrontAlarmActivity : AppCompatActivity() {
                 // * 가장 가까운 알람의 시간 알아내기
                 recentAlarm = RecentAlarm()
                 recentTimeList = recentAlarm.checkSQLGetSecond(SQLHelper)
+
+                if (recentTimeList.size <= 1){
+                    return
+                }
 
                 var recentHour = ""
                 var recentMin = ""
@@ -319,7 +324,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                         }
                         // 지금 울린 알람 기록
                         val function = Function()
-                        function.saveFileAsString("data2.bat", context)
+                        function.saveFileAsString("data2.bat", context, "ok button")
 
                         checkNextAlarm()
 

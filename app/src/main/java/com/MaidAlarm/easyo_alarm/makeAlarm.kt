@@ -278,7 +278,7 @@ class Receiver : BroadcastReceiver() {
                     val wakeLock: PowerManager.WakeLock =
                         (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
                             newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                                acquire()
+
                             }
                         }
 
@@ -345,6 +345,8 @@ class Receiver : BroadcastReceiver() {
                     // arrayFromMakeAlarm[10]: 설정한 알람의 분
                     if (arrayFromMakeAlarm!![present_week] == 1){
                         Log.d("makeAlarm", "지금 울릴 알람 맞음")
+                        val function = Function()
+                        function.saveFileAsString("history2.bat", AppClass.context, "it's right time")
 
                         // 볼륨 강제 설정(10분뒤 울리는 알람이랑 설정 방법 조금 다름)
                         val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -445,7 +447,7 @@ class Receiver : BroadcastReceiver() {
                 }
             }
             // 지금 울린 알람 기록
-            function.saveFileAsString("history.bat", AppClass.context)
+            function.saveFileAsString("history.bat", AppClass.context, "BraodCast is ended")
         }
     }
 }

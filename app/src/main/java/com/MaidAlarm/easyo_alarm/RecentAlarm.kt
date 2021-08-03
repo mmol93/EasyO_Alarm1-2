@@ -300,13 +300,16 @@ class RecentAlarm {
         Log.d("RecentAlarm", "recentTime: $recentTime")
         Log.d("RecentAlarm", "resultIdx: $resultIdx")
         Log.d("RecentAlarm", "currentMin: $currentMin")
-        Log.d("RecentAlarm", "resultIdxMin: ${minList[resultIdx]}")
-        Log.d("RecentAlarm", "secondResultIdxMin: ${minList[secondSmallIndex]}")
 
         // 제일 가까운 알람(분)이 현재 시간(분)과 일치할 경우
-        if (currentMin == minList[resultIdx]){
-            resultIdx = requestCode.indexOf(requestCode_switch[secondSmallIndex])
+        try{
+            if (currentMin == minList[resultIdx]){
+                resultIdx = requestCode.indexOf(requestCode_switch[secondSmallIndex])
+            }
+        }catch (e:Exception){
+            resultIdx = requestCode.indexOf(requestCode_switch[resultIdxInSwitch])
         }
+
         val totalResult = mutableListOf<Int>(Sun[resultIdx], Mon[resultIdx], Tue[resultIdx], Wed[resultIdx],
             Thu[resultIdx], Fri[resultIdx], Sat[resultIdx], hourList[resultIdx], minList[resultIdx])
 

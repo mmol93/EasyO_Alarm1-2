@@ -59,6 +59,8 @@ class Developer : AppCompatActivity() {
             try {
                 // 먼저 데이터를 가져온다
                 // 파일 읽어오기
+
+                // 브로드캐스트가 울렸는지 확인
                 var fis = openFileInput("history.bat")
                 var dis = DataInputStream(fis)
 
@@ -66,12 +68,21 @@ class Developer : AppCompatActivity() {
 
                 binder.textView.text = lastAlarmHistory
 
+                // 지금 울릴 알람이 맞는지 확인
+                fis = openFileInput("historye2.bat")
+                dis = DataInputStream(fis)
+
+                lastAlarmHistory = dis.readLine()
+
+                binder.textView.append("\n$lastAlarmHistory\n")
+
+                // frontAcitivity의 ok버튼 클릭 후 다시 시간 기록
                 fis = openFileInput("data2.bat")
                 dis = DataInputStream(fis)
 
                 lastAlarmHistory = dis.readLine()
 
-                binder.textView.append(lastAlarmHistory)
+                binder.textView.append("$lastAlarmHistory\n")
 
             }catch (e:Exception){
                 binder.textView.text = "최근 울린 알람 없음"
