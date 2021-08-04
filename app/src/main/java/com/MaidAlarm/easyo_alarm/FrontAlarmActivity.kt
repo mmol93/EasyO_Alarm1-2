@@ -324,7 +324,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                         }
                         // 지금 울린 알람 기록
                         val function = Function()
-                        function.saveFileAsString("data2.bat", context, "ok button")
+                        function.saveFileAsString("data2.bat", context, " ok button")
 
                         checkNextAlarm()
 
@@ -353,7 +353,7 @@ class FrontAlarmActivity : AppCompatActivity() {
                 }
                 // 지금 울린 알람 기록
                 val function = Function()
-                function.saveFileAsString("data2.bat", context)
+                function.saveFileAsString("data2.bat", context, " ok button")
 
                 checkNextAlarm()
 

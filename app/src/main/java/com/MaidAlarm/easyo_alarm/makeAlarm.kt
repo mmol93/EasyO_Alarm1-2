@@ -346,7 +346,7 @@ class Receiver : BroadcastReceiver() {
                     if (arrayFromMakeAlarm!![present_week] == 1){
                         Log.d("makeAlarm", "지금 울릴 알람 맞음")
                         val function = Function()
-                        function.saveFileAsString("history2.bat", AppClass.context, "it's right time")
+                        function.saveFileAsString("history2.bat", AppClass.context, " it's on time")
 
                         // 볼륨 강제 설정(10분뒤 울리는 알람이랑 설정 방법 조금 다름)
                         val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -447,7 +447,7 @@ class Receiver : BroadcastReceiver() {
                 }
             }
             // 지금 울린 알람 기록
-            function.saveFileAsString("history.bat", AppClass.context, "BraodCast is ended")
+            function.saveFileAsString("history.bat", AppClass.context, " BroadCast is ended")
         }
     }
 }

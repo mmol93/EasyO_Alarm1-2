@@ -56,12 +56,12 @@ class Developer : AppCompatActivity() {
         }
         // 여태 울린 알람의 이력을 가져온다
         binder.button1CheckHistoy.setOnClickListener {
-            try {
+            try{
                 // 먼저 데이터를 가져온다
                 // 파일 읽어오기
 
                 // 브로드캐스트가 울렸는지 확인
-                var fis = openFileInput("history.bat")
+                var fis = openFileInput("history2.bat")
                 var dis = DataInputStream(fis)
 
                 var lastAlarmHistory = dis.readLine()
@@ -69,7 +69,7 @@ class Developer : AppCompatActivity() {
                 binder.textView.text = lastAlarmHistory
 
                 // 지금 울릴 알람이 맞는지 확인
-                fis = openFileInput("historye2.bat")
+                fis = openFileInput("history.bat")
                 dis = DataInputStream(fis)
 
                 lastAlarmHistory = dis.readLine()
@@ -83,9 +83,8 @@ class Developer : AppCompatActivity() {
                 lastAlarmHistory = dis.readLine()
 
                 binder.textView.append("$lastAlarmHistory\n")
-
             }catch (e:Exception){
-                binder.textView.text = "최근 울린 알람 없음"
+                binder.textView.text = "기록된 알람 없음"
             }
         }
         setContentView(binder.root)
