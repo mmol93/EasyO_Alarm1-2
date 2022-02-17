@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_INCLUDE_STOPPED_PACKAGES
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.LinearGradient
@@ -85,6 +86,7 @@ class makeAlarm(
         // intent에 putIntent를 하기 위해선 List -> array로 변환필요
         Log.d("makeAlarm", "ListForPendingIntent: $ListForPendingIntent")
         intent.putExtra("arrayForPendingIntent", ListForPendingIntent)
+        intent.addFlags(FLAG_INCLUDE_STOPPED_PACKAGES)
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -268,9 +270,14 @@ class Receiver : BroadcastReceiver() {
                             weatherNotification.makeWeatherNotification(dailyMain[0], dailyMaxTemp[0], dailyMinTemp[0], dailyPop[0], notificationManager)
                         }
                     )
+                    // 다시 알람 설정
+                    val pref = context.getSharedPreferences("weatherAlarmData", Context.MODE_PRIVATE)
+                    val weatherAlarmTime = pref.getString("weatherAlarmTime", "01:00")
+                    val weatherAlarm = WeatherAlarm(context)
+                    weatherAlarm.setTomorrowWeatherAlarm(weatherAlarmTime!!)
                 }
 
-                // 10분 연장 버튼을 클릭했을 때
+                // 10분 연장 버튼을 클릭했을
                 "POSTPHONETIME" -> {
                     Log.d("makeAlarm", "알람 연장됨")
 
@@ -315,13 +322,8 @@ class Receiver : BroadcastReceiver() {
                 }
                 // 위 상황 이외의 것으로 일반적인 알람이 울렸을 때 발동하는 것들
                 else -> {
-                    // 휴식 상태인 휴대폰 깨우기
-                    val wakeLock: PowerManager.WakeLock =
-                        (context!!.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
-                            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
-                                acquire(120*1000L)
-                            }
-                        }
+                    val function = Function()
+                    function.saveFileAsString("history2.bat", AppClass.context, " BroadCast Called")
 
                     Log.d("makeAlarm", "onReceive() 호출 - else부분")
                     // 오늘이 알람에서 설정한 요일과 맞는지 확인하기 위해 오늘 날짜의 요일을 가져온다
@@ -345,8 +347,6 @@ class Receiver : BroadcastReceiver() {
                     // arrayFromMakeAlarm[10]: 설정한 알람의 분
                     if (arrayFromMakeAlarm!![present_week] == 1){
                         Log.d("makeAlarm", "지금 울릴 알람 맞음")
-                        val function = Function()
-                        function.saveFileAsString("history2.bat", AppClass.context, " it's on time")
 
                         // 볼륨 강제 설정(10분뒤 울리는 알람이랑 설정 방법 조금 다름)
                         val audioManager = context!!.getSystemService(Context.AUDIO_SERVICE) as AudioManager
@@ -501,6 +501,7 @@ fun addNewAlarm_normal_exact(alarmManager: AlarmManager,
     // intent에 putIntent를 하기 위해선 List -> array로 변환필요
     Log.d("makeAlarm", "ListForPendingIntent: $ListForPendingIntent")
     intent.putExtra("arrayForPendingIntent", ListForPendingIntent)
+    intent.addFlags(FLAG_INCLUDE_STOPPED_PACKAGES)
 
     val pendingIntent = PendingIntent.getBroadcast(
         context,

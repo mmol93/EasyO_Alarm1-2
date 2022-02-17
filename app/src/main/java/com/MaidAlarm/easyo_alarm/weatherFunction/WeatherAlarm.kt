@@ -39,6 +39,7 @@ class WeatherAlarm(context:Context) {
         val intent = Intent(context, Receiver::class.java)
         intent.putExtra("hour", 0)
         intent.putExtra("action", "weather")
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -48,7 +49,7 @@ class WeatherAlarm(context:Context) {
         )
 
         // 날씨 알람은 매일 울리기 때문에 setRepeat로 지정한다
-        alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendarTimeMillis, 24*60*60*1000L, pendingIntent)
+        alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendarTimeMillis, pendingIntent)
     }
 
     fun cancelTomorrowWeatherAlarm(){
