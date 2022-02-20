@@ -5,8 +5,10 @@ import android.app.KeyguardManager
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -94,6 +96,13 @@ class MainActivity : AppCompatActivity() {
                 super.onAdOpened()
                 Log.d("adMob", "메인광고 열림 성공")
             }
+        }
+
+        // 8.0 이상 부터는 브로드캐스트 등록을 해야한다
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val brFilter = IntentFilter("com.maidalarm.easyo.alarm")
+            val broadCastReceiver = Receiver()
+            registerReceiver(broadCastReceiver, brFilter)
         }
 
         // 아침 날씨 확인에 대한 인텐트 결과 처리

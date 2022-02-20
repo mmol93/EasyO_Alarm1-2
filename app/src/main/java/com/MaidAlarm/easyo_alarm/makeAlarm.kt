@@ -4,11 +4,8 @@ import android.Manifest
 import android.app.AlarmManager
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.content.Intent.FLAG_INCLUDE_STOPPED_PACKAGES
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.LinearGradient
 import android.location.Address
@@ -65,7 +62,7 @@ class makeAlarm(
         val function = Function()
         function.saveFileAsString("data2.bat", context)
 
-        val intent = Intent(context, Receiver::class.java)
+        val intent = Intent("com.maidalarm.easyo.alarm")
         // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
         // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
         // 넘겨줄 항목은 다음과 같다.
@@ -87,6 +84,8 @@ class makeAlarm(
         Log.d("makeAlarm", "ListForPendingIntent: $ListForPendingIntent")
         intent.putExtra("arrayForPendingIntent", ListForPendingIntent)
         intent.addFlags(FLAG_INCLUDE_STOPPED_PACKAGES)
+        intent.action = "com.maidalarm.easyo.alarm"
+        intent.component = ComponentName("com.MaidAlarm.easyo_alarm", "com.MaidAlarm.easyo_alarm.Receiver")
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -115,7 +114,9 @@ class makeAlarm(
 
     // *** 이미 있는 알람을 취소한다.
     fun cancelAlarm(requestCode: Int){
-        val intent = Intent(context, Receiver::class.java)
+        val intent = Intent("com.maidalarm.easyo.alarm")
+        intent.action = "com.maidalarm.easyo.alarm"
+        intent.component = ComponentName("com.MaidAlarm.easyo_alarm", "com.MaidAlarm.easyo_alarm.Receiver")
         val pendingIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         Log.d("makeAlarm", "Cancel(): requestCode: $requestCode")
         // 6. 해당 펜딩인텐트에 있는 알람을 해제(삭제, 취소)한다
@@ -481,7 +482,7 @@ fun addNewAlarm_normal_exact(alarmManager: AlarmManager,
         calendarMillis += intervalDay
     }
 
-    val intent = Intent(context, Receiver::class.java)
+    val intent = Intent("com.maidalarm.easyo.alarm")
     // *** 여기서 intent에 데이터를 넣어서 BroadCast에서 사용할 수 있다
     // pendingIntent 에는 1개의 변수만 넣을 수 있기 때문에 리스트를 임시로 만들어 넣는게 제일 좋다
     // 넘겨줄 항목은 다음과 같다.
@@ -502,6 +503,8 @@ fun addNewAlarm_normal_exact(alarmManager: AlarmManager,
     Log.d("makeAlarm", "ListForPendingIntent: $ListForPendingIntent")
     intent.putExtra("arrayForPendingIntent", ListForPendingIntent)
     intent.addFlags(FLAG_INCLUDE_STOPPED_PACKAGES)
+    intent.action = "com.maidalarm.easyo.alarm"
+    intent.component = ComponentName("com.MaidAlarm.easyo_alarm", "com.MaidAlarm.easyo_alarm.Receiver")
 
     val pendingIntent = PendingIntent.getBroadcast(
         context,

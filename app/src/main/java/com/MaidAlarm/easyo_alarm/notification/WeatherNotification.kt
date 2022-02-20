@@ -100,7 +100,7 @@ class WeatherNotification(val context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             // 3. 채널 객체 생성
             // IMPORTANCE_HIGH로 하지 않으면 메시지가 안나올 가능성 있음
-            val channel = NotificationChannel("channel2", name, NotificationManager.IMPORTANCE_LOW)
+            val channel = NotificationChannel("channel2", name, NotificationManager.IMPORTANCE_HIGH)
 
             // 5. Notification 보여줄 때 진동 사용 여부
             channel.enableVibration(false)

@@ -2,6 +2,7 @@ package com.MaidAlarm.easyo_alarm.weatherFunction
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -36,10 +37,12 @@ class WeatherAlarm(context:Context) {
         Log.d("WeatherAlarm - WeatherAlar.kt", "발동까지 남은 분: ${(calendarTimeMillis - System.currentTimeMillis())/(1000*60)}")
 
         // 브로드캐스트 등록하기
-        val intent = Intent(context, Receiver::class.java)
+        val intent = Intent("com.maidalarm.easyo.alarm")
         intent.putExtra("hour", 0)
         intent.putExtra("action", "weather")
         intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
+        intent.action = "com.maidalarm.easyo.alarm"
+        intent.component = ComponentName("com.MaidAlarm.easyo_alarm", "com.MaidAlarm.easyo_alarm.Receiver")
 
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -48,8 +51,7 @@ class WeatherAlarm(context:Context) {
             PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        // 날씨 알람은 매일 울리기 때문에 setRepeat로 지정한다
-        alarmManager?.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendarTimeMillis, pendingIntent)
+        alarmManager?.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendarTimeMillis, pendingIntent)
     }
 
     fun cancelTomorrowWeatherAlarm(){

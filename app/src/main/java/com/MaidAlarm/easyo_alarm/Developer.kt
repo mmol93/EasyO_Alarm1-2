@@ -1,6 +1,7 @@
 package com.MaidAlarm.easyo_alarm
 
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -28,7 +29,9 @@ class Developer : AppCompatActivity() {
 
             binder.textView.append("${requestCodeList}\n")
             // 설정되어 있는 브로드캐스트를 requestCode를 이용하여 각각 가져온다
-            val intent = Intent(this, Receiver::class.java)
+            val intent = Intent("com.maidalarm.easyo.alarm")
+            intent.action = "com.maidalarm.easyo.alarm"
+            intent.component = ComponentName("com.MaidAlarm.easyo_alarm", "com.MaidAlarm.easyo_alarm.Receiver")
             for (requestCode in requestCodeList) {
                 // 브로드 캐스트 해당 requestCode를 갖고 있는 브로드캐스트 가져오기
                 val alarmUp = PendingIntent.getBroadcast(
