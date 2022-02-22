@@ -169,6 +169,7 @@ class Receiver : BroadcastReceiver() {
             // 액션 버튼 클릭했을 때 행동 구현
             val actionCommand = intent.getStringExtra("action")
             val function = Function()
+            function.saveFileAsString("history2.bat", AppClass.context, " BroadCast Called")
             when(actionCommand){
                 // 알림바에서 action 버튼1을 눌렀을 때
                 "action1" -> {
@@ -324,7 +325,7 @@ class Receiver : BroadcastReceiver() {
                 // 위 상황 이외의 것으로 일반적인 알람이 울렸을 때 발동하는 것들
                 else -> {
                     val function = Function()
-                    function.saveFileAsString("history2.bat", AppClass.context, " BroadCast Called")
+                    function.saveFileAsString("history2.bat", AppClass.context, " Alarm BroadCast Called")
 
                     Log.d("makeAlarm", "onReceive() 호출 - else부분")
                     // 오늘이 알람에서 설정한 요일과 맞는지 확인하기 위해 오늘 날짜의 요일을 가져온다
